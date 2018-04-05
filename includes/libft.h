@@ -28,7 +28,7 @@
 # define ANSI_COLOR_RESET      "\x1b[0m"
 # define ANSI_DEL_LINE         "\r\x1b[K"
 # define BUFF_SIZE 10
-# define PRGRM_NAME "21sh"
+# define PRGRM_NAME "42sh"
 # define LIBFT_OK 0
 # define LIBFT_ERR 1
 
@@ -70,15 +70,28 @@ typedef struct			s_dbuf {
 	unsigned long		len;
 }						t_dbuf;
 
+int		ft_strindex(const char *str, int c);
+int		size_list(void *a);
+int		str_digit(char *str);
+char	*ft_strpushback(char *str, char c, size_t *buff_sz);
+void	*add_elem_back(void **alst, void *elem_to_add);
+void	*add_elem_front(void **alst, void *elem_to_add);
+int		is_whitespace(char c);
+char			*ft_strfjoin(char *s1, char const *s2);
+char			*ft_strffjoin(char *s1, char *s2);
+char				*ft_strpush(char *str, size_t idx, char c, size_t *buff_sz);
+void				del_list(void **elem, void (*f)(void**));
+void				*add_elem_front_dl(void **alst, void *elem_to_add);
+int					str_isprint(char *str);
+char				*ft_strpop(char *str, size_t idx);
+int					arrlen(char **arr);
+void				del_arr(char ***arr);
+unsigned long long	ft_hash(const char *str);
+size_t				ft_strlcpy(char *dst, const char *src, size_t size);
+int					ft_strindex(const char *str, int c); // pas fait
+char				**cpy_arr(char **arr);
 
-typedef struct		s_void
-{
-	struct s_void *next;
-	struct s_void *previous;
-}					t_void;
 
-char			*ft_strffjoin(char *s1, char *s2); //WHAT
-char	*ft_strpush(char *str, size_t idx, char c, size_t *buff_sz);
 char					**ft_split_whitespaces(char *str);
 void					ft_lstappend(t_list **head, t_list *new);
 char					*ft_str3join(char const *s1, char const *s2,
@@ -151,12 +164,12 @@ void					ft_lstdel(t_list **alst, void(*del)(void*, size_t));
 void					ft_lstadd(t_list **alst, t_list *new);
 void					ft_lstiter(t_list *lst, void(*f)(t_list *elem));
 t_list					*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-int						ft_any(char **tab, int (*f)(char*));
-int						ft_count_if(char **tab, int (*f)(char*));
+int						ft_any(char **tabo, int (*f)(char*));
+int						ft_count_if(char **tabo, int (*f)(char*));
 int						ft_find_next_prime(int nb);
-void					ft_foreach(int *tab, int length, void (*f)(int));
+void					ft_foreach(int *tabo, int length, void (*f)(int));
 int						ft_isprime(int nb);
-int						ft_issort(int *tab, int length, int (*f)(int, int));
+int						ft_issort(int *tabo, int length, int (*f)(int, int));
 t_list					*ft_lstat(t_list *begin_list, int nbr);
 t_list					*ft_lstfind(t_list *begin_list,
 	void *data_ref, int (*cmp)());
@@ -174,7 +187,7 @@ void					ft_lstremove_if(t_list **begin_list,
 void					ft_lstreverse(t_list **begin_list);
 int						ft_lstsize(t_list *begin_list);
 void					ft_lstsort(t_list **begin_list, int (*cmp)());
-int						*ft_map(int *tab, int length, int (*f)(int));
+int						*ft_map(int *tabo, int length, int (*f)(int));
 int						*ft_range(int min, int max);
 int						ft_factorial(int nb);
 int						ft_pow(int nb, int power);
