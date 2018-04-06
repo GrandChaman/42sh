@@ -26,14 +26,12 @@ int			main(void)
 {
 	t_ft_sh *shell;
 	char	*cmd;
-	int		should_exit;
 	int		fb;
 	t_sh21			*sh21;
 	extern char		**environ;
 
 	fb = 0;
 	sh21 = sh21_init(environ);
-	should_exit = 0;
 	shell = get_ft_shell();
 	shell->ht = NULL; //HASH TABLE
 	signal(SIGINT, ignore_signal);
@@ -45,7 +43,7 @@ int			main(void)
 		cli_loader(1); //1 = destroying the cli
 		return (1);
 	}
-	while (!should_exit)
+	while (42)
 	{
 		//char		*read_command(char *prompt, int status, int heredoc, int fb)
 		//@param	char *prompt : Un prompt alternatif (au lieu d'afficher le cwd)
