@@ -26,7 +26,7 @@ static char				*extract_autocomplete_search(t_ft_sh *sh)
 	while (sh->cursor - i - len > 0 &&
 		!ft_iswhitespace(sh->buf.buf[sh->cursor - i - len]))
 		len++;
-	return (ft_strndup(sh->buf.buf + (sh->cursor - i - len) +
+	return (ft_strndup2(sh->buf.buf + (sh->cursor - i - len) +
 		(sh->cursor - i - len > 0), len - (sh->cursor - i - len > 0)));
 }
 

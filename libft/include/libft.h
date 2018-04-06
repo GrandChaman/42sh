@@ -77,6 +77,7 @@ typedef struct		s_void
 	struct s_void *previous;
 }					t_void;
 
+size_t				ft_strlcpy(char *dst, const char *src, size_t size);
 char			*ft_strffjoin(char *s1, char *s2); //WHAT
 char	*ft_strpush(char *str, size_t idx, char c, size_t *buff_sz);
 char					**ft_split_whitespaces(char *str);
@@ -95,7 +96,7 @@ int						ft_memcmp(const void *lhs, const void *rhs,
 size_t					ft_strlen(const char *str);
 char					*ft_strcpy(char *dest, const char *src);
 char					*ft_strdup(const char *str);
-char					*ft_strndup(const char *str, size_t n);
+char	*ft_strndup(char *str, size_t size);
 char					*ft_strncpy(char *dest, const char *src, size_t count);
 size_t					ft_strlcat(char *dst, const char *src, size_t size);
 char					*ft_strcat(char *dest, const char *src);
