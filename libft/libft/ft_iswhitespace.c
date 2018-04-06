@@ -3,18 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_iswhitespace.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bluff <bluff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/22 17:54:32 by bluff             #+#    #+#             */
-/*   Updated: 2017/11/07 15:40:27 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/06 17:31:00 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_iswhitespace(int ch)
+int		ft_iswhitespace(int c)
 {
-	if ((ch >= 9 && ch <= 13) || ch == 32 || ch == 133)
+	if (c == ' ' || c == '\t' || c == '\v' || c == '\r' || c == '\n')
 		return (1);
 	return (0);
+	// if ((ch >= 9 && ch <= 13) || ch == 32 || ch == 133)
+		// return (1);
+	// return (0);
 }

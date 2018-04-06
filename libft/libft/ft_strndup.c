@@ -3,26 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bluff <bluff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/21 00:12:49 by bluff             #+#    #+#             */
-/*   Updated: 2018/03/14 18:19:36 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/06 17:43:57 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
+#include <errno.h>
 
-char	*ft_strndup(const char *str, size_t n)
+static size_t	ft_strlcpy2(char *dst, const char *src, size_t size)
 {
-	char	*nstr;
-	size_t	len;
+	size_t i;
 
-	if (!str || !n)
+	i = 0;
+	if (!src)
+		return (i);
+	while (src[i] != 0 && i < size - 1)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	while (i < size)
+	{
+		dst[i] = 0;
+		i++;
+	}
+	return (i);
+}
+
+
+char	*ft_strndup(const char *str, size_t size)
+{
+	char *tmp;
+
+	if (!str || size <= 0)
 		return (NULL);
-	len = ft_strlen(str);
-	len = (len > n ? n : len);
-	nstr = ft_strnew(n);
-	ft_strncpy(nstr, str, n);
-	return (nstr);
+	tmp = (char *)malloc(sizeof(char) * size);
+	if (tmp == NULL)
+		exit(3);
+	ft_strlcpy2(tmp, str, size);
+	return (tmp);
+	// char	*nstr;
+	// size_t	len;
+
+	// if (!str || !n)
+	// 	return (NULL);
+	// len = ft_strlen(str);
+	// len = (len > n ? n : len);
+	// nstr = ft_strnew(n);
+	// ft_strncpy(nstr, str, n);
+	// return (nstr);
 }

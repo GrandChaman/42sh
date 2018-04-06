@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:36:08 by hfontain          #+#    #+#             */
-/*   Updated: 2018/03/13 14:04:12 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/06 17:44:23 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,11 @@ char			**split_args(char *argv)
 		ret[i++] = word(&argv);
 	}
 	ret[i] = NULL;
+	char **u = ret;
+	while (*u)
+	{
+		ft_printf("++%s++\n", *u);
+		++u;
+	}
 	return (ret);
 }
