@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:03:18 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/03/19 13:16:43 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/06 17:22:09 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ char			*search_bin(char *bin, t_env *env)
 	t_hash_bin	*ret;
 	char		*tmp;
 
-	index = ft_hash(bin) % HASH_SIZE;
+	// while (*(env->orig_env))
+	index = ft_hash("ls") % (1 << 16);
 	ret = &env->hash_table[index];
 	tmp = ft_strrchr(ret->path, '/');
 	while (ret && tmp && !ft_strequ(tmp + 1, bin))
@@ -66,7 +67,9 @@ int				callsystem(char **av, char ***env)
 	int			status;
 	char		*str;
 
+	ft_printf("--%s--", av[0]);
 	str = search_bin(av[0], &sh21_get()->env);
+	ft_printf("--%s--\n", str);
 	if ((parent = fork()) < 0)
 		ft_exit(errno, "callsystem");
 	else if (!parent)
@@ -94,6 +97,7 @@ int				sh21_exec(int ac, char **av, char ***env)
 	idx = -1;
 	if (!av[0])
 		return (0);
+	ft_printf("^^%s^^\n", av[0]);
 	while (g_builtins[++idx].fn_ptr)
 	{
 		if (ft_strequ(av[0], g_builtins[idx].fn_name))

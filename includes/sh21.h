@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:38:34 by hfontain          #+#    #+#             */
-/*   Updated: 2018/03/20 18:24:12 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/06 16:13:21 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct		s_sh21
 	int				script;
 }					t_sh21;
 
-char					*random_str(size_t len);
+char				*random_str(size_t len);
 void				del_flist(void **lst);
 void				show_prompt(t_input *input);
 char				**sh21_envchar(t_sh21 *sh21);

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bluff <bluff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/21 00:12:49 by bluff             #+#    #+#             */
-/*   Updated: 2018/03/14 18:19:36 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/06 17:43:57 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
+#include <errno.h>
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
