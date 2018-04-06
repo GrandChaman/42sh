@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:58:39 by hfontain          #+#    #+#             */
-/*   Updated: 2018/03/19 20:38:23 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/06 16:29:41 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ t_sh21		*sh21_init(char *env[])
 
 	sh21 = sh21_get();
 	set_debug();
-	handle_windowsize(1);
-	init_history(sh21);
+	//handle_windowsize(1);
+	//init_history(sh21);
 	set_env(env, sh21);
 	g_err_lex = lex_create(ERROR, NULL);
 	g_end_of_input = lex_create(EOI, "End of Input");

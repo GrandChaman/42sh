@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:36:08 by hfontain          #+#    #+#             */
-/*   Updated: 2018/03/14 21:12:18 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/06 17:27:58 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int		func_word(t_ast_node *root)
 	sh21 = sh21_get();
 	root->content = format_word(&root->content);
 	sh21->argv = split_args(root->content);
+	ft_printf("**%s**\n", sh21->argv[0]);
 	sh21->argc = arrlen(sh21->argv);
 	if (root->left)
 		status = g_exec_fn[root->left->type](root->left);
