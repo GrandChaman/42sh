@@ -70,6 +70,7 @@ typedef struct			s_dbuf {
 	unsigned long		len;
 }						t_dbuf;
 
+char	*ft_strndup2(char *str, size_t size);
 int		ft_strindex(const char *str, int c);
 int		size_list(void *a);
 int		str_digit(char *str);

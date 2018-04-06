@@ -76,7 +76,7 @@ void			collect_data_local_file(t_list **list, char *str_part)
 		load_dir_and_add_slash_autocomplete(dir, list, str_part, NULL);
 	else if (str_part && (slash = ft_strrchr(str_part, '/')))
 	{
-		path = ft_strndup(str_part, (slash - str_part) + 1);
+		path = ft_strndup2(str_part, (slash - str_part) + 1);
 		if ((dir = opendir(path)))
 			load_dir_autocomplete(dir, list, path, slash + 1);
 		else
