@@ -47,6 +47,20 @@ char		*check_correct(char *cmd)
 			if (stock == 2)
 				return ("s_quote>");
 		}
+		if (cmd[i] && (cmd[i] == '|' || cmd[i] == '\\'))
+		{
+			stock = cmd[i];
+			i++;
+			while (cmd[i] && (cmd[i] == ' ' || cmd[i] == '\n'))
+				i++;
+			if (cmd[i] == '\0')
+			{
+				if (stock == '|')
+					return ("pipe>");
+				if (stock == '\\')
+					return ("backslash>");
+			}
+		}
 		i++;
 	}
 	return (NULL);
