@@ -31,6 +31,5 @@ void	ft_exit(int err, const char *s)
 	sh21 = sh21_get();
 	if (err)
 		ft_error(err, s);
-	del_sh21_exit();
 	exit(err);
 }

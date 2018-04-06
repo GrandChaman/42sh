@@ -15,6 +15,5 @@
 
 int	exec_tree(t_ast_node *first)
 {
-	ft_printf("$$%s$$\n", first->content);
 	return (g_exec_fn[first->type](first));
 }
