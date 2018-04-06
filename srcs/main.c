@@ -22,13 +22,6 @@ static void	ignore_signal(int sig)
 	(void)sig;
 }
 
-char		*check_correct(char *toto)
-{
-	if (!ft_strcmp(toto, "Salut"))
-		return ("HeyThere > ");
-	return (NULL);
-}
-
 int			main(void)
 {
 	t_ft_sh *shell;
@@ -65,8 +58,6 @@ int			main(void)
 		if (parser(sh21->lex) && sh21->input.signal != SIGNAL_CTRLC)
 			sh21_get()->ret = exec_tree(sh21->tree.root_node);
 		add_to_history(shell, cmd); // ADD TO HISTORY
-		if (!ft_strcmp(cmd, "exit"))
-			should_exit = 1;
 		free(cmd);
 	}
 	cli_loader(1); //1 = destroying the cli

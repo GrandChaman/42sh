@@ -25,7 +25,6 @@ int		func_word(t_ast_node *root)
 	sh21 = sh21_get();
 	root->content = format_word(&root->content);
 	sh21->argv = split_args(root->content);
-	ft_printf("**%s**\n", sh21->argv[0]);
 	sh21->argc = arrlen(sh21->argv);
 	if (root->left)
 		status = g_exec_fn[root->left->type](root->left);

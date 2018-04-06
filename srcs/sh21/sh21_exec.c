@@ -67,9 +67,7 @@ int				callsystem(char **av, char ***env)
 	int			status;
 	char		*str;
 
-	ft_printf("--%s--", av[0]);
 	str = search_bin(av[0], &sh21_get()->env);
-	ft_printf("--%s--\n", str);
 	if ((parent = fork()) < 0)
 		ft_exit(errno, "callsystem");
 	else if (!parent)
@@ -97,7 +95,6 @@ int				sh21_exec(int ac, char **av, char ***env)
 	idx = -1;
 	if (!av[0])
 		return (0);
-	ft_printf("^^%s^^\n", av[0]);
 	while (g_builtins[++idx].fn_ptr)
 	{
 		if (ft_strequ(av[0], g_builtins[idx].fn_name))

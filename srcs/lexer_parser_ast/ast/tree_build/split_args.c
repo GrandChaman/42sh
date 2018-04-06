@@ -111,9 +111,6 @@ char			**split_args(char *argv)
 	ret[i] = NULL;
 	char **u = ret;
 	while (*u)
-	{
-		ft_printf("++%s++\n", *u);
 		++u;
-	}
 	return (ret);
 }
