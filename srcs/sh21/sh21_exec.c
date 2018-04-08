@@ -19,7 +19,7 @@ char			*search_bin(char *bin, t_env *env)
 	char		*tmp;
 
 	// while (*(env->orig_env))
-	index = ft_hash("ls") % (1 << 16);
+	index = ft_hash(bin) % (1 << 16);
 	ret = &env->hash_table[index];
 	tmp = ft_strrchr(ret->path, '/');
 	while (ret && tmp && !ft_strequ(tmp + 1, bin))
@@ -64,7 +64,7 @@ int				try_direct_acces(char **av, char ***env)
 int				callsystem(char **av, char ***env)
 {
 	pid_t		parent;
-	int			status;
+	int			status; 
 	char		*str;
 
 	str = search_bin(av[0], &sh21_get()->env);
