@@ -77,6 +77,7 @@ typedef struct		s_void
 	struct s_void *previous;
 }					t_void;
 
+char	*ft_strrchr_2(const char *s, int c);
 size_t				ft_strlcpy(char *dst, const char *src, size_t size);
 char			*ft_strffjoin(char *s1, char *s2); //WHAT
 char	*ft_strpush(char *str, size_t idx, char c, size_t *buff_sz);
