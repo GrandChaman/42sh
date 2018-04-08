@@ -12,45 +12,63 @@
 
 #include "sh21.h"
 #include "ast.h"
+#include "ft_sh.h"
 
-void		heredoc_node2(t_input *input, int fd)
+static int		final_heredoc(char *tmp, char *str, char *tmp2, int fd)
 {
-	if (input->buff)
+	while ((ft_strcmp(str, tmp) != 0) && tmp[0] != T_CTRL_D)
 	{
-		write(fd, input->buff, ft_strlen(input->buff));
-		ft_putchar_fd('\n', fd);
+		tmp2 = ft_strjoin(tmp, "\n");
+		ft_fprintf(fd, tmp2);
+		free(tmp2);
+		free(tmp);
+		if ((tmp = read_command(NULL, 0, 1, 0)) == NULL)
+		{
+			free(str);
+			return (-1);
+		}
 	}
-	input_init(input, 'h');
-	sh21_get()->input.mode = HEREDOC;
-	input_get(input);
+	free(tmp);
+	free(str);
+	return (1);
+}
+
+static void		open_heredoc_file(char *path_file, int *fd)
+{
+	if ((*fd = open(path_file, O_WRONLY | O_TRUNC, 0777)) == -1)
+		ft_perror("21sh", "Can't open heredoc file");
+	close(*fd);
+	if ((*fd = open(path_file, O_RDWR | O_APPEND, 0777)) == -1)
+		ft_perror("21sh", "Can't open heredoc file");
 }
 
 void		heredoc_node(t_ast_node *node)
 {
-	t_input	*input;
+	char	*str;
+	char	*tmp;
+	char	*path_file;
 	int		fd;
+	char	*tmp2;
 	char	*tmp_file;
-	char	*tmp_heredoc;
 
-	tmp_heredoc = node->content;
+	str = node->content;
 	if (!(tmp_file = random_str(SIZE_RANDOM_STR)))
 		return ;
 	node->content = ft_strjoin(TMP_PATH_HEREDOC, tmp_file);
-	if ((fd = open(node->content, O_CREAT | O_WRONLY, 0644)) < 0)
+	if ((tmp = read_command(NULL, 0, 1, 0)) == NULL)
 	{
-		ft_strdel(&tmp_heredoc);
+		free(str);
 		return ;
 	}
-	ft_strdel(&tmp_file);
-	input = &sh21_get()->input;
-	input_init(input, 'h');
-	sh21_get()->input.mode = HEREDOC;
-	init_term(sh21_get());
-	while (sh21_get()->terminal.isatty && !ft_strequ(input->buff, tmp_heredoc)
-	&& sh21_get()->input.signal != SIGNAL_CTRLD
-	&& sh21_get()->input.signal != SIGNAL_CTRLC)
-		heredoc_node2(input, fd);
-	reinit_term(sh21_get());
-	ft_strdel(&tmp_heredoc);
+	tmp2 = ft_itoa(1);
+	path_file = ft_strjoin(TMP_PATH_HEREDOC, tmp_file);
+	free(tmp2);
+	if ((fd = open(path_file, O_RDWR | O_CREAT | O_EXCL |
+		O_APPEND, 0777)) == -1)
+		open_heredoc_file(path_file, &fd);
+	free(path_file);
+	if ((final_heredoc(tmp, str, tmp2, fd)) == -1)
+		return ;
 	close(fd);
+	return ;
 }
