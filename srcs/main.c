@@ -42,7 +42,7 @@ int			main(void)
 	{
 		cli_loader(1); //1 = destroying the cli
 		return (1);
-	}
+	} 
 	while (42)
 	{
 		//char		*read_command(char *prompt, int status, int heredoc, int fb)
