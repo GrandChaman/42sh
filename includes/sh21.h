@@ -25,7 +25,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <signal.h>
-# include "input.h"
+# include "cli.h"
 # include "libft.h"
 # include "ft_printf.h"
 # include "error_message.h"
