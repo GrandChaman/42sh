@@ -25,9 +25,9 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <signal.h>
+# include "input.h"
 # include "libft.h"
 # include "ft_printf.h"
-# include "input.h"
 # include "error_message.h"
 # include "lexer.h"
 # include "ast.h"
@@ -47,8 +47,8 @@ typedef struct		s_term
 typedef struct		s_sh21
 {
 	t_term			terminal;
-	t_input			input;
 	t_lex			*lex;
+	t_input			input;
 	t_ast			tree;
 	t_env			env;
 	char			**argv;
@@ -61,7 +61,6 @@ typedef struct		s_sh21
 
 char				*random_str(size_t len);
 void				del_flist(void **lst);
-void				show_prompt(t_input *input);
 char				**sh21_envchar(t_sh21 *sh21);
 int					all_signal(void);
 
@@ -79,7 +78,6 @@ void				del_ast(t_ast_node **node);
 void				del_hash(t_env	*env);
 void				del_history(void **list);
 void				del_history(void **list);
-void				del_input(t_input *input);
 void				del_lex(void **lex);
 void				del_redir(void **node);
 void				del_sh21(void);
