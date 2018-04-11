@@ -17,7 +17,6 @@ void	del_sh21(void)
 	t_sh21	*sh21;
 
 	sh21 = sh21_get();
-	del_input(&sh21->input);
 	del_arr(&sh21->env.env_cpy);
 	del_arr(&sh21->argv);
 	ft_strdel(&g_err_lex->content);
@@ -35,9 +34,6 @@ void	del_sh21_exit(void)
 	del_arr(&sh21->env.orig_env);
 	del_arr(&sh21->env.local_var);
 	del_hash(&sh21->env);
-	del_list((void**)&sh21->input.history.list, del_history);
-	close(sh21->input.history_fd);
 	del_list((void**)&g_err_lex, del_lex);
 	del_list((void**)&g_end_of_input, del_lex);
-	reinit_term(sh21);
 }

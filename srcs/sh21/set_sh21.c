@@ -15,34 +15,6 @@
 #include <term.h>
 #include "builtins.h"
 
-void		reinit_term(t_sh21 *sh21)
-{
-	if (tcgetattr(sh21->input.tty, &sh21->terminal.term) == -1)
-		ft_exit(errno, "tcgetattr");
-	sh21->terminal.term.c_lflag |= ICANON;
-	sh21->terminal.term.c_lflag |= ECHO;
-	sh21->terminal.term.c_lflag |= ISIG;
-	if (tcsetattr(sh21->input.tty, 0, &sh21->terminal.term) == -1)
-		ft_exit(errno, "tcsetattr");
-}
-
-void		init_term(t_sh21 *sh21)
-{
-	const char	*term = getenv("TERM") ? getenv("TERM") : "xterm-256color";
-
-	if (!(sh21->terminal.term_name = (char *)term))
-		ft_exit(-5, "getenv");
-	if (tcgetattr(sh21->input.tty, &sh21->terminal.term) == -1)
-		ft_exit(errno, "tcgetattr");
-	if (tgetent(NULL, sh21->terminal.term_name) == -1)
-		ft_exit(errno, "tgetent");
-	sh21->terminal.term.c_lflag &= ~(ICANON | ECHO | ISIG);
-	sh21->terminal.term.c_cc[VMIN] = 1;
-	sh21->terminal.term.c_cc[VTIME] = 0;
-	if (tcsetattr(sh21->input.tty, TCSAFLUSH, &sh21->terminal.term) == -1)
-		ft_exit(errno, "tcsetattr");
-}
-
 void		set_env(char **env, t_sh21 *sh21)
 {
 	int		shlvl;
@@ -65,7 +37,6 @@ t_sh21		*sh21_init(char *env[])
 	t_sh21	*sh21;
 
 	sh21 = sh21_get();
-	set_debug();
 	//handle_windowsize(1);
 	//init_history(sh21);
 	set_env(env, sh21);
