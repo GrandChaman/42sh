@@ -50,12 +50,14 @@ int			main(void)
 		//@param	int status : La valeur de retour de la derniere commande
 		//@param	heredoc : Si le prompt actuel est un heredoc (Laisser *prompt a NULL si heredoc est egale a 1)
 		//@param	fb : (boolean) Si le CLI doit afficher un feedback (Genre OK en vert ou Stop en rouge)
-		cmd = read_command(NULL, 0, 0, (!fb ? fb++ : fb));
-		sh21->buf = cmd;
+		if (((cmd = read_command(NULL, 0, 0, (!fb ? fb++ : fb))) == NULL))
+			break ;
+		sh21->buf = cmd; // a free lexa->str;
 		lexer(sh21);
 		if (parser(sh21->lex) && sh21->signal != SIGNAL_CTRLC)
 			sh21_get()->ret = exec_tree(sh21->tree.root_node);
 		add_to_history(shell, cmd); // ADD TO HISTORY
+		del_sh21();
 		free(cmd);
 	}
 	cli_loader(1); //1 = destroying the cli
