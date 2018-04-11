@@ -15,12 +15,12 @@ SRC_DIR = srcs
 OBJ_DIR = objs
 DEP_DIR = dep
 INCLUDE = includes
-VPATH = srcs:srcs/cli:srcs/term:srcs/builtins:srcs/input/cursor:srcs/input/history \
-	:srcs/input/input_function_call:srcs/input/utils:srcs/lexer_parser_ast/ast \
+VPATH = srcs:srcs/cli:srcs/term:srcs/builtins \
+	:srcs/lexer_parser_ast/ast \
 	:srcs/lexer_parser_ast/lexer:srcs/lexer_parser_ast/parser:srcs/sh21 \
 	:srcs/lexer_parser_ast/ast/tree_build:srcs/lexer_parser_ast/ast/tree_exec \
 	:srcs/lexer_parser_ast/parser/parser_funcs \
-	:srcs/sh21/del:srcs/sh21/errors:srcs/sh21/print:srcs/sh21/signal
+	:srcs/sh21/del:srcs/sh21/errors:srcs/sh21/print
 SRC =  cli.c cli_init.c \
 		terminal_settings.c cli_selection.c term_command.c cli_utils.c \
 		cli_nav.c cli_delete.c history_loader.c cli_autocomplete.c \
@@ -29,12 +29,8 @@ SRC =  cli.c cli_init.c \
 		cli_prompt.c history_utils.c cli_spe_nav.c cli_autocomplete_ht.c \
 		bi_cd.c bi_echo.c bi_env.c bi_exit.c bi_export.c bi_hash.c bi_setenv.c \
 		bi_unset.c bi_unsetenv.c ft_getenv.c ft_putenv.c ft_setenv.c ft_unsetenv.c \
-		hash_table_builtins.c cursor.c cut.c add_history.c init_history.c \
-		arrow_down.c arrow_left.c arrow_right.c arrow_up.c beg_line.c \
-		clear_screen.c controlc.c copypaste.c delete_back.c delete_forw.c end_line.c \
-		eof.c line_down.c line_up.c newline.c word_beg.c word_end.c write_char.c \
-		clear_command.c display_input.c input_call_function.c input_get.c input_init.c \
-		my_putchar.c opentty.c exec_tree.c add_str.c ast_create_node.c ast_redir_function.c \
+		hash_table_builtins.c \
+		exec_tree.c add_str.c ast_create_node.c ast_redir_function.c \
 		find_var.c format_word.c free_node.c heredoc_node.c restore_fd.c skip_var.c \
 		split_args.c func_amper.c func_and_if.c func_assignment_word.c func_backslash.c \
 		func_bang.c func_case.c func_do.c func_dollar.c func_done.c func_dquote.c \
@@ -54,7 +50,7 @@ SRC =  cli.c cli_init.c \
 		subshell.c timespec.c word_list.c main.c del_ast.c del_env.c del_hash.c \
 		del_history.c del_input.c del_lex.c del_redir.c del_sh21.c errors.c \
 		input_piped_script.c env_usage.c print_env.c print_history.c print_lex.c \
-		set_debug.c set_sh21.c sh21_exec.c signal.c is_correct.c
+		set_debug.c set_sh21.c sh21_exec.c is_correct.c
 
 LIBFT_INCLUDE = $(LIBFT_DIR)/include
 CFLAG = -g3 -Wall -Wextra -Werror  -I $(LIBFT_INCLUDE) -I $(INCLUDE)
