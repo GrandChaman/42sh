@@ -48,9 +48,10 @@ typedef struct		s_sh21
 {
 	t_term			terminal;
 	t_lex			*lex;
-	t_input			input;
 	t_ast			tree;
 	t_env			env;
+	char			*buf;
+	int				signal;
 	char			**argv;
 	int				argc;
 	int				debug_tty;

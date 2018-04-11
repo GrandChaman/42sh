@@ -56,9 +56,9 @@ int				input_piped_script(t_sh21 *sh21, char **argv)
 	while ((ret = read(fd_input, buf, 1024)) > 0)
 	{
 		buf[ret] = 0;
-		sh21->input.buff = ft_strfjoin(sh21->input.buff, buf);
+		sh21->buf = ft_strfjoin(sh21->buf, buf);
 	}
-	if (ret < 0 || !sh21->input.buff)
+	if (ret < 0 || !sh21->buf)
 		ft_exit(-6, "script_error");
 	return (input_piped_script2(sh21, ret));
 }

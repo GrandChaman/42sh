@@ -29,7 +29,7 @@ void		lexfallback(t_lexa *lexa)
 
 void		lexa_init(t_lexa *lexa, t_sh21 *sh21)
 {
-	lexa->str = sh21->input.buff;
+	lexa->str = sh21->buf;
 	lexa->stat = SNIL;
 	lexa->prev = '\0';
 	lexa->t = EOI;
