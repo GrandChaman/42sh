@@ -52,7 +52,7 @@ int			main(void)
 		//@param	fb : (boolean) Si le CLI doit afficher un feedback (Genre OK en vert ou Stop en rouge)
 		if (((cmd = read_command(NULL, 0, 0, (!fb ? fb++ : fb))) == NULL))
 			break ;
-		sh21->buf = cmd; // a free lexa->str;
+		sh21->buf = cmd;
 		lexer(sh21);
 		if (parser(sh21->lex) && sh21->signal != SIGNAL_CTRLC)
 			sh21_get()->ret = exec_tree(sh21->tree.root_node);
@@ -60,6 +60,6 @@ int			main(void)
 		del_sh21();
 		free(cmd);
 	}
-	cli_loader(1); //1 = destroying the cli
+	del_sh21_exit();
 	return (0);
 }

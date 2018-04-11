@@ -26,6 +26,7 @@ static int		final_heredoc(char *tmp, char *str, char *tmp2, int fd, t_sh21 *sh21
 		{
 			free(str);
 			sh21->signal = SIGNAL_CTRLC;
+			close(fd);
 			return (-1);
 		}
 	}
@@ -61,6 +62,7 @@ void		heredoc_node(t_ast_node *node)
 	if ((tmp = read_command(NULL, 0, 1, 0)) == NULL)
 	{
 		free(str);
+		free(tmp_file);
 		sh21->signal = SIGNAL_CTRLC;
 		return ;
 	}
