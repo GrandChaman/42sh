@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_sh.h"
+#include "cli.h"
 
 char			*search_history_nav(t_ft_sh *sh, char *search, int up)
 {

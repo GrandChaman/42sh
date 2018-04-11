@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_sh.h"
+#include "cli.h"
 
 static void		get_graphics_for_filetype(mode_t type, t_ft_autoc_entry *entry)
 {

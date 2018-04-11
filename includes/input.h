@@ -55,7 +55,7 @@ enum 	e_signal
 {
 	SIGNAL_ENTER,
 	SIGNAL_CTRLD,
-	SIGNAL_CTRLC,
+
 	SIGNAL_NONE,
 };
 
