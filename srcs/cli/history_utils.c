@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_sh.h"
+#include "cli.h"
 
 void				delete_hist_entry(void *entry, size_t size)
 {

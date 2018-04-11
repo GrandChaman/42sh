@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_sh.h"
+#include "cli.h"
 
 unsigned int	cursor_new_origin(t_ft_sh *sh)
 {

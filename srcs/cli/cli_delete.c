@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_sh.h"
+#include "cli.h"
 
 void		backspace_command(unsigned long touch)
 {

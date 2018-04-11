@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_sh.h"
+#include "cli.h"
 
 static char				*extract_autocomplete_search(t_ft_sh *sh)
 {

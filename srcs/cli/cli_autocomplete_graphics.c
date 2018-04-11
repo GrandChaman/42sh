@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_sh.h"
+#include "cli.h"
 
 void		cancel_autocompletion(t_ft_sh *shell, unsigned long rchar)
 {

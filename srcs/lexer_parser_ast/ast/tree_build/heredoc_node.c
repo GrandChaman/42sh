@@ -12,7 +12,7 @@
 
 #include "sh21.h"
 #include "ast.h"
-#include "ft_sh.h"
+#include "cli.h"
 
 static int		final_heredoc(char *tmp, char *str, char *tmp2, int fd, t_sh21 *sh21)
 {
@@ -25,7 +25,7 @@ static int		final_heredoc(char *tmp, char *str, char *tmp2, int fd, t_sh21 *sh21
 		if ((tmp = read_command(NULL, 0, 1, 0)) == NULL)
 		{
 			free(str);
-			sh21->signal = SIGNAL_CTRLC;
+			sh21->signal = T_CTRL_C;
 			close(fd);
 			return (-1);
 		}
@@ -63,7 +63,7 @@ void		heredoc_node(t_ast_node *node)
 	{
 		free(str);
 		free(tmp_file);
-		sh21->signal = SIGNAL_CTRLC;
+		sh21->signal = T_CTRL_C;
 		return ;
 	}
 	tmp2 = ft_itoa(1);

@@ -13,7 +13,7 @@
 #include "sh21.h"
 #include "ast.h"
 #include "lexer.h"
-#include "ft_sh.h"
+#include "cli.h"
 
 t_lex		*g_err_lex;
 
@@ -54,7 +54,7 @@ int			main(void)
 			break ;
 		sh21->buf = cmd;
 		lexer(sh21);
-		if (parser(sh21->lex) && sh21->signal != SIGNAL_CTRLC)
+		if (parser(sh21->lex) && sh21->signal != T_CTRL_C)
 			sh21_get()->ret = exec_tree(sh21->tree.root_node);
 		add_to_history(shell, cmd); // ADD TO HISTORY
 		del_sh21();
