@@ -26,7 +26,6 @@
 # include <fcntl.h>
 # include <signal.h>
 # include "cli.h"
-# include "input.h"
 # include "libft.h"
 # include "ft_printf.h"
 # include "error_message.h"
@@ -76,17 +75,13 @@ int					sh21_loadenv(t_sh21 *sh21, char **environ);
 t_sh21				*sh21_get(void);
 t_sh21				*sh21_init(char *env[]);
 void				del_ast(t_ast_node **node);
-void				del_ast(t_ast_node **node);
 void				del_hash(t_env	*env);
-void				del_history(void **list);
-void				del_history(void **list);
 void				del_lex(void **lex);
 void				del_redir(void **node);
 void				del_sh21(void);
 void				del_sh21_exit(void);
 void				ft_exit(int err, const char *s);
 void				handle_windowsize(int nb);
-void				init_history(t_sh21 *sh21);
 void				init_term(t_sh21 *sh21);
 void				reinit_term(t_sh21 *sh21);
 void				set_debug(void);
