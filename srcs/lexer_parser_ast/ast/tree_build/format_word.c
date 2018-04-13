@@ -12,46 +12,6 @@
 
 #include "sh21.h"
 
-static void	case_dollar(char **ret, char **ptr, int *i)
-{
-	*ret = add_str(ret, ptr, i);
-	(*ptr)++;
-	*ret = ft_strfjoin(*ret, find_var(*ptr));
-	*ptr += skip_var(*ptr);
-}
-
-static void	case_quote(char **ret, char **ptr, int *i)
-{
-	(*i)++;
-	while ((*ptr)[*i] && (*ptr)[*i] != '\'')
-		(*i)++;
-	if ((*ptr)[*i])
-		(*i)++;
-	*ret = add_str(ret, ptr, i);
-}
-
-static void	case_dquote(char **ret, char **ptr, int *i)
-{
-	(*i)++;
-	while ((*ptr)[*i] && (*ptr)[*i] != '\"')
-	{
-		if ((*ptr)[*i] == '$')
-			case_dollar(ret, ptr, i);
-		else
-			(*i)++;
-	}
-	if ((*ptr)[*i])
-		(*i)++;
-	*ret = add_str(ret, ptr, i);
-}
-
-static void	case_tilde(char **ret, char **ptr, int *i)
-{
-	*ret = add_str(ret, ptr, i);
-	(*ptr)++;
-	*ret = ft_strfjoin(*ret, ft_getenv("HOME", &sh21_get()->env.orig_env));
-}
-
 char		*format_word(char **str)
 {
 	char	*ret;
@@ -63,7 +23,9 @@ char		*format_word(char **str)
 	ret = NULL;
 	while (ptr[i])
 	{
-		if (ptr[i] == '~')
+		if (ptr[i] == '\\')
+			case_backslash(&ret, &ptr, &i, NULL);
+		else if (ptr[i] == '~')
 			case_tilde(&ret, &ptr, &i);
 		else if (ptr[i] == '\'')
 			case_quote(&ret, &ptr, &i);

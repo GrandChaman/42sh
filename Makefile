@@ -29,9 +29,8 @@ SRC =  cli.c cli_init.c \
 		cli_prompt.c history_utils.c cli_spe_nav.c cli_autocomplete_ht.c \
 		bi_cd.c bi_echo.c bi_env.c bi_exit.c bi_export.c bi_hash.c bi_setenv.c \
 		bi_unset.c bi_unsetenv.c ft_getenv.c ft_putenv.c ft_setenv.c ft_unsetenv.c \
-		hash_table_builtins.c \
-		exec_tree.c add_str.c ast_create_node.c ast_redir_function.c \
-		find_var.c format_word.c free_node.c heredoc_node.c restore_fd.c skip_var.c \
+		hash_table_builtins.c exec_tree.c add_str.c ast_create_node.c ast_redir_function.c \
+		find_var.c format_word.c case_format_word.c free_node.c heredoc_node.c restore_fd.c skip_var.c \
 		split_args.c func_amper.c func_and_if.c func_assignment_word.c func_backslash.c \
 		func_bang.c func_case.c func_do.c func_dollar.c func_done.c func_dquote.c \
 		func_dsemi.c func_elif.c func_else.c func_endl.c func_eoi.c func_equal.c \
