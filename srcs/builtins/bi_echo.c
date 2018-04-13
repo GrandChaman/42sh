@@ -40,6 +40,8 @@ int				write_echo_special_codes(char *argv, int *cursor)
 		ft_printf("%c", ft_atoi_base(argv, "01234567"));
 	else if (*argv == '\0' || *argv == ' ')
 		write(STDOUT_FILENO, "\\", 1);
+	else
+		return (2);
 	(*cursor) += 1;
 	while (ft_isdigit((*argv)++))
 		(*cursor)++;
@@ -51,6 +53,7 @@ int				bi_echo(int argc, char **argv, char ***environ)
 	int i;
 	int ii;
 	int should_print_nl;
+	int stock;
 
 	(void)environ;
 	(void)argc;
@@ -65,8 +68,10 @@ int				bi_echo(int argc, char **argv, char ***environ)
 		while (argv[i][++ii])
 			if (argv[i][ii] == '\\')
 			{
-				if (!write_echo_special_codes(&(argv[i][ii + 1]), &ii)) // Attention
+				if (!(stock = write_echo_special_codes(&(argv[i][ii + 1]), &ii))) // Attention
 					return (0);
+				if (stock == 2)
+					write(STDOUT_FILENO, &(argv[i][ii]), 1);
 			}
 			else
 				write(STDOUT_FILENO, &(argv[i][ii]), 1);
