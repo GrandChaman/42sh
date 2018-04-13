@@ -1,7 +1,0 @@
-double quote "
-quote '
-pipe |
-backslash \
-
-Error a regler : ls | ls ne fonctionne pas (si on fait entrer entre les deux), fuadrait supprimer le \n
-Comportement de bakslash a definir

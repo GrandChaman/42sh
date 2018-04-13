@@ -30,6 +30,7 @@ int		func_word(t_ast_node *root)
 		status = g_exec_fn[root->left->type](root->left);
 	if (!status)
 		status = sh21_exec(arrlen(sh21->argv), sh21->argv, &sh21->env.orig_env);
+	sh21->status = status;
 	fd_cleanup = sh21->tree.fd_cleanup;
 	while (fd_cleanup)
 	{

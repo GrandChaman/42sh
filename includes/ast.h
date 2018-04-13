@@ -20,6 +20,7 @@
 # define TMP_HEREDOC_SIZE 64
 # define TMP_PATH_HEREDOC "/tmp/"
 # define CONTENT_SIZE 1024
+# define SPECIAL_PARAMETERS "@*#?-$!0"
 
 typedef struct			s_fd_cleanup
 {

@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ast.h"
-#include "libft.h"
 #include "sh21.h"
 
 int		func_pipe2(t_ast_node *root, int pipefd[2])
@@ -57,5 +55,6 @@ int		func_pipe(t_ast_node *root)
 		close(nw);
 	}
 	waitpid(pid, &ret, WUNTRACED);
-	return (ret + ret_child);
+	sh21_get()->status = ret;
+	return (ret);
 }

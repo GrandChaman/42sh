@@ -12,21 +12,42 @@
 
 #include "sh21.h"
 
-char	*find_var(char *str)
-{
-	char	c;
-	char	*ret;
-	int		i;
-	int		j;
+/*
+**	A completer ulterieurement avec tous les specials parameters
+*/
 
-	i = 0;
-	j = skip_var(str);
-	c = str[j];
-	str[j] = 0;
+char	*special_parameters(char c)
+{
+	t_sh21 *sh21;
+
+	sh21 = sh21_get();
+	if (c == '?')
+		return (ft_itoa(sh21->status));
+	else
+		return (NULL);
+}
+
+char	*find_internal(char *str)
+{
+	int		i;
+	char	*ret;
+	char	c;
+
+	i = skip_var(str);
+	c = str[i];
+	str[i] = 0;
 	ret = ft_getenv(str, &sh21_get()->env.orig_env);
 	if (!ret)
 		ret = ft_getenv(str, &sh21_get()->env.local_var);
-	str[j] = c;
-	str += j;
-	return (ret);
+	str[i] = c;
+	str += i;
+	return (ret ? ft_strdup(ret) : ret);
+}
+
+char	*find_var(char *str)
+{
+	if (ft_strindex(SPECIAL_PARAMETERS, str[0]))
+		return (special_parameters(str[0]));
+	else
+		return (find_internal(str));
 }
