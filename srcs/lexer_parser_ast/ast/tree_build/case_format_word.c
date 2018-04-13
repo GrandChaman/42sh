@@ -25,7 +25,7 @@ void	case_dollar(char **ret, char **ptr, int *i)
 {
 	*ret = add_str(ret, ptr, i);
 	(*ptr)++;
-	*ret = ft_strfjoin(*ret, find_var(*ptr));
+	*ret = ft_strffjoin(*ret, find_var(*ptr));
 	*ptr += skip_var(*ptr);
 }
 

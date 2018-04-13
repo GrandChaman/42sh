@@ -55,9 +55,10 @@ typedef struct		s_sh21
 	char			**argv;
 	int				argc;
 	int				debug_tty;
-	t_list			*envl;
+	t_list		*envl;
 	int				ret;
 	int				script;
+	int				status;
 }					t_sh21;
 
 char				*random_str(size_t len);
@@ -84,7 +85,7 @@ void				ft_exit(int err, const char *s);
 void				handle_windowsize(int nb);
 void				init_term(t_sh21 *sh21);
 void				reinit_term(t_sh21 *sh21);
-void				set_debug(void);
+void				set_debugtty(void);
 void				ft_lstpush(t_list *lst, t_list *lnew);
 void				ft_lstqueue(t_list **lst, t_list *lnew);
 size_t				compute(const char *n, const char *v, \

@@ -17,7 +17,12 @@ int	skip_var(char *str)
 	int i;
 
 	i = 0;
-	while (ft_isalnum(str[i]) || str[i] == '_')
+	if (ft_strindex(SPECIAL_PARAMETERS, str[0]) >= 0)
 		i++;
+	else
+	{
+		while (ft_isalnum(str[i]) || str[i] == '_')
+		i++;
+	}
 	return (i);
 }
