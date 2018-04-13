@@ -16,7 +16,7 @@ void	case_backslash(char **ret, char **ptr, int *i, char *special_chars)
 {
 	*ret = add_str(ret, ptr, i);
 	(*i)++;
-	if (ft_strindex(special_chars, (*ptr)[*i]) >= 0)
+	if (!special_chars || ft_strindex(special_chars, (*ptr)[*i]) >= 0)
 		(*ptr)++;
 	*ret = add_str(ret, ptr, i);
 }
