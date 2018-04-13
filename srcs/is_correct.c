@@ -25,7 +25,10 @@ static int quote(char *cmd, int *i)
 		if (cmd[*i] == tabl[var])
 		{
 			if ((check_second_quote(tabl[var], i, cmd)) != 0)
+			{
+				printf("%d\n", var);
 				return (var);
+			}
 		}
 		var++;
 	}
@@ -40,7 +43,7 @@ char		*check_correct(char *cmd)
 	i = 0;
 	while (cmd[i])
 	{
-		if ((stock = quote(cmd, &i) != 0))
+		if ((stock = quote(cmd, &i)) != 0)
 		{
 			if (stock == 1)
 				return ("d_quote>");
