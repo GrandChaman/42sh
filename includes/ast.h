@@ -138,6 +138,12 @@ char					*word(char **argv);
 char					*add_str(char **ret, char **ptr, int *i);
 char					*find_var(char *str);
 int						skip_var(char *str);
+void					case_backslash(char **ret, char **ptr,
+							int *i, char *special_chars);
+void					case_dollar(char **ret, char **ptr, int *i);
+void					case_quote(char **ret, char **ptr, int *i);
+void					case_dquote(char **ret, char **ptr, int *i);
+void					case_tilde(char **ret, char **ptr, int *i);
 
 static t_exec_tree g_exec_fn[] =
 {
