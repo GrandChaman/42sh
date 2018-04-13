@@ -38,6 +38,8 @@ int				write_echo_special_codes(char *argv, int *cursor)
 		write(STDOUT_FILENO, "\\", 1);
 	else if (*argv == '0')
 		ft_printf("%c", ft_atoi_base(argv, "01234567"));
+	else if (*argv == '\0' || *argv == ' ')
+		write(STDOUT_FILENO, "\\", 1);
 	(*cursor) += 1;
 	while (ft_isdigit((*argv)++))
 		(*cursor)++;
