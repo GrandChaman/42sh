@@ -49,7 +49,7 @@ SRC =  cli.c cli_init.c \
 		subshell.c timespec.c word_list.c main.c del_ast.c del_env.c del_hash.c \
 		del_lex.c del_redir.c del_sh21.c errors.c \
 		input_piped_script.c env_usage.c print_env.c print_lex.c \
-		set_sh21.c sh21_exec.c is_correct.c
+		set_sh21.c sh21_exec.c is_correct.c bi_cd_2.c
 
 LIBFT_INCLUDE = $(LIBFT_DIR)/include
 CFLAG = -g3 -Wall -Wextra -Werror  -I $(LIBFT_INCLUDE) -I $(INCLUDE)

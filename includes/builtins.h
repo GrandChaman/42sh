@@ -15,6 +15,15 @@
 
 # include "sh21.h"
 
+typedef struct			s_flag
+{
+	int					flag_P;
+	int					flag_L;
+	int					idx;
+	int					buf_to_free;
+}						t_flag;
+
+int 		go_home(char ***environ);
 int						ft_echo(char *argv[]);
 int						find_bin_paths(t_env *env, char ***environ);
 
