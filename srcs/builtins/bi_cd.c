@@ -31,7 +31,9 @@ static char *ft_work_on_it(char *str)
 		i++;
 	}
 	result = ft_memalloc(sizeof(char ) * o);
+	ft_printf("str = %s\n", str);
 	ft_strncpy(result, str, o);
+	ft_printf("result = %s\n", result);
 	return (result);
 }
 
@@ -166,4 +168,4 @@ int			bi_cd(int argc, char **argv, char ***environ)
 		return (ft_error(errno, "cd"));
 }
 //Reste a checker si les valeurs de retours sont bonnes
-//	 +  les protections !!! 
+//	 +  les protections !!! + rajouter un / si on fait cd / puis cd tmp !!!!!!!!!!!!!!!!!!!!!!!!!

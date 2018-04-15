@@ -32,8 +32,7 @@ static int quote(char *cmd, int *i)
 	return (0);
 }
 
-char		*check_correct(char *cmd)
-{
+char		*check_correct(char *cmd){
 	int i;
 	int stock;
 
