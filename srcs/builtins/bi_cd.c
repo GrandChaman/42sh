@@ -30,8 +30,8 @@ static char *ft_work_on_it(char *str)
 			o = i + 1;
 		i++;
 	}
-	result = malloc(sizeof(char ) * o);
-	result = ft_strncpy(result, str, o);
+	result = ft_memalloc(sizeof(char ) * o);
+	ft_strncpy(result, str, o);
 	return (result);
 }
 
@@ -166,3 +166,4 @@ int			bi_cd(int argc, char **argv, char ***environ)
 		return (ft_error(errno, "cd"));
 }
 //Reste a checker si les valeurs de retours sont bonnes
+//	 +  les protections !!! 
