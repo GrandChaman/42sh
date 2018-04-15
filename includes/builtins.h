@@ -23,7 +23,7 @@ typedef struct			s_flag
 	int					buf_to_free;
 }						t_flag;
 
-int 		go_home(char ***environ);
+int 					go_home(char ***environ);
 int						ft_echo(char *argv[]);
 int						find_bin_paths(t_env *env, char ***environ);
 
