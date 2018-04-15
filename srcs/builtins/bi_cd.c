@@ -15,6 +15,60 @@
 #include "libft.h"
 #include "builtins.h"
 
+static char *ft_work_on_it(char *str)
+{
+	int i;
+	int o;
+	char *result;
+
+	result = NULL;
+	i = 0;
+	o = 0;
+	while (str[i])
+	{
+		if (str[i] == '/')
+			o = i + 1;
+		i++;
+	}
+	result = malloc(sizeof(char ) * o);
+	result = ft_strncpy(result, str, o);
+	return (result);
+}
+
+static char *change_path(int *error, char **argv, char ***environ, t_flag *flag)
+{
+	char cwd[1024];
+	char *str;	
+
+	flag->buf_to_free = 0;
+	if (flag->flag_P)
+	{
+		if (!argv[flag->idx])
+		{
+			if (go_home(environ) == -3)
+				*error = 1;
+			return (NULL);
+		}
+		return (argv[flag->idx]);
+	}
+	if (flag->flag_L || (flag->flag_L == 0 && flag->flag_P == 0))
+	{
+		if (ft_strcmp(argv[flag->idx], "..") == 0)
+		{
+   			if (getcwd(cwd, sizeof(cwd)) != NULL)
+			{
+				str = ft_getenv("PWD", environ);
+				str = ft_work_on_it(str);
+				flag->buf_to_free = 1;
+			   return (str);
+			}
+   			else
+			   perror("getcwd() error");
+		}
+	}
+	return (argv[flag->idx]);
+}
+
 int			change_oldpwd_pwd(char ***environ, const char* path)
 {
 	char	buf[PATH_MAX];
@@ -27,27 +81,73 @@ int			change_oldpwd_pwd(char ***environ, const char* path)
 	return (0);
 }
 
-int			bi_cd(int argc, char **argv, char ***environ)
+int 		go_home(char ***environ)
 {
 	const char		*home = ft_getenv("HOME", environ);
-	const char		*oldpwd = ft_getenv("OLDPWD", environ);
-	int				p;
-	int				idx;
 
-	p = 0;
-	idx = 1;
+	if (!chdir(home)) // PAS BON SI HOME == /tmp
+		return (change_oldpwd_pwd(environ, NULL));
+	return (ft_error(-3, "cd"));
+}
+
+static int	check_flag(t_flag *flag, char **argv)
+{
+	int i;
+	int o;
+
+	o = 1;
+	flag->flag_L = 0;
+	flag->flag_P = 0;
+	while (argv[o] && argv[o][0] == '-')
+	{
+		i = 1;		
+		if (!argv[o][1])
+			return (o);
+		while (argv[o][i])
+		{
+			if (argv[o][i] != 'L' && argv[o][i] != 'P')
+			{
+				ft_printf("42sh :cd: -%c: invalid option\n");
+				ft_printf("cd: usage: cd [-L|-P] [dir]\n");
+				return (-1);
+			}
+			i++;
+		}
+		i--;
+		if (argv[o][i] == 'P')
+		{
+			flag->flag_P = 1;
+			flag->flag_L = 0;
+		}
+		if (argv[o][i] == 'L')
+		{
+			flag->flag_L = 1;
+			flag->flag_P = 0;
+		}
+		o++;
+	}
+	return (o);
+}
+
+int			bi_cd(int argc, char **argv, char ***environ)
+{
+	const char		*oldpwd = ft_getenv("OLDPWD", environ);
+	char			*buf;
+	int				error;
+	t_flag			flag;
+	
+
 	if (argc < 2)
+		return (go_home(environ) != 0); // {AS super si home == /tmp}
+	if ((flag.idx = check_flag(&flag, argv)) == -1)
+		return (-1);
+	if ((buf = change_path(&error, argv, environ, &flag)) == NULL)
 	{
-		if (!chdir(home))
-			return (change_oldpwd_pwd(environ, NULL));
-		return (ft_error(-3, "cd"));
+		if (error)
+			return (-1);
+		return (1);
 	}
-	if (argv[1][0] == '-' && (argv[1][1] == 'P' || argv[1][1] == 'L'))
-	{
-		++idx;
-		p = (argv[1][1] == 'P');
-	}
-	if (ft_strequ(argv[idx], "-"))
+	if (ft_strequ(buf, "-"))
 	{
 		if (!oldpwd)
 			return (ft_error(-7, "cd"));
@@ -55,8 +155,14 @@ int			bi_cd(int argc, char **argv, char ***environ)
 			return (change_oldpwd_pwd(environ, NULL));
 		return (ft_error(-4, "cd"));
 	}
-	if (chdir(argv[idx]) == 0)
-		return (change_oldpwd_pwd(environ, p ? NULL : argv[idx]));
+	if (chdir(buf) == 0)
+	{
+		change_oldpwd_pwd(environ, buf);
+		if (flag.buf_to_free)
+			free(buf);
+		return (0);
+	}
 	else
 		return (ft_error(errno, "cd"));
 }
+//Reste a checker si les valeurs de retours sont bonnes
