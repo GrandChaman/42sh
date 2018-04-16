@@ -21,7 +21,7 @@ enum flag_cd {
 	CD_P,
 };
 
-static char	*check_flag(int *flag, char **argv)
+static char	*check_flag(int *flag, char **argv, int *error)
 {
 	int i;
 	int o;
@@ -31,13 +31,14 @@ static char	*check_flag(int *flag, char **argv)
 	{
 		i = 0;
 		if (!argv[o][1])
-			return (argv[o - 1]);
+			return (argv[o]);
 		while (argv[o][++i])
 		{
 			if (argv[o][i] != 'L' && argv[o][i] != 'P')
 			{
 				ft_fprintf(2,
 					"42sh :cd: -%c: invalid option\ncd: usage: cd [-L|-P] [dir]\n");
+				*error = 1;
 				return (NULL);
 			}
 		}
@@ -241,10 +242,13 @@ int			bi_cd(int argc, char **argv, char ***environ)
 {
 	char				*curpath;
 	int					flag;
+	int					error;
 
+	error = 0;
 	(void)argc;
 	flag = 0;
-	if (!(curpath = check_flag(&flag, argv)))
+	curpath = check_flag(&flag, argv, &error);
+	if (error)
 		return (1);
 	if (!curpath)
 		return (go_home(environ) != 0); // !! si home == /tmp
