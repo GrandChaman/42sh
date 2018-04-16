@@ -14,13 +14,10 @@
 
 void	case_backslash(char **ret, char **ptr, int *i, char *special_chars)
 {
-	int quote;
-
 	*ret = add_str(ret, ptr, i);
 	(*i)++;
 	if (!special_chars || ft_strindex(special_chars, (*ptr)[*i]) >= 0)
 		(*ptr)++;
-	ft_printf("voici le charactere courant = |%c|", *ptr);
 	*ret = add_str(ret, ptr, i);
 }
 

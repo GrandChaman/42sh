@@ -52,7 +52,6 @@ int 					cd_rule8(char *curpath, char ***environ, int flag,
 int 					cd_rule7(char *curpath, char ***environ, int flag,
 							int free_curpath);
 int 					cd_rule_dash(char ***environ, int flag);
-static char		*check_flag(int *flag, char **argv, int *error);
 int						change_oldpwd_pwd(char ***environ, const char* path);
 int 					go_home(char ***environ);
 int 					ft_is_dir(char *buf, int print);
