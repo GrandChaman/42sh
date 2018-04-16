@@ -48,7 +48,8 @@ void		prompt_select(char *prompt, int status, int heredoc, int fb)
 		else if (WSTOPSIG(status))
 			ft_fprintf(2, "{bred}-- Stopped : %d -- {eoc}\n", WSTOPSIG(status));
 		else
-			ft_fprintf(2, "{byellow}-- Exit : %d -- {eoc}\n", WEXITSTATUS(status));
+			ft_fprintf(2, "{byellow}-- Exit : %d -- {eoc}\n",
+				WEXITSTATUS(status));
 	}
 	if (prompt || heredoc)
 	{

@@ -265,9 +265,11 @@ int			bi_cd(int argc, char **argv, char ***environ)
 	if (error)
 		return (1);
 	if (!curpath)
-		return (go_home(environ) != 0); // !! si home == /tmp
+		return (go_home(environ) != 0);
 	if (ft_strequ(curpath, "-"))
+	{
 		return (cd_rule_dash(environ, flag));
+	}
 	if (curpath[0] == '/' || curpath[0] == '.')
 		return (cd_rule7(curpath, environ, flag, 0));
 	else if (!(curpath = cd_rule5(curpath, environ)))
