@@ -43,9 +43,9 @@ typedef struct			s_ast
 {
 	t_ast_node			*root_node;
 	t_fd_cleanup		*fd_cleanup;
-	char						heredoc_file[TMP_HEREDOC_SIZE];
-	int 						escaped_quote_count[1000];
-	int 						nb_escaped_quote;
+	char				heredoc_file[TMP_HEREDOC_SIZE];
+	int 				escaped_quote_count[1000];
+	int 				nb_escaped_quote;
 }						t_ast;
 
 typedef void			(*t_fd_function)(t_fd_cleanup*);
