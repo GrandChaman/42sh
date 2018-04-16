@@ -96,24 +96,25 @@ int 		cd_rule10(char *curpath, char ***environ, int flag, int free_curpath)
 
 	if (chdir(curpath) < 0)
 	{
-		(free_curpath ? ft_strdel(&curpath) : (0));
+		(free_curpath == 1 ? ft_strdel(&curpath) : (0));
 		return (ft_error(errno, "cd"));
 	}
+	ft_printf("PWD : |%s|\n", ft_getenv("PWD", environ));
 	ft_setenv("OLDPWD", ft_getenv("PWD", environ), 1, environ);
-	if (flag != CD_P)
-		ft_setenv("PWD", curpath, 1, environ);
-	else
-	{
-		if (getcwd(getcwd_path, PATH_MAX) < 0)
-		{
-			(free_curpath ? ft_strdel(&curpath) : (0));
-			return (ft_error(errno, "getcwd"));
-		}
-		ft_setenv("PWD", getcwd_path, 1, environ);
-	}
+	// if (flag != CD_P)
+	// 	ft_setenv("PWD", curpath, 1, environ);
+	// else
+	// {
+	// 	if (getcwd(getcwd_path, PATH_MAX) < 0)
+	// 	{
+	// 		(free_curpath ? ft_strdel(&curpath) : (0));
+	// 		return (ft_error(errno, "getcwd"));
+	// 	}
+	// 	ft_setenv("PWD", getcwd_path, 1, environ);
+	// }
 	if (free_curpath == 3)
 		ft_printf("%s\n", curpath);
-	(free_curpath ? ft_strdel(&curpath) : (0));
+	// (free_curpath == 1 ? ft_strdel(&curpath) : (0));
 	return (0);
 }
 
@@ -225,12 +226,16 @@ int 		cd_rule7(char *curpath, char ***environ, int flag, int free_curpath)
 	return (cd_rule8(curpath, environ, flag, free_curpath));
 }
 
-
 int 		cd_rule_dash(char ***environ, int flag)
 {
 	char	*oldpwd;
 
 	if (!(oldpwd = ft_getenv("PWD", environ)))
+	{
+		ft_error(-4, "cd");
+		return (1);
+	}
+	if (!ft_is_dir(oldpwd))
 	{
 		ft_error(-4, "cd");
 		return (1);
@@ -261,3 +266,7 @@ int			bi_cd(int argc, char **argv, char ***environ)
 	else
 		return (cd_rule7(curpath, environ, flag, 1));
 }
+
+
+//cd -
+// cd (-P|-L) dossier_non_droit
