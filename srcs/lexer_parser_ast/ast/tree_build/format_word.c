@@ -12,6 +12,14 @@
 
 #include "sh21.h"
 
+static char	*norme_0(int i, char *ret, char *ptr, char **str)
+{
+	if (i)
+		ret = add_str(&ret, &ptr, &i);
+	ft_strdel(str);
+	return (ret);
+}
+
 char		*format_word(char **str)
 {
 	char	*ret;
@@ -36,8 +44,5 @@ char		*format_word(char **str)
 		else
 			++i;
 	}
-	if (i)
-		ret = add_str(&ret, &ptr, &i);
-	ft_strdel(str);
-	return (ret);
+	return (norme_0(i, ret, ptr, str));
 }
