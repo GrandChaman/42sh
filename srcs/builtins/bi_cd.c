@@ -112,6 +112,7 @@ int 		cd_rule10(char *curpath, char ***environ, int flag, int free_curpath)
 	}
 	if (free_curpath == 3)
 		ft_printf("%s\n", curpath);
+	(free_curpath ? ft_strdel(&curpath) : (0));
 	return (0);
 }
 
@@ -189,7 +190,7 @@ int 		cd_rule8(char *curpath, char ***environ, int flag, int free_curpath)
 		else if ((ft_strnequ(curpath + i, "/../", 4) || ft_strnequ(curpath + i, "/..", 4)) && i != 0)
 		{
 			if (!cd_rule8_casedotdot(&i, curpath, free_curpath))
-			return (1);
+				return (1);
 		}
 		else
 			i++;
