@@ -236,5 +236,6 @@ int						ft_asprintf(char **ret, const char *format, ...);
 int						ft_snprintf(char *ret, size_t size, const char *format,
 	...);
 int						ft_stralike(char *str1, char *str2, size_t len);
+char					*ft_strjoin_multiple(int nb_args, ...);
 
 #endif
