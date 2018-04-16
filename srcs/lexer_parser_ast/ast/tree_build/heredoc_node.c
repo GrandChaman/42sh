@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_node.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbertoia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 14:25:16 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/03/12 14:25:18 by fbertoia         ###   ########.fr       */
+/*   Updated: 2018/04/16 15:00:35 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void		open_heredoc_file(char *path_file, int *fd)
 		ft_perror("21sh", "Can't open heredoc file");
 }
 
-void		heredoc_node(t_ast_node *node)
+void			heredoc_node(t_ast_node *node)
 {
 	char	*str;
 	char	*tmp;

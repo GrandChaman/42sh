@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 14:51:14 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/03/15 18:19:41 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/16 14:55:22 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,5 @@ void	del_sh21_exit(void)
 	del_hash(&sh21->env);
 	del_list((void**)&g_err_lex, del_lex);
 	del_list((void**)&g_end_of_input, del_lex);
-	cli_loader(1); //1 = destroying the cli
+	cli_loader(1);
 }
