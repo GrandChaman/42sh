@@ -45,6 +45,21 @@ int						bi_hash(int argc, char **argv, char ***environ);
 int						bi_export(int argc, char **argv, char ***environ);
 int						bi_unset(int argc, char **argv, char ***environ);
 
+char					*cd_rule5(char *curpath, char ***environ);
+int						cd_rule8_casedotdot(int *i, char *curpath, int free_curpath);
+int 					cd_rule8(char *curpath, char ***environ, int flag,
+							int free_curpath);
+int 					cd_rule7(char *curpath, char ***environ, int flag,
+							int free_curpath);
+int 					cd_rule_dash(char ***environ, int flag);
+static char		*check_flag(int *flag, char **argv, int *error);
+int						change_oldpwd_pwd(char ***environ, const char* path);
+int 					go_home(char ***environ);
+int 					ft_is_dir(char *buf, int print);
+int 					create_pwd(char *curpath, char ***environ, int free_curpath);
+int 					cd_rule10(char *curpath, char ***environ, int flag,
+							int free_curpath);
+
 void					del_hash_bin(t_hash_bin *hash_bin);
 void					del_hash(t_env	*env);
 
@@ -53,6 +68,12 @@ typedef struct			s_builtin
 	const char		*fn_name;
 	int				(*fn_ptr)(int, char**, char ***);
 }						t_builtin;
+
+enum flag_cd {
+	CD_NO_FLAG,
+	CD_L,
+	CD_P,
+};
 
 static const t_builtin	g_builtins[] =
 {
