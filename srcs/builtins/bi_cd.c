@@ -119,7 +119,7 @@ int 		cd_rule10(char *curpath, char ***environ, int flag, int free_curpath)
 	else if (!create_pwd(curpath, environ, free_curpath))
 		return (1);
 	if (free_curpath == 3)
-		ft_printf("%s\n", ft_getenv("OLDPWD", environ));
+		ft_printf("%s\n", ft_getenv("PWD", environ));
 	(free_curpath ? ft_strdel(&curpath) : (0));
 	return (0);
 }
@@ -243,9 +243,10 @@ int 		cd_rule_dash(char ***environ, int flag)
 		ft_error(-4, "cd");
 		return (1);
 	}
-	if (!ft_is_dir(oldpwd, 1))
+	if (!ft_is_dir(oldpwd, 0))
 	{
-		ft_error(-4, "cd");
+		ft_strdel(&oldpwd);
+		ft_error(-8, "cd");
 		return (1);
 	}
 	return (cd_rule10((char *)oldpwd, environ, flag, 3));
