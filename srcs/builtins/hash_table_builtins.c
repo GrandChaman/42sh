@@ -26,7 +26,7 @@ static t_hash_bin	*add_paths(char *bin_name, char *path_dir, t_env *env)
 	ptr = &env->hash_table[index];
 	if (ptr->path)
 	{
-		while (ptr->path && ptr->next) 
+		while (ptr->path && ptr->next)
 			ptr = ptr->next;
 		ptr->next = (t_hash_bin*)malloc(sizeof(t_hash_bin));
 		if (!(ptr = ptr->next))
