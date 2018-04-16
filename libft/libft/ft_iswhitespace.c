@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/22 17:54:32 by bluff             #+#    #+#             */
-/*   Updated: 2018/04/06 17:31:00 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/16 15:11:49 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,4 @@ int		ft_iswhitespace(int c)
 	if (c == ' ' || c == '\t' || c == '\v' || c == '\r' || c == '\n')
 		return (1);
 	return (0);
-	// if ((ch >= 9 && ch <= 13) || ch == 32 || ch == 133)
-		// return (1);
-	// return (0);
 }

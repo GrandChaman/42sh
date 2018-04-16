@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   is_correct.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/04/16 15:02:35 by hfontain          #+#    #+#             */
+/*   Updated: 2018/04/16 15:02:55 by hfontain         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "sh21.h"
 
@@ -12,7 +23,7 @@ static int check_second_quote(char second, int *i, char *cmd)
 			if (cmd[*i] == '\0')
 				continue ;
 			*i = *i + 1;
-			continue ; 
+			continue ;
 		}
 		*i = *i + 1;
 	}
@@ -23,8 +34,8 @@ static int check_second_quote(char second, int *i, char *cmd)
 
 static int quote(char *cmd, int *i)
 {
-	char tabl[4];
-	int var;
+	char	tabl[4];
+	int		var;
 
 	tabl[1] = '"';
 	tabl[2] = '\'';
@@ -44,10 +55,10 @@ static int quote(char *cmd, int *i)
 
 char		*check_correct(char *cmd)
 {
-	int i;
-	int o;
-	int stock;
-	int beforestock;
+	int		i;
+	int		o;
+	int		stock;
+	int		beforestock;
 
 	i = 0;
 	while (cmd[i])
@@ -71,7 +82,7 @@ char		*check_correct(char *cmd)
 		{
 			stock = cmd[i];
 			if (cmd[i - 1])
-				beforestock = cmd[i - 1];			
+				beforestock = cmd[i - 1];
 			o = i;
 			o++;
 			while (cmd[o] && (cmd[o] == ' ' || cmd[o] == '\n'))

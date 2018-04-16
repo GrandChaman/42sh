@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cli_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/18 17:32:17 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/03/28 14:55:32 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/16 14:32:16 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cli.h"
+#include "ft_printf.h"
 
 int			display_prompt(int last_result)
 {
@@ -23,7 +24,7 @@ int			display_prompt(int last_result)
 		res += ft_strlen(path);
 	else
 		res += ft_strlen("(null)");
-	ft_printf("%s$ {cyan}%s{eoc}> ",
+	ft_fprintf(2, "%s$ {cyan}%s{eoc}> ",
 	(last_result ? ANSI_COLOR_B_RED : ANSI_COLOR_B_GREEN), path);
 	free(path);
 	shell = get_ft_shell();
@@ -34,20 +35,20 @@ int			display_prompt(int last_result)
 void		prompt_select(char *prompt, int status, int heredoc, int fb)
 {
 	if (!status && fb)
-		ft_printf("{bgreen}-- OK --{eoc}\n");
+		ft_fprintf(2, "{bgreen}-- OK --{eoc}\n");
 	else if (fb)
 	{
 		if (WIFSIGNALED(status))
-			ft_printf("{bred}-- Signal : %d -- {eoc}\n", WTERMSIG(status));
+			ft_fprintf(2, "{bred}-- Signal : %d -- {eoc}\n", WTERMSIG(status));
 		else if (WSTOPSIG(status))
-			ft_printf("{bred}-- Stopped : %d -- {eoc}\n", WSTOPSIG(status));
+			ft_fprintf(2, "{bred}-- Stopped : %d -- {eoc}\n", WSTOPSIG(status));
 		else
-			ft_printf("{byellow}-- Exit : %d -- {eoc}\n", WEXITSTATUS(status));
+			ft_fprintf(2, "{byellow}-- Exit : %d -- {eoc}\n", WEXITSTATUS(status));
 	}
 	if (prompt || heredoc)
 	{
 		prompt = (!heredoc ? prompt : "heredoc> ");
-		ft_printf(prompt);
+		ft_fprintf(2, prompt);
 		get_ft_shell()->prompt_size = ft_strlen(prompt);
 	}
 	else

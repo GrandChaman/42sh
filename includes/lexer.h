@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/03/15 17:43:37 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/16 13:29:02 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,7 @@ typedef struct			s_lexa
 	t_token_type	t;
 	t_lex			*lex;
 	int				oquote;
+	int				escaped;
 }						t_lexa;
 
 static size_t g_lexa_buff_sz = 1024;
