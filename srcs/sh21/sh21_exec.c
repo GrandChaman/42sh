@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:03:18 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/06 17:22:09 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/16 14:55:50 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int				try_direct_acces(char **av, char ***env)
 int				callsystem(char **av, char ***env)
 {
 	pid_t		parent;
-	int			status; 
+	int			status;
 	char		*str;
 
 	str = search_bin(av[0], &sh21_get()->env);

@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 20:35:41 by hfontain          #+#    #+#             */
-/*   Updated: 2018/03/22 17:01:19 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/16 13:29:17 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void		lexa_init(t_lexa *lexa, t_sh21 *sh21)
 	lexa->lex = NULL;
 	lexa->oquote = 0;
 	lexa->buffer = ft_strnew(0);
+	lexa->escaped = 0;
 }
 
 void		loop_word(t_lex *ptr)

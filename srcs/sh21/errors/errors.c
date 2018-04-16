@@ -6,13 +6,13 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 17:04:12 by hfontain          #+#    #+#             */
-/*   Updated: 2018/02/19 18:52:35 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/16 14:56:22 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 
-int		ft_error(int err, const char *s)
+int				ft_error(int err, const char *s)
 {
 	if (err >= 0)
 		ft_fprintf(2, "%[RED]21sh%[NC]: %s: %s\n", s, g_errno_message[err]);
@@ -64,5 +64,3 @@ char			*random_str(size_t len)
 	close(fd);
 	return (ret);
 }
-
-
