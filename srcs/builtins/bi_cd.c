@@ -12,7 +12,7 @@
 
 #include "sh21.h"
 
-static char	*check_flag(int *flag, char **argv, int *error)
+char	*check_flag(int *flag, char **argv, int *error)
 {
 	int i;
 	int o;
