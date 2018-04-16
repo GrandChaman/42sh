@@ -12,7 +12,18 @@
 
 #include "sh21.h"
 
-int	change_oldpwd_pwd(char ***environ, const char *path)
+char	*cd_rules5_2(char *curpath)
+{
+	curpath = ft_strjoin("./", curpath);
+	if (!ft_is_dir(curpath, 1))
+	{
+		ft_strdel(&curpath);
+		return (NULL);
+	}
+	return (curpath);
+}
+
+int		change_oldpwd_pwd(char ***environ, const char *path)
 {
 	char	buf[PATH_MAX];
 
@@ -24,7 +35,7 @@ int	change_oldpwd_pwd(char ***environ, const char *path)
 	return (0);
 }
 
-int	go_home(char ***environ)
+int		go_home(char ***environ)
 {
 	const char		*home = ft_getenv("HOME", environ);
 
@@ -33,7 +44,7 @@ int	go_home(char ***environ)
 	return (ft_error(-3, "cd"));
 }
 
-int	ft_is_dir(char *buf, int print)
+int		ft_is_dir(char *buf, int print)
 {
 	struct stat file_stat;
 
@@ -52,7 +63,7 @@ int	ft_is_dir(char *buf, int print)
 	return (1);
 }
 
-int	create_pwd(char *curpath, char ***environ, int free_curpath)
+int		create_pwd(char *curpath, char ***environ, int free_curpath)
 {
 	char getcwd_path[PATH_MAX];
 
