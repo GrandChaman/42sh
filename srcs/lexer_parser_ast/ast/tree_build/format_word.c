@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 16:24:35 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/03/15 17:44:27 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/16 15:02:04 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char		*format_word(char **str)
 		else if (ptr[i] == '$')
 			case_dollar(&ret, &ptr, &i);
 		else
-			i++;
+			++i;
 	}
 	if (i)
 		ret = add_str(&ret, &ptr, &i);

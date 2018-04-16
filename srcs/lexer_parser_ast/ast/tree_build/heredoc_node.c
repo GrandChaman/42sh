@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_node.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbertoia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 14:25:16 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/03/12 14:25:18 by fbertoia         ###   ########.fr       */
+/*   Updated: 2018/04/16 15:00:35 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 #include "ast.h"
 #include "cli.h"
 
-static int		final_heredoc(char *tmp, char *str, char *tmp2, int fd, t_sh21 *sh21)
+static int	final_heredoc(char *tmp, char *str, int fd, t_sh21 *sh21)
 {
+	char *tmp2;
+
 	while ((ft_strcmp(str, tmp) != 0) && tmp[0] != T_CTRL_D)
 	{
 		tmp2 = ft_strjoin(tmp, "\n");
@@ -35,7 +37,7 @@ static int		final_heredoc(char *tmp, char *str, char *tmp2, int fd, t_sh21 *sh21
 	return (1);
 }
 
-static void		open_heredoc_file(char *path_file, int *fd)
+static void	open_heredoc_file(char *path_file, int *fd)
 {
 	if ((*fd = open(path_file, O_WRONLY | O_TRUNC, 0777)) == -1)
 		ft_perror("21sh", "Can't open heredoc file");
@@ -44,13 +46,27 @@ static void		open_heredoc_file(char *path_file, int *fd)
 		ft_perror("21sh", "Can't open heredoc file");
 }
 
+static void	heredoc_node_2(char *str, char *tmp, char *tmp_file, t_sh21 *sh21)
+{
+	char	*path_file;
+	int		fd;
+
+	path_file = ft_strjoin(TMP_PATH_HEREDOC, tmp_file);
+	free(tmp_file);
+	if ((fd = open(path_file, O_RDWR | O_CREAT | O_EXCL |
+		O_APPEND, 0777)) == -1)
+		open_heredoc_file(path_file, &fd);
+	free(path_file);
+	if ((final_heredoc(tmp, str, fd, sh21)) == -1)
+		return ;
+	close(fd);
+	return ;
+}
+
 void		heredoc_node(t_ast_node *node)
 {
 	char	*str;
 	char	*tmp;
-	char	*path_file;
-	int		fd;
-	char	*tmp2;
 	char	*tmp_file;
 	t_sh21	*sh21;
 
@@ -66,16 +82,6 @@ void		heredoc_node(t_ast_node *node)
 		sh21->signal = T_CTRL_C;
 		return ;
 	}
-	tmp2 = ft_itoa(1);
-	path_file = ft_strjoin(TMP_PATH_HEREDOC, tmp_file);
-	free(tmp_file);
-	free(tmp2);
-	if ((fd = open(path_file, O_RDWR | O_CREAT | O_EXCL |
-		O_APPEND, 0777)) == -1)
-		open_heredoc_file(path_file, &fd);
-	free(path_file);
-	if ((final_heredoc(tmp, str, tmp2, fd, sh21)) == -1)
-		return ;
-	close(fd);
+	heredoc_node_2(str, tmp, tmp_file, sh21);
 	return ;
 }

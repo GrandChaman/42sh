@@ -6,17 +6,16 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 16:44:45 by hfontain          #+#    #+#             */
-/*   Updated: 2018/03/14 20:53:21 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/16 15:18:55 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh21.h" 
+#include "sh21.h"
 #include "ft_printf.h"
 #include "libft.h"
 #include "builtins.h"
 
-
-int				write_echo_special_codes(char *argv, int *cursor)
+int			write_echo_special_codes(char *argv, int *cursor)
 {
 	if (*argv == 'a')
 		write(STDOUT_FILENO, "\a", 1);
@@ -48,7 +47,28 @@ int				write_echo_special_codes(char *argv, int *cursor)
 	return (1);
 }
 
-int				bi_echo(int argc, char **argv, char ***environ)
+static int	flag_echo(char **argv, int *should_print_nl)
+{
+	int i;
+	int o;
+
+	i = 1;
+	while (argv[i] && argv[i][0] == '-')
+	{
+		o = 1;
+		while (argv[i][o])
+		{
+			if (argv[i][o] != 'n')
+				return (i);
+			*should_print_nl = 0;
+			o++;
+		}
+		i++;
+	}
+	return (i);
+}
+
+int			bi_echo(int argc, char **argv, char ***environ)
 {
 	int i;
 	int ii;
@@ -59,16 +79,16 @@ int				bi_echo(int argc, char **argv, char ***environ)
 	(void)argc;
 	if (!argv[1])
 		return (0 * ft_printf("\n"));
-	should_print_nl = (!ft_strcmp(argv[1], "-n") ? 0 : 1);
-	i = !should_print_nl;
+	i = flag_echo(argv, &should_print_nl) - 1;
 	while (argv[++i] && (ii = -1))
 	{
-		if (i != 1 && should_print_nl)
+		if ((flag_echo(argv, &should_print_nl)) != i)
 			write(STDOUT_FILENO, " ", 1);
 		while (argv[i][++ii])
 			if (argv[i][ii] == '\\')
 			{
-				if (!(stock = write_echo_special_codes(&(argv[i][ii + 1]), &ii))) // Attention
+				if (!(stock = write_echo_special_codes(&(argv[i][ii + 1])
+					, &ii)))
 					return (0);
 				if (stock == 2)
 					write(STDOUT_FILENO, &(argv[i][ii]), 1);
@@ -80,28 +100,3 @@ int				bi_echo(int argc, char **argv, char ***environ)
 		write(STDOUT_FILENO, "\n", 1);
 	return (0);
 }
-
-/*int		bi_echo(int argc, char **argv, char ***environ)
-{
-	int		i;
-	int		n;
-
-	(void)environ;
-	if (argc <= 1)
-	{
-		ft_putchar('\n');
-		return (0);
-	}
-	n = ft_strcmp(argv[1], "-n") == 0;
-	i = 1 + n;
-	while (i < argc)
-	{
-		ft_putstr(argv[i]);
-		if (i != argc - 1)
-			ft_putchar(' ');
-		++i;
-	}
-	if (!n)
-		ft_putchar('\n');
-	return (0);
-}*/

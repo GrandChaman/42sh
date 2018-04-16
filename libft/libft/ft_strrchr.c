@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bluff <bluff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/21 20:26:15 by bluff             #+#    #+#             */
-/*   Updated: 2017/11/06 12:26:24 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/16 15:15:03 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ char	*ft_strrchr(const char *str, int ch)
 			i--;
 	return (NULL);
 }
-
 
 char	*ft_strrchr_2(const char *s, int c)
 {

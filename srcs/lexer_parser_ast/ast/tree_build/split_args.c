@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:36:08 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/06 17:44:23 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/16 15:19:03 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static int		get_next_quote(char *argv, char quote)
 {
-	int i;
+	int		i;
 
 	i = 1;
 	while (argv[i] && argv[i] != quote)
@@ -36,8 +36,8 @@ static void		case_whitespace(char **argv, int *wd_nb, int *flag)
 
 static int		word_number(char *argv)
 {
-	int wd_nb;
-	int flag;
+	int		wd_nb;
+	int		flag;
 
 	flag = 0;
 	wd_nb = 0;
@@ -94,6 +94,7 @@ char			**split_args(char *argv)
 	char	**ret;
 	int		wd_nb;
 	int		i;
+	char	**u;
 
 	i = 0;
 	wd_nb = word_number(argv);
@@ -109,7 +110,7 @@ char			**split_args(char *argv)
 		ret[i++] = word(&argv);
 	}
 	ret[i] = NULL;
-	char **u = ret;
+	u = ret;
 	while (*u)
 		++u;
 	return (ret);
