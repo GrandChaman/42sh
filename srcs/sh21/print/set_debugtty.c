@@ -12,9 +12,10 @@
 
 #include "sh21.h"
 
-void set_debugtty(void) {
-  int fd;
+void	set_debugtty(void)
+{
+	int fd;
 
-  fd = open("/dev/ttys002", O_RDWR);
-  sh21_get()->debug_tty = fd;
+	fd = open("/dev/ttys002", O_RDWR);
+	sh21_get()->debug_tty = fd;
 }
