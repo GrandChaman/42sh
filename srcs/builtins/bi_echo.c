@@ -15,6 +15,14 @@
 #include "libft.h"
 #include "builtins.h"
 
+static int	norme_1(int *cursor, char *argv)
+{
+	(*cursor) += 1;
+	while (ft_isdigit((*argv)++))
+		(*cursor)++;
+	return (1);
+}
+
 int			write_echo_special_codes(char *argv, int *cursor)
 {
 	if (*argv == 'a')
@@ -41,10 +49,7 @@ int			write_echo_special_codes(char *argv, int *cursor)
 		write(STDOUT_FILENO, "\\", 1);
 	else
 		return (2);
-	(*cursor) += 1;
-	while (ft_isdigit((*argv)++))
-		(*cursor)++;
-	return (1);
+	return (norme_1(cursor, argv));
 }
 
 static int	flag_echo(char **argv, int *should_print_nl)
@@ -56,6 +61,8 @@ static int	flag_echo(char **argv, int *should_print_nl)
 	while (argv[i] && argv[i][0] == '-')
 	{
 		o = 1;
+		if (!argv[i][o])
+			return (i);
 		while (argv[i][o])
 		{
 			if (argv[i][o] != 'n')
@@ -68,15 +75,10 @@ static int	flag_echo(char **argv, int *should_print_nl)
 	return (i);
 }
 
-int			bi_echo(int argc, char **argv, char ***environ)
+static int	norme_0(char **argv, int i, int ii, int stock)
 {
-	int i;
-	int ii;
 	int should_print_nl;
-	int stock;
 
-	(void)environ;
-	(void)argc;
 	if (!argv[1])
 		return (0 * ft_printf("\n"));
 	i = flag_echo(argv, &should_print_nl) - 1;
@@ -99,4 +101,18 @@ int			bi_echo(int argc, char **argv, char ***environ)
 	if (should_print_nl)
 		write(STDOUT_FILENO, "\n", 1);
 	return (0);
+}
+
+int			bi_echo(int argc, char **argv, char ***environ)
+{
+	int i;
+	int ii;
+	int stock;
+
+	i = 0;
+	ii = 0;
+	stock = 0;
+	(void)environ;
+	(void)argc;
+	return (norme_0(argv, i, ii, stock));
 }
