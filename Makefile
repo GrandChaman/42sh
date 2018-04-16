@@ -6,7 +6,7 @@
 #    By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/16 13:28:08 by fle-roy           #+#    #+#              #
-#    Updated: 2018/04/16 20:54:40 by rfautier         ###   ########.fr        #
+#    Updated: 2018/04/16 20:26:20 by fbertoia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ SRC =  cli.c cli_init.c \
 		set_sh21.c sh21_exec.c is_correct.c bi_cd_2.c
 
 LIBFT_INCLUDE = $(LIBFT_DIR)/include
-CFLAG = -g3 -Wall -Wextra -I $(LIBFT_INCLUDE) -I $(INCLUDE)
+CFLAG = -g3 -O2 -Wall -Wextra -I $(LIBFT_INCLUDE) -I $(INCLUDE)
 CC = cc
 LFLAG = -ltermcap
 BIN = bin
@@ -69,13 +69,13 @@ $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 $(OBJ_DIR)/%.o: %.c
 	@printf "\r\033[K[$(NAME_UP)] \033[1;32mBuilding $<\033[0m"
-	@$(CC) $(CFLAG) -c $< -o $@
+	@$(CC) $(CFLAG) -c $(CFLAG) $< -o $@
 $(DEP_DIR)/%.d: %.c
 	@printf "\r\033[K[$(NAME_UP)] \033[1;32mGenerating dependencies - $<\033[0m"
 	@$(CC) $(CFLAG) -MM $^ | sed -e '1s/^/$(OBJ_DIR)\//' > $@
 $(NAME): $(LIBFT) $(SRC_LIBFT) $(SRC_PRINTF) $(SRC_GNL) $(OBJ)
 	@printf "\r\033[K[$(NAME_UP)] \033[1;32mLinking...\033[0m"
-	@$(CC) $(LFLAG) -o $(NAME) $(LIBFT) $(OBJ)
+	@$(CC) $(CFLAG) $(LFLAG) -o $(NAME) $(LIBFT) $(OBJ)
 	@printf "\r\033[K[$(NAME_UP)] \033[1;32mDone!\033[0m\n"
 clean:
 	@$(MAKE) -C $(LIBFT_DIR) clean
