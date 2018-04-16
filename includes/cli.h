@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cli.h                                            :+:      :+:    :+:   */
+/*   cli.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 10:56:03 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/05 16:08:54 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/16 15:07:01 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_SH_H
-# define FT_SH_H
+#ifndef FT_CLI_H
+# define FT_CLI_H
+
 # include <sys/ioctl.h>
 # include "libft.h"
 # include <dirent.h>
@@ -146,9 +147,7 @@ typedef	struct			s_ft_hist_entry
 	int					timestamp;
 }						t_ft_hist_entry;
 
-//TO CHANGE
-char		*check_correct(char *toto);
-//END
+char					*check_correct(char *toto);
 
 t_bin_hash_table		*load_bin_into_hash_table(t_list *env);
 int						compare_with_key(void *e1, void *e2);

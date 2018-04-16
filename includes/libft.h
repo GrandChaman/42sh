@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bluff <bluff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 20:24:12 by bluff             #+#    #+#             */
-/*   Updated: 2018/03/22 13:10:22 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/16 15:08:42 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,43 +70,43 @@ typedef struct			s_dbuf {
 	unsigned long		len;
 }						t_dbuf;
 
-char	*ft_strrchr_2(const char *s, int c);
-char	*ft_strndup2(char *str, size_t size);
-int		ft_strindex(const char *str, int c);
-int		size_list(void *a);
-int		str_digit(char *str);
-char	*ft_strpushback(char *str, char c, size_t *buff_sz);
-void	*add_elem_back(void **alst, void *elem_to_add);
-void	*add_elem_front(void **alst, void *elem_to_add);
-int		is_whitespace(char c);
-char			*ft_strfjoin(char *s1, char const *s2);
-char			*ft_strffjoin(char *s1, char *s2);
-char				*ft_strpush(char *str, size_t idx, char c, size_t *buff_sz);
-void				del_list(void **elem, void (*f)(void**));
-void				*add_elem_front_dl(void **alst, void *elem_to_add);
-int					str_isprint(char *str);
-char				*ft_strpop(char *str, size_t idx);
-int					arrlen(char **arr);
-void				del_arr(char ***arr);
-unsigned long long	ft_hash(const char *str);
-size_t				ft_strlcpy(char *dst, const char *src, size_t size);
-int					ft_strindex(const char *str, int c); // pas fait
-char				**cpy_arr(char **arr);
-
+char					*ft_strrchr_2(const char *s, int c);
+char					*ft_strndup2(char *str, size_t size);
+int						ft_strindex(const char *str, int c);
+int						size_list(void *a);
+int						str_digit(char *str);
+char					*ft_strpushback(char *str, char c, size_t *buff_sz);
+void					*add_elem_back(void **alst, void *elem_to_add);
+void					*add_elem_front(void **alst, void *elem_to_add);
+int						is_whitespace(char c);
+char					*ft_strfjoin(char *s1, char const *s2);
+char					*ft_strffjoin(char *s1, char *s2);
+char					*ft_strpush(char *str, size_t idx, char c,
+						size_t *buff_sz);
+void					del_list(void **elem, void (*f)(void**));
+void					*add_elem_front_dl(void **alst, void *elem_to_add);
+int						str_isprint(char *str);
+char					*ft_strpop(char *str, size_t idx);
+int						arrlen(char **arr);
+void					del_arr(char ***arr);
+unsigned long long		ft_hash(const char *str);
+size_t					ft_strlcpy(char *dst, const char *src, size_t size);
+int						ft_strindex(const char *str, int c);
+char					**cpy_arr(char **arr);
 
 char					**ft_split_whitespaces(char *str);
 void					ft_lstappend(t_list **head, t_list *new);
 char					*ft_str3join(char const *s1, char const *s2,
-	char const *s3);
+						char const *s3);
 void					ft_bzero(void *s, size_t n);
 void					*ft_memset(void *dest, int ch, size_t count);
 void					*ft_memcpy(void *dest, const void *src, size_t count);
 void					*ft_memccpy(void *dest, const void *src, int c,
-	size_t n);
+						size_t n);
 void					*ft_memmove(void *dest, const void *src, size_t count);
 void					*ft_memchr(const void *ptr, int ch, size_t count);
 int						ft_memcmp(const void *lhs, const void *rhs,
-	size_t count);
+						size_t count);
 size_t					ft_strlen(const char *str);
 char					*ft_strcpy(char *dest, const char *src);
 char					*ft_strdup(const char *str);
@@ -120,9 +120,9 @@ char					*ft_strrchr(const char *str, int ch);
 char					*ft_strstr(const char *str, const char *substr);
 int						ft_strcmp(const char *lhs, const char *rhs);
 int						ft_strncmp(const char *lhs, const char *rhs,
-	size_t count);
+						size_t count);
 char					*ft_strnstr(const char *str, const char *substr,
-	size_t count);
+						size_t count);
 int						ft_atoi(const char *str);
 int						ft_isdigit(int ch);
 int						ft_isalpha(int c);
@@ -150,18 +150,18 @@ int						ft_strcommon(char *s1, char *s2);
 char					**ft_strsplit(char const *s, char c);
 char					**ft_strsplit_multi(const char *s, int (*c)(int));
 char					*ft_strsub(char const *s, unsigned int start,
-	size_t len);
+						size_t len);
 char					*ft_itoa(int n);
 char					*ft_strjoin(char const *s1, char const *s2);
 void					ft_striter(char *s, void (*f)(char*));
 void					ft_striteri(char *s, void (*f)(unsigned int, char *));
 char					*ft_strmap(char const *s, char (*f)(char));
 char					*ft_strmapi(char const *s,
-	char (*f)(unsigned int, char));
+						char (*f)(unsigned int, char));
 char					*ft_strtrim(char const *s);
 t_list					*ft_lstnew(void const *content, size_t content_size);
 void					ft_lstdelone(t_list **alst,
-	void (*del)(void *, size_t));
+						void (*del)(void *, size_t));
 void					ft_lstdel(t_list **alst, void(*del)(void*, size_t));
 void					ft_lstadd(t_list **alst, t_list *new);
 void					ft_lstiter(t_list *lst, void(*f)(t_list *elem));
@@ -174,18 +174,18 @@ int						ft_isprime(int nb);
 int						ft_issort(int *tabo, int length, int (*f)(int, int));
 t_list					*ft_lstat(t_list *begin_list, int nbr);
 t_list					*ft_lstfind(t_list *begin_list,
-	void *data_ref, int (*cmp)());
+						void *data_ref, int (*cmp)());
 void					ft_lstforeach_if(t_list *begin_list,
-	void (*f)(void *), void *data_ref, int (*cmp)());
+						void (*f)(void *), void *data_ref, int (*cmp)());
 void					ft_lstforeach(t_list *begin_list, void (*f)(void *));
 t_list					*ft_lstlast(t_list *begin_list);
 void					ft_lstmerge(t_list **begin_list1, t_list *begin_list2);
 void					ft_lstpush_back(t_list **begin_list,
-	void *data, size_t size);
+						void *data, size_t size);
 void					ft_lstpush_front(t_list **begin_list,
-	void *data, size_t size);
+						void *data, size_t size);
 void					ft_lstremove_if(t_list **begin_list,
-	void *data_ref, int (*cmp)());
+						void *data_ref, int (*cmp)());
 void					ft_lstreverse(t_list **begin_list);
 int						ft_lstsize(t_list *begin_list);
 void					ft_lstsort(t_list **begin_list, int (*cmp)());
@@ -203,13 +203,13 @@ int						ft_iswhitespace(int ch);
 int						ft_atoi_base(const char *nb, const char *base);
 t_btree					*ft_btree_create_node(void *item);
 void					ft_btree_insert_data(t_btree **root, void *item,
-	int (*cmpf)(void *, void *));
+						int (*cmpf)(void *, void *));
 void					ft_btree_apply_infix(t_btree *root,
-	void (*applyf)(void *));
+						void (*applyf)(void *));
 void					ft_btree_apply_prefix(t_btree *root,
-	void (*applyf)(void *));
+						void (*applyf)(void *));
 void					ft_btree_apply_suffix(t_btree *root,
-	void (*applyf)(void *));
+						void (*applyf)(void *));
 void					ft_btree_destroy(t_btree **root);
 int						ft_btree_count_node(t_btree *tree);
 void					ft_perror(char *title, char *error);
@@ -226,7 +226,7 @@ int						dbuf_append(t_dbuf *buf, char *to_append);
 int						dbuf_clear(t_dbuf *buf);
 int						dbuf_destroy(t_dbuf *buf);
 int						dbuf_insert(t_dbuf *buf, unsigned long pos,
-	char to_insert);
+						char to_insert);
 int						dbuf_remove(t_dbuf *buf, unsigned long pos);
 int						dbuf_substract(t_dbuf *buf);
 int						dbuf_print(t_dbuf *buf, unsigned char fd);
@@ -234,7 +234,7 @@ int						ft_printf(const char *format, ...);
 int						ft_fprintf(int fd, const char *format, ...);
 int						ft_asprintf(char **ret, const char *format, ...);
 int						ft_snprintf(char *ret, size_t size, const char *format,
-	...);
+						...);
 int						ft_stralike(char *str1, char *str2, size_t len);
 
 #endif

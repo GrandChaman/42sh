@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strfjoin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 13:44:53 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/02/17 17:24:17 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/16 15:12:41 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static char		*null_case(char const *s1, char const *s2)
 	else
 		return (ft_strdup(s1));
 }
+
 char			*ft_strfjoin(char *s1, char const *s2)
 {
 	char	*ret;
