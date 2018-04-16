@@ -31,7 +31,7 @@ static char	*check_flag(int *flag, char **argv)
 	{
 		i = 0;
 		if (!argv[o][1])
-			return (argv[o]);
+			return (argv[o - 1]);
 		while (argv[o][++i])
 		{
 			if (argv[o][i] != 'L' && argv[o][i] != 'P')
