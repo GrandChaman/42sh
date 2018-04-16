@@ -22,27 +22,12 @@ static void	ignore_signal(int sig)
 	(void)sig;
 }
 
-int			main(void)
+static void	main_loop(t_sh21 *sh21, t_ft_sh *shell)
 {
-	t_ft_sh			*shell;
-	char			*cmd;
-	int				fb;
-	t_sh21			*sh21;
-	extern char		**environ;
+	int		fb;
+	char	*cmd;
 
 	fb = 0;
-	sh21 = sh21_init(environ);
-	shell = get_ft_shell();
-	shell->ht = NULL;
-	signal(SIGINT, ignore_signal);
-	if (!is_env_correct())
-		return (1);
-	cli_loader(0);
-	if (!shell->is_a_tty)
-	{
-		cli_loader(1);
-		return (1);
-	}
 	while (42)
 	{
 		if (((cmd = read_command(NULL, 0, 0, (!fb ? fb++ : fb))) == NULL))
@@ -55,6 +40,27 @@ int			main(void)
 		del_sh21();
 		free(cmd);
 	}
+}
+
+int			main(void)
+{
+	t_ft_sh			*shell;
+	t_sh21			*sh21;
+	extern char		**environ;
+
+	sh21 = sh21_init(environ);
+	shell = get_ft_shell();
+	shell->ht = NULL;
+	signal(SIGINT, ignore_signal);
+	if (!is_env_correct())
+		return (1);
+	cli_loader(0);
+	if (!shell->is_a_tty)
+	{
+		cli_loader(1);
+		return (1);
+	}
+	main_loop(sh21, shell);
 	del_sh21_exit();
 	return (0);
 }
