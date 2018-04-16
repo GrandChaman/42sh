@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/06 16:38:21 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/16 15:01:07 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,39 @@ static int	end_lex(t_lexa *lexa, t_sh21 *sh21)
 	return (1);
 }
 
+static void	lexfallbackesc(t_lexa *lexa)
+{
+	lexa->stat = SWORD;
+	lexa->t = WORD;
+	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
+	lexa->escaped = 0;
+}
+
+static void	escape(t_lexa *lexa)
+{
+	lexa->c = *++(lexa->str);
+	lexa->escaped = 1;
+	lexfallback(lexa);
+}
+
 int			lexer(t_sh21 *sh21)
 {
 	t_lexa		lexa;
 
 	lexa_init(&lexa, sh21);
-	while (*lexa.str)
+	while (*lexa.str && (lexa.c = *(lexa.str)))
 	{
-		lexa.c = *(lexa.str);
 		check_semi_stat(&lexa);
-		if (lexa.c == '"' || lexa.c == '\'')
+		if (lexa.c == '\\')
+			escape(&lexa);
+		else if (lexa.c == '"' || lexa.c == '\'')
 			on_quote(&lexa);
 		else if (lexa.oquote)
 			lexa.buffer = ft_strpushback(lexa.buffer, lexa.c, &g_lexa_buff_sz);
 		else if (lexa.c == ' ')
 			on_blank(&lexa);
 		else if (is_operator_part(lexa.prev, lexa.stat))
-			on_operator_prev(&lexa);
+			lexa.escaped ? lexfallbackesc(&lexa) : on_operator_prev(&lexa);
 		else if (is_operator_part(lexa.c, lexa.stat))
 			on_operator(&lexa);
 		else if (lexa.stat == SWORD)

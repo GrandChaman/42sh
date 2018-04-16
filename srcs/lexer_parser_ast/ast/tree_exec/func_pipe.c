@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:36:08 by hfontain          #+#    #+#             */
-/*   Updated: 2018/03/12 18:57:17 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/16 14:57:57 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		func_pipe2(t_ast_node *root, int pipefd[2])
 	dup2(pipefd[0], 0);
 	if (root->right)
 		ret = g_exec_fn[root->right->type](root->right);
-		wait(&status);
+	wait(&status);
 	dup2(nw, 0);
 	close(nw);
 	exit(0);

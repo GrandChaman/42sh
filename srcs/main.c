@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/06 17:16:22 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/16 14:57:00 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,39 +24,34 @@ static void	ignore_signal(int sig)
 
 int			main(void)
 {
-	t_ft_sh *shell;
-	char	*cmd;
-	int		fb;
+	t_ft_sh			*shell;
+	char			*cmd;
+	int				fb;
 	t_sh21			*sh21;
 	extern char		**environ;
 
 	fb = 0;
 	sh21 = sh21_init(environ);
 	shell = get_ft_shell();
-	shell->ht = NULL; //HASH TABLE
+	shell->ht = NULL;
 	signal(SIGINT, ignore_signal);
-	if (!is_env_correct()) //CHECK ENV
+	if (!is_env_correct())
 		return (1);
-	cli_loader(0); //0 = loading the cli
+	cli_loader(0);
 	if (!shell->is_a_tty)
 	{
-		cli_loader(1); //1 = destroying the cli
+		cli_loader(1);
 		return (1);
-	} 
+	}
 	while (42)
 	{
-		//char		*read_command(char *prompt, int status, int heredoc, int fb)
-		//@param	char *prompt : Un prompt alternatif (au lieu d'afficher le cwd)
-		//@param	int status : La valeur de retour de la derniere commande
-		//@param	heredoc : Si le prompt actuel est un heredoc (Laisser *prompt a NULL si heredoc est egale a 1)
-		//@param	fb : (boolean) Si le CLI doit afficher un feedback (Genre OK en vert ou Stop en rouge)
 		if (((cmd = read_command(NULL, 0, 0, (!fb ? fb++ : fb))) == NULL))
 			break ;
 		sh21->buf = cmd;
 		lexer(sh21);
 		if (parser(sh21->lex) && sh21->signal != T_CTRL_C)
 			sh21_get()->ret = exec_tree(sh21->tree.root_node);
-		add_to_history(shell, cmd); // ADD TO HISTORY
+		add_to_history(shell, cmd);
 		del_sh21();
 		free(cmd);
 	}
