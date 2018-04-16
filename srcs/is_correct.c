@@ -85,10 +85,9 @@ char		*check_correct(char *cmd)
 {
 	int		i;
 	int		stock;
-	char	*retour;
 
-	i = -1;
-	while (cmd[++i])
+	i = 0;
+	while (cmd[i])
 	{
 		if (cmd[i] == '\\')
 		{
@@ -104,8 +103,9 @@ char		*check_correct(char *cmd)
 			if (stock == 2)
 				return ("s_quote>");
 		}
-		if ((retour = check_correct_2(i, cmd)) != NULL)
-			return (retour);
+		if (check_correct_2(i, cmd) != NULL)
+			return (check_correct_2(i, cmd));
+		i++;
 	}
 	return (NULL);
 }
