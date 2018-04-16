@@ -69,6 +69,13 @@ static void	escape(t_lexa *lexa)
 	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
 }
 
+static void	lexfallback(t_lexa *lexa)
+{
+	lexa->stat = SWORD;
+	lexa->t = WORD;
+	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
+}
+
 int			lexer(t_sh21 *sh21)
 {
 	t_lexa		lexa;
