@@ -262,7 +262,6 @@ int			bi_cd(int argc, char **argv, char ***environ)
 	(void)argc;
 	flag = 0;
 	curpath = check_flag(&flag, argv, &error);
-	ft_printf("lala curpath = %s\n", )
 	if (error)
 		return (1);
 	if (!curpath)
