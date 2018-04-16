@@ -12,7 +12,17 @@
 
 #include "sh21.h"
 
-static char	*check_flag(int *flag, char **argv, int *error)
+static void			assign_flag(int *i, int *o, int *flag, char **argv)
+{
+	*i = *i - 1;
+	if (argv[*o][*i] == 'P')
+		*flag = CD_P;
+	if (argv[*o][*i] == 'L')
+		*flag = CD_L;
+	*o = *o + 1;
+}
+
+static char			*check_flag(int *flag, char **argv, int *error)
 {
 	int i;
 	int o;
@@ -28,22 +38,19 @@ static char	*check_flag(int *flag, char **argv, int *error)
 			if (argv[o][i] != 'L' && argv[o][i] != 'P')
 			{
 				ft_fprintf(2,
-					"42sh :cd: -%c: invalid option\ncd: usage: cd [-L|-P] [dir]\n");
+					"42sh :cd: -%c: invalid option\ncd: usage:"
+					" cd [-L|-P] [dir]\n");
 				*error = 1;
 				return (NULL);
 			}
 		}
-		i--;
-		if (argv[o][i] == 'P')
-			*flag = CD_P;
-		if (argv[o][i] == 'L')
-			*flag = CD_L;
-		o++;
+		assign_flag(&i, &o, flag, argv);
 	}
 	return (argv[o]);
 }
 
-int					cd_rule10(char *curpath, char ***environ, int flag, int free_curpath)
+int					cd_rule10(char *curpath, char ***environ,
+	int flag, int free_curpath)
 {
 	if (chdir(curpath) < 0)
 	{
