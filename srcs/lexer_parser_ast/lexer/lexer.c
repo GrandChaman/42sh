@@ -60,19 +60,13 @@ static int	end_lex(t_lexa *lexa, t_sh21 *sh21)
 	return (1);
 }
 
-static void	lexfallbackesc(t_lexa *lexa)
+static void	escape(t_lexa *lexa)
 {
 	lexa->stat = SWORD;
 	lexa->t = WORD;
 	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
-	lexa->escaped = 0;
-}
-
-static void	escape(t_lexa *lexa)
-{
 	lexa->c = *++(lexa->str);
-	lexa->escaped = 1;
-	lexfallback(lexa);
+	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
 }
 
 int			lexer(t_sh21 *sh21)
