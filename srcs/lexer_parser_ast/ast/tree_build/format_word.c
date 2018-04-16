@@ -21,6 +21,8 @@ char		*format_word(char **str)
 	i = 0;
 	ptr = *str;
 	ret = NULL;
+	sh21_get()->tree.nb_escaped_quote = 0;
+	ft_printf("*str = |%s|\n", *str);
 	while (ptr[i])
 	{
 		if (ptr[i] == '\\')
