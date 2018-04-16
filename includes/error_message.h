@@ -25,6 +25,7 @@ static const char	*g_own_message[] =
 	"TERM not set",
 	"Invalid null input",
 	"No such file or directory",
+	"OLDPWD not valid",
 	""
 };
 
