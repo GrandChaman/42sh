@@ -6,7 +6,7 @@
 #    By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/16 13:28:08 by fle-roy           #+#    #+#              #
-#    Updated: 2018/04/05 16:42:23 by fle-roy          ###   ########.fr        #
+#    Updated: 2018/04/16 20:54:40 by rfautier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ SRC =  cli.c cli_init.c \
 		set_sh21.c sh21_exec.c is_correct.c bi_cd_2.c
 
 LIBFT_INCLUDE = $(LIBFT_DIR)/include
-CFLAG = -g3 -Wall -Wextra -Werror  -I $(LIBFT_INCLUDE) -I $(INCLUDE)
+CFLAG = -g3 -Wall -Wextra -I $(LIBFT_INCLUDE) -I $(INCLUDE)
 CC = cc
 LFLAG = -ltermcap
 BIN = bin
