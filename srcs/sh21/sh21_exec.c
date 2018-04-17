@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh21_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbertoia <fbertoia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:03:18 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/16 14:55:50 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/17 11:11:24 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char			*search_bin(char *bin, t_env *env)
 	t_hash_bin	*ret;
 	char		*tmp;
 
-	index = ft_hash(bin) % (1 << 16);
+	index = ft_hash(bin) % (HASH_SIZE);
 	ret = &env->hash_table[index];
 	tmp = ft_strrchr_2(ret->path, '/');
 	while (ret && tmp && !ft_strequ(tmp + 1, bin))

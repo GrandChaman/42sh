@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 15:21:13 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/06 17:06:15 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/17 11:11:21 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_hash_bin	*add_paths(char *bin_name, char *path_dir, t_env *env)
 	ft_strlcpy(tmp, path_dir, OPEN_MAX);
 	ft_strlcat(tmp, "/", OPEN_MAX);
 	ft_strlcat(tmp, bin_name, OPEN_MAX);
-	index = ft_hash(bin_name) % (1 << 16);
+	index = ft_hash(bin_name) % (HASH_SIZE);
 	ptr = &env->hash_table[index];
 	if (ptr->path)
 	{

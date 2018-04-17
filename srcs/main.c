@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/16 14:57:00 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/17 14:33:51 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ static void	main_loop(t_sh21 *sh21, t_ft_sh *shell)
 	fb = 0;
 	while (42)
 	{
-		if (((cmd = read_command(NULL, 0, 0, (!fb ? fb++ : fb))) == NULL))
+		if (((cmd = read_command(NULL, sh21->ret, 0, (!fb ? fb++ : fb))) == NULL))
 			break ;
+		add_to_history(shell, cmd);
 		sh21->buf = cmd;
 		lexer(sh21);
 		if (parser(sh21->lex) && sh21->signal != T_CTRL_C)
 			sh21_get()->ret = exec_tree(sh21->tree.root_node);
-		add_to_history(shell, cmd);
 		del_sh21();
 		free(cmd);
 	}

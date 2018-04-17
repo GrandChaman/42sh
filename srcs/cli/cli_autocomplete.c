@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 16:26:13 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/03/29 13:59:53 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/17 13:50:00 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,22 @@ void					collect_data(char *str_part)
 {
 	t_ft_sh			*sh;
 	unsigned int	save_cur;
+	int				max_possible_element;
 
 	sh = get_ft_shell();
 	save_cur = sh->cursor;
+	max_possible_element = (sh->x_size / 8) * sh->y_size;
 	collect_data_local_file(&sh->autocomplete, str_part);
 	collect_data_ht(&sh->autocomplete, str_part);
-	ft_lstsort(&sh->autocomplete, cmp_autoc_entry);
+	if (ft_lstsize(sh->autocomplete) >= max_possible_element)
+	{
+		if (sh->autocomplete)
+			ft_lstdel(&sh->autocomplete, delete_autocomplete_entry);
+		exec_term_command(TC_BELL);
+		return ;
+	}
+	else
+		ft_lstsort(&sh->autocomplete, cmp_autoc_entry);
 }
 
 static void				complete_missing_autocomplete(t_ft_sh *sh,

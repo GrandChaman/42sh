@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 16:38:41 by hfontain          #+#    #+#             */
-/*   Updated: 2018/03/19 17:43:48 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/17 14:31:10 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int		bi_exit(int argc, char **argv, char ***environ)
 	(void)argc;
 	(void)argv;
 	(void)environ;
+	del_sh21_exit();
 	ft_exit(0, NULL);
 	return (0);
 }
