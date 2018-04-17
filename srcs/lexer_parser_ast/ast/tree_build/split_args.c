@@ -12,90 +12,6 @@
 
 #include "sh21.h"
 
-char			*word(char **argv)
-{
-	char	*ret;
-	int		i;
-	char	quote;
-	int		flag;
-
-	ret = NULL;
-	i = 0;
-	flag = 0;
-	while ((*argv)[i] && ft_isprint((*argv)[i]) && !is_whitespace((*argv)[i]))
-	{
-		if ((*argv)[i] == (char)'\'' || (*argv)[i] == (char)'\"')
-		{
-			quote = (*argv)[i];
-			ft_memmove(*argv + i, *argv + i + 1, ft_strlen(*argv + i + 1));
-			while ((*argv)[i] && (*argv)[i] != quote)
-				++i;
-			ft_memmove(*argv + i, *argv + i + 1, ft_strlen(*argv + i));
-		}
-		else
-			i++;
-	}
-	ret = ft_strndup(*argv, i + 1);
-	*argv += i;
-	return (ret);
-}
-
-int escaped_quote(char *argv, t_ast *tree, int *i, int *j)
-{
-	if (argv[*i + *j] == '\'' || argv[*i + *j] == '\"')
-	{
-		if (tree->i < tree->nb_escaped_quote && tree->esc_i[tree->i]
-			== (*i + *j + tree->quote_count))
-		{
-			tree->i++;
-			return (1);
-		}
-	}
-	return (0);
-}
-
-void case_quote_args(char *argv, int *i, int *j)
-{
-	t_ast	*tree;
-	char	c;
-
-	tree = &sh21_get()->tree;
-	c = argv[*i + *j];
-	if (escaped_quote(argv, tree, i, j))
-		return ;
-	else
-	{
-		ft_strcpy(argv + *i + *j, argv + *i + *j + 1);
-		tree->quote_count += 1;
-		while (argv[*i + *j] && (argv[*i + *j] != c
-		|| escaped_quote(argv, tree, i, j)))
-			*j += 1;
-		ft_strcpy(argv + *i + *j, argv + *i + *j + 1);
-		tree->quote_count += 1;
-	}
-}
-
-t_args *new_args(char *argv, int *j, int *i)
-{
-	t_args *new_el;
-
-	if (!(new_el = (t_args*)malloc(sizeof(t_args))))
-		del_sh21_exit();
-	new_el->content = ft_strndup(argv + *i, *j + 1);
-	new_el->next = NULL;
-	*i += *j;
-	*j = 0;
-	return (new_el);
-}
-
-void case_space(char *argv, int *i, int *j, t_args **list)
-{
-	if (*j)
-		add_elem_back((void**)list, (void*)new_args(argv, j, i));
-	else
-		*i += 1;
-}
-
 void del_el(void **el)
 {
 	t_args **ptr;
@@ -141,7 +57,7 @@ char **split_args(char *argv)
 	sh21_get()->tree.quote_count = 0;
 	while (argv[i + j])
 	{
-		if (escaped_quote(argv, &sh21_get()->tree, &i, &j))
+		if (escaped_char(argv, &sh21_get()->tree, &i, &j))
 			j++;
 		else if (argv[i + j] == '\"' || argv[i + j] == '\'')
 			case_quote_args(argv, &i, &j);
