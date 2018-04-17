@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 15:02:35 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/16 15:02:55 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/17 18:57:52 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ static char	*check_correct_2(int i, char *cmd)
 		if (cmd[o] == '\0')
 		{
 			if (stock == '|')
-				return ("cmd>");
+				return ("cmd> ");
 			else if (stock == '\\')
 				return ("cmd");
 			else if (stock == '&' && beforestock && beforestock == '&')
-				return ("cmd>");
+				return ("cmd> ");
 		}
 	}
 	return (NULL);
@@ -94,16 +94,16 @@ char		*check_correct(char *cmd)
 		if (cmd[i] == '\\')
 		{
 			if (cmd[++i] == '\0')
-				return ("cmd>");
+				return ("cmd> ");
 			i++;
 			continue ;
 		}
 		if ((stock = quote(cmd, &i)) != 0)
 		{
 			if (stock == 1)
-				return ("d_quote>");
+				return ("d_quote> ");
 			if (stock == 2)
-				return ("s_quote>");
+				return ("s_quote> ");
 		}
 		if (check_correct_2(i, cmd) != NULL)
 			return (check_correct_2(i, cmd));
