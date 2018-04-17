@@ -14,11 +14,26 @@
 
 void	case_backslash(char **ret, char **ptr, int *i, char *special_chars)
 {
+	t_ast	*tree;
+	int		len;
+	int		quote;
+
+	quote = 0;
+	tree = &sh21_get()->tree;
 	*ret = add_str(ret, ptr, i);
 	(*i)++;
 	if (!special_chars || ft_strindex(special_chars, (*ptr)[*i]) >= 0)
 		(*ptr)++;
+	if (**ptr == '\'' || **ptr == '\"')
+		quote = 1;
 	*ret = add_str(ret, ptr, i);
+	if (quote)
+	{
+		len = ft_strlen(*ret);
+		tree->esc_i[tree->nb_escaped_quote] = len ? len - 1 : len;
+		if (tree->nb_escaped_quote < NB_ESCAPED_QUOTE)
+			tree->nb_escaped_quote++;
+	}
 }
 
 void	case_dollar(char **ret, char **ptr, int *i)
