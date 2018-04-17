@@ -52,7 +52,7 @@ SRC =  cli.c cli_init.c \
 		set_sh21.c sh21_exec.c is_correct.c bi_cd_2.c bi_cd3.c
 
 LIBFT_INCLUDE = $(LIBFT_DIR)/include
-CFLAG = -g3 -O2 -Wall -Wextra -I $(LIBFT_INCLUDE) -I $(INCLUDE)
+CFLAG = -g3 -O2 -Wall -Wextra -fsanitize=address -I $(LIBFT_INCLUDE) -I $(INCLUDE)
 CC = cc
 LFLAG = -ltermcap
 BIN = bin

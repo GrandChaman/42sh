@@ -21,6 +21,7 @@
 # define TMP_PATH_HEREDOC "/tmp/"
 # define CONTENT_SIZE 1024
 # define SPECIAL_PARAMETERS "@*#?-$!0"
+# define NB_ESCAPED_QUOTE 1024
 
 typedef struct			s_fd_cleanup
 {
@@ -39,13 +40,21 @@ typedef struct			s_ast_node
 	struct s_ast_node	*right;
 }						t_ast_node;
 
+typedef struct			s_args
+{
+	struct s_args 		*next;
+	char 				*content;
+}						t_args;
+
 typedef struct			s_ast
 {
 	t_ast_node			*root_node;
 	t_fd_cleanup		*fd_cleanup;
 	char				heredoc_file[TMP_HEREDOC_SIZE];
-	int 				escaped_quote_count[1000];
+	int 				esc_i[NB_ESCAPED_QUOTE];
 	int 				nb_escaped_quote;
+	int 				i;
+	int 				quote_count;
 }						t_ast;
 
 typedef void			(*t_fd_function)(t_fd_cleanup*);
