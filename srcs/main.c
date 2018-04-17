@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/17 16:55:58 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/17 17:00:28 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	str_replace(char **src, char *tok, char *new)
 int is_ok(char *str, int bef, int aft)
 {
 	if (str[bef] != '\\' && str[bef] != '\''
-		&& str[aft] != '"')
+		&& str[aft] != '"' && !is_whitespace(str[aft]))
 		return (1);
 	return (0);
 }
