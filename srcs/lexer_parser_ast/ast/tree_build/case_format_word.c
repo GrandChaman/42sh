@@ -12,22 +12,27 @@
 
 #include "sh21.h"
 
+/*
+** The function case_backslash fill an array to keep the index of backslashed
+** character that will be interpreted a second time in the split_args function
+*/
+
 void	case_backslash(char **ret, char **ptr, int *i, char *special_chars)
 {
 	t_ast	*tree;
 	int		len;
-	int		quote;
+	int		backslashed;
 
-	quote = 0;
+	backslashed = 0;
 	tree = &sh21_get()->tree;
 	*ret = add_str(ret, ptr, i);
 	(*i)++;
 	if (!special_chars || ft_strindex(special_chars, (*ptr)[*i]) >= 0)
 		(*ptr)++;
-	if (**ptr == '\'' || **ptr == '\"')
-		quote = 1;
+	if (**ptr == '\'' || **ptr == '\"' || is_whitespace(**ptr))
+		backslashed = 1;
 	*ret = add_str(ret, ptr, i);
-	if (quote)
+	if (backslashed)
 	{
 		len = ft_strlen(*ret);
 		tree->esc_i[tree->nb_escaped_quote] = len ? len - 1 : len;

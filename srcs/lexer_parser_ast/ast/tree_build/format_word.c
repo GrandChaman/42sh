@@ -20,6 +20,19 @@ static char	*norme_0(int i, char *ret, char *ptr, char **str)
 	return (ret);
 }
 
+static void	bminus(void)
+{
+	t_ast	*tree;
+	int		i;
+
+	i = 0;
+	tree = &sh21_get()->tree;
+	while (i < NB_ESCAPED_QUOTE)
+	{
+		tree->esc_i[i++] = -1;
+	}
+}
+
 char		*format_word(char **str)
 {
 	char	*ret;
@@ -30,6 +43,7 @@ char		*format_word(char **str)
 	ptr = *str;
 	ret = NULL;
 	sh21_get()->tree.nb_escaped_quote = 0;
+	bminus();
 	while (ptr[i])
 	{
 		if (ptr[i] == '\\')
