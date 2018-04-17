@@ -30,7 +30,7 @@ static void	main_loop(t_sh21 *sh21, t_ft_sh *shell)
 	fb = 0;
 	while (42)
 	{
-		if (((cmd = read_command(NULL, 0, 0, (!fb ? fb++ : fb))) == NULL))
+		if (((cmd = read_command(NULL, sh21->ret, 0, (!fb ? fb++ : fb))) == NULL))
 			break ;
 		sh21->buf = cmd;
 		lexer(sh21);

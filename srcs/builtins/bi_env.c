@@ -23,19 +23,6 @@ static	int		flag_i(char **av, char ***cpy_env, int *i)
 	return (2);
 }
 
-static	int		flag_p(char **av, char ***cpy_env, int *i)
-{
-	if (av[++(*i)])
-	{
-		if (!av[*i])
-			return (print_env(*cpy_env));
-		ft_setenv("PATH", av[(*i)++], 1, cpy_env);
-	}
-	else
-		return (env_usage('P', 2));
-	return (2);
-}
-
 static	int		flag_u(char **av, char ***cpy_env, int *i)
 {
 	if (av[++(*i)])
@@ -82,9 +69,6 @@ int				bi_env(int ac, char *av[], char ***environ)
 	env->env_cpy = tmp;
 	if (av[i] && ft_strequ(av[i], "-i"))
 		if ((ret = flag_i(av, &env->env_cpy, &i)) < 2)
-			return (ret);
-	if (av[i] && ft_strequ(av[i], "-P"))
-		if ((ret = flag_p(av, &env->env_cpy, &i)) < 2)
 			return (ret);
 	while (av[i] && ft_strequ(av[i], "-u"))
 		if ((ret = flag_u(av, &env->env_cpy, &i)) < 2)
