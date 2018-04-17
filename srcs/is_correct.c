@@ -62,7 +62,9 @@ static char	*check_correct_2(int i, char *cmd)
 	if (cmd[i] && (cmd[i] == '|' || cmd[i] == '\\' || cmd[i] == '&'))
 	{
 		stock = cmd[i];
-		if (cmd[i - 1])
+		if (i == 0)
+			beforestock = '\0';
+		else
 			beforestock = cmd[i - 1];
 		o = i;
 		o++;
