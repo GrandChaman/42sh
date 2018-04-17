@@ -46,7 +46,7 @@ char	*find_internal(char *str)
 
 char	*find_var(char *str)
 {
-	if (ft_strindex(SPECIAL_PARAMETERS, str[0]))
+	if (ft_strindex(SPECIAL_PARAMETERS, str[0]) >= 0)
 		return (special_parameters(str[0]));
 	else
 		return (find_internal(str));
