@@ -16,7 +16,7 @@ char	*cd_rule5(char *curpath, char ***environ)
 {
 	char				**cdpath;
 	char				*buf;
-	int 				slash;
+	int					slash;
 	int					i;
 
 	i = -1;
@@ -37,13 +37,7 @@ char	*cd_rule5(char *curpath, char ***environ)
 		ft_strdel(&buf);
 	}
 	del_arr(&cdpath);
-	curpath = ft_strjoin("./", curpath);
-	if (!ft_is_dir(curpath, 1))
-	{
-		ft_strdel(&curpath);
-		return (NULL);
-	}
-	return (curpath);
+	return (cd_rules5_2(curpath));
 }
 
 int		cd_rule8_casedotdot(int *i, char *curpath, int free_curpath)
@@ -70,41 +64,40 @@ int		cd_rule8_casedotdot(int *i, char *curpath, int free_curpath)
 	return (1);
 }
 
-int 	cd_rule8(char *curpath, char ***environ, int flag, int free_curpath)
+int		cd_rule8(char *cur, char ***environ, int flag, int free_curpath)
 {
 	int i;
 	int len;
 
 	i = 0;
-	while (curpath[i])
+	while (cur[i])
 	{
-		if (ft_strnequ(curpath + i, "/./", 3)
-		|| ft_strnequ(curpath + i, "/.", 3))
-			ft_strcpy(curpath + i, curpath + i + 2);
-		else if (ft_strnequ(curpath + i, "//", 2))
-			ft_strcpy(curpath + i, curpath + i + 1);
-		else if ((ft_strnequ(curpath + i, "/../", 4)
-		|| ft_strnequ(curpath + i, "/..", 4)) && i != 0)
+		if (ft_strnequ(cur + i, "/./", 3) || ft_strnequ(cur + i, "/.", 3))
+			ft_strcpy(cur + i, cur + i + 2);
+		else if (ft_strnequ(cur + i, "//", 2))
+			ft_strcpy(cur + i, cur + i + 1);
+		else if ((ft_strnequ(cur + i, "/../", 4)
+		|| ft_strnequ(cur + i, "/..", 4)) && i != 0)
 		{
-			if (!cd_rule8_casedotdot(&i, curpath, free_curpath))
+			if (!cd_rule8_casedotdot(&i, cur, free_curpath))
 				return (1);
 		}
 		else
 			i++;
 	}
-	if ((len = ft_strlen(curpath)) > PATH_MAX || curpath[0] == 0)
+	if ((len = ft_strlen(cur)) > PATH_MAX || cur[0] == 0)
 	{
-		(free_curpath ? ft_strdel(&curpath) : (0));
+		(free_curpath ? ft_strdel(&cur) : (0));
 		return (len > PATH_MAX ? 1 : 0);
 	}
-	return (cd_rule10(curpath, environ, flag, free_curpath));
+	return (cd_rule10(cur, environ, flag, free_curpath));
 }
 
-int 	cd_rule7(char *curpath, char ***environ, int flag, int free_curpath)
+int		cd_rule7(char *curpath, char ***environ, int flag, int free_curpath)
 {
 	const char	*pwd;
-	char				*curpath_new;
-	int 				slash;
+	char		*curpath_new;
+	int			slash;
 
 	if (flag == CD_P)
 		return (cd_rule10(curpath, environ, flag, free_curpath));
@@ -124,8 +117,7 @@ int 	cd_rule7(char *curpath, char ***environ, int flag, int free_curpath)
 	return (cd_rule8(curpath, environ, flag, free_curpath));
 }
 
-
-int 	cd_rule_dash(char ***environ, int flag)
+int		cd_rule_dash(char ***environ, int flag)
 {
 	char	*oldpwd;
 

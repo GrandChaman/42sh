@@ -58,6 +58,7 @@ static int	flag_echo(char **argv, int *should_print_nl)
 	int o;
 
 	i = 1;
+	*should_print_nl = 1;
 	while (argv[i] && argv[i][0] == '-')
 	{
 		o = 1;
@@ -81,8 +82,8 @@ static int	norme_0(char **argv, int i, int ii, int stock)
 
 	if (!argv[1])
 		return (0 * ft_printf("\n"));
-	i = flag_echo(argv, &should_print_nl) - 1;
-	while (argv[++i] && (ii = -1))
+	i = flag_echo(argv, &should_print_nl);
+	while (argv[i] && (ii = -1))
 	{
 		if ((flag_echo(argv, &should_print_nl)) != i)
 			write(STDOUT_FILENO, " ", 1);
@@ -97,6 +98,7 @@ static int	norme_0(char **argv, int i, int ii, int stock)
 			}
 			else
 				write(STDOUT_FILENO, &(argv[i][ii]), 1);
+		i++;
 	}
 	if (should_print_nl)
 		write(STDOUT_FILENO, "\n", 1);
