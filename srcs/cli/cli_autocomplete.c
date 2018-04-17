@@ -6,16 +6,19 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 16:26:13 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/17 13:50:00 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/17 16:46:03 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cli.h"
+#include "sh21.h"
 
 static char				*extract_autocomplete_search(t_ft_sh *sh)
 {
-	int i;
-	int len;
+	int		i;
+	int		len;
+	char	*tmp;
+	char	*res;
 
 	i = 0;
 	len = 0;
@@ -26,8 +29,17 @@ static char				*extract_autocomplete_search(t_ft_sh *sh)
 	while (sh->cursor - i - len > 0 &&
 		!ft_iswhitespace(sh->buf.buf[sh->cursor - i - len]))
 		len++;
-	return (ft_strndup2(sh->buf.buf + (sh->cursor - i - len) +
-		(sh->cursor - i - len > 0), len - (sh->cursor - i - len > 0)));
+	tmp = ft_strndup2(sh->buf.buf + (sh->cursor - i - len) +
+		(sh->cursor - i - len > 0), len - (sh->cursor - i - len > 0));
+	if (tmp && tmp[0] == '~')
+	{
+		ft_asprintf(&res, "%s%s", ft_getenv("HOME", &sh21_get()->env.orig_env),
+			tmp + 1);
+		free(tmp);
+		return (res);
+	}
+	else
+		return (tmp);
 }
 
 void					collect_data(char *str_part)
