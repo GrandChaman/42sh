@@ -6,7 +6,7 @@
 #    By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/16 13:28:08 by fle-roy           #+#    #+#              #
-#    Updated: 2018/04/17 16:37:24 by rfautier         ###   ########.fr        #
+#    Updated: 2018/04/17 17:03:24 by fle-roy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ SRC =  cli.c cli_init.c \
 		subshell.c timespec.c word_list.c main.c del_ast.c del_env.c del_hash.c \
 		del_lex.c del_redir.c del_sh21.c errors.c \
 		input_piped_script.c env_usage.c print_env.c print_lex.c \
-		set_sh21.c sh21_exec.c is_correct.c bi_cd_2.c bi_cd3.c
+		set_sh21.c sh21_exec.c is_correct.c bi_cd_2.c bi_cd3.c bi_history.c
 
 LIBFT_INCLUDE = $(LIBFT_DIR)/include
 CFLAG = -g3 -O2 -Wall -Wextra -fsanitize=address -I $(LIBFT_INCLUDE) -I $(INCLUDE)
