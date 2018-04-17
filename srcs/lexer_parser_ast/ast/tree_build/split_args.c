@@ -145,12 +145,8 @@ void case_quote_args(char *argv, int *i, int *j)
 		ft_strcpy(argv + *i + *j, argv + *i + *j + 1);
 		tree->quote_count += 1;
 		while (argv[*i + *j] && (argv[*i + *j] != c || escaped_quote(argv, tree, i, j)))
-		{
-			// ft_printf("case_quote : %s\n", argv + *i + *j);
 			*j += 1;
-		}
 		ft_strcpy(argv + *i + *j, argv + *i + *j + 1);
-		// ft_printf("case_quote : %s\n", argv + *i + *j);
 		tree->quote_count += 1;
 	}
 }
@@ -224,7 +220,7 @@ char **split_args(char *argv)
 	sh21_get()->tree.quote_count = 0;
 	while (argv[i + j])
 	{
-		ft_printf("argv = %s, i = %d, j = %d\n", argv + i + j, i, j);
+		// ft_printf("argv = %s, i = %d, j = %d\n", argv + i + j, i, j);
 		if (argv[i + j] == '\"' || argv[i + j] == '\'')
 			case_quote_args(argv, &i, &j);
 		else if (is_whitespace(argv[i + j]))
