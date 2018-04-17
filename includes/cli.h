@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cli.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 10:56:03 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/16 15:07:01 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/17 17:35:57 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ typedef	struct			s_ft_touch
 typedef	struct			s_ft_hist_entry
 {
 	char				*command;
-	int					timestamp;
+	long				timestamp;
 }						t_ft_hist_entry;
 
 char					*check_correct(char *toto);
