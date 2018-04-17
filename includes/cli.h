@@ -184,6 +184,7 @@ void					history_nav(unsigned long touch);
 void					cli_reset_cursor(t_ft_sh *sh);
 void					sh_clear_screen(unsigned long rchar);
 void					vertical_nav(unsigned long touch);
+char					*search_history_nav(t_ft_sh *sh, char *search, int up);
 void					collect_data(char *str_part);
 void					ft_sh_autocomplete(unsigned long touch);
 unsigned int			cursor_new_origin(t_ft_sh *sh);

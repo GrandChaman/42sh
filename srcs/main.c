@@ -18,117 +18,134 @@
 
 t_lex		*g_err_lex;
 
-
-static char	*ft_strpushm(char *str, size_t idx, char c)
+char *get_history_at(int nb, int *j)
 {
-	char	*new;
-	size_t	ln;
+	const t_list	*list = get_ft_shell()->history;
+	int	len = ft_lstsize((t_list*)list);
+	t_list *ptr;
 
-	if (!str)
+	char *iota;
+
+	nb += nb < 0 ? len + 1 : 0;
+	if (nb <= 0 || nb > len)
+		return (NULL);
+	iota = ft_itoa(nb);
+	*j += ft_strlen(iota);
+	ft_strdel(&iota);
+	ptr = (t_list*)list;
+	while (len != nb && len > 0)
 	{
-		new = ft_strnew(1);
-		new[0] = c;
-		return (new);
+		ptr = ptr->next;
+		len--;
 	}
-	ln = ft_strlen(str);
-	if (ln == 0)
-	{
-		new = ft_strnew(1);
-		new[0] = c;
-		ft_strdel(&str);
-		return (new);
-	}
-	if (idx > ln)
-		return (str);
-	new = ft_strnew(ln + 1);
-	ft_strncpy(new, str, idx);
-	ft_strncat(new, &c, 1);
-	ft_strcat(new, str + idx);
-	ft_strdel(&str);
-	return (new);
+	return (ft_strdup(((t_ft_hist_entry*)(ptr->content))->command));
 }
 
-int	str_replace(char **src, char *tok, char *new)
+char *cmp_history(char *str, int *j)
 {
-	char	*ptr;
-	if ((ptr = ft_strstr(*src, tok)))
-	{
-		int	offset = (int)(ptr - *src);
-		int	nb = ft_strlen(tok);
-		while (nb)
-		{
-			*src = ft_strpop(*src, offset);
-			--nb;
-		}
-		char *tmp = new;
-		while (*tmp)
-		{
-			*src = ft_strpushm(*src, offset + nb, *tmp);
-			++nb;
-			++tmp;
-		}
-		return (1);
-	}
-	return (0);
+	char *tmp;
+	char *ret;
+
+	while (str[*j] && ft_isalpha(str[*j]))
+		*j += 1;
+	tmp = ft_strndup(str, *j);
+	ret = search_history_nav(get_ft_shell(), tmp, 1);
+	ft_printf("tmp = %s.       |     ret = %s\n", tmp, ret);
+	ft_strdel(&tmp);
+	return (ft_strdup(ret));
 }
 
-int is_ok(char *str, int bef, int aft)
+void replace_bang(char **str, int *i, int *j, char *bang)
 {
-	if (str[bef] != '\\' && str[bef] != '\''
-		&& str[aft] != '"' && !is_whitespace(str[aft]))
-		return (1);
-	return (0);
+	char *ret;
+
+	ret = ft_strnew(ft_strlen(*str) + ft_strlen(bang));
+	ft_strncpy(ret, *str, *i);
+	ft_strcat(ret, bang);
+	ft_strcat(ret, *str + *i + *j + 1);
+	ft_strdel(str);
+	*str = ret;
 }
 
-char	*get_history_at(int i)
+int case_bang(char **str, int *i)
 {
-	t_ft_sh *sh = get_ft_shell();
-	t_list	*tmp, *first;// *last;
-	const int len = ft_lstsize(sh->history);
-	int mv;
+	int		j;
+	int		ret;
+	char	*bang;
 
-	if (i < 0)
-		mv = -i;
-	else if (i > 0)
-		mv = len - i;
+	j = 1;
+	if (!(*str)[*i + j])
+		bang = NULL;
+	else if ((*str)[*i + j] == '!')
+		bang = ft_strdup(((t_ft_hist_entry*)(get_ft_shell()->
+			history->content))->command);
+	else if (ft_isdigit((*str)[*i + j]) || (*str)[ *i + j] == '-')
+		bang = get_history_at(ft_atoi((*str) + *i + j), &j);
 	else
-		mv = 0;
-
-	first = sh->history;
-	tmp = first;
-	while (tmp && mv--)
-	{
-		first = tmp;
-		tmp = tmp->next;
-	}
-	return ((t_ft_hist_entry*)first->content)->command;
+		bang = cmp_history(*str + *i + j, &j);
+	if (!bang)
+		return (0);
+	replace_bang(str, i, &j, bang);
+	*i += 1 + ft_strlen(bang);
+	return (1);
 }
 
-static int bbb(char *str)
+int case_backslash_bang(char *str, int *i, char c)
 {
-	int i = 0;
-	int aa;
-	char *tmp = str;
-	int err;
-	while (*tmp)
+	int ret;
+
+	*i += 1;
+	ret = str[*i] == c;
+	if (str[*i])
+		*i += 1;
+	return (ret);
+}
+
+void case_quote_bang(char *str, int *i)
+{
+	*i += 1;
+	while (str[*i] && (str[*i] != '\'' || case_backslash_bang(str, i, str[*i])))
+		*i += 1;
+}
+
+int case_dquote_bang(char **str, int *i)
+{
+	int ret;
+
+	ret = 1;
+	*i += 1;
+	while ((*str)[*i] && ((*str)[*i] != '"'))
 	{
-		if (str[i] == '!' && str[i + 1] == '!' && is_ok(str, i - 1, i + 1))
-			err = str_replace(&str, "!!", get_history_at(0));
-		else if (str[i] == '!'
-					&& is_ok(str, i - 1, i + 1)
-					&& ((str[i + 1] == '-' && ft_isdigit(str[i + 2]))
-						|| ft_isdigit(str[i + 1])))
-		{
-			aa = ft_atoi(&str[i + 1]);
-			char	*j = ft_strjoin("!", ft_itoa(aa));
-			err = str_replace(&str, j, get_history_at(aa));
-			free(j);
-		}
-		++i;
-		++tmp;
+		if ((*str)[*i] == '!')
+			ret = case_bang(str, i);
+		*i += 1;
 	}
-	err ? ft_printf("%s\n", str) : (0);
-	return (err);
+	return (ret);
+}
+
+static int bbb(char **str)
+{
+	int i;
+	int ret;
+
+	ret = 1;
+	i =0;
+	while ((*str)[i])
+	{
+		if ((*str)[i] == '\\')
+			case_backslash_bang(*str, &i, (*str)[i]);
+		else if ((*str)[i] == '\'')
+			case_quote_bang(*str, &i);
+		else if ((*str)[i] == '\"')
+			ret = case_dquote_bang(str, &i);
+		else if ((*str)[i] == '!')
+			ret = case_bang(str, &i);
+		else
+			i++;
+		if (!ret)
+			break;
+	}
+	return (ret);
 }
 
 static void	ignore_signal(int sig)
@@ -146,14 +163,19 @@ static void	main_loop(t_sh21 *sh21, t_ft_sh *shell)
 	{
 		if (((cmd = read_command(NULL, sh21->ret, 0, (!fb ? fb++ : fb))) == NULL))
 			break ;
-		int x = bbb(cmd);
-		x ? (0) : add_to_history(shell, cmd);
+		if (bbb(&cmd) < 0)
+		{
+			del_sh21();
+			ft_strdel(&cmd);
+			continue;
+		}
+		add_to_history(shell, cmd);
 		sh21->buf = cmd;
 		lexer(sh21);
 		if (parser(sh21->lex) && sh21->signal != T_CTRL_C)
 			sh21_get()->ret = exec_tree(sh21->tree.root_node);
 		del_sh21();
-		free(cmd);
+		ft_strdel(&cmd);
 	}
 }
 
