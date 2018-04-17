@@ -71,14 +71,9 @@ static void	escape(t_lexa *lexa)
 
 static void	lexfallbackesc(t_lexa *lexa)
 {
-	if (lexa->c == '\\')
-	{
-		lexa->stat = SWORD;
-		lexa->t = WORD;
-		lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
-	}
-	else if (lexa->c == '"' || lexa->c == '\'')
-		on_quote(lexa);
+	lexa->stat = SWORD;
+	lexa->t = WORD;
+	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
 }
 
 int			lexer(t_sh21 *sh21)
@@ -89,8 +84,10 @@ int			lexer(t_sh21 *sh21)
 	while (*lexa.str && (lexa.c = *(lexa.str)))
 	{
 		check_semi_stat(&lexa);
-		if (lexa.c == '\\' || (lexa.c == '"' || lexa.c == '\''))
+		if (lexa.c == '\\')
 			escape(&lexa);
+		else if (lexa.c == '"' || lexa.c == '\'')
+			on_quote(&lexa);
 		else if (lexa.oquote)
 			lexa.buffer = ft_strpushback(lexa.buffer, lexa.c, &g_lexa_buff_sz);
 		else if (lexa.c == ' ')
