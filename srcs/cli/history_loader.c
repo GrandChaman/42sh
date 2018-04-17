@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 14:16:25 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/05 16:10:16 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/17 17:36:03 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void			write_history(t_ft_sh *sh, int fd)
 	while (list)
 	{
 		entry = (t_ft_hist_entry*)list->content;
-		ft_fprintf(fd, "%d %s\n", entry->timestamp, entry->command);
+		ft_fprintf(fd, "%ld %s\n", entry->timestamp, entry->command);
 		list = list->prev;
 	}
 	ft_lstdel(&sh->history, delete_hist_entry);
@@ -94,7 +94,7 @@ void				add_to_history(t_ft_sh *sh, char *cmd)
 	last_nl = 0;
 	if (!cmd || cmd[0] == '\0')
 		return ;
-	entry.timestamp = time(NULL);
+	entry.timestamp = (unsigned int)time(NULL);
 	while (cmd[i++])
 		if (cmd[i] == '\n' || !cmd[i])
 		{
