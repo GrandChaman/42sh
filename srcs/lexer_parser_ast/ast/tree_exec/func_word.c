@@ -13,6 +13,19 @@
 #include "sh21.h"
 #include "ast.h"
 
+void 	bminus(void)
+{
+	t_ast *tree;
+	int i;
+
+	i = 0;
+	tree = &sh21_get()->tree;
+	while (i < NB_ESCAPED_QUOTE)
+	{
+		tree->esc_i[i++] = -1;
+	}
+}
+
 int		func_word(t_ast_node *root)
 {
 	t_sh21			*sh21;
@@ -23,6 +36,7 @@ int		func_word(t_ast_node *root)
 	if (!root)
 		return (0);
 	sh21 = sh21_get();
+	bminus();
 	root->content = format_word(&root->content);
 	sh21->argv = split_args(root->content);
 	sh21->argc = arrlen(sh21->argv);
