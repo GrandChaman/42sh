@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 15:54:39 by hfontain          #+#    #+#             */
-/*   Updated: 2018/03/19 20:37:03 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/17 17:05:52 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int						bi_unsetenv(int argc, char **argv, char ***environ);
 int						bi_hash(int argc, char **argv, char ***environ);
 int						bi_export(int argc, char **argv, char ***environ);
 int						bi_unset(int argc, char **argv, char ***environ);
+int						bi_history(int argc, char **argv, char ***environ);
 
 char					*cd_rule5(char *curpath, char ***environ);
 int						cd_rule8_casedotdot(int *i, char *curpath, int free_curpath);
@@ -86,6 +87,7 @@ static const t_builtin	g_builtins[] =
 	{"hash", &bi_hash},
 	{"unset", &bi_unset},
 	{"export", &bi_export},
+	{"history", &bi_history},
 	{"End of Builtins", NULL}
 };
 
