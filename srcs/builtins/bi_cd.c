@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 16:45:16 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/05 14:01:07 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/18 18:48:22 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char			*check_flag(int *flag, char **argv, int *error)
 			if (argv[o][i] != 'L' && argv[o][i] != 'P')
 			{
 				ft_fprintf(2,
-					"42sh :cd: -%c: invalid option\ncd: usage:"
+					"cd: -%c: invalid option\nusage:"
 					" cd [-L|-P] [dir]\n");
 				*error = 1;
 				return (NULL);

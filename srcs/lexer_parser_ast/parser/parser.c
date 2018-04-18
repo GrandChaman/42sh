@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/16 14:27:15 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/18 18:46:15 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		parser(t_lex *lex)
 		sh21_get()->tree.root_node = ast_create_tree(cpy);
 		return (1);
 	}
-	ft_printf("21sh: Syntax error near '%s'\n", lex->content);
+	ft_fprintf(2, "{red}42sh{eoc}: Syntax error near '%s'\n", lex->content);
 	ft_strdel(&g_err_lex->content);
 	return (0);
 }
