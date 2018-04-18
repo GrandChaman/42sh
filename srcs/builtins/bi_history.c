@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/17 18:20:08 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/18 13:28:29 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "cli.h"
 #include <time.h>
 
-int					bi_history(int argc, char **argv, char ***environ)
+static int			display_history(int limit)
 {
 	t_ft_sh			*sh;
 	t_list			*tmp;
@@ -22,15 +22,13 @@ int					bi_history(int argc, char **argv, char ***environ)
 	unsigned int	i;
 	char			t_format[50];
 
-	(void)argc;
-	(void)argv;
-	(void)environ;
 	sh = get_ft_shell();
-	tmp = sh->history;
-	tmp = ft_lstlast(tmp);
-	if (!tmp)
-		return (0);
 	i = 0;
+	if (!(tmp = (limit || limit > ft_lstsize(sh->history) ?
+		ft_lstat(sh->history, limit) : ft_lstlast(sh->history))))
+		return (0);
+	if (tmp != sh->history)
+		i = ft_lstsize(tmp);
 	while ((tmp = tmp->prev))
 	{
 		entry = (t_ft_hist_entry*)tmp->content;
@@ -41,4 +39,25 @@ int					bi_history(int argc, char **argv, char ***environ)
 		i++;
 	}
 	return (0);
+}
+
+int					bi_history(int argc, char **argv, char ***environ)
+{
+	int i;
+
+	i = 0;
+	(void)environ;
+	if (argc == 1)
+		return (display_history(0));
+	if (argv[1][0] == '-')
+		return (0);//Handle param
+	else
+	{
+		while (argv[1][i])
+			if (!ft_isdigit(argv[1][i++]))
+				return (ft_fprintf(2, "42sh: history: %s: numeric argument"
+					" required", argv[1]) && 1);
+		return (display_history(ft_atoi(argv[1])));
+	}
+
 }
