@@ -39,6 +39,7 @@ typedef struct			s_ast_node
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
 	struct s_ast_node	*redir_node;
+	struct s_ast_node	*condition_node;
 }						t_ast_node;
 
 typedef struct			s_args
@@ -74,7 +75,8 @@ enum	e_fd
 char					**split_args(char *argv);
 
 int						ast_apply_prefix(t_ast_node *root);
-int						ast_redir_token(t_token_type type);
+int						ast_is_shell_cmd(t_token_type type);
+int						ast_redir_node(t_token_type type);
 int						exec_tree(t_ast_node *first);
 int						func_amper(t_ast_node *root);
 int						func_and_if(t_ast_node *root);
@@ -146,6 +148,17 @@ void					fd_close(t_fd_cleanup *elem);
 void					fd_reassign(t_fd_cleanup *elem);
 void					heredoc_node(t_ast_node *node);
 
+
+t_ast_node				*ast_assignment_word(t_lex **lex, t_ast_node *node);
+t_ast_node		*ast_pipe(t_lex **lex, t_ast_node *root);
+t_ast_node		*ast_while(t_lex **lex, t_ast_node *root);
+t_ast_node		*ast_word(t_lex **lex, t_ast_node *node);
+t_ast_node		*ast_compound_list(t_lex **lex, t_ast_node *node);
+t_ast_node		*ast_else(t_lex **lex, t_ast_node *root);
+t_ast_node		*ast_elif(t_lex **lex, t_ast_node *root);
+t_ast_node		*ast_if(t_lex **lex, t_ast_node *node);
+
+
 char					*format_word(char **str);
 char					*word(char **argv);
 char					*add_str(char **ret, char **ptr, int *i);
@@ -166,8 +179,7 @@ void					case_space(char *argv, int *i, int *j, t_args **list);
 void					del_el(void **el);
 char					**copy_list_to_array(t_args **list);
 char					**split_args(char *argv);
-
-
+void					ast_print(t_ast_node *root);
 
 static t_exec_tree g_exec_fn[] =
 {
