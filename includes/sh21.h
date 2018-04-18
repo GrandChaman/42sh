@@ -91,5 +91,6 @@ void				ft_lstpush(t_list *lst, t_list *lnew);
 void				ft_lstqueue(t_list **lst, t_list *lnew);
 size_t				compute(const char *n, const char *v, \
 					char **str, void *to_free);
+char				*remove_char(char *str);
 
 #endif
