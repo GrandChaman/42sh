@@ -129,7 +129,6 @@ int bang(char **str)
 			ft_strdel(str);
 			break;
 		}
-		ft_printf("str = %s\n", *str);
 	}
 	return (ret);
 }
