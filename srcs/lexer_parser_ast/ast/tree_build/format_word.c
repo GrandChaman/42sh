@@ -6,11 +6,12 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 16:24:35 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/16 15:02:04 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/17 16:05:33 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
+#include "builtins.h"
 
 static char	*norme_0(int i, char *ret, char *ptr, char **str)
 {
