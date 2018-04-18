@@ -26,6 +26,7 @@ static const char	*g_own_message[] =
 	"Invalid null input",
 	"No such file or directory",
 	"OLDPWD not valid",
+	"event not found",
 	""
 };
 
