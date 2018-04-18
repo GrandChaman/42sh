@@ -34,6 +34,7 @@ static void	main_loop(t_sh21 *sh21, t_ft_sh *shell)
 	{
 		if (((cmd = read_command(NULL, sh21->ret, 0, (!fb ? fb++ : fb))) == NULL))
 			break ;
+		cmd = remove_char(cmd);
 		if (bang(&cmd) < 0)
 		{
 			del_sh21();
