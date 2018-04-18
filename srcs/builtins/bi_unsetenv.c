@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 16:43:37 by hfontain          #+#    #+#             */
-/*   Updated: 2018/03/14 21:32:30 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/18 18:49:06 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		bi_unsetenv(int argc, char **argv, char ***environ)
 
 	if (argc == 1)
 	{
-		ft_printf("%[RED]21sh%[NC]: unsetenv: Too few arguments\n");
+		ft_printf("unsetenv: Too few arguments\n");
 		return (1);
 	}
 	i = 1;
