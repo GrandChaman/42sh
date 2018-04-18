@@ -44,23 +44,25 @@ int		cd_rule8_casedotdot(int *i, char *curpath, int free_curpath)
 {
 	int j;
 
-	j = -1;
-	curpath[*i] = 0;
+	j = *i == 0 ? 0 : -1;
+	curpath[*i + 1] = 0;
 	if (!ft_is_dir(curpath, 1))
 	{
 		(free_curpath ? ft_strdel(&curpath) : (0));
 		return (0);
 	}
-	curpath[*i] = '/';
+	curpath[*i + 1] = '.';
 	while (j + *i >= 0 && curpath[j + *i] != '/')
 		j--;
 	if (curpath[*i + 3] != '/')
 		j++;
-	if (j + *i != 0)
+	if (j < 0)
 	{
 		ft_strcpy(curpath + *i + j, curpath + *i + 3);
 		*i += j;
 	}
+	else
+		ft_strcpy(curpath + 1, curpath + 3);
 	return (1);
 }
 
@@ -76,8 +78,8 @@ int		cd_rule8(char *cur, char ***environ, int flag, int free_curpath)
 			ft_strcpy(cur + i, cur + i + 2);
 		else if (ft_strnequ(cur + i, "//", 2))
 			ft_strcpy(cur + i, cur + i + 1);
-		else if ((ft_strnequ(cur + i, "/../", 4)
-		|| ft_strnequ(cur + i, "/..", 4)) && i != 0)
+		else if (ft_strnequ(cur + i, "/../", 4)
+		|| ft_strnequ(cur + i, "/..", 4))
 		{
 			if (!cd_rule8_casedotdot(&i, cur, free_curpath))
 				return (1);

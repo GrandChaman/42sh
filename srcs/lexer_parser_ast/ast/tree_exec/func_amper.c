@@ -16,5 +16,6 @@
 int		func_amper(t_ast_node *root)
 {
 	(void)root;
+	// root->left.job = 1;
 	return (0);
 }
