@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 10:56:03 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/17 17:35:57 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/18 15:30:06 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,8 @@ void					vertical_nav(unsigned long touch);
 void					skip_in_terminal(unsigned long touch);
 void					home_or_end_touch(unsigned long touch);
 int						is_last_char_a_nl(void);
+int						read_history(t_ft_sh *sh, int fd);
+void					write_history(t_ft_sh *sh, int fd, int should_delete);
 
 static t_ft_touch		g_ft_touch_list[] =
 {

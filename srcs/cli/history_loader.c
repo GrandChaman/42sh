@@ -6,13 +6,13 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 14:16:25 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/17 17:36:03 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/18 15:32:11 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cli.h"
 
-static int			read_history(t_ft_sh *sh, int fd)
+int						read_history(t_ft_sh *sh, int fd)
 {
 	int				gnl_res;
 	char			*line;
@@ -36,7 +36,7 @@ static int			read_history(t_ft_sh *sh, int fd)
 	return (gnl_res);
 }
 
-static void			write_history(t_ft_sh *sh, int fd)
+void				write_history(t_ft_sh *sh, int fd, int should_delete)
 {
 	t_ft_hist_entry	*entry;
 	t_list			*list;
@@ -51,8 +51,11 @@ static void			write_history(t_ft_sh *sh, int fd)
 		ft_fprintf(fd, "%ld %s\n", entry->timestamp, entry->command);
 		list = list->prev;
 	}
-	ft_lstdel(&sh->history, delete_hist_entry);
-	sh->history_size = 0;
+	if (should_delete)
+	{
+		ft_lstdel(&sh->history, delete_hist_entry);
+		sh->history_size = 0;
+	}
 }
 
 int					load_history(t_ft_sh *sh, int unload)
@@ -70,7 +73,7 @@ int					load_history(t_ft_sh *sh, int unload)
 		return (ft_fprintf(2, "\nCan't open history file. open() failed.\n"));
 	if (unload)
 	{
-		write_history(sh, fd);
+		write_history(sh, fd, 1);
 		sh->history = NULL;
 		sh->history_size = 0;
 	}
