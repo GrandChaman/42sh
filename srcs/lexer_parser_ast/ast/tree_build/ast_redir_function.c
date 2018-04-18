@@ -28,8 +28,7 @@ int				ast_redir_node(t_token_type type)
 		|| type == DLESS
 		|| type == DLESSDASH
 		|| type == CLOBBER
-		|| type == GREATAND
-		|| type == PIPE)
+		|| type == GREATAND)
 		return (1);
 	return (0);
 }

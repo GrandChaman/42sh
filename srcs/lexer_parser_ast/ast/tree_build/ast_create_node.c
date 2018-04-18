@@ -39,8 +39,8 @@ t_ast_node		*ast_create_leaf(t_token_type type, t_lex **lex)
 {
 	t_ast_node			*node;
 	int 				call_fc;
-	static t_ast_node	*(*ast_pipeline_cmd_token[5])(t_lex **, t_ast_node *) =
-	{NULL, ast_word, ast_assignment_word, ast_while, ast_if};
+	static t_ast_node	*(*ast_pipeline_cmd_token[6])(t_lex **, t_ast_node *) =
+	{NULL, ast_word, ast_assignment_word, ast_pipe, ast_while, ast_if};
 
 	if (!lex || !*lex)
 		return (NULL);
@@ -49,7 +49,7 @@ t_ast_node		*ast_create_leaf(t_token_type type, t_lex **lex)
 	|| ast_redir_node((*lex)->token_type)))
 	{
 		if (ast_redir_node((*lex)->token_type))
-			node->redir_node = redir_node(lex, node->left);
+			node->redir_node = redir_node(lex, node->redir_node);
 		else
 			node = ast_pipeline_cmd_token[call_fc](lex, node);
 	}
