@@ -94,7 +94,9 @@ char		*check_correct(char *cmd)
 		if (cmd[i] == '\\')
 		{
 			if (cmd[++i] == '\0')
+			{
 				return ("cmd> ");
+			}
 			i++;
 			continue ;
 		}
