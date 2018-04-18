@@ -25,7 +25,21 @@ void 	case_quote_rm(char *str, int *i)
 void 	case_backslash_rm(char *str, int *i)
 {
 	if (str[*i + 1] == '\n')
+	{
 		str = ft_strcpy(str + *i, str + *i + 2);
+		printf("Hehe $$%s$$\n", str);
+	}
+	else
+		*i += 1;
+}
+
+void 	case_remove_chariot(char *str, int *i)
+{
+	if (str[*i + 1] == '\n')
+	{
+		str = ft_strcpy(str + *i + 1, str + *i + 2);
+		printf("Ya ##%s## \n", str);
+	}
 	else
 		*i += 1;
 }
@@ -41,6 +55,12 @@ char	*remove_char(char *str)
 			case_quote_rm(str, &i);
 		else if (str[i] == '\\')
 			case_backslash_rm(str, &i);
+		else if (str[i] == '&' && i != 0 && str[i - 1] == '&')
+			case_remove_chariot(str, &i);
+		else if (str[i] == '|' && i != 0 && str[i - 1] == '|')
+			case_remove_chariot(str, &i);
+		else if (str[i] == '|')
+			case_remove_chariot(str, &i);
 		else
 			i++;
 	}
