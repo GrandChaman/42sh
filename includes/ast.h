@@ -38,6 +38,7 @@ typedef struct			s_ast_node
 	char				*heredoc;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
+	struct s_ast_node	*redir_node;
 }						t_ast_node;
 
 typedef struct			s_args
