@@ -13,7 +13,9 @@ void 	case_quote_rm(char *str, int *i)
 void 	case_backslash_rm(char *str, int *i)
 {
 	if (str[*i + 1] == '\n')
+	{
 		str = ft_strcat(str + *i, str + *i + 2);
+	}
 	else
 		*i += 1;
 }
