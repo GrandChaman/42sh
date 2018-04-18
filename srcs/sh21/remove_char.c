@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 12:40:21 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/18 18:22:20 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/18 18:26:24 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,20 @@ void 	case_quote_rm(char *str, int *i)
 
 void 	case_backslash_rm(char *str, int *i)
 {
-	while (ft_iswhitespace(str[*i + 1]))
+	while (str[*i + 1] == ' ' || str[*i + 1] == '\t')
 		*i += 1;
 	if (str[*i + 1] == '\n')
-	{
 		str = ft_strcpy(str + *i, str + *i + 2);
-		printf("Hehe $$%s$$\n", str);
-	}
 	else
 		*i += 1;
 }
 
-//modif
 void 	case_remove_chariot(char *str, int *i)
 {
-	while (ft_iswhitespace(str[*i + 1]))
+	while (str[*i + 1] == ' ' || str[*i + 1] == '\t')
 		*i += 1;
 	if (str[*i + 1] == '\n')
-	{
 		str = ft_strcpy(str + *i + 1, str + *i + 2);
-		printf("Ya ##%s## \n", str);
-	}
 	else
 		*i += 1;
 }
