@@ -67,7 +67,8 @@ int case_bang(char **str, int *i)
 	if (!bang)
 		return (0);
 	replace_bang(str, i, &j, bang);
-	*i += 1 + ft_strlen(bang);
+	*i += ft_strlen(bang);
+	ft_strdel(&bang);
 	return (1);
 }
 
@@ -104,7 +105,7 @@ int case_dquote_bang(char **str, int *i)
 	return (ret);
 }
 
-int bbb(char **str)
+int bang(char **str)
 {
 	int i;
 	int ret;
@@ -124,7 +125,11 @@ int bbb(char **str)
 		else
 			i++;
 		if (!ret)
+		{
+			ft_strdel(str);
 			break;
+		}
+		ft_printf("str = %s\n", *str);
 	}
 	return (ret);
 }

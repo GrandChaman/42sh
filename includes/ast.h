@@ -157,6 +157,17 @@ void					case_quote(char **ret, char **ptr, int *i);
 void					case_dquote(char **ret, char **ptr, int *i);
 void					case_tilde(char **ret, char **ptr, int *i);
 
+
+int						escaped_char(char *argv, t_ast *tree, int *i, int *j);
+void					case_quote_args(char *argv, int *i, int *j);
+t_args					*new_args(char *argv, int *j, int *i);
+void					case_space(char *argv, int *i, int *j, t_args **list);
+void					del_el(void **el);
+char					**copy_list_to_array(t_args **list);
+char					**split_args(char *argv);
+
+
+
 static t_exec_tree g_exec_fn[] =
 {
 	NULL,
