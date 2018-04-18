@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bi_history.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/18 13:28:29 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/18 18:48:51 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int					bi_history(int argc, char **argv, char ***environ)
 	{
 		while (argv[1][i])
 			if (!ft_isdigit(argv[1][i++]))
-				return (ft_fprintf(2, "42sh: history: %s: numeric argument"
+				return (ft_fprintf(2, "history: %s: numeric argument"
 					" required", argv[1]) && 1);
 		return (display_history(ft_atoi(argv[1])));
 	}

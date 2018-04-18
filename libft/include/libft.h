@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bluff <bluff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 20:24:12 by bluff             #+#    #+#             */
-/*   Updated: 2018/03/22 13:10:22 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/18 18:44:52 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define ANSI_COLOR_RESET      "\x1b[0m"
 # define ANSI_DEL_LINE         "\r\x1b[K"
 # define BUFF_SIZE 10
-# define PRGRM_NAME "21sh"
+# define PRGRM_NAME "42sh"
 # define LIBFT_OK 0
 # define LIBFT_ERR 1
 
