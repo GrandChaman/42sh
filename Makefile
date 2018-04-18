@@ -53,7 +53,7 @@ SRC =  cli.c cli_init.c \
 		word.c split_args2.c remove_char.c
 
 LIBFT_INCLUDE = $(LIBFT_DIR)/include
-CFLAG = -g3 -O2 -Wall -Wextra -I $(LIBFT_INCLUDE) -I $(INCLUDE)
+CFLAG = -g3 -O2 -Wall -Wextra -fsanitize=address -I $(LIBFT_INCLUDE) -I $(INCLUDE)
 CC = cc
 LFLAG = -ltermcap
 BIN = bin
