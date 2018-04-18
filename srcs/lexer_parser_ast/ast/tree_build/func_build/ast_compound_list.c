@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_elif.c                                        :+:      :+:    :+:   */
+/*   ast_compound_list.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbertoia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/18 23:19:12 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/18 23:19:14 by fbertoia         ###   ########.fr       */
+/*   Created: 2018/04/18 23:20:22 by fbertoia          #+#    #+#             */
+/*   Updated: 2018/04/18 23:20:24 by fbertoia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 
-int		func_elif(t_ast_node *root)
+int 			is_compound_token(t_token_type type)
 {
-	int status;
+	if (type == SEMI || type == AMPER || type == AND_IF || type == OR_IF)
+		return (1);
+	return (0);
+}
 
-	status = 0;
-	if (!g_exec_fn[root->condition_node->type](root->condition_node))
-		status = g_exec_fn[root->left->type](root->left);
-	else if (root->right)
-		status = g_exec_fn[root->right->type](root->right);
-	return (status);
+t_ast_node		*ast_compound_list(t_lex **lex, t_ast_node *node)
+{
+	node = ast_create_leaf((*lex)->token_type, lex);
+	while (is_compound_token((*lex)->token_type))
+		node = ast_create_op(node, lex);
+	return (node);
 }

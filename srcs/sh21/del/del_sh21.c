@@ -37,5 +37,6 @@ void	del_sh21_exit(void)
 	del_hash(&sh21->env);
 	del_list((void**)&g_err_lex, del_lex);
 	del_list((void**)&g_end_of_input, del_lex);
+	close(sh21_get()->debug_tty);
 	cli_loader(1);
 }

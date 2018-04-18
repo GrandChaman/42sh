@@ -13,7 +13,7 @@
 #include "sh21.h"
 #include "ast.h"
 
-int				ast_redir_token(t_token_type type)
+int				ast_redir_node(t_token_type type)
 {
 	if (type == IO_NUMBER
 		|| type == GREATER

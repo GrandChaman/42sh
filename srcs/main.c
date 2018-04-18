@@ -45,7 +45,10 @@ static void	main_loop(t_sh21 *sh21, t_ft_sh *shell)
 		sh21->buf = cmd;
 		lexer(sh21);
 		if (parser(sh21->lex) && sh21->signal != T_CTRL_C)
+		{
+			ast_print(sh21->tree.root_node);
 			sh21_get()->ret = exec_tree(sh21->tree.root_node);
+		}
 		del_sh21();
 		ft_strdel(&cmd);
 	}

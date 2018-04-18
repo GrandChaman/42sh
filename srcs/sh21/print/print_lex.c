@@ -19,7 +19,7 @@ void	print_lex_list(t_lex *elem)
 	sh21 = sh21_get();
 	while (elem)
 	{
-		ft_printf("Tok: %-16s '%[RED]%s%[NC](%i)'\n",
+		ft_fprintf(sh21->debug_tty, "Tok: %-16s '%[RED]%s%[NC](%i)'\n",
 				g_token_type_str[(int)elem->token_type], elem->content,
 				elem->token_type);
 		elem = elem->next;
