@@ -61,7 +61,7 @@ typedef struct		s_sh21
 	int				status;
 }					t_sh21;
 
-int bbb(char **str);
+int					bang(char **str);
 char				*random_str(size_t len);
 void				del_flist(void **lst);
 char				**sh21_envchar(t_sh21 *sh21);
