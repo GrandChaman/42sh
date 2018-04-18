@@ -24,6 +24,8 @@ void 	case_quote_rm(char *str, int *i)
 
 void 	case_backslash_rm(char *str, int *i)
 {
+	while (ft_iswhitespace(str[*i + 1]))
+		*i += 1;
 	if (str[*i + 1] == '\n')
 	{
 		str = ft_strcpy(str + *i, str + *i + 2);
@@ -35,6 +37,8 @@ void 	case_backslash_rm(char *str, int *i)
 
 void 	case_remove_chariot(char *str, int *i)
 {
+	while (ft_iswhitespace(str[*i + 1]))
+		*i += 1;
 	if (str[*i + 1] == '\n')
 	{
 		str = ft_strcpy(str + *i + 1, str + *i + 2);
