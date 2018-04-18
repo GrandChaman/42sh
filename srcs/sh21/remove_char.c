@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_char.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbertoia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 12:40:21 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/18 12:40:23 by fbertoia         ###   ########.fr       */
+/*   Updated: 2018/04/18 18:22:20 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void 	case_backslash_rm(char *str, int *i)
 		*i += 1;
 }
 
+//modif
 void 	case_remove_chariot(char *str, int *i)
 {
 	while (ft_iswhitespace(str[*i + 1]))
