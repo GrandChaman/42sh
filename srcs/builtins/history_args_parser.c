@@ -64,13 +64,12 @@ int				handle_arg(t_hist_args *args, char **arg)
 
 void			read_args(t_hist_args *args, int argc, char **argv)
 {
-	int idx;
 	int err;
 
-	idx = 1;
-	while (idx < argc)
+	args->argv_count = 1;
+	while (args->argv_count < argc)
 	{
-		char  *arg = argv[idx];
+		char  *arg = argv[args->argv_count];
 		if (*arg == '-')
 		{
 			++arg;
@@ -79,9 +78,9 @@ void			read_args(t_hist_args *args, int argc, char **argv)
 				++arg;
 				if (*arg && isdigit(*arg))
 					args->d_val = atoi(arg);
-				else if (idx < argc - 1)
+				else if (args->argv_count < argc - 1)
 				{
-					arg = argv[++idx];
+					arg = argv[++args->argv_count];
 					if (*arg && isdigit(*arg))
 						args->d_val = atoi(arg);
 					else
@@ -98,7 +97,7 @@ void			read_args(t_hist_args *args, int argc, char **argv)
 		}
 		else
 			return;
-		++idx;
+		++args->argv_count;
 	}
 }
 

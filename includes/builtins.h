@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 15:54:39 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/18 18:07:39 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/19 16:24:14 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct	s_hist_args
 	int		s;
 	int		awrn;
 	int		err;
+	int		argv_count;
 }				t_hist_args;
 
 char					*cd_rules5_2(char *curpath);
