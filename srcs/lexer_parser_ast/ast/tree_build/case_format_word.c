@@ -17,14 +17,13 @@
 ** character that will be interpreted a second time in the split_args function
 */
 
-void	case_backslash(char **ret, char **ptr, int *i, char *special_chars)
+
+void	case_backslash(char **ret, char **ptr, int *i, char *special_chars, t_ast_node *node)
 {
-	t_ast	*tree;
 	int		len;
 	int		backslashed;
 
 	backslashed = 0;
-	tree = &sh21_get()->tree;
 	*ret = add_str(ret, ptr, i);
 	(*i)++;
 	if (!special_chars || ft_strindex(special_chars, (*ptr)[*i]) >= 0)
@@ -35,9 +34,9 @@ void	case_backslash(char **ret, char **ptr, int *i, char *special_chars)
 	if (backslashed)
 	{
 		len = ft_strlen(*ret);
-		tree->esc_i[tree->nb_escaped_quote] = len ? len - 1 : len;
-		if (tree->nb_escaped_quote < NB_ESCAPED_QUOTE)
-			tree->nb_escaped_quote++;
+		node->esc_i[node->nb_escaped_quote] = len ? len - 1 : len;
+		if (node->nb_escaped_quote < NB_ESCAPED_QUOTE)
+			node->nb_escaped_quote++;
 	}
 }
 
@@ -59,13 +58,13 @@ void	case_quote(char **ret, char **ptr, int *i)
 	*ret = add_str(ret, ptr, i);
 }
 
-void	case_dquote(char **ret, char **ptr, int *i)
+void	case_dquote(char **ret, char **ptr, int *i, t_ast_node *node)
 {
 	(*i)++;
 	while ((*ptr)[*i] && (*ptr)[*i] != '\"')
 	{
 		if ((*ptr)[*i] == '\\')
-			case_backslash(ret, ptr, i, "$`\"\\\n");
+			case_backslash(ret, ptr, i, "$`\"\\\n", node);
 		else if ((*ptr)[*i] == '$')
 			case_dollar(ret, ptr, i);
 		else
