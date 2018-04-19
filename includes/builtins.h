@@ -23,6 +23,17 @@ typedef struct			s_flag
 	int					buf_to_free;
 }						t_flag;
 
+typedef struct	s_hist_args
+{
+	int		c;
+	int		d;
+	int		d_val;
+	int		p;
+	int		s;
+	int		awrn;
+	int		err;
+}				t_hist_args;
+
 char					*cd_rules5_2(char *curpath);
 int 					go_home(char ***environ);
 int						ft_echo(char *argv[]);
@@ -46,6 +57,7 @@ int						bi_hash(int argc, char **argv, char ***environ);
 int						bi_export(int argc, char **argv, char ***environ);
 int						bi_unset(int argc, char **argv, char ***environ);
 int						bi_history(int argc, char **argv, char ***environ);
+void			read_args(t_hist_args *args, int argc, char **argv);
 
 char					*cd_rule5(char *curpath, char ***environ);
 int						cd_rule8_casedotdot(int *i, char *curpath, int free_curpath);
@@ -75,6 +87,7 @@ enum flag_cd {
 	CD_L,
 	CD_P,
 };
+
 
 static const t_builtin		g_builtins[] =
 {
