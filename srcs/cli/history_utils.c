@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 12:44:15 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/19 17:15:19 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/19 17:21:10 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ char				*get_history_file(void)
 	if (!lexer_s)
 		return (NULL);
 	home = ft_getenv("HOME", &lexer_s->env.orig_env);
-	ft_asprintf(&path, "%s/.42sh_history");
+	ft_asprintf(&path, "%s/.42sh_history", home);
 	return (path);
 }

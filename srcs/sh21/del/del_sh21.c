@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   del_sh21.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbertoia <fbertoia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 14:51:14 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/16 14:55:22 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/19 17:23:24 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	del_sh21_exit(void)
 	t_sh21	*sh21;
 
 	sh21 = sh21_get();
+	cli_loader(1);
 	del_sh21();
 	del_arr(&sh21->env.orig_env);
 	del_arr(&sh21->env.local_var);
 	del_hash(&sh21->env);
 	del_list((void**)&g_err_lex, del_lex);
 	del_list((void**)&g_end_of_input, del_lex);
-	cli_loader(1);
 }
