@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/19 12:43:15 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/19 13:09:59 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ static int			display_history(int lim)
 		return (0);
 	if (lim)
 		i = sh->history_size - lim;
-	while ((tmp = tmp->prev))
+	while (tmp && ++i)
 	{
 		entry = (t_ft_hist_entry*)tmp->content;
 		ft_bzero(t_format, 50);
 		strftime(t_format, 50, "%e/%d/%G %H:%M:%S",
 			localtime((const time_t *)&entry->timestamp));
-		ft_printf("%d\t%s\t%s\n", i, t_format, entry->command);
-		i++;
+		ft_printf("%d\t%s\t%s\n", i - 1, t_format, entry->command);
+		tmp = tmp->prev;
 	}
 	return (0);
 }
@@ -131,17 +131,16 @@ static char	*find_diverging_point_in_history_file(char *path, int *fd)
 static int			delete_at_offset(int offset)
 {
 	t_ft_sh	*sh;
-	int		len;
 	t_list	*tmp;
 
 	sh = get_ft_shell();
-	len = sh->history_size;
-	if (offset < 0 || len - offset < 0)
+	if (sh->history_size >= SH_HIST_MAX_SIZE)
+		offset--;
+	if (offset < 0 || sh->history_size - offset < 0)
 		return (ft_fprintf(2, "42sh: history: %d: index out of range\n",
 			offset) && 1);
-	if (!(tmp = ft_lstat(sh->history, len - offset)))
+	if (!(tmp = ft_lstat(sh->history, sh->history_size - offset - 1)))
 		return (1);
-	ft_printf("Deleting : %s\n", ((t_ft_hist_entry*)(tmp->content))->command);
 	ft_lstdelone(&tmp, delete_hist_entry);
 	return (0);
 }
