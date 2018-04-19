@@ -163,7 +163,7 @@ static const char		*g_token_type_str[] =
 	"IO_NUM_SPC"
 };
 
-int						lexer(t_sh21 *sh21);
+t_lex					*lexer(char *cmd);
 int						is_operator_part(char c, int stat);
 int						is_redir_part(char c);
 int						is_redir_token(t_token_type token_type);
@@ -230,7 +230,7 @@ void					on_operator_prev(t_lexa *lexa);
 void					on_operator(t_lexa *lexa);
 void					on_word(t_lexa *lexa);
 void					lexfallback(t_lexa *lexa);
-void					lexa_init(t_lexa *lexa, t_sh21 *sh21);
+void					lexa_init(t_lexa *lexa, char *cmd);
 void					loop_word(t_lex *ptr);
 void					word_recog(t_lexa *lexa);
 
