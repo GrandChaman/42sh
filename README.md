@@ -6,3 +6,5 @@
 
 - variables locales (verifier posix)
 - ! et builtin history si possible
+
+- !' ' 
