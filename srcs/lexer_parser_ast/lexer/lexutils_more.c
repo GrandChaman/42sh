@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 20:35:41 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/16 13:29:17 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/19 15:46:21 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void		lexfallback(t_lexa *lexa)
 	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
 }
 
-void		lexa_init(t_lexa *lexa, t_sh21 *sh21)
+void		lexa_init(t_lexa *lexa, char *cmd)
 {
-	lexa->str = sh21->buf;
+	lexa->str = cmd;
 	lexa->stat = SNIL;
 	lexa->prev = '\0';
 	lexa->t = EOI;

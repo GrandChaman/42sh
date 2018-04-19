@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:38:34 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/19 15:09:18 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/19 15:47:19 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int					all_signal(void);
 
 int					ft_error(int err, const char *s);
 int					input_piped_script(t_sh21 *sh21, char **argv);
-int					lexer(t_sh21 *sh21);
 int					parser(t_lex *lex);
 int					sh21_addenv(t_sh21 *sh21, const char *n, const char *v);
 int					sh21_exec(int ac, char **av, char ***env);

@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/19 15:09:44 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/19 16:09:23 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ t_lex		*lex_create(t_token_type token_type, char *content)
 		lex->content = ft_strdup(content);
 	else
 	{
-		lex->content = malloc(sizeof(char) * 1);
 		lex->content[0] = '\0';
+		lex->content = malloc(sizeof(char) * 1);
 	}
 	lex->token_type = token_type;
 	lex->next = NULL;
 	return (lex);
 }
 
-static int	end_lex(t_lexa *lexa, t_sh21 *sh21)
+static t_lex	*end_lex(t_lexa *lexa)
 {
 	int		prev_word;
 	t_lex	*ptr;
@@ -56,8 +56,7 @@ static int	end_lex(t_lexa *lexa, t_sh21 *sh21)
 		ptr = ptr->next;
 	}
 	lexa->buffer ? ft_strdel(&lexa->buffer) : (0);
-	sh21->lex = lexa->lex;
-	return (1);
+	return (lexa->lex);
 }
 
 static void	escape(t_lexa *lexa)
@@ -76,11 +75,11 @@ static void	lexfallbackesc(t_lexa *lexa)
 	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
 }
 
-int			lexer(t_sh21 *sh21)
+t_lex			*lexer(char *cmd)
 {
 	t_lexa		lexa;
 
-	lexa_init(&lexa, sh21);
+	lexa_init(&lexa, cmd);
 	while (*lexa.str && (lexa.c = *(lexa.str)))
 	{
 		check_semi_stat(&lexa);
@@ -105,5 +104,5 @@ int			lexer(t_sh21 *sh21)
 		lexa.prev = lexa.c;
 		++(lexa.str);
 	}
-	return (end_lex(&lexa, sh21));
+	return (end_lex(&lexa));
 }
