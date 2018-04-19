@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/19 15:04:56 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/19 16:13:30 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ static int	find_history_divergence(char *path, char **line, t_list **hist, int *
 			*hist = (*hist)->prev;
 		else
 			break ;
-		ft_free((void**)line);
+		ft_strdel(line);
 	}
 	return (gnl_res);
 }
@@ -133,12 +133,15 @@ static int			append_new_line_to_hist_file(char *path)
 	int		gnl_res;
 	t_list	*tmp;
 
+	line = NULL;
 	gnl_res = find_history_divergence("toto.txt", &line, &tmp, &fd);
+	free(line);
 	if (gnl_res < 0)
-		return (ft_fprintf(2,
-			"42sh: history: Error while reading history file %s\n") && 1);
+		return ((close(fd) + ft_fprintf(2,
+			"42sh: history: Error while reading history file %s\n")) || 1);
 	if (lseek(fd, 0, SEEK_END) < 0)
-		return (ft_fprintf(2, "42sh: history: lseek() failed\n") && 1);
+		return ((close(fd) + ft_fprintf(2, "42sh: history: lseek() failed\n"))
+			&& 1);
 	while (tmp)
 	{
 		ft_fprintf(fd, "%lu %s\n",
@@ -147,6 +150,31 @@ static int			append_new_line_to_hist_file(char *path)
 		tmp = tmp->prev;
 	}
 	close(fd);
+	return (0);
+}
+
+static int			append_new_line_to_hist(char *path)
+{
+	int		fd;
+	char	*line;
+	int		gnl_res;
+	t_list	*tmp;
+	t_ft_sh	*sh;
+
+	sh = get_ft_shell();
+	gnl_res = find_history_divergence("toto.txt", &line, &tmp, &fd);
+	if (gnl_res < 0)
+		return ((close(fd) + ft_fprintf(2,
+			"42sh: history: Error while reading history file %s\n")) || 1);
+	if (line)
+		parse_and_add_to_history(sh, line);
+	free(line);
+	read_history(get_ft_shell(), fd);
+	if (lseek(fd, 0, SEEK_END) < 0)
+		return ((close(fd) +
+			ft_fprintf(2, "42sh: history: lseek() failed\n")) || 1);
+	close(fd);
+	return (0);
 }
 
 static int			delete_at_offset(int offset)
@@ -176,7 +204,7 @@ int					bi_history(int argc, char **argv, char ***environ)
 	if (argc == 1)
 		return (display_history(0));
 	if (argv[1][0] == '-')
-		return (append_new_line_to_hist_file("toto.txt"));//Handle param
+		return (append_new_line_to_hist("toto.txt"));//Handle param
 	else
 	{
 		while (argv[1][i])
