@@ -21,16 +21,12 @@ t_ast_node		*ast_create_node(t_token_type type, char *str)
 		ft_exit(errno, NULL);
 	if (!node)
 		return (NULL);
+	bzero(node, sizeof(node));
 	node->type = type;
 	if (str)
 		node->content = ft_strdup(str);
 	else
 		node->content = NULL;
-	node->left = NULL;
-	node->right = NULL;
-	node->heredoc = NULL;
-	node->redir_node = NULL;
-	node->condition_node = NULL;
 	return (node);
 }
 
