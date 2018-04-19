@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/19 15:09:29 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/19 18:57:41 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,15 +209,16 @@ void					word_rec(t_lex *lex);
 
 typedef struct			s_lexa
 {
-	char			*str;
 	char			*buffer;
-	int				stat;
-	char			prev;
+	char			*cmd;
+	char			*str;
 	char			c;
-	t_token_type	t;
-	t_lex			*lex;
-	int				oquote;
+	char			prev;
 	int				escaped;
+	int				oquote;
+	int				stat;
+	t_lex			*lex;
+	t_token_type	t;
 }						t_lexa;
 
 static size_t g_lexa_buff_sz = 1024;

@@ -53,3 +53,7 @@ dkms.conf
 42sh
 
 file
+
+\.42sh_subshell_cmd0
+
+\.42sh_subshell_res0
