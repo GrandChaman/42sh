@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cli_autocomplete.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 16:26:13 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/18 17:45:14 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/19 18:57:54 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void				complete_missing_autocomplete(t_ft_sh *sh,
 {
 	int					i;
 	char				*tmp;
-
+	char				*res;
 	i = 0;
 	if (!completion)
 		return ;
@@ -82,7 +82,11 @@ static void				complete_missing_autocomplete(t_ft_sh *sh,
 			i++;
 		else
 			break ;
-	insert_in_cli(completion + i + (sh->cursor < sh->buf.cursor));
+	tmp = ft_strdup(completion + i + (sh->cursor < sh->buf.cursor));
+	res = escape_operator(tmp);
+	insert_in_cli(res);
+	free(tmp);
+	free(res);
 }
 
 static void				ft_sh_autocomplete_routine(t_ft_sh *sh, char *str_part)
