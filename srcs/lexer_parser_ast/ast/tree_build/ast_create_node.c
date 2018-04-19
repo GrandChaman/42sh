@@ -21,26 +21,28 @@ t_ast_node		*ast_create_node(t_token_type type, char *str)
 		ft_exit(errno, NULL);
 	if (!node)
 		return (NULL);
+	node->content = NULL;
+	node->heredoc = NULL;
+	node->left = NULL;
+	node->right = NULL;
+	node->redir_node = NULL;
+	node->condition_node = NULL;
+	node->nb_escaped_quote = 0;
+	node->i = 0;
+	node->quote_count = 0;
 	node->type = type;
 	if (str)
 		node->content = ft_strdup(str);
-	else
-		node->content = NULL;
-	node->left = NULL;
-	node->right = NULL;
-	node->heredoc = NULL;
-	node->redir_node = NULL;
-	node->condition_node = NULL;
 	return (node);
 }
 
+static t_ast_node	*(*g_ast_pipeline_cmd_token[6])(t_lex **, t_ast_node *) =
+{NULL, ast_word, ast_assignment_word, ast_pipe, ast_while, ast_if};
 
 t_ast_node		*ast_create_leaf(t_token_type type, t_lex **lex)
 {
 	t_ast_node			*node;
 	int 				call_fc;
-	static t_ast_node	*(*ast_pipeline_cmd_token[6])(t_lex **, t_ast_node *) =
-	{NULL, ast_word, ast_assignment_word, ast_pipe, ast_while, ast_if};
 
 	if (!lex || !*lex)
 		return (NULL);
@@ -51,7 +53,7 @@ t_ast_node		*ast_create_leaf(t_token_type type, t_lex **lex)
 		if (ast_redir_node((*lex)->token_type))
 			node->redir_node = redir_node(lex, node->redir_node);
 		else
-			node = ast_pipeline_cmd_token[call_fc](lex, node);
+			node = g_ast_pipeline_cmd_token[call_fc](lex, node);
 	}
 	return (node);
 }

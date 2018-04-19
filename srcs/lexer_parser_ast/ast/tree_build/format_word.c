@@ -21,44 +21,31 @@ static char	*norme_0(int i, char *ret, char *ptr, char **str)
 	return (ret);
 }
 
-static void	bminus(void)
-{
-	t_ast	*tree;
-	int		i;
-
-	i = 0;
-	tree = &sh21_get()->tree;
-	while (i < NB_ESCAPED_QUOTE)
-	{
-		tree->esc_i[i++] = -1;
-	}
-}
-
-char		*format_word(char **str)
+char		*format_word(t_ast_node *node)
 {
 	char	*ret;
 	char	*ptr;
 	int		i;
 
 	i = 0;
-	ptr = *str;
+	ptr = node->content;
 	ret = NULL;
-	sh21_get()->tree.nb_escaped_quote = 0;
-	bminus();
+	ft_memset(node->esc_i, -1, NB_ESCAPED_QUOTE);
 	while (ptr[i])
 	{
 		if (ptr[i] == '\\')
-			case_backslash(&ret, &ptr, &i, NULL);
+			case_backslash(&ret, &ptr, &i, NULL, node);
 		else if (ptr[i] == '~')
 			case_tilde(&ret, &ptr, &i);
 		else if (ptr[i] == '\'')
 			case_quote(&ret, &ptr, &i);
 		else if (ptr[i] == '\"')
-			case_dquote(&ret, &ptr, &i);
+			case_dquote(&ret, &ptr, &i, node);
 		else if (ptr[i] == '$')
 			case_dollar(&ret, &ptr, &i);
 		else
 			++i;
 	}
-	return (norme_0(i, ret, ptr, str));
+	node->content = norme_0(i, ret, ptr, &node->content);
+	return (node->content);
 }
