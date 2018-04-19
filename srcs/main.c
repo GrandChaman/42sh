@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/19 15:46:53 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/19 18:10:14 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,18 @@ static void	main_loop(t_sh21 *sh21, t_ft_sh *shell)
 	}
 }
 
-int			main(void)
+int			main(int argc, char *argv[])
 {
 	t_ft_sh			*shell;
 	t_sh21			*sh21;
 	extern char		**environ;
 
+	(void)argc;
 	sh21 = sh21_init(environ);
 	shell = get_ft_shell();
 	shell->ht = NULL;
+	if (!sh21->terminal.isatty || argv[1])
+		return (input_piped_script(sh21, argv));
 	signal(SIGINT, ignore_signal);
 	if (!is_env_correct())
 		return (1);
