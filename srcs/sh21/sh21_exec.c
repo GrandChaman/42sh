@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh21_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbertoia <fbertoia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:03:18 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/17 11:11:24 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/18 18:44:02 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int				callbase(char **av, char ***env)
 	int			status;
 
 	if ((parent = fork()) < 0)
-		ft_exit(errno, "callsystem");
+		ft_exit(errno, "fork");
 	else if (!parent)
 	{
 		if (execve(av[0], av, *env) < 0)
@@ -52,11 +52,16 @@ int				callbase(char **av, char ***env)
 int				try_direct_acces(char **av, char ***env)
 {
 	t_sh21			*sh21;
+	struct stat		st;
 
 	sh21 = sh21_get();
 	if (ft_strchr(av[0], '/') == NULL)
 		return (0);
-	callbase(av, env);
+	stat(av[0], &st);
+	if (S_ISDIR(st.st_mode))
+		ft_error(21, av[0]);
+	else
+		callbase(av, env);
 	return (1);
 }
 
@@ -68,7 +73,7 @@ int				callsystem(char **av, char ***env)
 
 	str = search_bin(av[0], &sh21_get()->env);
 	if ((parent = fork()) < 0)
-		ft_exit(errno, "callsystem");
+		ft_exit(errno, "fork");
 	else if (!parent)
 	{
 		if (str)

@@ -54,6 +54,8 @@ int		func_pipe(t_ast_node *root)
 		dup2(nw, 1);
 		close(nw);
 	}
+	// if (root->job = 1)
+	// 	job_control_at_job(pid, root->content);
 	waitpid(pid, &ret, WUNTRACED);
 	sh21_get()->status = ret;
 	return (ret);

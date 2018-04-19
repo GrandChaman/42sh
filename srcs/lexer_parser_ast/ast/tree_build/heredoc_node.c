@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 14:25:16 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/16 15:00:35 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/18 18:45:46 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ static int	final_heredoc(char *tmp, char *str, int fd, t_sh21 *sh21)
 static void	open_heredoc_file(char *path_file, int *fd)
 {
 	if ((*fd = open(path_file, O_WRONLY | O_TRUNC, 0777)) == -1)
-		ft_perror("21sh", "Can't open heredoc file");
+		ft_perror("42sh", "Can't open heredoc file");
 	close(*fd);
 	if ((*fd = open(path_file, O_RDWR | O_APPEND, 0777)) == -1)
-		ft_perror("21sh", "Can't open heredoc file");
+		ft_perror("42sh", "Can't open heredoc file");
 }
 
 static void	heredoc_node_2(char *str, char *tmp, char *tmp_file, t_sh21 *sh21)

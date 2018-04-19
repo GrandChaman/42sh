@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bluff <bluff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 20:24:12 by bluff             #+#    #+#             */
-/*   Updated: 2018/03/22 13:10:22 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/18 18:44:52 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define ANSI_COLOR_RESET      "\x1b[0m"
 # define ANSI_DEL_LINE         "\r\x1b[K"
 # define BUFF_SIZE 10
-# define PRGRM_NAME "21sh"
+# define PRGRM_NAME "42sh"
 # define LIBFT_OK 0
 # define LIBFT_ERR 1
 
@@ -82,7 +82,7 @@ size_t				ft_strlcpy(char *dst, const char *src, size_t size);
 char			*ft_strffjoin(char *s1, char *s2); //WHAT
 char	*ft_strpush(char *str, size_t idx, char c, size_t *buff_sz);
 char					**ft_split_whitespaces(char *str);
-void					ft_lstappend(t_list **head, t_list *new);
+void					ft_lstappend(t_list **head, t_list *nw);
 char					*ft_str3join(char const *s1, char const *s2,
 	char const *s3);
 void					ft_bzero(void *s, size_t n);
@@ -150,7 +150,7 @@ t_list					*ft_lstnew(void const *content, size_t content_size);
 void					ft_lstdelone(t_list **alst,
 	void (*del)(void *, size_t));
 void					ft_lstdel(t_list **alst, void(*del)(void*, size_t));
-void					ft_lstadd(t_list **alst, t_list *new);
+void					ft_lstadd(t_list **alst, t_list *nw);
 void					ft_lstiter(t_list *lst, void(*f)(t_list *elem));
 t_list					*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 int						ft_any(char **tab, int (*f)(char*));
@@ -224,6 +224,5 @@ int						ft_snprintf(char *ret, size_t size, const char *format,
 	...);
 int						ft_stralike(char *str1, char *str2, size_t len);
 char					*ft_strjoin_multiple(int nb_args, ...);
-
 
 #endif

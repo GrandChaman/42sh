@@ -6,14 +6,14 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 15:54:39 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/17 17:05:52 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/18 18:07:39 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-// # include "sh21.h"
+# include "sh21.h"
 
 typedef struct			s_flag
 {
@@ -76,7 +76,7 @@ enum flag_cd {
 	CD_P,
 };
 
-static const t_builtin	g_builtins[] =
+static const t_builtin		g_builtins[] =
 {
 	{"exit", &bi_exit},
 	{"cd", &bi_cd},
