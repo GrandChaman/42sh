@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 12:44:15 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/19 16:09:02 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/19 16:44:39 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,17 @@ void					parse_and_add_to_history(t_ft_sh *sh, char *line)
 	sh->history_size++;
 	if (sh->history_size > SH_HIST_MAX_SIZE)
 		trim_history(sh);
+}
+
+char				*get_history_file(void)
+{
+	char	*home;
+	char	*path;
+	t_sh21	*lexer_s;
+
+	if (!lexer_s)
+		return (NULL);
+	home = ft_getenv("HOME", lexer_s->env.orig_env);
+	ft_asprintf(&path, "%s/.42sh_history");
+	return (path);
 }

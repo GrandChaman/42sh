@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/19 16:14:52 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/19 16:55:16 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,18 @@ static int			read_and_append_history_form_file(char *path)
 	int			fd;
 
 	sh = get_ft_shell();
+	path = (path ? path : get_history_file());
+	if (!path)
+		return (ft_fprintf(2, "42sh: history: can't open default history file."
+			" HOME not defined %s.\n", path) || 1);
 	if ((fd = open(path, O_RDONLY)) < 0)
 		return (ft_fprintf(2, "42sh: history: can't read file %s.\n", path)
-			&& 1);
+			|| 1);
 	if (read_history(sh, fd) < 0)
 	{
 		close(fd);
 		return (ft_fprintf(2, "42sh: history: error while reading %s.\n", path)
-			&& 1);
+			|| 1);
 	}
 	close(fd);
 	return (0);
@@ -78,6 +82,10 @@ static int			write_history_to_file(char *path)
 	int			fd;
 
 	sh = get_ft_shell();
+	path = (path ? path : get_history_file());
+	if (!path)
+		return (ft_fprintf(2, "42sh: history: can't open default history file."
+			" HOME not defined %s.\n", path) || 1);
 	if ((fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644)) < 0)
 		return (ft_fprintf(2, "42sh: history: can't write to file %s.\n", path)
 			&& 1);
@@ -107,6 +115,10 @@ static int	find_history_divergence(char *path, char **line, t_list **hist, int *
 	sh = get_ft_shell();
 	if (!sh->history)
 		return (-1);
+	path = (path ? path : get_history_file());
+	if (!path)
+		return (ft_fprintf(2, "42sh: history: can't open default history file."
+			" HOME not defined %s.\n", path) || 1);
 	*hist = ft_lstlast(sh->history);
 	if ((*fd = open(path, O_RDWR)) < 0)
 		return (ft_fprintf(2, "42sh: history: can't write to "
@@ -134,6 +146,10 @@ static int			append_new_line_to_hist_file(char *path)
 	t_list	*tmp;
 
 	line = NULL;
+	path = (path ? path : get_history_file());
+	if (!path)
+		return (ft_fprintf(2, "42sh: history: can't open default history file."
+			" HOME not defined %s.\n", path) || 1);
 	gnl_res = find_history_divergence("toto.txt", &line, &tmp, &fd);
 	free(line);
 	if (gnl_res < 0)
@@ -162,6 +178,10 @@ static int			append_new_line_to_hist(char *path)
 	t_ft_sh	*sh;
 
 	sh = get_ft_shell();
+	path = (path ? path : get_history_file());
+	if (!path)
+		return (ft_fprintf(2, "42sh: history: can't open default history file."
+			" HOME not defined %s.\n", path) || 1);
 	gnl_res = find_history_divergence("toto.txt", &line, &tmp, &fd);
 	if (gnl_res < 0)
 		return ((close(fd) + ft_fprintf(2,
@@ -208,20 +228,20 @@ int					bi_history(int argc, char **argv, char ***environ)
 	if (flags.err)
 		return (flags.err);
 	if (flags.d)
-		return (display_history(flags.d_val));
+		ret = delete_at_offset(flags.d_val);
 	if (flags.p)
-		ret = 0; //-p
+		ret = display_cmd(argc, argv, !flags.s);
 	if (flags.s)
-		ret = 0; //-s
+		add_to_history(get_ft_shell(), argv[flags.argv_count]);
 	if (flags.awrn == 'a')
-		ret = 0;
+		ret = append_new_line_to_hist_file(argv[flags.argv_count]);
 	else if (flags.awrn == 'w')
-		ret = 0;
+		ret = write_history_to_file(argv[flags.argv_count]);
 	else if (flags.awrn == 'n')
-		ret = 0;
+		ret = append_new_line_to_hist(argv[flags.argv_count]);
 	if (flags.c)
-		ret = 0;
+		ret = clear_history();
 	if (flags.awrn == 'r')
-		ret = 0;
+		ret = read_and_append_history_form_file(argv[flags.argv_count]);
 	return (ret);
 }
