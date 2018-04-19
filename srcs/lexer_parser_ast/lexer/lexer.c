@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/19 17:30:06 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/19 19:36:25 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ t_lex			*lexer(char *cmd)
 {
 	t_lexa		lexa;
 
+	lexa.cmd = cmd;
 	lexa_init(&lexa, cmd);
 	while (*lexa.str && (lexa.c = *(lexa.str)))
 	{

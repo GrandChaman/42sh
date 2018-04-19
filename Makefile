@@ -6,7 +6,7 @@
 #    By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/16 13:28:08 by fle-roy           #+#    #+#              #
-#    Updated: 2018/04/19 17:30:43 by hfontain         ###   ########.fr        #
+#    Updated: 2018/04/19 19:19:44 by hfontain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ SRC =  $(shell find srcs -regex '.*\.c' -exec basename {} \; | tr '\n' ' ')
 # 		word.c split_args2.c remove_char.c
 
 LIBFT_INCLUDE = $(LIBFT_DIR)/include
-CFLAG = -g3 -O2 -Wall -Wextra -I $(LIBFT_INCLUDE) -I $(INCLUDE)
+CFLAG = -g3 -O2 -Wall -Wextra -fsanitize=address -I $(LIBFT_INCLUDE) -I $(INCLUDE)
 CC = cc
 LFLAG = -ltermcap
 BIN = bin
