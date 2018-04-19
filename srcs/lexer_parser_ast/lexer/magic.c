@@ -17,11 +17,11 @@
 
 char	*exec_subshell(char *str)
 {
-		// t_lex *lex;
-        //
-        //
-        //
-		// lex = lexer(str);
+	t_ast *root;
+	t_lex *lex;
+
+	lex = lexer(str);
+	parser(lex);
 	return (str);
 }
 

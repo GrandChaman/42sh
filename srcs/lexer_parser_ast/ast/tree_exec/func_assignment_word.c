@@ -22,7 +22,7 @@ int		func_assignment_word(t_ast_node *root)
 	if (root->left && root->left->left)
 		ret = g_exec_fn[root->left->left->type](root->left->left);
 	sh21 = sh21_get();
-	root->content = format_word(&root->content);
+	format_word(root);
 	ret += ft_putenv(ft_strdup(root->content), &sh21->env.local_var);
 	return (ret);
 }
