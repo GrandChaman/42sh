@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 14:16:25 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/18 15:32:11 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/19 16:08:59 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,11 @@ int						read_history(t_ft_sh *sh, int fd)
 {
 	int				gnl_res;
 	char			*line;
-	char			*tmp;
-	t_ft_hist_entry	entry;
 
 	while ((gnl_res = get_next_line(fd, &line)) > 0)
 	{
-		tmp = ft_strchr(line, ' ');
-		if (tmp)
-			entry.command = ft_strdup(tmp + 1);
-		else
-			entry.command = ft_strdup(line);
-		entry.timestamp = ft_atoi(line);
+		parse_and_add_to_history(sh, line);
 		free(line);
-		ft_lstpush_front(&sh->history, &entry, sizeof(entry));
-		sh->history_size++;
-		if (sh->history_size > SH_HIST_MAX_SIZE)
-			trim_history(sh);
 	}
 	return (gnl_res);
 }

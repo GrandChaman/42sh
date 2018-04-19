@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 12:44:15 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/03/22 13:53:15 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/19 16:09:02 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,21 @@ void				trim_history(t_ft_sh *sh)
 		ft_lstdel(&lcpy, delete_hist_entry);
 		sh->history_size = SH_HIST_MAX_SIZE;
 	}
+}
+
+void					parse_and_add_to_history(t_ft_sh *sh, char *line)
+{
+	char			*tmp;
+	t_ft_hist_entry	entry;
+
+	tmp = ft_strchr(line, ' ');
+	if (tmp)
+		entry.command = ft_strdup(tmp + 1);
+	else
+		entry.command = ft_strdup(line);
+	entry.timestamp = ft_atoi(line);
+	ft_lstpush_front(&sh->history, &entry, sizeof(entry));
+	sh->history_size++;
+	if (sh->history_size > SH_HIST_MAX_SIZE)
+		trim_history(sh);
 }
