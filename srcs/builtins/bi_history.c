@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/19 13:09:59 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/19 15:04:56 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int			write_history_to_file(char *path)
 	int			fd;
 
 	sh = get_ft_shell();
-	if ((fd = open(path, O_WRONLY)) < 0)
+	if ((fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644)) < 0)
 		return (ft_fprintf(2, "42sh: history: can't write to file %s.\n", path)
 			&& 1);
 	write_history(sh, fd, 0);
@@ -98,34 +98,55 @@ static int			display_cmd(int argc, const char **argv, int should_display)
 	return (0);
 }
 
-static char	*find_diverging_point_in_history_file(char *path, int *fd)
+static int	find_history_divergence(char *path, char **line, t_list **hist, int *fd)
 {
 	t_ft_sh		*sh;
-	char		*line;
 	char		*tmp;
-	t_list		*hist;
+	int			gnl_res;
 
 	sh = get_ft_shell();
 	if (!sh->history)
-		return (NULL);
-	hist = ft_lstlast(sh->history);
-	if ((*fd = open(path, O_WRONLY)) < 0)
-		return ((void*)(long)(ft_fprintf(2, "42sh: history: can't write to "
-		"file %s.\n", path) && 0));
-	while (hist && get_next_line(*fd, &line) > 0)
+		return (-1);
+	*hist = ft_lstlast(sh->history);
+	if ((*fd = open(path, O_RDWR)) < 0)
+		return (ft_fprintf(2, "42sh: history: can't write to "
+		"file %s.\n", path) * -1);
+	while (*hist && (gnl_res = get_next_line(*fd, line)) > 0)
 	{
-		tmp = ft_strchr(line, ' ');
+		tmp = ft_strchr(*line, ' ');
 		if (!tmp)
 			continue ;
-		if (!ft_strcmp(tmp, ((t_ft_hist_entry*)hist->content)->command))
-			hist = hist->prev;
+		++tmp;
+		if (!ft_strcmp(tmp, ((t_ft_hist_entry*)(*hist)->content)->command))
+			*hist = (*hist)->prev;
 		else
 			break ;
-		free(line);
+		ft_free((void**)line);
 	}
-	return (line);
-	// return ((t_ft_hist_entry){.command = ft_strdup(tmp),
-	// 	.timestamp = ft_atoi(line)})
+	return (gnl_res);
+}
+
+static int			append_new_line_to_hist_file(char *path)
+{
+	int		fd;
+	char	*line;
+	int		gnl_res;
+	t_list	*tmp;
+
+	gnl_res = find_history_divergence("toto.txt", &line, &tmp, &fd);
+	if (gnl_res < 0)
+		return (ft_fprintf(2,
+			"42sh: history: Error while reading history file %s\n") && 1);
+	if (lseek(fd, 0, SEEK_END) < 0)
+		return (ft_fprintf(2, "42sh: history: lseek() failed\n") && 1);
+	while (tmp)
+	{
+		ft_fprintf(fd, "%lu %s\n",
+			((t_ft_hist_entry*)tmp->content)->timestamp,
+			((t_ft_hist_entry*)tmp->content)->command);
+		tmp = tmp->prev;
+	}
+	close(fd);
 }
 
 static int			delete_at_offset(int offset)
@@ -142,6 +163,7 @@ static int			delete_at_offset(int offset)
 	if (!(tmp = ft_lstat(sh->history, sh->history_size - offset - 1)))
 		return (1);
 	ft_lstdelone(&tmp, delete_hist_entry);
+	sh->history_size--;
 	return (0);
 }
 
@@ -154,7 +176,7 @@ int					bi_history(int argc, char **argv, char ***environ)
 	if (argc == 1)
 		return (display_history(0));
 	if (argv[1][0] == '-')
-		return (delete_at_offset(ft_atoi(argv[2])));//Handle param
+		return (append_new_line_to_hist_file("toto.txt"));//Handle param
 	else
 	{
 		while (argv[1][i])
