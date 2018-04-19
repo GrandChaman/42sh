@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/19 16:13:30 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/19 16:14:52 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,21 +197,31 @@ static int			delete_at_offset(int offset)
 
 int					bi_history(int argc, char **argv, char ***environ)
 {
-	int i;
+	int ret;
+	t_hist_args flags;
 
-	i = 0;
 	(void)environ;
+	ret = 0;
 	if (argc == 1)
 		return (display_history(0));
-	if (argv[1][0] == '-')
-		return (append_new_line_to_hist("toto.txt"));//Handle param
-	else
-	{
-		while (argv[1][i])
-			if (!ft_isdigit(argv[1][i++]))
-				return (ft_fprintf(2, "42sh: history: %s: numeric argument"
-					" required\n", argv[1]) && 1);
-		return (display_history(ft_atoi(argv[1])));
-	}
-
+	read_args(&flags, argc, argv);
+	if (flags.err)
+		return (flags.err);
+	if (flags.d)
+		return (display_history(flags.d_val));
+	if (flags.p)
+		ret = 0; //-p
+	if (flags.s)
+		ret = 0; //-s
+	if (flags.awrn == 'a')
+		ret = 0;
+	else if (flags.awrn == 'w')
+		ret = 0;
+	else if (flags.awrn == 'n')
+		ret = 0;
+	if (flags.c)
+		ret = 0;
+	if (flags.awrn == 'r')
+		ret = 0;
+	return (ret);
 }

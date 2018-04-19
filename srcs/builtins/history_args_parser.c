@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include "sh21.h"
 
 #define AF			1 << 0
 #define WF			1 << 1
@@ -11,29 +12,18 @@
 #define AWRN_ERR	1 << 5
 #define INVARG		1 << 6
 
-typedef struct	s_hist_args
-{
-	int		c;
-	int		d;
-	int		d_val;
-	int		p;
-	int		s;
-	int		awrn;
-	int		err;
-}				t_hist_args;
-
-t_hist_args		*args_create(void)
-{
-	t_hist_args *args = malloc(sizeof(t_hist_args));
-	args->c = 0;
-	args->d = 0;
-	args->d_val = 0;
-	args->p = 0;
-	args->s = 0;
-	args->awrn = 0;
-	args->err = 0;
-	return (args);
-}
+// t_hist_args		*args_create(void)
+// {
+// 	t_hist_args *args = malloc(sizeof(t_hist_args));
+// 	args->c = 0;
+// 	args->d = 0;
+// 	args->d_val = 0;
+// 	args->p = 0;
+// 	args->s = 0;
+// 	args->awrn = 0;
+// 	args->err = 0;
+// 	return (args);
+// }
 
 static void		awrn_handle(t_hist_args *args, char *str)
 {
