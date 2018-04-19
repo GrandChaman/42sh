@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/18 16:02:47 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/19 11:45:27 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static int			read_and_append_history_form_file(char *path)
 			&& 1);
 	}
 	close(fd);
+	return (0);
 }
 
 static int			write_history_to_file(char *path)
@@ -83,6 +84,47 @@ static int			write_history_to_file(char *path)
 	write_history(sh, fd, 0);
 	close(fd);
 	return (0);
+}
+
+static int			display_cmd(int argc, const char **argv, int should_display)
+{
+	int i;
+
+	i = -1;
+	if (!should_display)
+		return (0);
+	while (++i < argc)
+		ft_printf("%s\n", argv);
+	return (0);
+}
+
+static t_ft_hist_entry	find_diverging_point_in_history_file(char *path, int *fd)
+{
+	t_ft_sh		*sh;
+	char		*line;
+	char		*tmp;
+	t_list		*hist;
+
+	sh = get_ft_shell();
+	if (!sh->history)
+		return (NULL);
+	hist = ft_lstlast(sh->history);
+	if ((*fd = open(path, O_WRONLY)) < 0)
+		return ((void*)(long)(ft_fprintf(2, "42sh: history: can't write to "
+		"file %s.\n", path) && 0));
+	while (hist && get_next_line(*fd, &line) > 0)
+	{
+		tmp = ft_strchr(line, ' ');
+		if (!tmp)
+			continue ;
+		if (!ft_strcmp(tmp, ((t_ft_hist_entry*)hist->content)->command))
+			hist = hist->prev;
+		else
+			break ;
+		free(line);
+	}
+	return ((t_ft_hist_entry){.command = ft_strdup(tmp),
+		.timestamp = ft_atoi(line)})
 }
 
 static int			delete_at_offset(int offset)
