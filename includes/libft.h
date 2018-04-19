@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 20:24:12 by bluff             #+#    #+#             */
-/*   Updated: 2018/04/16 15:08:42 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/18 17:51:48 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int						ft_strindex(const char *str, int c);
 char					**cpy_arr(char **arr);
 
 char					**ft_split_whitespaces(char *str);
-void					ft_lstappend(t_list **head, t_list *new);
+void					ft_lstappend(t_list **head, t_list *nw);
 char					*ft_str3join(char const *s1, char const *s2,
 						char const *s3);
 void					ft_bzero(void *s, size_t n);
@@ -163,7 +163,7 @@ t_list					*ft_lstnew(void const *content, size_t content_size);
 void					ft_lstdelone(t_list **alst,
 						void (*del)(void *, size_t));
 void					ft_lstdel(t_list **alst, void(*del)(void*, size_t));
-void					ft_lstadd(t_list **alst, t_list *new);
+void					ft_lstadd(t_list **alst, t_list *nw);
 void					ft_lstiter(t_list *lst, void(*f)(t_list *elem));
 t_list					*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 int						ft_any(char **tabo, int (*f)(char*));

@@ -26,8 +26,8 @@ int		func_word(t_ast_node *root)
 	root->content = format_word(&root->content);
 	sh21->argv = split_args(root->content);
 	sh21->argc = arrlen(sh21->argv);
-	if (root->left)
-		status = g_exec_fn[root->left->type](root->left);
+	if (root->redir_node)
+		status = g_exec_fn[root->redir_node->type](root->redir_node);
 	if (!status)
 		status = sh21_exec(arrlen(sh21->argv), sh21->argv, &sh21->env.orig_env);
 	sh21->status = status;

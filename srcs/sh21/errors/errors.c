@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 17:04:12 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/16 14:56:22 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/18 18:47:44 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 int				ft_error(int err, const char *s)
 {
 	if (err >= 0)
-		ft_fprintf(2, "%[RED]21sh%[NC]: %s: %s\n", s, g_errno_message[err]);
+		ft_fprintf(2, "42sh: %s: %s\n", s, g_errno_message[err]);
 	else
 	{
 		err = -err;
-		ft_fprintf(2, "%[RED]21sh%[NC]: %s: %s\n", s, g_own_message[err]);
+		ft_fprintf(2, "42sh: %s: %s\n", s, g_own_message[err]);
 	}
 	return (err);
 }
