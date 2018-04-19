@@ -6,3 +6,4 @@
 
 - variables locales (verifier posix)
 - ! et builtin history si possible
+- autocomplete et \ (Notamment les espaces)
