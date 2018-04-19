@@ -6,11 +6,12 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 12:44:15 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/19 16:44:39 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/19 17:15:19 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cli.h"
+#include "sh21.h"
 
 void				delete_hist_entry(void *entry, size_t size)
 {
@@ -61,9 +62,10 @@ char				*get_history_file(void)
 	char	*path;
 	t_sh21	*lexer_s;
 
+	lexer_s = sh21_get();
 	if (!lexer_s)
 		return (NULL);
-	home = ft_getenv("HOME", lexer_s->env.orig_env);
+	home = ft_getenv("HOME", &lexer_s->env.orig_env);
 	ft_asprintf(&path, "%s/.42sh_history");
 	return (path);
 }
