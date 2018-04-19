@@ -21,12 +21,10 @@ t_ast_node		*ast_create_node(t_token_type type, char *str)
 		ft_exit(errno, NULL);
 	if (!node)
 		return (NULL);
-	bzero(node, sizeof(node));
+	ft_bzero((void*)node, sizeof(node));
 	node->type = type;
 	if (str)
 		node->content = ft_strdup(str);
-	else
-		node->content = NULL;
 	return (node);
 }
 
