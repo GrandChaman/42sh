@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 15:54:39 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/19 16:24:14 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/19 17:12:33 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,14 @@ int						bi_hash(int argc, char **argv, char ***environ);
 int						bi_export(int argc, char **argv, char ***environ);
 int						bi_unset(int argc, char **argv, char ***environ);
 int						bi_history(int argc, char **argv, char ***environ);
-void			read_args(t_hist_args *args, int argc, char **argv);
+int						hist_write(char *path);
+int						hist_append_file(char *path);
+int						hist_sync(char *path);
+int						hist_sync_file(char *path);
+int						hist_divergence(char *path, char **line,
+	t_list **hist, int *fd);
+
+void					read_args(t_hist_args *args, int argc, char **argv);
 
 char					*cd_rule5(char *curpath, char ***environ);
 int						cd_rule8_casedotdot(int *i, char *curpath, int free_curpath);

@@ -6,15 +6,14 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/19 16:55:16 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/19 17:14:08 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 #include "cli.h"
-#include <time.h>
 
-static int			display_history(int lim)
+static int			hist_display(int lim)
 {
 	t_ft_sh			*sh;
 	t_list			*tmp;
@@ -43,7 +42,7 @@ static int			display_history(int lim)
 	return (0);
 }
 
-static int			clear_history(void)
+static int			hist_clear(void)
 {
 	t_ft_sh *sh;
 
@@ -53,48 +52,7 @@ static int			clear_history(void)
 	return (0);
 }
 
-static int			read_and_append_history_form_file(char *path)
-{
-	t_ft_sh		*sh;
-	int			fd;
-
-	sh = get_ft_shell();
-	path = (path ? path : get_history_file());
-	if (!path)
-		return (ft_fprintf(2, "42sh: history: can't open default history file."
-			" HOME not defined %s.\n", path) || 1);
-	if ((fd = open(path, O_RDONLY)) < 0)
-		return (ft_fprintf(2, "42sh: history: can't read file %s.\n", path)
-			|| 1);
-	if (read_history(sh, fd) < 0)
-	{
-		close(fd);
-		return (ft_fprintf(2, "42sh: history: error while reading %s.\n", path)
-			|| 1);
-	}
-	close(fd);
-	return (0);
-}
-
-static int			write_history_to_file(char *path)
-{
-	t_ft_sh		*sh;
-	int			fd;
-
-	sh = get_ft_shell();
-	path = (path ? path : get_history_file());
-	if (!path)
-		return (ft_fprintf(2, "42sh: history: can't open default history file."
-			" HOME not defined %s.\n", path) || 1);
-	if ((fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644)) < 0)
-		return (ft_fprintf(2, "42sh: history: can't write to file %s.\n", path)
-			&& 1);
-	write_history(sh, fd, 0);
-	close(fd);
-	return (0);
-}
-
-static int			display_cmd(int argc, const char **argv, int should_display)
+static int			display_cmd(int argc, char **argv, int should_display)
 {
 	int i;
 
@@ -106,98 +64,7 @@ static int			display_cmd(int argc, const char **argv, int should_display)
 	return (0);
 }
 
-static int	find_history_divergence(char *path, char **line, t_list **hist, int *fd)
-{
-	t_ft_sh		*sh;
-	char		*tmp;
-	int			gnl_res;
-
-	sh = get_ft_shell();
-	if (!sh->history)
-		return (-1);
-	path = (path ? path : get_history_file());
-	if (!path)
-		return (ft_fprintf(2, "42sh: history: can't open default history file."
-			" HOME not defined %s.\n", path) || 1);
-	*hist = ft_lstlast(sh->history);
-	if ((*fd = open(path, O_RDWR)) < 0)
-		return (ft_fprintf(2, "42sh: history: can't write to "
-		"file %s.\n", path) * -1);
-	while (*hist && (gnl_res = get_next_line(*fd, line)) > 0)
-	{
-		tmp = ft_strchr(*line, ' ');
-		if (!tmp)
-			continue ;
-		++tmp;
-		if (!ft_strcmp(tmp, ((t_ft_hist_entry*)(*hist)->content)->command))
-			*hist = (*hist)->prev;
-		else
-			break ;
-		ft_strdel(line);
-	}
-	return (gnl_res);
-}
-
-static int			append_new_line_to_hist_file(char *path)
-{
-	int		fd;
-	char	*line;
-	int		gnl_res;
-	t_list	*tmp;
-
-	line = NULL;
-	path = (path ? path : get_history_file());
-	if (!path)
-		return (ft_fprintf(2, "42sh: history: can't open default history file."
-			" HOME not defined %s.\n", path) || 1);
-	gnl_res = find_history_divergence("toto.txt", &line, &tmp, &fd);
-	free(line);
-	if (gnl_res < 0)
-		return ((close(fd) + ft_fprintf(2,
-			"42sh: history: Error while reading history file %s\n")) || 1);
-	if (lseek(fd, 0, SEEK_END) < 0)
-		return ((close(fd) + ft_fprintf(2, "42sh: history: lseek() failed\n"))
-			&& 1);
-	while (tmp)
-	{
-		ft_fprintf(fd, "%lu %s\n",
-			((t_ft_hist_entry*)tmp->content)->timestamp,
-			((t_ft_hist_entry*)tmp->content)->command);
-		tmp = tmp->prev;
-	}
-	close(fd);
-	return (0);
-}
-
-static int			append_new_line_to_hist(char *path)
-{
-	int		fd;
-	char	*line;
-	int		gnl_res;
-	t_list	*tmp;
-	t_ft_sh	*sh;
-
-	sh = get_ft_shell();
-	path = (path ? path : get_history_file());
-	if (!path)
-		return (ft_fprintf(2, "42sh: history: can't open default history file."
-			" HOME not defined %s.\n", path) || 1);
-	gnl_res = find_history_divergence("toto.txt", &line, &tmp, &fd);
-	if (gnl_res < 0)
-		return ((close(fd) + ft_fprintf(2,
-			"42sh: history: Error while reading history file %s\n")) || 1);
-	if (line)
-		parse_and_add_to_history(sh, line);
-	free(line);
-	read_history(get_ft_shell(), fd);
-	if (lseek(fd, 0, SEEK_END) < 0)
-		return ((close(fd) +
-			ft_fprintf(2, "42sh: history: lseek() failed\n")) || 1);
-	close(fd);
-	return (0);
-}
-
-static int			delete_at_offset(int offset)
+static int			hist_del_at_offset(int offset)
 {
 	t_ft_sh	*sh;
 	t_list	*tmp;
@@ -223,25 +90,22 @@ int					bi_history(int argc, char **argv, char ***environ)
 	(void)environ;
 	ret = 0;
 	if (argc == 1)
-		return (display_history(0));
+		return (hist_display(0));
 	read_args(&flags, argc, argv);
 	if (flags.err)
 		return (flags.err);
-	if (flags.d)
-		ret = delete_at_offset(flags.d_val);
-	if (flags.p)
-		ret = display_cmd(argc, argv, !flags.s);
+	ret = (flags.d ? hist_del_at_offset(flags.d_val) : ret);
+	ret = (flags.p ? display_cmd(argc, argv, !flags.s) : ret);
 	if (flags.s)
 		add_to_history(get_ft_shell(), argv[flags.argv_count]);
 	if (flags.awrn == 'a')
-		ret = append_new_line_to_hist_file(argv[flags.argv_count]);
+		ret = hist_sync_file(argv[flags.argv_count]);
 	else if (flags.awrn == 'w')
-		ret = write_history_to_file(argv[flags.argv_count]);
+		ret = hist_write(argv[flags.argv_count]);
 	else if (flags.awrn == 'n')
-		ret = append_new_line_to_hist(argv[flags.argv_count]);
-	if (flags.c)
-		ret = clear_history();
+		ret = hist_sync(argv[flags.argv_count]);
+	ret = (flags.c ? hist_clear() : ret);
 	if (flags.awrn == 'r')
-		ret = read_and_append_history_form_file(argv[flags.argv_count]);
+		ret = hist_append_file(argv[flags.argv_count]);
 	return (ret);
 }
