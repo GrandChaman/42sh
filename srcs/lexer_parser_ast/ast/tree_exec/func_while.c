@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_while.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbertoia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 23:19:46 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/18 23:19:49 by fbertoia         ###   ########.fr       */
+/*   Updated: 2018/04/19 14:24:07 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int		func_while(t_ast_node *root)
 	t_fd_cleanup	*fd_cleanup;
 	int				status;
 
+	sh21 = sh21_get();
 	status = 0;
 	if (root->redir_node)
 		status = g_exec_fn[root->redir_node->type](root->redir_node);
