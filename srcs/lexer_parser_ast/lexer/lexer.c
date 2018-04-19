@@ -6,14 +6,14 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/18 19:34:12 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/19 15:09:44 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "sh21.h"
 #include "libft.h"
-// modif
+
 t_lex		*lex_create(t_token_type token_type, char *content)
 {
 	t_lex	*lex;
@@ -86,6 +86,8 @@ int			lexer(t_sh21 *sh21)
 		check_semi_stat(&lexa);
 		if (lexa.c == '\\')
 			escape(&lexa);
+		else if (lexa.c == '`')
+			on_magicq(&lexa);
 		else if (lexa.c == '"' || lexa.c == '\'')
 			on_quote(&lexa);
 		else if (lexa.oquote)
