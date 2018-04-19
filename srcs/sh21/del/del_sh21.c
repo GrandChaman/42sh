@@ -19,7 +19,6 @@ void	del_sh21(void)
 	sh21 = sh21_get();
 	sh21->signal = 0;
 	del_arr(&sh21->env.env_cpy);
-	del_arr(&sh21->argv);
 	ft_strdel(&g_err_lex->content);
 	del_list((void**)&sh21->lex, del_lex);
 	del_ast(&sh21->tree.root_node);

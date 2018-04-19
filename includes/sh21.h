@@ -52,8 +52,6 @@ typedef struct		s_sh21
 	t_env			env;
 	char			*buf;
 	int				signal;
-	char			**argv;
-	int				argc;
 	int				debug_tty;
 	t_list			*envl;
 	int				ret;

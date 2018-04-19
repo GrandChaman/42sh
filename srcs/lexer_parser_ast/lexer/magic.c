@@ -10,9 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
 #include "sh21.h"
-#include "libft.h"
+
+// change_fd();
+
+
+char	*exec_subshell(char *str)
+{
+	t_ast *root;
+	t_lex *lex;
+
+	lex = lexer(str);
+	parser(lex);
+	return (str);
+}
 
 static int	g_open = 0;
 

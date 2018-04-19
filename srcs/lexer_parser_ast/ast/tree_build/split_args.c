@@ -44,25 +44,24 @@ char **copy_list_to_array(t_args **list)
 	return (ret);
 }
 
-char **split_args(char *argv)
+char **split_args(char *argv, t_ast_node *node)
 {
 	t_args	*list;
 	int		i;
 	int		j;
+	int		*tabi[] = {&i, &j};
 
 	list = NULL;
 	i = 0;
 	j = 0;
-	sh21_get()->tree.i = 0;
-	sh21_get()->tree.quote_count = 0;
 	while (argv[i + j])
 	{
-		if (escaped_char(argv, &sh21_get()->tree, &i, &j))
+		if (escaped_char(argv, node, &i, &j))
 			j++;
 		else if (argv[i + j] == '\"' || argv[i + j] == '\'')
-			case_quote_args(argv, &i, &j);
+			case_quote_args(argv, &i, &j, node);
 		else if (is_whitespace(argv[i + j]))
-			case_space(argv, &i, &j, &list);
+			case_space(argv, tabi, node, &list);
 		else
 			j++;
 	}
