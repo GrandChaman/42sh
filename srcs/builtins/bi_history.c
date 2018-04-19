@@ -160,15 +160,13 @@ int					bi_history(int argc, char **argv, char ***environ)
 		return (flags.err);
 	if (flags.d)
 		return (display_history(flags.d_val));
-	if (flags.s)
-		ret = 0; //-s
 	if (flags.p)
+		ret = 0; //-p
+	if (flags.s)
 		ret = 0; //-s
 	if (flags.awrn == 'a')
 		ret = 0;
 	else if (flags.awrn == 'w')
-		ret = 0;
-	else if (flags.awrn == 'r')
 		ret = 0;
 	else if (flags.awrn == 'n')
 		ret = 0;
