@@ -18,10 +18,10 @@
 
 # define SIZE_RANDOM_STR 10
 # define TMP_HEREDOC_SIZE 64
-# define TMP_PATH_HEREDOC "/tmp/"
+# define TMP_PATH_RANDOM "/tmp/"
 # define CONTENT_SIZE 1024
 # define SPECIAL_PARAMETERS "@*#?-$!0"
-# define NB_ESCAPED_QUOTE 1024
+# define NB_ESCAPED_QUOTE 100
 
 typedef struct			s_fd_cleanup
 {

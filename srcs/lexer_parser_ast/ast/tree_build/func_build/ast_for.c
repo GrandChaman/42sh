@@ -14,5 +14,6 @@
 
 int		ast_for(t_ast_node *root)
 {
-
+	(void)root;
+	return (0);
 }

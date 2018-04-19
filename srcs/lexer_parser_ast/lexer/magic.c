@@ -10,9 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
 #include "sh21.h"
-#include "libft.h"
+
+// change_fd();
+
+
+char	*exec_subshell(char *str)
+{
+		// t_lex *lex;
+        //
+        //
+        //
+		// lex = lexer(str);
+	return (str);
+}
 
 void	on_magicq(t_lexa *lexa)
 {
