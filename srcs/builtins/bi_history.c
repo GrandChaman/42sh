@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/19 11:45:27 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/19 11:59:26 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static int			display_history(int lim)
 			&& 1);
 	if (!(tmp = (lim ? ft_lstat(sh->history, lim) : ft_lstlast(sh->history))))
 		return (0);
-	if (tmp != sh->history)
-		i = sh->history_size;
+	if (lim)
+		i = sh->history_size - lim;
 	while ((tmp = tmp->prev))
 	{
 		entry = (t_ft_hist_entry*)tmp->content;
@@ -98,7 +98,7 @@ static int			display_cmd(int argc, const char **argv, int should_display)
 	return (0);
 }
 
-static t_ft_hist_entry	find_diverging_point_in_history_file(char *path, int *fd)
+static char	*find_diverging_point_in_history_file(char *path, int *fd)
 {
 	t_ft_sh		*sh;
 	char		*line;
@@ -123,8 +123,9 @@ static t_ft_hist_entry	find_diverging_point_in_history_file(char *path, int *fd)
 			break ;
 		free(line);
 	}
-	return ((t_ft_hist_entry){.command = ft_strdup(tmp),
-		.timestamp = ft_atoi(line)})
+	return (line);
+	// return ((t_ft_hist_entry){.command = ft_strdup(tmp),
+	// 	.timestamp = ft_atoi(line)})
 }
 
 static int			delete_at_offset(int offset)
@@ -140,6 +141,7 @@ static int			delete_at_offset(int offset)
 			offset) && 1);
 	if (!(tmp = ft_lstat(sh->history, len - offset)))
 		return (1);
+	ft_printf("Deleting : %s\n", ((t_ft_hist_entry*)(tmp->content))->command);
 	ft_lstdelone(&tmp, delete_hist_entry);
 	return (0);
 }
@@ -153,7 +155,7 @@ int					bi_history(int argc, char **argv, char ***environ)
 	if (argc == 1)
 		return (display_history(0));
 	if (argv[1][0] == '-')
-		return (0);//Handle param
+		return (delete_at_offset(ft_atoi(argv[2])));//Handle param
 	else
 	{
 		while (argv[1][i])
