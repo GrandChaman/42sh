@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bi_history.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/19 12:43:15 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/19 14:22:53 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,8 +157,8 @@ int					bi_history(int argc, char **argv, char ***environ)
 		return (display_history(0));
 	read_args(&flags, argc, argv);
 	if (flags.err)
-		return (flags.err);
-	if (flags.d)
+		return (flags.err); // Handle err here
+	if (flags.d == 'd')
 		return (display_history(flags.d_val));
 	if (flags.p)
 		ret = 0; //-p
@@ -170,9 +170,9 @@ int					bi_history(int argc, char **argv, char ***environ)
 		ret = 0;
 	else if (flags.awrn == 'n')
 		ret = 0;
-	if (flags.c)
-		ret = 0;
 	if (flags.awrn == 'r')
+		ret = 0;
+	if (flags.c)
 		ret = 0;
 	return (ret);
 }

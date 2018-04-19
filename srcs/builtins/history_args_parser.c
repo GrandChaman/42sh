@@ -25,6 +25,10 @@
 // 	return (args);
 // }
 
+#define MULTIPLE_AWRN -1
+#define INVALID_CHAR -42
+#define INVALID_OFFSET 15
+
 static void		awrn_handle(t_hist_args *args, char *str)
 {
 	if (*str == 'a' && !args->awrn)
@@ -42,6 +46,8 @@ int				handle_arg(t_hist_args *args, char **arg)
 	char *str = *arg;
 	while (*str)
 	{
+		if (!ft_strchr("awrncdps", *str))
+			return ((args->err = INVALID_CHAR));
 		if (*str == 'c')
 			args->c = 1;
 		else if (*str == 'p')
@@ -51,11 +57,11 @@ int				handle_arg(t_hist_args *args, char **arg)
 		else if (strchr("awrn", *str) != NULL)
 		{
 			if (args->awrn != 0)
-				return (-1);
+				return ((args->err = MULTIPLE_AWRN));
 			awrn_handle(args, str);
 		}
 		else
-			return ((args->d = (*str == 'd')) ? 'd' : INVARG);
+			return ((args->d = (*str == 'd')) ? 'd' : INVALID_OFFSET);
 		++*arg;
 		++str;
 	}
@@ -90,11 +96,13 @@ void			read_args(t_hist_args *args, int argc, char **argv)
 				else
 					args->err = D_ERR;
 			}
-			else if (err < 0)
+			else if (err == -1)
 			{
 				args->err = AWRN_ERR;
 				return;
 			}
+			else if (err < 0)
+				return;
 		}
 		else
 			return;
