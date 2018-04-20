@@ -27,6 +27,7 @@ int		func_word(t_ast_node *root)
 	sh21 = sh21_get();
 	format_word(root);
 	argv = split_args(root->content, root);
+	ft_fprintf(sh21_get()->debug_tty, "{magenta}argv[0] = %s{eoc}\n", argv[0]);
 	argc = arrlen(argv);
 	if (root->redir_node)
 		status = g_exec_fn[root->redir_node->type](root->redir_node);

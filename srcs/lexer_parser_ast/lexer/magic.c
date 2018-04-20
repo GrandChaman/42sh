@@ -41,9 +41,9 @@ char	*exec_subshell(char *str)
 	}
 	else
 	{
+		wait(&pid);
 		dup2(nerr, 2);
 		dup2(nw, 1);
-		wait(&pid);
 	}
 	return (str);
 }
@@ -53,27 +53,48 @@ void	on_magicq(t_lexa *lexa)
 	int		offset;
 	char	*ret;
 	int		fd;
-	char	c;
-	int		i = 0;
+	char	buf[100];
+	char	**arr;
 	char	*new_str;
-	size_t	buf = 32;
+	int		i;
 
-	add_elem_back((void**)&lexa->lex, (void*)lex_create(lexa->t, lexa->buffer));
+	if (lexa->buffer && lexa->buffer[0] && lexa->t != WORD)
+		add_elem_back((void**)&lexa->lex, (void*)lex_create(lexa->t, lexa->buffer));
+	lexa->t = WORD;
+	offset = ft_strindex(lexa->str + 1, '`');
+	if (offset < 0)
+		return ;
 	lexa->str++;
-	offset = ft_strindex(lexa->str, '`');
 	ret = ft_strndup(lexa->str, offset + 1);
-	lexa->str += ft_strlen(ret) + 1;
+	lexa->str += offset;
 	exec_subshell(ret);
+	ft_strdel(&ret);
 	fd = open(".42sh_subshell_res0", O_RDONLY);
-	new_str = ft_strdup(lexa->str);
-	new_str = ft_strpush(new_str, i++, '#', &buf);
-	while (read(fd, &c, 1) == 1)
+	new_str = NULL;
+	ft_printf("3 str = %s\n", lexa->str);
+
+	while ((i = read(fd, buf, 99)) > 0)
 	{
-		//ft_putchar(c);
-		if (ft_iswhitespace(c)) c = ' ';
-		new_str = ft_strpush(new_str, i++, c, &buf);
-		//ft_printf("--%s--\n", new_str);
+		buf[i] = '\0';
+		new_str = ft_strfjoin(new_str, buf);
 	}
-	lexa->str = new_str;
-	//ft_printf(">>%s--\n", lexa->str);
+	if (!new_str)
+		return ;
+	if (lexa->oquote)
+		lexa->buffer = ft_strfjoin(lexa->buffer, new_str);
+	else
+	{
+		arr = ft_split_whitespaces(new_str);
+		i = 0;
+		while (arr && arr[i])
+		{
+			lexa->buffer = ft_strfjoin(lexa->buffer, arr[i]);
+			lexa->buffer = ft_strfjoin(lexa->buffer, " ");
+			i++;
+		}
+		del_arr(&arr);
+	}
+	ft_printf("4 str = %s\n", lexa->str);
+
+	ft_strdel(&new_str);
 }
