@@ -7,4 +7,7 @@
 - variables locales (verifier posix)
 - ! et builtin history si possible
 - autocomplete et \ (Notamment les espaces)
-- !' ' 
+- !' '
+- CLI bug avec escape char
+- CLI bug auto complete et espace char
+- history testing
