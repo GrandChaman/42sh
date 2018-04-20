@@ -12,7 +12,7 @@
 
 #include "sh21.h"
 
-static int	check_second(char second, int *i, char *cmd)
+static int	check_second_quote(char second, int *i, char *cmd)
 {
 	*i = *i + 1;
 	while (cmd[*i] && cmd[*i] != second)
@@ -46,7 +46,7 @@ static int	quote(char *cmd, int *i)
 	{
 		if (cmd[*i] == tabl[var])
 		{
-			if ((check_second(tabl[var], i, cmd)) != 0)
+			if ((check_second_quote(tabl[var], i, cmd)) != 0)
 				return (var);
 		}
 		var++;
@@ -54,32 +54,37 @@ static int	quote(char *cmd, int *i)
 	return (0);
 }
 
-static int bracket(char *cmd, int *i)
+static int bracket(char *cmd, int i)
 {
-	char	tabl[5];
-	int		var;
-	char	second;
+	int		a;
+	int		b;
+	int		c;
 
-	tabl[1] = '{';
-	tabl[2] = '[';
-	tabl[3] = '(';
-	tabl[4] = '\0';
-	var = 1;
-	while (tabl[var])
+	a = 0;
+	b = 0;
+	c = 0;
+	while (cmd[i])
 	{
-		if (cmd[*i] == tabl[var])
-		{
-			if (var == 1)
-				second = '}';
-			else if (var == 2)
-				second = ']';
-			else
-				second = ')';
-			if ((check_second(second, i, cmd)) != 0)
-				return (var);
-		}
-		var++;
+		if (cmd[i] == '{')
+			a++;
+		if (cmd[i] == '}')
+			a--;
+		if (cmd[i] == '(')
+			b++;
+		if (cmd[i] == ')')
+			b--;
+		if (cmd[i] == '[')
+			c++;
+		if (cmd[i] == ']')
+			c--;
+		i++;
 	}
+	if (a != 0)
+		return (1);
+	if (b != 0)
+		return (2);
+	if (c != 0)
+		return (3);
 	return (0);
 }
 
@@ -119,6 +124,15 @@ char		*check_correct(char *cmd)
 	int		stock;
 
 	i = 0;
+	if ((stock = bracket(cmd, i)) != 0)
+	{
+		if (stock == 1)
+			return ("need_}> ");
+		if (stock == 2)
+			return ("need_]> ");
+		if (stock == 3)
+			return ("need_)> ");
+	}
 	while (cmd[i])
 	{
 		if (cmd[i] == '\\')
@@ -136,17 +150,6 @@ char		*check_correct(char *cmd)
 				return ("s_quote> ");
 			if (stock == 3)
 				return ("b_quote> ");
-		}
-		if (check_correct_2(i, cmd) != NULL)
-			return (check_correct_2(i, cmd));
-		if ((stock = bracket(cmd, &i)) != 0)
-		{
-			if (stock == 1)
-				return ("need_}> ");
-			if (stock == 2)
-				return ("need_]> ");
-			if (stock == 3)
-				return ("need_)> ");
 		}
 		if (check_correct_2(i, cmd) != NULL)
 			return (check_correct_2(i, cmd));
