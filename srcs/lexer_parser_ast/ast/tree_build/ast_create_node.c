@@ -73,7 +73,6 @@ t_ast_node		*ast_create_op(t_ast_node *node, t_lex **lex)
 t_ast_node		*ast_create_tree(t_lex *lex)
 {
 	t_ast_node *node;
-	print_lex_list(lex);
 	node = ast_create_leaf(lex->token_type, &lex);
 	while (lex)
 		node = ast_create_op(node, &lex);
