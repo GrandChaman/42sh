@@ -12,7 +12,7 @@
 
 #include "sh21.h"
 
-static int	check_second_quote(char second, int *i, char *cmd)
+static int	check_second(char second, int *i, char *cmd)
 {
 	*i = *i + 1;
 	while (cmd[*i] && cmd[*i] != second)
@@ -34,18 +34,48 @@ static int	check_second_quote(char second, int *i, char *cmd)
 
 static int	quote(char *cmd, int *i)
 {
-	char	tabl[4];
+	char	tabl[5];
 	int		var;
 
 	tabl[1] = '"';
 	tabl[2] = '\'';
-	tabl[3] = '\0';
+	tabl[3] = '`';
+	tabl[4] = '\0';
 	var = 1;
 	while (tabl[var])
 	{
 		if (cmd[*i] == tabl[var])
 		{
-			if ((check_second_quote(tabl[var], i, cmd)) != 0)
+			if ((check_second(tabl[var], i, cmd)) != 0)
+				return (var);
+		}
+		var++;
+	}
+	return (0);
+}
+
+static int bracket(char *cmd, int *i)
+{
+	char	tabl[5];
+	int		var;
+	char	second;
+
+	tabl[1] = '{';
+	tabl[2] = '[';
+	tabl[3] = '(';
+	tabl[4] = '\0';
+	var = 1;
+	while (tabl[var])
+	{
+		if (cmd[*i] == tabl[var])
+		{
+			if (var == 1)
+				second = '}';
+			else if (var == 2)
+				second = ']';
+			else
+				second = ')';
+			if ((check_second(second, i, cmd)) != 0)
 				return (var);
 		}
 		var++;
@@ -94,9 +124,7 @@ char		*check_correct(char *cmd)
 		if (cmd[i] == '\\')
 		{
 			if (cmd[++i] == '\0')
-			{
 				return ("cmd> ");
-			}
 			i++;
 			continue ;
 		}
@@ -106,6 +134,19 @@ char		*check_correct(char *cmd)
 				return ("d_quote> ");
 			if (stock == 2)
 				return ("s_quote> ");
+			if (stock == 3)
+				return ("b_quote> ");
+		}
+		if (check_correct_2(i, cmd) != NULL)
+			return (check_correct_2(i, cmd));
+		if ((stock = bracket(cmd, &i)) != 0)
+		{
+			if (stock == 1)
+				return ("need_}> ");
+			if (stock == 2)
+				return ("need_]> ");
+			if (stock == 3)
+				return ("need_)> ");
 		}
 		if (check_correct_2(i, cmd) != NULL)
 			return (check_correct_2(i, cmd));
