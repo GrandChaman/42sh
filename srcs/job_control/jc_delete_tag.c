@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   jc_add.c                                           :+:      :+:    :+:   */
+/*   jc_delete_tag.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/20 15:58:28 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/21 13:21:37 by fle-roy          ###   ########.fr       */
+/*   Created: 2018/04/20 17:35:08 by fle-roy           #+#    #+#             */
+/*   Updated: 2018/04/21 15:32:52 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "job_control.h"
 
-void		jc_add(t_jc_tag jtag, pid_t npid)
+static void	delete_jc_tag(void *el, size_t size)
+{
+	(void)size;
+	ft_lstdel(&(((t_jc_job*)el)->pid_list), NULL);
+	free(el);
+}
+
+void		jc_delete_tag(t_jc_tag tag)
 {
 	t_list		*jb_list;
 	t_jc_job*	tmp;
@@ -21,15 +28,11 @@ void		jc_add(t_jc_tag jtag, pid_t npid)
 	while (jb_list)
 	{
 		tmp = ((t_jc_job*)jb_list->content);
-		if (tmp->tag == jtag)
+		if (tmp->tag == tag)
 		{
-			if (!tmp->pid_list)
-			{
-				if (setpgid(npid, npid) < 0)
-					ft_perror("setpgid", "called to setpgid failed.");
-				tmp->pgid = npid;
-			}
-			ft_lstpush_front(&tmp->pid_list, &npid, sizeof(pid_t));
+			if (jc_get()->fg_job == jb_list)
+				jc_get()->fg_job = NULL;
+			ft_lstdelone(&jb_list, delete_jc_tag);
 			return ;
 		}
 		jb_list = jb_list->next;

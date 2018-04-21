@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/18 17:57:50 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/21 18:58:37 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "lexer.h"
 #include "cli.h"
 #include "libft.h"
+#include "job_control.h"
+#include <locale.h>
 
 t_lex		*g_err_lex;
 
@@ -51,16 +53,65 @@ static void	main_loop(t_sh21 *sh21, t_ft_sh *shell)
 	}
 }
 
+void		job_control_test(char **environ)
+{
+	t_jc_tag	ntag;
+	pid_t		pid;
+	int			status;
+	char *newargv[] = { "sleep", "100", NULL };
+	signal(SIGTSTP, SIG_DFL);
+	signal(SIGCONT, SIG_DFL);
+	pid = fork();
+	if (!pid)
+		exit(execve("/bin/sleep", newargv, environ));
+	ntag = jc_create_tag();
+	jc_add(ntag, pid);
+	jc_set(ntag, FG);
+	ft_printf("Juste avant le wait wefewfwe \n");
+	while (1)
+	{
+		ft_printf("Waiting for %d\n", pid);
+		ft_printf("GPID FG : %d | GPID PARENT : %d\n", tcgetpgrp(0), getpgrp());
+		waitpid(-pid, &status, WUNTRACED);
+		signal(SIGTTOU, SIG_IGN);
+		signal(SIGTSTP, SIG_IGN);
+		signal(SIGCONT, SIG_IGN);
+		ft_printf("TOOTOTOTO %d\n", getpgrp());
+		tcsetpgrp(0, getpgrp());
+		signal(SIGTTOU, SIG_DFL);
+
+		ft_printf("GPID FG : %d | GPID PARENT : %d\n", tcgetpgrp(0), getpgrp());
+		if (WIFSTOPPED(status))
+		{
+			main_loop(sh21_get(), get_ft_shell());
+			break ;
+		}
+		break ;
+	}
+	ft_printf("Juste apres le wait\n");
+	jc_delete_tag(ntag);
+	ft_printf("Return value : %d\n", status);
+	if (WIFSIGNALED(status))
+		ft_printf("sig : %d\n", WTERMSIG(status));
+	if (WIFEXITED(status))
+		ft_printf("res : %d\n", WEXITSTATUS(status));
+}
+
 int			main(void)
 {
 	t_ft_sh			*shell;
 	t_sh21			*sh21;
 	extern char		**environ;
 
+	setlocale(LC_ALL, "");
 	sh21 = sh21_init(environ);
 	shell = get_ft_shell();
 	shell->ht = NULL;
-	signal(SIGINT, ignore_signal);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGCONT, SIG_IGN);
+	ft_printf("Toto : %d %d %d\n", getpgrp(), getpid(), getppid());
+	setpgid(0, getpid());
 	if (!is_env_correct())
 		return (1);
 	cli_loader(0);
@@ -69,7 +120,8 @@ int			main(void)
 		cli_loader(1);
 		return (1);
 	}
-	main_loop(sh21, shell);
+	//main_loop(sh21, shell);
+	job_control_test(environ);
 	del_sh21_exit();
 	return (0);
 }
