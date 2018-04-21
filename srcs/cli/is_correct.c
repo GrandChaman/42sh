@@ -67,23 +67,23 @@ static int bracket(char *cmd, int i)
 	{
 		if (cmd[i] == '{')
 			a++;
-		if (cmd[i] == '}')
+		else if (cmd[i] == '}')
 			a--;
-		if (cmd[i] == '(')
+		else if (cmd[i] == '(')
 			b++;
-		if (cmd[i] == ')')
+		else if (cmd[i] == ')')
 			b--;
-		if (cmd[i] == '[')
+		else if (cmd[i] == '[')
 			c++;
-		if (cmd[i] == ']')
+		else if (cmd[i] == ']')
 			c--;
 		i++;
 	}
 	if (a != 0)
 		return (1);
-	if (b != 0)
+	else if (b != 0)
 		return (2);
-	if (c != 0)
+	else if (c != 0)
 		return (3);
 	return (0);
 }
@@ -129,9 +129,9 @@ char		*check_correct(char *cmd)
 		if (stock == 1)
 			return ("need_}> ");
 		if (stock == 2)
-			return ("need_]> ");
-		if (stock == 3)
 			return ("need_)> ");
+		if (stock == 3)
+			return ("need_]> ");
 	}
 	while (cmd[i])
 	{
