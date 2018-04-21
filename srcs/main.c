@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/18 17:57:50 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/21 19:17:02 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "lexer.h"
 #include "cli.h"
 #include "libft.h"
+#include <locale.h>
 
 t_lex		*g_err_lex;
 
@@ -26,13 +27,11 @@ static void	ignore_signal(int sig)
 
 static void	main_loop(t_sh21 *sh21, t_ft_sh *shell)
 {
-	int		fb;
 	char	*cmd;
 
-	fb = 0;
 	while (42)
 	{
-		if (((cmd = read_command(NULL, sh21->ret, 0, (!fb ? fb++ : fb))) == NULL))
+		if (((cmd = read_command(NULL, sh21->ret, 0)) == NULL))
 			break ;
 		cmd = remove_char(cmd);
 		if (!bang(&cmd))
@@ -57,6 +56,7 @@ int			main(void)
 	t_sh21			*sh21;
 	extern char		**environ;
 
+	setlocale(LC_ALL, "");
 	sh21 = sh21_init(environ);
 	shell = get_ft_shell();
 	shell->ht = NULL;

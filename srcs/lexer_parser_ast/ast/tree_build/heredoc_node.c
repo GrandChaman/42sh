@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_node.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbertoia <fbertoia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 14:25:16 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/18 18:45:46 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/21 19:07:41 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	final_heredoc(char *tmp, char *str, int fd, t_sh21 *sh21)
 		ft_fprintf(fd, tmp2);
 		free(tmp2);
 		free(tmp);
-		if ((tmp = read_command(NULL, 0, 1, 0)) == NULL)
+		if ((tmp = read_command(NULL, 0, 1)) == NULL)
 		{
 			free(str);
 			sh21->signal = T_CTRL_C;
@@ -75,7 +75,7 @@ void		heredoc_node(t_ast_node *node)
 	if (!(tmp_file = random_str(SIZE_RANDOM_STR)))
 		return ;
 	node->content = ft_strjoin(TMP_PATH_HEREDOC, tmp_file);
-	if ((tmp = read_command(NULL, 0, 1, 0)) == NULL)
+	if ((tmp = read_command(NULL, 0, 1)) == NULL)
 	{
 		free(str);
 		free(tmp_file);
