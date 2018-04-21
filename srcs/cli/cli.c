@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 10:55:43 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/17 19:09:51 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/21 19:07:25 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,14 @@ static char	*read_command_outro(t_ft_sh *sh, char lchar, int heredoc)
 	return (res);
 }
 
-char		*read_command(char *prompt, int status, int heredoc, int fb)
+char		*read_command(char *prompt, int status, int heredoc)
 {
 	char	*nprompt;
 	t_ft_sh	*sh;
 	char	lchar;
 
 	sh = get_ft_shell();
-	prompt_select(prompt, status, heredoc, fb);
+	prompt_select(prompt, status, heredoc);
 	sh->is_alt_shell = (prompt || heredoc ? 1 : 0);
 	apply_terminal_setting(0);
 	lchar = read_command_routine(sh);
@@ -113,7 +113,7 @@ char		*read_command(char *prompt, int status, int heredoc, int fb)
 		dbuf_insert(&sh->buf, sh->cursor++, '\n');
 		ft_putchar('\n');
 		apply_terminal_setting(1);
-		return (read_command(nprompt, status, 0, 0));
+		return (read_command(nprompt, status, 0));
 	}
 	return (read_command_outro(sh, lchar, heredoc));
 }
