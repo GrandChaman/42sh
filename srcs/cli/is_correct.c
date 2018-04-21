@@ -54,38 +54,35 @@ static int	quote(char *cmd, int *i)
 	return (0);
 }
 
-static int bracket(char *cmd, int i)
+static char	*bracket(char *cmd, int i)
 {
-	int		a;
-	int		b;
-	int		c;
+	int tabl[3];
 
-	a = 0;
-	b = 0;
-	c = 0;
-	while (cmd[i])
+	tabl[0] = 0;
+	tabl[1] = 0;
+	tabl[2] = 0;
+	while (cmd[++i])
 	{
 		if (cmd[i] == '{')
-			a++;
+			tabl[0]++;
 		else if (cmd[i] == '}')
-			a--;
+			tabl[0]--;
 		else if (cmd[i] == '(')
-			b++;
+			tabl[1]++;
 		else if (cmd[i] == ')')
-			b--;
+			tabl[1]--;
 		else if (cmd[i] == '[')
-			c++;
+			tabl[2]++;
 		else if (cmd[i] == ']')
-			c--;
-		i++;
+			tabl[2]--;
 	}
-	if (a != 0)
-		return (1);
-	else if (b != 0)
-		return (2);
-	else if (c != 0)
-		return (3);
-	return (0);
+	if (tabl[0] > 0)
+		return ("need_}> ");
+	else if (tabl[1] > 0)
+		return ("need_)> ");
+	else if (tabl[2] > 0)
+		return ("need_]> ");
+	return (NULL);
 }
 
 static char	*check_correct_2(int i, char *cmd)
@@ -107,10 +104,8 @@ static char	*check_correct_2(int i, char *cmd)
 			o++;
 		if (cmd[o] == '\0')
 		{
-			if (stock == '|')
+			if (stock == '|' || stock == '\\')
 				return ("cmd> ");
-			else if (stock == '\\')
-				return ("cmd");
 			else if (stock == '&' && beforestock && beforestock == '&')
 				return ("cmd> ");
 		}
@@ -122,17 +117,11 @@ char		*check_correct(char *cmd)
 {
 	int		i;
 	int		stock;
+	char	*tmp;
 
 	i = 0;
-	if ((stock = bracket(cmd, i)) != 0)
-	{
-		if (stock == 1)
-			return ("need_}> ");
-		if (stock == 2)
-			return ("need_)> ");
-		if (stock == 3)
-			return ("need_]> ");
-	}
+	if ((tmp = bracket(cmd, i - 1)) != NULL)
+		return (tmp);
 	while (cmd[i])
 	{
 		if (cmd[i] == '\\')
