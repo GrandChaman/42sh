@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/18 17:32:17 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/16 18:40:21 by bluff            ###   ########.fr       */
+/*   Updated: 2018/04/21 13:34:40 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int			display_prompt(int last_result)
 		res += ft_strlen(path);
 	else
 		res += ft_strlen("(null)");
-	ft_fprintf(2, "%s$ {magenta}%s{eoc}> ",
-	(last_result ? ANSI_COLOR_B_RED : ANSI_COLOR_B_GREEN), path);
+	ft_fprintf(2, "%s%C {magenta}%s{eoc}> ",
+	(last_result ? ANSI_COLOR_B_RED : ANSI_COLOR_B_GREEN), 8594, path);
 	free(path);
 	shell = get_ft_shell();
 	shell->prompt_size = res;

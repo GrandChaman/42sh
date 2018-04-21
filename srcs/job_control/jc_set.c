@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   jc_add.c                                           :+:      :+:    :+:   */
+/*   jc_set.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/20 15:58:28 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/21 13:21:37 by fle-roy          ###   ########.fr       */
+/*   Created: 2018/04/21 13:13:55 by fle-roy           #+#    #+#             */
+/*   Updated: 2018/04/21 15:29:50 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "job_control.h"
+#include <signal.h>
 
-void		jc_add(t_jc_tag jtag, pid_t npid)
+int		jc_set(t_jc_tag tag, int mode)
 {
 	t_list		*jb_list;
 	t_jc_job*	tmp;
@@ -21,17 +22,19 @@ void		jc_add(t_jc_tag jtag, pid_t npid)
 	while (jb_list)
 	{
 		tmp = ((t_jc_job*)jb_list->content);
-		if (tmp->tag == jtag)
+		if (tmp->tag == tag)
 		{
-			if (!tmp->pid_list)
+			if (mode == BG)
 			{
-				if (setpgid(npid, npid) < 0)
-					ft_perror("setpgid", "called to setpgid failed.");
-				tmp->pgid = npid;
+				ft_printf("[%d] %d (%C)\n", tmp->tag, tmp->pgid, 8675);
+				return (tcsetpgrp(STDIN_FILENO, getpgrp()));
 			}
-			ft_lstpush_front(&tmp->pid_list, &npid, sizeof(pid_t));
-			return ;
+			ft_printf("[%d] %d (%C)\n", tmp->tag, tmp->pgid, 8673);
+			killpg(tmp->pgid, SIGCONT);
+			jc_get()->fg_job = jb_list;
+			return (tcsetpgrp(STDIN_FILENO, tmp->pgid));
 		}
 		jb_list = jb_list->next;
 	}
+	return (0);
 }
