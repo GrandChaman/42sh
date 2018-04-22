@@ -28,6 +28,14 @@
 ** lex->content, g_token_type_str[lex->token_type]); usleep(1000);}
 */
 
+enum 	e_index_subshell
+{
+	CMD_FD_SUBSH,
+	RES_FD_SUBSH,
+	NW_SUBSH,
+	NERR_SUBSH,
+};
+
 typedef struct s_sh21	t_sh21;
 typedef enum			e_token_type
 {
@@ -223,7 +231,7 @@ typedef struct			s_lexa
 
 static size_t g_lexa_buff_sz = 1024;
 
-void					on_magicq(t_lexa *lexa);
+void					on_subshell(t_lexa *lexa);
 void					check_semi_stat(t_lexa *lexa);
 void					on_quote(t_lexa *lexa);
 void					on_blank(t_lexa *lexa);
