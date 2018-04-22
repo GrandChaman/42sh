@@ -41,6 +41,7 @@ typedef struct			s_ast_node
 	struct s_ast_node	*redir_node;
 	int					tag_gpid;
 	int 				mod_gpid;
+	int 				piped_cmd;
 }						t_ast_node;
 
 typedef struct			s_args

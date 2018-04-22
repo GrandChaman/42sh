@@ -32,6 +32,7 @@ t_ast_node		*ast_create_node(t_token_type type, char *str)
 	node->redir_node = NULL;
 	node->tag_gpid = -1;
 	node->mod_gpid = FG;
+	node->piped_cmd = 0;
 	return (node);
 }
 

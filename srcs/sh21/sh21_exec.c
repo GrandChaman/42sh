@@ -6,7 +6,7 @@
 /*   By: fbertoia <fbertoia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:03:18 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/22 16:03:51 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/22 16:04:51 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,31 @@ int				callsystem(char **av, char ***env, t_ast_node *root)
 	return (0);
 }
 
-int				sh21_exec(int ac, char **av, char ***env, t_ast_node *root)
+int 			sh21_exec_builtin(char **av, char ***env, t_ast_node *root, t_builtin builtin)
+{
+	pid_t		parent;
+	int			status;
+
+	if (!(root->piped_cmd || root->mod_gpid))
+		return (builtin.fn_ptr(arrlen(av), av, env, root));
+	if ((parent = fork()) < 0)
+		ft_exit(errno, "fork");
+	else if (!parent)
+	{
+		status = builtin.fn_ptr(arrlen(av), av, env, root);
+		del_sh21_exit();
+		exit(status);
+	}
+	else
+	{
+		jc_add(root->tag_gpid, parent);
+		status = jc_set(root->tag_gpid, root->mod_gpid);
+		return (status);
+	}
+	return (0);
+}
+
+int				sh21_exec(char **av, char ***env, t_ast_node *root)
 {
 	int			idx;
 
@@ -106,7 +130,7 @@ int				sh21_exec(int ac, char **av, char ***env, t_ast_node *root)
 		if (ft_strequ(av[0], g_builtins[idx].fn_name))
 		{
 			jc_delete_tag(root->tag_gpid);
-			return (g_builtins[idx].fn_ptr(ac, av, env, root));
+			return (sh21_exec_builtin(av, env, root, g_builtins[idx]));
 		}
 	}
 	if (try_direct_acces(av, env, root))
