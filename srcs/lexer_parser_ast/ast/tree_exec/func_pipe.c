@@ -19,14 +19,14 @@ int		func_pipe2(t_ast_node *root, int pipefd[2])
 	int		ret;
 
 	status = 0;
-	nw = dup(0);
-	close(pipefd[1]);
-	dup2(pipefd[0], 0);
+	// nw = dup(0);
+	// close(pipefd[1]);
+	// dup2(pipefd[0], 0);
 	if (root->right)
 		ret = g_exec_fn[root->right->type](root->right);
-	wait(&status);
-	dup2(nw, 0);
-	close(nw);
+	// wait(&status);
+	// dup2(nw, 0);
+	// close(nw);
 	exit(0);
 }
 
@@ -45,7 +45,7 @@ void	set_bg_job(t_ast_node *root)
 		root->right->tag_gpid = root->tag_gpid;
 	root->left->piped_cmd = 1;
 	if (root->right)
-		root->right->piped_cmd = 1;	
+		root->right->piped_cmd = 1;
 }
 
 int		func_pipe(t_ast_node *root)
@@ -53,7 +53,7 @@ int		func_pipe(t_ast_node *root)
 	int pipefd[2];
 	int pid;
 	int ret_child;
-	int nw;
+	// int nw;
 	int ret;
 
 	ret_child = 0;
@@ -64,13 +64,14 @@ int		func_pipe(t_ast_node *root)
 		func_pipe2(root, pipefd);
 	else
 	{
-		nw = dup(1);
-		close(pipefd[0]);
-		dup2(pipefd[1], 1);
-		close(pipefd[1]);
+
+		// nw = dup(1);
+		// close(pipefd[0]);
+		// dup2(pipefd[1], 1);
+		// close(pipefd[1]);
 		ret_child = g_exec_fn[root->left->type](root->left);
-		dup2(nw, 1);
-		close(nw);
+		// dup2(nw, 1);
+		// close(nw);
 	}
 	// if (root->job = 1)
 	// 	job_control_at_job(pid, root->content);

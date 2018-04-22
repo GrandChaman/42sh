@@ -94,4 +94,7 @@ size_t				compute(const char *n, const char *v, \
 					char **str, void *to_free);
 char				*remove_char(char *str);
 
+int 	change_fd(t_ast_node *root);
+int 	reset_fd(t_ast_node *root);
+
 #endif
