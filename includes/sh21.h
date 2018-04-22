@@ -61,6 +61,8 @@ typedef struct		s_sh21
 
 static int			g_shell_idx = 0;
 
+int		main_expr(char *str, int *i);
+int		ft_eval_expr(char *str, int *end);
 int					bang(char **str);
 char				*random_str(size_t len);
 void				del_flist(void **lst);
