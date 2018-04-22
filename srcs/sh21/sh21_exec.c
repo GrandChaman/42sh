@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh21_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbertoia <fbertoia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:03:18 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/18 18:44:02 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/22 16:03:51 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,19 @@ char			*search_bin(char *bin, t_env *env)
 
 int				callbase(char **av, char ***env, t_ast_node *root)
 {
-	pid_t		parent;
+	pid_t		child;
 	int			status;
 
-	if ((parent = fork()) < 0)
+	if ((child = fork()) < 0)
 		ft_exit(errno, "fork");
-	else if (!parent)
+	else if (!child)
 	{
 		if (execve(av[0], av, *env) < 0)
 			ft_exit(errno, av[0]);
 	}
 	else
 	{
-		jc_add(root->tag_gpid, parent);
+		jc_add(root->tag_gpid, child);
 		status = jc_set(root->tag_gpid, root->mod_gpid);
 		return (status);
 	}
@@ -68,14 +68,14 @@ int				try_direct_acces(char **av, char ***env, t_ast_node *root)
 
 int				callsystem(char **av, char ***env, t_ast_node *root)
 {
-	pid_t		parent;
+	pid_t		child;
 	int			status;
 	char		*str;
 
 	str = search_bin(av[0], &sh21_get()->env);
-	if ((parent = fork()) < 0)
+	if ((child = fork()) < 0)
 		ft_exit(errno, "fork");
-	else if (!parent)
+	else if (!child)
 	{
 		if (str)
 		{
@@ -87,7 +87,7 @@ int				callsystem(char **av, char ***env, t_ast_node *root)
 	}
 	else
 	{
-		jc_add(root->tag_gpid, parent);
+		jc_add(root->tag_gpid, child);
 		status = jc_set(root->tag_gpid, root->mod_gpid);
 		return (status);
 	}
@@ -104,7 +104,10 @@ int				sh21_exec(int ac, char **av, char ***env, t_ast_node *root)
 	while (g_builtins[++idx].fn_ptr)
 	{
 		if (ft_strequ(av[0], g_builtins[idx].fn_name))
+		{
+			jc_delete_tag(root->tag_gpid);
 			return (g_builtins[idx].fn_ptr(ac, av, env, root));
+		}
 	}
 	if (try_direct_acces(av, env, root))
 		return (0);
