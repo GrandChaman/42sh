@@ -15,10 +15,11 @@
 #include "libft.h"
 #include "builtins.h"
 
-int		bi_exit(int argc, char **argv, char ***environ)
+int		bi_exit(int argc, char **argv, char ***environ, t_ast_node *root)
 {
 	(void)argc;
 	(void)argv;
+	(void)root;
 	(void)environ;
 	del_sh21_exit();
 	ft_exit(0, NULL);

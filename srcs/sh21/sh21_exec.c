@@ -29,7 +29,7 @@ char			*search_bin(char *bin, t_env *env)
 	return (ret ? ret->path : NULL);
 }
 
-int				callbase(char **av, char ***env)
+int				callbase(char **av, char ***env, t_ast_node *root)
 {
 	pid_t		parent;
 	int			status;
@@ -43,13 +43,14 @@ int				callbase(char **av, char ***env)
 	}
 	else
 	{
-		parent = waitpid(parent, &status, WUNTRACED);
+		jc_add(root->tag_gpid, parent);
+		status = jc_set(root->tag_gpid, root->mod_gpid);
 		return (status);
 	}
 	return (0);
 }
 
-int				try_direct_acces(char **av, char ***env)
+int				try_direct_acces(char **av, char ***env, t_ast_node *root)
 {
 	t_sh21			*sh21;
 	struct stat		st;
@@ -61,11 +62,11 @@ int				try_direct_acces(char **av, char ***env)
 	if (S_ISDIR(st.st_mode))
 		ft_error(21, av[0]);
 	else
-		callbase(av, env);
+		callbase(av, env, root);
 	return (1);
 }
 
-int				callsystem(char **av, char ***env)
+int				callsystem(char **av, char ***env, t_ast_node *root)
 {
 	pid_t		parent;
 	int			status;
@@ -86,13 +87,14 @@ int				callsystem(char **av, char ***env)
 	}
 	else
 	{
-		parent = waitpid(parent, &status, WUNTRACED);
+		jc_add(root->tag_gpid, parent);
+		status = jc_set(root->tag_gpid, root->mod_gpid);
 		return (status);
 	}
 	return (0);
 }
 
-int				sh21_exec(int ac, char **av, char ***env)
+int				sh21_exec(int ac, char **av, char ***env, t_ast_node *root)
 {
 	int			idx;
 
@@ -102,9 +104,9 @@ int				sh21_exec(int ac, char **av, char ***env)
 	while (g_builtins[++idx].fn_ptr)
 	{
 		if (ft_strequ(av[0], g_builtins[idx].fn_name))
-			return (g_builtins[idx].fn_ptr(ac, av, env));
+			return (g_builtins[idx].fn_ptr(ac, av, env, root));
 	}
-	if (try_direct_acces(av, env))
+	if (try_direct_acces(av, env, root))
 		return (0);
-	return (callsystem(av, env));
+	return (callsystem(av, env, root));
 }

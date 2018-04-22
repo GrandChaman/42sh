@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # define FG 0
 # define BG 1
-typedef unsigned char t_jc_tag;
+typedef int t_jc_tag;
 typedef enum { NONE, RUNNING, DONE, KILLED, SUSPENDED } t_jc_status;
 // https://www.usna.edu/Users/cs/aviv/classes/ic221/s16/lec/17/lec.html
 //https://stackoverflow.com/questions/10779020/sending-a-process-to-the-background-and-returning-control-to-my-shell

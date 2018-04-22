@@ -39,6 +39,8 @@ typedef struct			s_ast_node
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
 	struct s_ast_node	*redir_node;
+	int					tag_gpid;
+	int 				mod_gpid;
 }						t_ast_node;
 
 typedef struct			s_args

@@ -30,6 +30,8 @@ t_ast_node		*ast_create_node(t_token_type type, char *str)
 	node->right = NULL;
 	node->heredoc = NULL;
 	node->redir_node = NULL;
+	node->tag_gpid = -1;
+	node->mod_gpid = FG;
 	return (node);
 }
 
