@@ -65,7 +65,7 @@ t_ast_node		*ast_create_leaf(t_token_type type, t_lex **lex)
 		if ((*lex)->token_type == PIPE)
 			node = ast_pipe((*lex)->token_type, lex, node);
 		else if (ast_redir_token((*lex)->token_type))
-			node->left = redir_node(lex, node->left);
+			node->redir_node = redir_node(lex, node->redir_node);
 		else
 		{
 			node->content = ft_strfjoin(node->content, (*lex)->content);

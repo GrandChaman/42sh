@@ -6,12 +6,13 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 13:13:55 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/22 15:49:22 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/22 18:26:09 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "job_control.h"
 #include <signal.h>
+#include "sh21.h"
 
 static void	jc_change_pgrp(t_jc_job *job, int mode)
 {
@@ -19,15 +20,15 @@ static void	jc_change_pgrp(t_jc_job *job, int mode)
 	{
 		ft_printf("[%d] %d (%C)\n", job->tag, job->pgid, 8675);
 		if (tcsetpgrp(STDIN_FILENO, getpgrp()))
-			ft_perror("tcsetpgrp", "System call failed");
+			ft_exit(errno, "tcsetpgrp");
 		return ;
 	}
 	//ft_printf("[%d] %d (%C)\n", job->tag, job->pgid, 8673);
 	if (killpg(job->pgid, SIGCONT))
-		ft_perror("killpg", "System call failed");
+		ft_exit(errno, "killpg");
 	jc_get()->fg_job = job;
 	if (tcsetpgrp(STDIN_FILENO, job->pgid))
-		ft_perror("tcsetpgrp", "System call failed");
+		ft_exit(errno, "tcsetpgrp");
 }
 
 static int	jc_wait(t_jc_job *job, int mode)
