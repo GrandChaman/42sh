@@ -30,6 +30,19 @@ int		func_pipe2(t_ast_node *root, int pipefd[2])
 	exit(0);
 }
 
+void	set_bg_job(t_ast_node *root)
+{
+	if (root->tag_gpid < 0)
+		root->tag_gpid = jc_create_tag();
+	if (root->mod_gpid == BG)
+	{
+		root->left->mod_gpid = root->mod_gpid;
+		root->right->mod_gpid = root->mod_gpid;
+	}
+	root->left->tag_gpid = root->tag_gpid;
+	root->right->tag_gpid = root->tag_gpid;
+}
+
 int		func_pipe(t_ast_node *root)
 {
 	int pipefd[2];
@@ -56,7 +69,7 @@ int		func_pipe(t_ast_node *root)
 	}
 	// if (root->job = 1)
 	// 	job_control_at_job(pid, root->content);
-	waitpid(pid, &ret, WUNTRACED);
+	ret = jc_set(root->tag_gpid, root->mod_gpid);
 	sh21_get()->status = ret;
 	return (ret);
 }
