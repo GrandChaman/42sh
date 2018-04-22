@@ -40,12 +40,29 @@ void	case_backslash(char **ret, char **ptr, int *i, char *special_chars, t_ast_n
 	}
 }
 
+
+// echo $((2 + 3))
+// echo 5
+
 void	case_dollar(char **ret, char **ptr, int *i)
 {
+	int end;
+
+	end = 0;
 	*ret = add_str(ret, ptr, i);
 	(*ptr)++;
-	*ret = ft_strffjoin(*ret, find_var(*ptr));
-	*ptr += skip_var(*ptr);
+	if (ft_strnequ(*ptr, "((", 2))
+	{
+		*ret = ft_strjoin(*ret, " ");
+		*ret = ft_strjoin(*ret, ft_itoa(ft_eval_expr(*ptr, &end)));
+		*ptr += end;
+		ft_printf("YA forcement des leaks ou mallocfree , j attend le lexer  me laisse passer");
+	}
+	else
+	{
+		*ret = ft_strffjoin(*ret, find_var(*ptr));
+		*ptr += skip_var(*ptr);
+	}
 }
 
 void	case_quote(char **ret, char **ptr, int *i)
