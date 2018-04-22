@@ -6,7 +6,7 @@
 /*   By: fbertoia <fbertoia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:03:18 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/22 16:04:51 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/22 16:12:17 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ int				callbase(char **av, char ***env, t_ast_node *root)
 	else if (!child)
 	{
 		if (execve(av[0], av, *env) < 0)
+		{
+			jc_delete_tag(root->tag_gpid);
 			ft_exit(errno, av[0]);
+		}
 	}
 	else
 	{
@@ -77,13 +80,11 @@ int				callsystem(char **av, char ***env, t_ast_node *root)
 		ft_exit(errno, "fork");
 	else if (!child)
 	{
-		if (str)
+		if (!str || execve(str, av, *env) < 0)
 		{
-			if (execve(str, av, *env) < 0)
-				ft_exit(errno, str);
+			jc_delete_tag(root->tag_gpid);
+			ft_exit((str ? errno : -1), (str ? str : av[0]));
 		}
-		else
-			ft_exit(-1, av[0]);
 	}
 	else
 	{
@@ -99,8 +100,11 @@ int 			sh21_exec_builtin(char **av, char ***env, t_ast_node *root, t_builtin bui
 	pid_t		parent;
 	int			status;
 
-	if (!(root->piped_cmd || root->mod_gpid))
+	if (!(root->piped_cmd || root->mod_gpid == BG))
+	{
+		jc_delete_tag(root->tag_gpid);
 		return (builtin.fn_ptr(arrlen(av), av, env, root));
+	}
 	if ((parent = fork()) < 0)
 		ft_exit(errno, "fork");
 	else if (!parent)
@@ -128,10 +132,7 @@ int				sh21_exec(char **av, char ***env, t_ast_node *root)
 	while (g_builtins[++idx].fn_ptr)
 	{
 		if (ft_strequ(av[0], g_builtins[idx].fn_name))
-		{
-			jc_delete_tag(root->tag_gpid);
 			return (sh21_exec_builtin(av, env, root, g_builtins[idx]));
-		}
 	}
 	if (try_direct_acces(av, env, root))
 		return (0);

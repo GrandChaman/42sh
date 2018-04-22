@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 20:49:07 by hfontain          #+#    #+#             */
-/*   Updated: 2018/03/15 15:55:56 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/22 16:17:38 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**cpy_arr(char **arr)
 		return (NULL);
 	while (arr[i])
 		i++;
-	ret = (char**)malloc(sizeof(char*) * (i + 1));
+	ret = (char**)ft_memalloc(sizeof(char*) * (i + 1));
 	if (!ret)
 		return (NULL);
 	ret[i] = NULL;
