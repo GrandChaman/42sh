@@ -19,33 +19,15 @@ int		func_pipe2(t_ast_node *root, int pipefd[2])
 	int		ret;
 
 	status = 0;
-	// nw = dup(0);
-	// close(pipefd[1]);
-	// dup2(pipefd[0], 0);
+	close(pipefd[1]);
 	if (root->right)
-		ret = g_exec_fn[root->right->type](root->right);
-	// wait(&status);
-	// dup2(nw, 0);
-	// close(nw);
-	exit(0);
-}
-
-void	set_bg_job(t_ast_node *root)
-{
-	if (root->tag_gpid < 0)
-		root->tag_gpid = jc_create_tag();
-	if (root->mod_gpid == BG)
 	{
-		root->left->mod_gpid = root->mod_gpid;
-		if (root->right)
-			root->right->mod_gpid = root->mod_gpid;
-	}
-	root->left->tag_gpid = root->tag_gpid;
-	if (root->right)
-		root->right->tag_gpid = root->tag_gpid;
-	root->left->piped_cmd = 1;
-	if (root->right)
+		root->right->pipe_fd[0] = pipefd[0];
 		root->right->piped_cmd = 1;
+		ret = g_exec_fn[root->right->type](root->right);
+	}
+	wait(&status);
+	exit(0);
 }
 
 int		func_pipe(t_ast_node *root)
@@ -53,29 +35,28 @@ int		func_pipe(t_ast_node *root)
 	int pipefd[2];
 	int pid;
 	int ret_child;
-	// int nw;
 	int ret;
 
+	// set_bg_job(root);
 	ret_child = 0;
-	if (pipe(pipefd) < -1)
+	if (pipe(pipefd) < 0)
 		return (ft_error(errno, NULL));
+	ft_printf("pipe[0] = %d , pipe[1] = %d\n", pipefd[0], pipefd[1]);
 	pid = fork();
 	if (pid == 0)
 		func_pipe2(root, pipefd);
 	else
 	{
-
-		// nw = dup(1);
-		// close(pipefd[0]);
-		// dup2(pipefd[1], 1);
-		// close(pipefd[1]);
+		close(pipefd[0]);
+		root->left->piped_cmd = 1;
+		root->left->pipe_fd[0] = root->pipe_fd[0];
+		root->left->pipe_fd[1] = pipefd[1];
 		ret_child = g_exec_fn[root->left->type](root->left);
-		// dup2(nw, 1);
-		// close(nw);
 	}
 	// if (root->job = 1)
 	// 	job_control_at_job(pid, root->content);
-	ret = jc_set(root->tag_gpid, root->mod_gpid);
+	// ret = jc_set(root->tag_gpid, root->mod_gpid);
+	waitpid(pid, &ret, WUNTRACED);
 	sh21_get()->status = ret;
 	return (ret);
 }
