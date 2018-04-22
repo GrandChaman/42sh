@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 15:23:14 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/21 15:40:21 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/22 15:07:08 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,17 @@
 # define FG 0
 # define BG 1
 typedef unsigned char t_jc_tag;
-typedef enum { NONE, RUNNING, DONE, SUSPENDED } t_jc_status;
+typedef enum { NONE, RUNNING, DONE, KILLED, SUSPENDED } t_jc_status;
 // https://www.usna.edu/Users/cs/aviv/classes/ic221/s16/lec/17/lec.html
 //https://stackoverflow.com/questions/10779020/sending-a-process-to-the-background-and-returning-control-to-my-shell
+
+static const char		*g_jc_status_string[] = {
+	"not started",
+	"continuing",
+	"done",
+	"terminated",
+	"suspended"
+};
 
 typedef	struct			s_jc_job
 {
@@ -44,5 +52,7 @@ void			jc_add(t_jc_tag jtag, pid_t npid);
 void			jc_delete_tag(t_jc_tag tag);
 int				jc_set(t_jc_tag tag, int mode);
 t_jc_job		*jc_get_by_pid(pid_t pid);
+void			jc_print(t_jc_job *job);
+void			jc_update(t_jc_tag tag, int status);
 
 #endif
