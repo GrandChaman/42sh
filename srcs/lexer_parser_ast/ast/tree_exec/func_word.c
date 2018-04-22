@@ -25,13 +25,12 @@ int		func_word(t_ast_node *root)
 	sh21 = sh21_get();
 	root->content = format_word(&root->content);
 	sh21->argv = split_args(root->content);
-	sh21->argc = arrlen(sh21->argv);
 	if (root->tag_gpid < 0)
 		root->tag_gpid = jc_create_tag();
 	if (root->redir_node)
 		status = g_exec_fn[root->redir_node->type](root->redir_node);
 	if (!status)
-		status = sh21_exec(arrlen(sh21->argv), sh21->argv, &sh21->env.orig_env, root); //add tag_gpid
+		status = sh21_exec(sh21->argv, &sh21->env.orig_env, root); //add tag_gpid
 	sh21->status = status;
 	fd_cleanup = sh21->tree.fd_cleanup;
 	while (fd_cleanup)
