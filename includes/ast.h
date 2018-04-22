@@ -31,6 +31,12 @@ typedef struct			s_fd_cleanup
 	int					fd_reassign;
 }						t_fd_cleanup;
 
+enum e_pipe_side
+{
+	PIPE_IN,
+	PIPE_OUT,
+};
+
 typedef struct			s_ast_node
 {
 	t_token_type		type;
@@ -42,6 +48,9 @@ typedef struct			s_ast_node
 	int					tag_gpid;
 	int 				mod_gpid;
 	int 				piped_cmd;
+	int 				pipe_fd;
+	int 				pipe_side;
+	int 				tmp_fd;
 }						t_ast_node;
 
 typedef struct			s_args

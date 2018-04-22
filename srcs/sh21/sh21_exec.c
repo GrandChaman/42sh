@@ -38,6 +38,12 @@ int				callbase(char **av, char ***env, t_ast_node *root)
 		ft_exit(errno, "fork");
 	else if (!child)
 	{
+		if (change_fd(root) < 0)
+		{
+			jc_delete_tag(root->tag_gpid);
+			del_sh21_exit();
+			exit(errno);
+		}
 		if (execve(av[0], av, *env) < 0)
 		{
 			jc_delete_tag(root->tag_gpid);
@@ -80,6 +86,12 @@ int				callsystem(char **av, char ***env, t_ast_node *root)
 		ft_exit(errno, "fork");
 	else if (!child)
 	{
+		if (change_fd(root) < 0)
+		{
+			jc_delete_tag(root->tag_gpid);
+			del_sh21_exit();
+			exit(errno);
+		}
 		if (!str || execve(str, av, *env) < 0)
 		{
 			jc_delete_tag(root->tag_gpid);
@@ -109,6 +121,12 @@ int 			sh21_exec_builtin(char **av, char ***env, t_ast_node *root, t_builtin bui
 		ft_exit(errno, "fork");
 	else if (!parent)
 	{
+		if (change_fd(root) < 0)
+		{
+			jc_delete_tag(root->tag_gpid);
+			del_sh21_exit();
+			exit(errno);
+		}
 		status = builtin.fn_ptr(arrlen(av), av, env, root);
 		del_sh21_exit();
 		exit(status);
