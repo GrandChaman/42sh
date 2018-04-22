@@ -87,7 +87,7 @@ t_lex			*lexer(char *cmd)
 		if (lexa.c == '\\')
 			escape(&lexa);
 		else if (lexa.c == '`')
-			on_magicq(&lexa);
+			on_subshell(&lexa);
 		else if (lexa.c == '"' || lexa.c == '\'')
 			on_quote(&lexa);
 		else if (lexa.oquote)

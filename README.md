@@ -6,4 +6,6 @@
 
 - cat -e 3<Makefile <&3
 - job control
-- 
+-
+
+- set position executable pour shell
