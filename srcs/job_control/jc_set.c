@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 13:13:55 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/22 15:07:59 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/22 15:49:22 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ static void	jc_change_pgrp(t_jc_job *job, int mode)
 			ft_perror("tcsetpgrp", "System call failed");
 		return ;
 	}
-	ft_printf("[%d] %d (%C)\n", job->tag, job->pgid, 8673);
+	//ft_printf("[%d] %d (%C)\n", job->tag, job->pgid, 8673);
 	if (killpg(job->pgid, SIGCONT))
 		ft_perror("killpg", "System call failed");
 	jc_get()->fg_job = job;
-	if (tcsetpgrp(STDIN_FILENO, job->pgid));
+	if (tcsetpgrp(STDIN_FILENO, job->pgid))
 		ft_perror("tcsetpgrp", "System call failed");
 }
 
