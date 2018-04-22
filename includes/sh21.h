@@ -73,7 +73,7 @@ int					input_piped_script(t_sh21 *sh21, char **argv);
 int					lexer(t_sh21 *sh21);
 int					parser(t_lex *lex);
 int					sh21_addenv(t_sh21 *sh21, const char *n, const char *v);
-int					sh21_exec(int ac, char **av, char ***env, t_ast_node *root);
+int					sh21_exec(char **av, char ***env, t_ast_node *root);
 int					sh21_loadenv(t_sh21 *sh21, char **environ);
 t_sh21				*sh21_get(void);
 t_sh21				*sh21_init(char *env[]);

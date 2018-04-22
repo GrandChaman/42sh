@@ -37,10 +37,15 @@ void	set_bg_job(t_ast_node *root)
 	if (root->mod_gpid == BG)
 	{
 		root->left->mod_gpid = root->mod_gpid;
-		root->right->mod_gpid = root->mod_gpid;
+		if (root->right)
+			root->right->mod_gpid = root->mod_gpid;
 	}
 	root->left->tag_gpid = root->tag_gpid;
-	root->right->tag_gpid = root->tag_gpid;
+	if (root->right)
+		root->right->tag_gpid = root->tag_gpid;
+	root->left->piped_cmd = 1;
+	if (root->right)
+		root->right->piped_cmd = 1;	
 }
 
 int		func_pipe(t_ast_node *root)
