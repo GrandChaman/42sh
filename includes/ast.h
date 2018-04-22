@@ -33,8 +33,8 @@ typedef struct			s_fd_cleanup
 
 enum e_pipe_side
 {
-	PIPE_IN,
-	PIPE_OUT,
+	PIPE_IN = 0,
+	PIPE_OUT = 1,
 };
 
 typedef struct			s_ast_node
@@ -48,9 +48,10 @@ typedef struct			s_ast_node
 	int					tag_gpid;
 	int 				mod_gpid;
 	int 				piped_cmd;
-	int 				pipe_fd;
+	int 				pipe_fd[2];
 	int 				pipe_side;
-	int 				tmp_fd;
+	int 				tmp_fd_write;
+	int 				tmp_fd_read;
 }						t_ast_node;
 
 typedef struct			s_args
@@ -180,6 +181,7 @@ char					**copy_list_to_array(t_args **list);
 char					**split_args(char *argv);
 
 
+void			set_bg_job(t_ast_node *root);
 
 static t_exec_tree g_exec_fn[] =
 {
