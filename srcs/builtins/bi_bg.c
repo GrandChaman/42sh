@@ -5,7 +5,7 @@ int					bi_bg(int argc, char **argv, char ***environ, t_ast_node *root)
 	int i;
 
 	i = 1;
-	(void)environ;
+	(void)environ; // rajouter msg si c est deja en backgroung;
 	(void)root;
 	if (argc == 1)
 	{
