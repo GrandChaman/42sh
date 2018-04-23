@@ -6,13 +6,13 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:36:08 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/16 15:19:03 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/23 18:04:42 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 
-void del_el(void **el)
+void	del_el(void **el)
 {
 	t_args **ptr;
 
@@ -21,7 +21,7 @@ void del_el(void **el)
 	ft_memdel((void**)ptr);
 }
 
-char **copy_list_to_array(t_args **list)
+char	**copy_list_to_array(t_args **list)
 {
 	int		len;
 	char	**ret;
@@ -44,13 +44,15 @@ char **copy_list_to_array(t_args **list)
 	return (ret);
 }
 
-char **split_args(char *argv, t_ast_node *node)
+char	**split_args(char *argv, t_ast_node *node)
 {
-	t_args	*list;
-	int		i;
-	int		j;
-	int		*tabi[] = {&i, &j};
+	t_args		*list;
+	int			i;
+	int			j;
+	int			*tabi[2];
 
+	tabi[0] = &i;
+	tabi[1] = &j;
 	list = NULL;
 	i = 0;
 	j = 0;

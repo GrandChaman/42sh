@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ast_compound_list.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbertoia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 23:20:22 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/18 23:20:24 by fbertoia         ###   ########.fr       */
+/*   Updated: 2018/04/23 17:59:50 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 
-int 			is_compound_token(t_token_type type)
+int				is_compound_token(t_token_type type)
 {
 	if (type == SEMI || type == AMPER || type == AND_IF || type == OR_IF)
 		return (1);

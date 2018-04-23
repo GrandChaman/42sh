@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   eval_expr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/04/23 17:52:58 by hfontain          #+#    #+#             */
+/*   Updated: 2018/04/23 17:53:45 by hfontain         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sh21.h"
 
 static int		is_number(char *str, int *i)
@@ -20,7 +32,7 @@ static int		is_number(char *str, int *i)
 
 static int		check_parenthese(char *str, int *i)
 {
-	int nbr;
+	int		nbr;
 
 	while (str[*i] == ' ' || str[*i] == '\n')
 		*i = *i + 1;
@@ -87,10 +99,10 @@ int		main_expr(char *str, int *i)
 
 int		ft_eval_expr(char *ori, int *end)
 {
-	int i;
-	int o;
-	char *str;
-	char *lol;
+	int		i;
+	int		o;
+	char	*str;
+	char	*lol;
 
 	i = 0;
 	o = 0;
@@ -107,7 +119,7 @@ int		ft_eval_expr(char *ori, int *end)
 	}
 	*end = i;
 	lol = ft_strdup(ori);
-	str = ft_strsub(lol, 0, i); //LEAKS de MALADE
+	str = ft_strsub(lol, 0, i);
 	i = 0;
 	i = main_expr(str, &i);
 	free(str);

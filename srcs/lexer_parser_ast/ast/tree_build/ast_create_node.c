@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:36:08 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/06 17:24:41 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/23 17:50:47 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static t_ast_node	*(*g_ast_pipeline_cmd_token[6])(t_lex **, t_ast_node *) =
 
 t_ast_node		*ast_create_leaf(t_token_type type, t_lex **lex)
 {
-	t_ast_node			*node;
-	int 				call_fc;
+	t_ast_node		*node;
+	int				call_fc;
 
 	if (!lex || !*lex)
 		return (NULL);
@@ -60,7 +60,7 @@ t_ast_node		*ast_create_leaf(t_token_type type, t_lex **lex)
 
 t_ast_node		*ast_create_op(t_ast_node *node, t_lex **lex)
 {
-	t_ast_node *root;
+	t_ast_node	*root;
 
 	root = ast_create_node((*lex)->token_type, (*lex)->content);
 	root->left = node;
@@ -72,7 +72,8 @@ t_ast_node		*ast_create_op(t_ast_node *node, t_lex **lex)
 
 t_ast_node		*ast_create_tree(t_lex *lex)
 {
-	t_ast_node *node;
+	t_ast_node	*node;
+
 	node = ast_create_leaf(lex->token_type, &lex);
 	while (lex)
 		node = ast_create_op(node, &lex);
