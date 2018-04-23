@@ -16,6 +16,6 @@ void	set_debugtty(void)
 {
 	int fd;
 
-	fd = open("/dev/ttys002", O_RDWR);
+	fd = open("/dev/ttys000", O_RDWR);
 	sh21_get()->debug_tty = fd;
 }

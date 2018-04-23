@@ -42,6 +42,7 @@ t_sh21		*sh21_init(char *env[])
 	g_end_of_input = lex_create(EOI, "End of Input");
 	find_bin_paths(&sh21->env, &sh21->env.orig_env);
 	sh21->terminal.isatty = isatty(0);
+	set_debugtty();
 	return (sh21);
 }
 
