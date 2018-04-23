@@ -48,6 +48,9 @@ int						ft_setenv(const char *name, const char *value,
 int						print_env(char **env);
 int						env_usage(char c, int option);
 
+int					check_jobs(int tague);
+int					get_last_last_jobs();
+int					get_last_jobs();
 int					bi_kill(int argc, char **argv, char ***environ, t_ast_node *root);
 int					bi_fg(int argc, char **argv, char ***environ, t_ast_node *root);
 int					bi_bg(int argc, char **argv, char ***environ, t_ast_node *root);
