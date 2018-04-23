@@ -21,7 +21,7 @@ void			ast_print(t_ast_node *root)
 	offset += 4;
 	ast_print(root->right);
 	offset -= 4;
-	ft_fprintf(sh21_get()->debug_tty, "%*s%s\n", offset, "", root->content);
+	ft_fprintf(sh21_get()->debug_tty, "%*s%s mod = %d tag_gpid = %d\n", offset, "", root->content, root->mod_gpid, root->tag_gpid);
 	offset += 4;
 	ast_print(root->left);
 	offset -= 4;
