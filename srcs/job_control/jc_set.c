@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 13:13:55 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/23 13:21:26 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/23 14:09:49 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,11 @@ static void	jc_change_pgrp(t_jc_job *job, int mode)
 			ft_exit(errno, "tcsetpgrp");
 		return ;
 	}
-	//ft_printf("[%d] %d (%C)\n", job->tag, job->pgid, 8673);
 	if (killpg(job->pgid, SIGCONT))
 		ft_exit(errno, "killpg");
 	jc_get()->fg_job = job;
 	if (tcsetpgrp(STDIN_FILENO, job->pgid))
-		ft_exit(errno, "tcsetpgrp"); //decommenter apres
+		ft_exit(errno, "tcsetpgrp");
 }
 
 static int	jc_wait(t_jc_job *job, int mode, int *should_update)
@@ -37,7 +36,6 @@ static int	jc_wait(t_jc_job *job, int mode, int *should_update)
 
 	signal(SIGTSTP, SIG_DFL);
 	signal(SIGCONT, SIG_DFL);
-	signal(SIGINT, SIG_DFL);
 	*should_update = 1;
 	if (mode == BG)
 	{
@@ -53,7 +51,6 @@ static int	jc_wait(t_jc_job *job, int mode, int *should_update)
 	}
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGCONT, SIG_IGN);
-	signal(SIGINT, SIG_IGN);
 	return (status);
 }
 
