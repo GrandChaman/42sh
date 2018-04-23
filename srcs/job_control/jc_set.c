@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 13:13:55 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/23 14:29:56 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/23 17:46:34 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,24 @@ static void	jc_change_pgrp(t_jc_job *job, int mode)
 		ft_printf("[%d] %d (%C)\n", job->tag, job->pgid, 8675);
 		if (tcsetpgrp(STDIN_FILENO, getpgrp()))
 			ft_exit(errno, "tcsetpgrp");
+		if (job->status == SUSPENDED && killpg(job->pgid, SIGCONT))
+			ft_exit(errno, "killpg");
+			job->status = RUNNING;
 		return ;
 	}
-	if (killpg(job->pgid, SIGCONT))
+	if (job->status == SUSPENDED && killpg(job->pgid, SIGCONT))
 		ft_exit(errno, "killpg");
+	job->status = RUNNING;
 	jc_get()->fg_job = job;
 	if (tcsetpgrp(STDIN_FILENO, job->pgid))
 		ft_exit(errno, "tcsetpgrp");
+
 }
 
 static int	jc_wait(t_jc_job *job, int mode, int *should_update)
 {
 	int status;
 
-	signal(SIGTSTP, SIG_DFL);
-	signal(SIGCONT, SIG_DFL);
 	*should_update = 1;
 	if (mode == BG)
 	{
@@ -49,8 +52,6 @@ static int	jc_wait(t_jc_job *job, int mode, int *should_update)
 		ft_fprintf(2, "Toto 2\n");
 		tcsetpgrp(0, getpgrp());
 	}
-	signal(SIGTSTP, SIG_IGN);
-	signal(SIGCONT, SIG_IGN);
 	return (status);
 }
 
