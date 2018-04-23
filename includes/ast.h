@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:32:20 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/23 17:57:29 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/23 18:20:31 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,14 +145,14 @@ void					fd_close(t_fd_cleanup *elem);
 void					fd_reassign(t_fd_cleanup *elem);
 void					heredoc_node(t_ast_node *node);
 
-t_ast_node		*ast_assignment_word(t_lex **lex, t_ast_node *node);
-t_ast_node		*ast_pipe(t_lex **lex, t_ast_node *root);
-t_ast_node		*ast_while(t_lex **lex, t_ast_node *root);
-t_ast_node		*ast_word(t_lex **lex, t_ast_node *node);
-t_ast_node		*ast_compound_list(t_lex **lex, t_ast_node *node);
-t_ast_node		*ast_else(t_lex **lex, t_ast_node *root);
-t_ast_node		*ast_elif(t_lex **lex, t_ast_node *root);
-t_ast_node		*ast_if(t_lex **lex, t_ast_node *node);
+t_ast_node				*ast_assignment_word(t_lex **lex, t_ast_node *node);
+t_ast_node				*ast_pipe(t_lex **lex, t_ast_node *root);
+t_ast_node				*ast_while(t_lex **lex, t_ast_node *root);
+t_ast_node				*ast_word(t_lex **lex, t_ast_node *node);
+t_ast_node				*ast_compound_list(t_lex **lex, t_ast_node *node);
+t_ast_node				*ast_else(t_lex **lex, t_ast_node *root);
+t_ast_node				*ast_elif(t_lex **lex, t_ast_node *root);
+t_ast_node				*ast_if(t_lex **lex, t_ast_node *node);
 
 char					*format_word(t_ast_node *node);
 char					*word(char **argv);
@@ -163,9 +163,9 @@ void					case_backslash(char **ret, char **ptr,
 							int *i, t_ast_node *node);
 void					case_dollar(char **ret, char **ptr, int *i);
 void					case_quote(char **ret, char **ptr, int *i);
-void					case_dquote(char **ret, char **ptr, int *i,t_ast_node *node);
+void					case_dquote(char **ret, char **ptr, int *i,
+							t_ast_node *node);
 void					case_tilde(char **ret, char **ptr, int *i);
-
 
 int						escaped_char(char *argv, t_ast_node *node, int *i,
 							int *j);

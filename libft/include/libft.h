@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 20:24:12 by bluff             #+#    #+#             */
-/*   Updated: 2018/04/23 17:46:25 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/23 18:19:09 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct			s_dbuf {
 	unsigned short		cursor;
 	unsigned long		len;
 }						t_dbuf;
-
 
 typedef struct			s_void
 {
