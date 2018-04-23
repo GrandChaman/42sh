@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 13:13:55 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/23 14:09:49 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/23 14:29:56 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ static int	jc_wait(t_jc_job *job, int mode, int *should_update)
 	}
 	else
 	{
+		ft_fprintf(2, "Toto 1\n");
 		waitpid(-job->pgid, &status, WUNTRACED);
-		signal(SIGTTOU, SIG_IGN);
+		ft_fprintf(2, "Toto 2\n");
 		tcsetpgrp(0, getpgrp());
-		signal(SIGTTOU, SIG_DFL);
 	}
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGCONT, SIG_IGN);
