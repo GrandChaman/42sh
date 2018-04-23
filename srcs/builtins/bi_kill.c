@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bi_kill.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rfautier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/04/23 19:30:13 by rfautier          #+#    #+#             */
+/*   Updated: 2018/04/23 19:30:16 by rfautier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "builtins.h"
 
 static int			find_pgid(int tague)
@@ -16,11 +28,11 @@ static int			find_pgid(int tague)
 	return (0);
 }
 
-static void			print_signal()
+static void			print_signal(void)
 {
 	ft_printf("1) SIGHUP\n2) SIGINT\n3) SIGQUIT\n4) SIGILL\n"
-			 "5) SIGTRAP\n6) SIGABRT\n7) SIGEMT\n8) SIGFPE\n"
-			 "9) SIGKILL\n10) SIGBUS\n11) SIGSEGV\n12) SIGSYS\n"
+			"5) SIGTRAP\n6) SIGABRT\n7) SIGEMT\n8) SIGFPE\n"
+			"9) SIGKILL\n10) SIGBUS\n11) SIGSEGV\n12) SIGSYS\n"
 			"13) SIGPIPE\n14) SIGALRM\n15) SIGTERM\n16) SIGURG\n"
 			"17) SIGSTOP\n18) SIGTSTP\n19) SIGCONT\n20) SIGCHLD\n"
 			"21) SIGTTIN\n22) SIGTTOU\n23) SIGIO\n24) SIGXCPU\n"
@@ -56,7 +68,37 @@ static int			flag_kill(int *i, char **argv, int *sinal)
 	return (0);
 }
 
-int					bi_kill(int argc, char **argv, char ***environ, t_ast_node *root)
+static int			bi_kill_loop(char **argv, int i, int *stock)
+{
+	if (argv[i][1] == '%' || argv[i][1] == '+')
+	{
+		if (!(*stock = find_pgid(get_last_jobs())))
+		{
+			ft_fprintf(2, "42sh: kill: %s: no such job\n", argv[i]);
+			return (1);
+		}
+	}
+	else if (argv[i][1] == '-')
+	{
+		if (!(*stock = find_pgid(get_last_last_jobs())))
+		{
+			ft_fprintf(2, "42sh: kill: %s: no such job\n", argv[i]);
+			return (1);
+		}
+	}
+	else
+	{
+		if (!(*stock = find_pgid(ft_atoi(argv[i] + 1))))
+		{
+			ft_fprintf(2, "42sh: kill: %s: no such job\n", argv[i]);
+			return (1);
+		}
+	}
+	return (0);
+}
+
+int					bi_kill(int argc, char **argv,
+	char ***environ, t_ast_node *root)
 {
 	int i;
 	int stock;
@@ -64,39 +106,23 @@ int					bi_kill(int argc, char **argv, char ***environ, t_ast_node *root)
 
 	(void)environ;
 	(void)root;
-	i = 1;
-	sinal = 15;
-	if (argc == 1)
+	if ((sinal = 15) && argc == 1)
 	{
 		ft_fprintf(2, "kill: usage: [-l | -SIGNAL]\n");
 		return (0);
 	}
-	if (flag_kill(&i, argv, &sinal))
+	if ((i = 0) && flag_kill(&i, argv, &sinal))
 		return (0);
-	while (i < argc)
+	while (++i < argc)
 	{
 		if (argv[i][0] == '%')
 		{
-			if (argv[i][1] == '%' || argv[i][1] == '+')
-			{
-				if (!(stock = find_pgid(get_last_jobs())))
-					return (ft_fprintf(2, "42sh: kill: %s: no such job\n", argv[i]));
-			}
-			else if (argv[i][1] == '-')
-			{
-				if (!(stock = find_pgid(get_last_last_jobs())))
-					return (ft_fprintf(2, "42sh: kill: %s: no such job\n", argv[i]));
-			}
-			else
-			{
-				if (!(stock = find_pgid(ft_atoi(argv[i] + 1))))
-					return (ft_fprintf(2, "42sh: kill: %s: no such job\n", argv[i]));
-			}
+			if (bi_kill_loop(argv, i, &stock))
+				return (0);
 			killpg(stock, sinal);
 		}
 		else
 			kill(ft_atoi(argv[i]), sinal);
-		i++;
 	}
 	return (0);
 }
