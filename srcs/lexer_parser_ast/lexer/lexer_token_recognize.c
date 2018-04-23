@@ -31,18 +31,17 @@ int				is_operator_part(char c, int stat)
 {
 	return (c == '\n'
 		|| c == '&'
-			|| c == '|'
-				|| c == '<'
-					|| c == '>'
-						|| c == ';'
-							|| (c == '=' && stat != SWORD)
-								|| c == '\n'
-									|| c == '('
-										|| c == ')'
-											|| (c == '{' && stat != SWORD)
-												|| c == '}'
-													|| (stat == SOP
-														&& c == '-'));
+		|| c == '|'
+		|| c == '<'
+		|| c == '>'
+		|| c == ';'
+		|| c == '\n'
+	//	|| c == '('
+	//	|| c == ')'
+		|| c == '}'
+		|| (c == '{' && stat != SWORD)
+		|| (c == '=' && stat != SWORD)
+		|| (stat == SOP && c == '-'));
 }
 
 t_token_type	get_operator_tok(char *str)
