@@ -39,12 +39,10 @@ void	case_backslash(char **ret, char **ptr, int *i, char *special_chars, t_ast_n
 			node->nb_escaped_quote++;
 	}
 }
-// echo $((2 + 3))
-// echo 5
 
 void	case_dollar(char **ret, char **ptr, int *i)
 {
-	int end;
+	int		end;
 
 	end = 0;
 	*ret = add_str(ret, ptr, i);
