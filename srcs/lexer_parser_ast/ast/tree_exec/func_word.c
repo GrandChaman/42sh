@@ -25,7 +25,7 @@ int		func_word(t_ast_node *root)
 	sh21 = sh21_get();
 	root->content = format_word(&root->content);
 	sh21->argv = split_args(root->content);
-	set_job(root);
+	// set_job(root);
 	if (!status)
 		status = sh21_exec(sh21->argv, &sh21->env.orig_env, root); //add tag_gpid
 	sh21->status = status;

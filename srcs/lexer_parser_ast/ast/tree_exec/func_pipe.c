@@ -37,7 +37,7 @@ int		func_pipe(t_ast_node *root)
 	int ret_child;
 	int ret;
 
-	set_job(root);
+	// set_job(root);
 	ret_child = 0;
 	if (pipe(pipefd) < 0)
 		return (ft_error(errno, NULL));
@@ -52,8 +52,8 @@ int		func_pipe(t_ast_node *root)
 		root->left->pipe_fd[1] = pipefd[1];
 		ret_child = g_exec_fn[root->left->type](root->left);
 	}
-	ret = jc_set(root->tag_gpid, root->mod_gpid);
-	// waitpid(pid, &ret, WUNTRACED);
+	// ret = jc_set(root->tag_gpid, root->mod_gpid);
+	waitpid(pid, &ret, WUNTRACED);
 	sh21_get()->status = ret;
 	return (ret);
 }
