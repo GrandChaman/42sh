@@ -7,8 +7,6 @@ int 	change_fd(t_ast_node *root)
 	ret = 1;
 	if (root->piped_cmd)
 	{
-		ft_fprintf(sh21_get()->debug_tty, "content = %s, pide_fd[0] = %d, pipe_fd[1] = %d\n",
-		root->content, root->pipe_fd[0], root->pipe_fd[1]);
 		if (root->pipe_fd[0] != 0)
 		{
 			if ((root->tmp_fd_read = dup(0)) < 0)
@@ -46,20 +44,8 @@ int 	reset_fd(t_ast_node *root)
 	if (root->piped_cmd)
 	{
 		if (root->pipe_fd[0] != 0)
-		{
-			ft_printf("%s : fermeture de l'entree, close %d %d\n",
-			root->content, root->tmp_fd_read, root->pipe_fd[0]);
-			dup2(root->tmp_fd_read, 0);
-			// close(root->tmp_fd_read);
 			close(root->pipe_fd[0]);
-		}
 		if (root->pipe_fd[1] != 1)
-		{
-			ft_printf("%s : fermeture de la sortie, close %d %d\n",
-			root->content, root->tmp_fd_write, root->pipe_fd[1]);
-			dup2(root->tmp_fd_write, 1);
-			close(root->tmp_fd_write);
 			close(root->pipe_fd[1]);
-		}
 	}
 }

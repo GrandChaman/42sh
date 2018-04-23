@@ -55,4 +55,5 @@ t_jc_job		*jc_get_by_pid(pid_t pid);
 void			jc_print(t_jc_job *job);
 void			jc_update(t_jc_job *job, int status);
 
+
 #endif

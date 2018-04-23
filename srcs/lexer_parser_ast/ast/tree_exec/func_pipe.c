@@ -24,10 +24,10 @@ int		func_pipe2(t_ast_node *root, int pipefd[2])
 	{
 		root->right->pipe_fd[0] = pipefd[0];
 		root->right->piped_cmd = 1;
-		ret = g_exec_fn[root->right->type](root->right);
+		status = g_exec_fn[root->right->type](root->right);
 	}
-	wait(&status);
-	exit(0);
+	del_sh21_exit();
+	exit(status);
 }
 
 int		func_pipe(t_ast_node *root)
@@ -37,11 +37,10 @@ int		func_pipe(t_ast_node *root)
 	int ret_child;
 	int ret;
 
-	// set_bg_job(root);
+	set_job(root);
 	ret_child = 0;
 	if (pipe(pipefd) < 0)
 		return (ft_error(errno, NULL));
-	ft_printf("pipe[0] = %d , pipe[1] = %d\n", pipefd[0], pipefd[1]);
 	pid = fork();
 	if (pid == 0)
 		func_pipe2(root, pipefd);
@@ -53,10 +52,8 @@ int		func_pipe(t_ast_node *root)
 		root->left->pipe_fd[1] = pipefd[1];
 		ret_child = g_exec_fn[root->left->type](root->left);
 	}
-	// if (root->job = 1)
-	// 	job_control_at_job(pid, root->content);
-	// ret = jc_set(root->tag_gpid, root->mod_gpid);
-	waitpid(pid, &ret, WUNTRACED);
+	ret = jc_set(root->tag_gpid, root->mod_gpid);
+	// waitpid(pid, &ret, WUNTRACED);
 	sh21_get()->status = ret;
 	return (ret);
 }
