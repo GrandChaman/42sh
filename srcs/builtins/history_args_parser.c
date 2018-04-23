@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 14:06:25 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/23 17:48:24 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/23 18:23:06 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 
 t_hist_args		*args_create(void)
 {
-	t_hist_args *args = malloc(sizeof(t_hist_args));
+	t_hist_args *args;
+
+	args = malloc(sizeof(t_hist_args));
 	args->c = 0;
 	args->d = 0;
 	args->d_val = 0;
@@ -72,11 +74,12 @@ void			read_args(t_hist_args *args, int argc, char **argv)
 {
 	int		idx;
 	int		err;
+	char	*arg;
 
 	idx = 1;
 	while (idx < argc)
 	{
-		char  *arg = argv[idx];
+		arg = argv[idx];
 		if (*arg == '-')
 		{
 			++arg;
@@ -99,11 +102,11 @@ void			read_args(t_hist_args *args, int argc, char **argv)
 			else if (err < 0)
 			{
 				args->err = AWRN_ERR;
-				return;
+				return ;
 			}
 		}
 		else
-			return;
+			return ;
 		++idx;
 	}
 }

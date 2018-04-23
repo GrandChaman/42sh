@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 15:54:39 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/23 17:47:23 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/23 18:19:35 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 # include "sh21.h"
 
-#define AF			1 << 0
-#define WF			1 << 1
-#define RF			1 << 2
-#define NF			1 << 3
-#define D_ERR		1 << 4
-#define AWRN_ERR	1 << 5
-#define INVARG		1 << 6
+# define AF			1 << 0
+# define WF			1 << 1
+# define RF			1 << 2
+# define NF			1 << 3
+# define D_ERR		1 << 4
+# define AWRN_ERR	1 << 5
+# define INVARG		1 << 6
 
 typedef struct			s_hist_args
 {
@@ -36,8 +36,8 @@ typedef struct			s_hist_args
 
 typedef struct			s_flag
 {
-	int					flag_P;
-	int					flag_L;
+	int					flag_p;
+	int					flag_l;
 	int					idx;
 	int					buf_to_free;
 }						t_flag;
