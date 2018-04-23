@@ -64,11 +64,9 @@ void		word_recog(t_lexa *lexa)
 	token_last_elem = BEGIN;
 	while (ptr)
 	{
-		if (ptr->token_type == WORD || ptr->token_type == IO_NUM_SPC ||
+		if (ptr->token_type == WORD ||
 			ptr->token_type == IO_NUMBER)
 		{
-			if (ptr->token_type == IO_NUM_SPC)
-				ptr->token_type = WORD;
 			if (str_digit(ptr->content) &&
 				((ptr->next && is_redir_part(ptr->next->content[0]))
 							|| is_redir_token(token_last_elem)))
@@ -76,6 +74,8 @@ void		word_recog(t_lexa *lexa)
 			else
 				loop_word(ptr);
 		}
+		if (ptr->token_type == IO_NUM_SPC)
+			ptr->token_type = WORD;
 		token_last_elem = ptr->token_type;
 		ptr = ptr->next;
 	}
