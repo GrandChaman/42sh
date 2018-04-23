@@ -39,8 +39,6 @@ void	case_backslash(char **ret, char **ptr, int *i, char *special_chars, t_ast_n
 			node->nb_escaped_quote++;
 	}
 }
-
-
 // echo $((2 + 3))
 // echo 5
 
@@ -53,10 +51,8 @@ void	case_dollar(char **ret, char **ptr, int *i)
 	(*ptr)++;
 	if (ft_strnequ(*ptr, "((", 2))
 	{
-		*ret = ft_strjoin(*ret, " ");
-		*ret = ft_strjoin(*ret, ft_itoa(ft_eval_expr(*ptr, &end)));
+		*ret = ft_strffjoin(*ret, ft_itoa(ft_eval_expr(*ptr, &end)));
 		*ptr += end;
-		ft_printf("YA forcement des leaks ou mallocfree , j attend le lexer  me laisse passer");
 	}
 	else
 	{
