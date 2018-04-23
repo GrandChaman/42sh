@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/22 15:09:12 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/23 14:07:04 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int			main(void)
 	sh21 = sh21_init(environ);
 	shell = get_ft_shell();
 	shell->ht = NULL;
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, ignore_signal);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGCONT, SIG_IGN);
 	setpgid(0, getpid());
