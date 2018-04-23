@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/22 15:09:12 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/23 14:26:18 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	main_loop(t_sh21 *sh21, t_ft_sh *shell)
 		lexer(sh21);
 		if (parser(sh21->lex) && sh21->signal != T_CTRL_C)
 			sh21_get()->ret = exec_tree(sh21->tree.root_node);
+		ast_print(sh21->tree.root_node);
 		del_sh21();
 		ft_strdel(&cmd);
 	}
@@ -98,9 +99,11 @@ int			main(void)
 	sh21 = sh21_init(environ);
 	shell = get_ft_shell();
 	shell->ht = NULL;
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, ignore_signal);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGCONT, SIG_IGN);
+	signal(SIGTTOU, SIG_IGN);
+	signal(SIGTTIN, SIG_IGN);
 	setpgid(0, getpid());
 	if (!is_env_correct())
 		return (1);
