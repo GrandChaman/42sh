@@ -48,6 +48,10 @@ int						ft_setenv(const char *name, const char *value,
 int						print_env(char **env);
 int						env_usage(char c, int option);
 
+int					bi_kill(int argc, char **argv, char ***environ, t_ast_node *root);
+int					bi_fg(int argc, char **argv, char ***environ, t_ast_node *root);
+int					bi_bg(int argc, char **argv, char ***environ, t_ast_node *root);
+int					bi_jobs(int argc, char **argv, char ***environ, t_ast_node *root);
 int						bi_cd(int argc, char **argv, char ***environ, t_ast_node *root);
 int						bi_echo(int argc, char **argv, char ***environ, t_ast_node *root);
 int						bi_env(int argc, char **argv, char ***environ, t_ast_node *root);
@@ -101,6 +105,10 @@ static const t_builtin		g_builtins[] =
 {
 	{"exit", &bi_exit},
 	{"cd", &bi_cd},
+	{"jobs", &bi_jobs},
+	{"fg", &bi_fg},
+	{"bg", &bi_bg},
+	{"kill", &bi_kill},
 	{"echo", &bi_echo},
 	{"env", &bi_env},
 	{"setenv", &bi_setenv},

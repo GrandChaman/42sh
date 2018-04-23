@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 13:13:55 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/22 17:26:27 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/23 13:21:26 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,19 @@ static void	jc_change_pgrp(t_jc_job *job, int mode)
 		ft_exit(errno, "tcsetpgrp"); //decommenter apres
 }
 
-static int	jc_wait(t_jc_job *job, int mode)
+static int	jc_wait(t_jc_job *job, int mode, int *should_update)
 {
 	int status;
 
 	signal(SIGTSTP, SIG_DFL);
 	signal(SIGCONT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+	*should_update = 1;
 	if (mode == BG)
-		waitpid(-job->pgid, &status, WUNTRACED | WNOHANG);
+	{
+		if (!waitpid(-job->pgid, &status, WUNTRACED | WNOHANG))
+			*should_update = 0;
+	}
 	else
 	{
 		waitpid(-job->pgid, &status, WUNTRACED);
@@ -48,7 +53,7 @@ static int	jc_wait(t_jc_job *job, int mode)
 	}
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGCONT, SIG_IGN);
-
+	signal(SIGINT, SIG_IGN);
 	return (status);
 }
 
@@ -57,6 +62,7 @@ int			jc_set(t_jc_tag tag, int mode)
 	t_list		*jb_list;
 	t_jc_job*	job;
 	int			res;
+	int			should_update;
 
 	jb_list = jc_get()->job_list;
 	while (jb_list)
@@ -65,8 +71,11 @@ int			jc_set(t_jc_tag tag, int mode)
 		if (job->tag == tag)
 		{
 			jc_change_pgrp(job, mode);
-			res = jc_wait(job, mode);
-			jc_update(job, res);
+			res = jc_wait(job, mode, &should_update);
+			if (should_update)
+				jc_update(job, res);
+			else
+				res = 0;
 			return (res);
 		}
 		jb_list = jb_list->next;

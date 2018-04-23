@@ -6,11 +6,29 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 13:33:03 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/22 16:06:04 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/23 13:22:26 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "job_control.h"
+
+void		jc_update_all(void)
+{
+	t_jc		*jc;
+	t_list	*job_list;
+	t_jc_job	*job;
+	int			status;
+
+	jc = jc_get();
+	job_list = jc->job_list;
+	while (job_list)
+	{
+		job = ((t_jc_job*)job_list->content);
+		if (waitpid(-job->pgid, &status, WUNTRACED | WNOHANG))
+			jc_update(((t_jc_job*)job_list->content), status);
+		job_list = job_list->next;
+	}
+}
 
 void		jc_update(t_jc_job *job, int status)
 {
@@ -19,6 +37,7 @@ void		jc_update(t_jc_job *job, int status)
 	jc = jc_get();
 	if (WIFEXITED(status) || WIFSIGNALED(status))
 	{
+		ft_fprintf(2, "Toto : %d\n", WTERMSIG(status));
 		job->status = (WIFEXITED(status) ? DONE : KILLED);
 		if (job != jc->fg_job || job->status == KILLED)
 			jc_print(job);
