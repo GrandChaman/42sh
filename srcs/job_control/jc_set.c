@@ -16,18 +16,28 @@
 
 static void	jc_change_pgrp(t_jc_job *job, int mode)
 {
+	int kill_res;
+
 	if (mode == BG)
 	{
 		ft_printf("[%d] %d (%C)\n", job->tag, job->pgid, 8675);
 		if (tcsetpgrp(STDIN_FILENO, getpgrp()))
 			ft_exit(errno, "tcsetpgrp");
-		if (job->status == SUSPENDED && killpg(job->pgid, SIGCONT))
-			ft_exit(errno, "killpg");
+		if (job->status == SUSPENDED)
+		{
+			kill_res = killpg(job->pgid, SIGCONT);
+			if (kill_res != 0 && errno != EPERM)
+				ft_exit(errno, "killpg");
+		}
 			job->status = RUNNING;
 		return ;
 	}
-	if (job->status == SUSPENDED && killpg(job->pgid, SIGCONT))
-		ft_exit(errno, "killpg");
+	if (job->status == SUSPENDED)
+	{
+		kill_res = killpg(job->pgid, SIGCONT);
+		if (kill_res != 0 && errno != EPERM)
+			ft_exit(errno, "killpg");
+	}
 	job->status = RUNNING;
 	jc_get()->fg_job = job;
 	if (tcsetpgrp(STDIN_FILENO, job->pgid))
@@ -38,17 +48,30 @@ static void	jc_change_pgrp(t_jc_job *job, int mode)
 static int	jc_wait(t_jc_job *job, int mode, int *should_update)
 {
 	int status;
+	int wait_res;
 
 	*should_update = 1;
 	if (mode == BG)
 	{
-		if (!waitpid(-job->pgid, &status, WUNTRACED | WNOHANG))
-			*should_update = 0;
+		*should_update = 0; //TODO
+		while ((wait_res = waitpid(-job->pgid, &status, WUNTRACED | WNOHANG))
+			!= 0)
+			{
+				if (wait_res < 0)
+					ft_exit(errno, "waitpid");
+				else
+					*should_update = 1;
+				ft_printf("Alatreub");
+			}
 	}
 	else
 	{
 		ft_fprintf(2, "Toto 1\n");
-		waitpid(-job->pgid, &status, WUNTRACED);
+		while ((wait_res = waitpid(-job->pgid, &status, WUNTRACED)))
+			if (wait_res < 0 && errno != ECHILD)
+				ft_exit(errno, "waitpid");
+			else if (wait_res < 0 && errno == ECHILD)
+				break ;
 		ft_fprintf(2, "Toto 2\n");
 		tcsetpgrp(0, getpgrp());
 	}
@@ -68,6 +91,16 @@ int			jc_set(t_jc_tag tag, int mode)
 		job = ((t_jc_job*)jb_list->content);
 		if (job->tag == tag)
 		{
+			// DEBUG
+			t_list *toto;
+			ft_fprintf(2, "{green}%d - Call jc_set\n{eoc}", getpid());
+			toto = job->pid_list;
+			while (toto)
+			{
+				ft_printf("PID : {magenta}%d{eoc}\n", *((int*)toto->content));
+				toto = toto->next;
+			}
+			// DEBUG
 			jc_change_pgrp(job, mode);
 			res = jc_wait(job, mode, &should_update);
 			if (should_update)

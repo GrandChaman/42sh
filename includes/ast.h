@@ -49,9 +49,9 @@ typedef struct			s_ast_node
 	int 				mod_gpid;
 	int 				piped_cmd;
 	int 				pipe_fd[2];
-	int 				pipe_side;
 	int 				tmp_fd_write;
 	int 				tmp_fd_read;
+	int 				pipe_to_close;
 }						t_ast_node;
 
 typedef struct			s_args

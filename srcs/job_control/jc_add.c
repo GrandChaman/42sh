@@ -18,6 +18,7 @@ void		jc_add(t_jc_tag jtag, pid_t npid)
 	t_list		*jb_list;
 	t_jc_job*	tmp;
 
+	ft_printf("{green}%d - call jc_add(%d, %d){eoc}\n", getpid(), jtag, npid);
 	jb_list = jc_get()->job_list;
 	while (jb_list)
 	{
@@ -30,6 +31,8 @@ void		jc_add(t_jc_tag jtag, pid_t npid)
 					ft_perror("setpgid", "called to setpgid failed.");
 				tmp->pgid = npid;
 			}
+			else if (setpgid(npid, tmp->pgid) < 0)
+				ft_perror("setpgid", "called to setpgid failed.");
 			ft_lstpush_back(&tmp->pid_list, &npid, sizeof(pid_t));
 			return ;
 		}

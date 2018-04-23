@@ -12,48 +12,51 @@
 
 #include "sh21.h"
 
-int		func_pipe2(t_ast_node *root, int pipefd[2])
+int		func_pipe_right(t_ast_node *root, int pipefd[2])
 {
-	int		nw;
 	int		status;
-	int		ret;
 
 	status = 0;
-	close(pipefd[1]);
 	if (root->right)
 	{
+		root->right->piped_cmd = 1 + root->piped_cmd;
 		root->right->pipe_fd[0] = pipefd[0];
-		root->right->piped_cmd = 1;
+		root->left->pipe_to_close = pipefd[1];
 		status = g_exec_fn[root->right->type](root->right);
 	}
-	del_sh21_exit();
-	exit(status);
+	close(pipefd[1]);
+	close(pipefd[0]);
+	return (status);
+}
+
+void 	func_pipe_left(t_ast_node *root, int pipefd[2])
+{
+	root->left->piped_cmd = 1 + root->piped_cmd;
+	root->left->pipe_fd[0] = root->pipe_fd[0];
+	root->left->pipe_fd[1] = pipefd[1];
+	root->left->pipe_to_close = pipefd[0];
+	g_exec_fn[root->left->type](root->left);
 }
 
 int		func_pipe(t_ast_node *root)
 {
 	int pipefd[2];
-	int pid;
-	int ret_child;
 	int ret;
 
 	set_job(root);
-	ret_child = 0;
+	if (!root->piped_cmd)
+		root->piped_cmd = 1;
 	if (pipe(pipefd) < 0)
 		return (ft_error(errno, NULL));
-	pid = fork();
-	if (pid == 0)
-		func_pipe2(root, pipefd);
-	else
+	ft_printf("{red}pipefd[0] = %d, pipefd[1] = %d{eoc}\n", pipefd[0], pipefd[1]);
+	func_pipe_left(root, pipefd);
+	ret = func_pipe_right(root, pipefd);
+	if (root->piped_cmd == 1)
 	{
-		close(pipefd[0]);
-		root->left->piped_cmd = 1;
-		root->left->pipe_fd[0] = root->pipe_fd[0];
-		root->left->pipe_fd[1] = pipefd[1];
-		ret_child = g_exec_fn[root->left->type](root->left);
+		ft_printf("PID killed = %d, tag_gpid = %d\n", getpid(), root->tag_gpid);
+		ft_printf("{red}HOW MANY WAIT ? %s %s{eoc}\n", root->left->content, root->right->content);
+		ret = jc_set(root->tag_gpid, root->mod_gpid);
 	}
-	ret = jc_set(root->tag_gpid, root->mod_gpid);
-	// waitpid(pid, &ret, WUNTRACED);
 	sh21_get()->status = ret;
 	return (ret);
 }

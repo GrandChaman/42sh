@@ -35,6 +35,7 @@ t_ast_node		*ast_create_node(t_token_type type, char *str)
 	node->piped_cmd = 0;
 	node->pipe_fd[0] = 0;
 	node->pipe_fd[1] = 1;
+	node->pipe_to_close = -1;
 	return (node);
 }
 

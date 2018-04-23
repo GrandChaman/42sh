@@ -29,85 +29,62 @@ char			*search_bin(char *bin, t_env *env)
 	return (ret ? ret->path : NULL);
 }
 
-int				callbase(char **av, char ***env, t_ast_node *root)
-{
-	pid_t		child;
-	int			status;
-
-	if ((child = fork()) < 0)
-		ft_exit(errno, "fork");
-	else if (!child)
-	{
-		if (change_fd(root) < 0)
-		{
-			jc_delete_tag(root->tag_gpid);
-			del_sh21_exit();
-			exit(errno);
-		}
-		if (execve(av[0], av, *env) < 0)
-		{
-			jc_delete_tag(root->tag_gpid);
-			ft_exit(errno, av[0]);
-		}
-	}
-	else
-	{
-		reset_fd(root);
-		jc_add(root->tag_gpid, child);
-		status = jc_set(root->tag_gpid, root->mod_gpid);
-		// child = waitpid(child, &status, WUNTRACED);
-		return (status);
-	}
-	return (0);
-}
-
 int				try_direct_acces(char **av, char ***env, t_ast_node *root)
 {
 	t_sh21			*sh21;
 	struct stat		st;
+	int				ret;
+	char 			*cmd;
 
 	sh21 = sh21_get();
-	if (ft_strchr(av[0], '/') == NULL)
-		return (0);
-	stat(av[0], &st);
-	if (S_ISDIR(st.st_mode))
-		ft_error(21, av[0]);
+	if (ft_strchr(av[0], '/') != NULL)
+	{
+		stat(av[0], &st);
+		if (S_ISDIR(st.st_mode))
+			return (ft_error(21, av[0]));
+		else
+			return (callsystem(av[0], av, env, root));
+	}
 	else
-		callbase(av, env, root);
-	return (1);
+	{
+		cmd = search_bin(av[0], &sh21_get()->env);
+		return (callsystem(cmd, av, env, root));
+	}
 }
 
-int				callsystem(char **av, char ***env, t_ast_node *root)
+int				callsystem(char *cmd, char **av, char ***env, t_ast_node *root)
 {
 	pid_t		child;
 	int			status;
-	char		*str;
 
-	str = search_bin(av[0], &sh21_get()->env);
+	status = 0;
 	if ((child = fork()) < 0)
 		ft_exit(errno, "fork");
 	else if (!child)
 	{
 		if (change_fd(root) < 0)
 		{
-			jc_delete_tag(root->tag_gpid);
 			del_sh21_exit();
 			exit(errno);
 		}
-		if (!str || execve(str, av, *env) < 0)
+		if (!cmd || execve(cmd, av, *env) < 0)
 		{
 			jc_delete_tag(root->tag_gpid);
 			reset_fd(root);
-			ft_exit((str ? errno : -1), (str ? str : av[0]));
+			ft_exit((cmd ? errno : -1), (cmd ? cmd : av[0]));
 		}
-		ft_exit((str ? errno : -1), (str ? str : av[0]));
+		ft_exit((cmd ? errno : -1), (cmd ? cmd : av[0]));
 	}
 	else
 	{
-		reset_fd(root);
 		jc_add(root->tag_gpid, child);
-		status = jc_set(root->tag_gpid, root->mod_gpid);
-		// child = waitpid(child, &status, WUNTRACED);
+		reset_fd(root);
+		ft_printf("{yellow}%d - EXECUTION de %s - %d{eoc}\n", getpid(), cmd, child);
+		if (!root->piped_cmd)
+		{
+			ft_printf("{red}YOU ENTERED INTO THE SET{eoc}\n");
+			status = jc_set(root->tag_gpid, root->mod_gpid);
+		}
 		return (status);
 	}
 	return (0);
@@ -118,6 +95,7 @@ int 			sh21_exec_builtin(char **av, char ***env, t_ast_node *root, t_builtin bui
 	pid_t		parent;
 	int			status;
 
+	status = 0;
 	if (!(root->piped_cmd || root->mod_gpid == BG))
 	{
 		jc_delete_tag(root->tag_gpid);
@@ -141,8 +119,11 @@ int 			sh21_exec_builtin(char **av, char ***env, t_ast_node *root, t_builtin bui
 	{
 		reset_fd(root);
 		jc_add(root->tag_gpid, parent);
-		status = jc_set(root->tag_gpid, root->mod_gpid);
-		// parent = waitpid(parent, &status, WUNTRACED);//SUPP
+		if (!root->piped_cmd)
+		{
+			ft_printf("{red}YOU ENTERED INTO THE SET{eoc}, cmd = %s - %d\n", builtin.fn_name, parent);
+			status = jc_set(root->tag_gpid, root->mod_gpid);
+		}
 		return (status);
 	}
 	return (0);
@@ -161,7 +142,5 @@ int				sh21_exec(char **av, char ***env, t_ast_node *root)
 		if (ft_strequ(av[0], g_builtins[idx].fn_name))
 			return (sh21_exec_builtin(av, env, root, g_builtins[idx]));
 	}
-	if (try_direct_acces(av, env, root))
-		return (0);
-	return (callsystem(av, env, root));
+	return (try_direct_acces(av, env, root));
 }
