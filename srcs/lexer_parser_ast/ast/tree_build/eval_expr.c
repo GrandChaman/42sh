@@ -90,6 +90,7 @@ int		ft_eval_expr(char *ori, int *end)
 	int i;
 	int o;
 	char *str;
+	char *lol;
 
 	i = 0;
 	o = 0;
@@ -105,10 +106,11 @@ int		ft_eval_expr(char *ori, int *end)
 		i++;
 	}
 	*end = i;
-	str = ft_strdup(ori);
-	str = ft_strsub(str, 0, i); //LEAKS de MALADE
+	lol = ft_strdup(ori);
+	str = ft_strsub(lol, 0, i); //LEAKS de MALADE
 	i = 0;
 	i = main_expr(str, &i);
 	free(str);
+	free(lol);
 	return (i);
 }
