@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 15:23:14 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/22 15:27:23 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/22 17:35:08 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int				jc_set(t_jc_tag tag, int mode);
 t_jc_job		*jc_get_by_pid(pid_t pid);
 void			jc_print(t_jc_job *job);
 void			jc_update(t_jc_job *job, int status);
+void			jc_update_all(void);
 
 
 #endif
