@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 13:33:03 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/22 18:18:57 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/23 13:22:26 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void		jc_update_all(void)
 	while (job_list)
 	{
 		job = ((t_jc_job*)job_list->content);
-		waitpid(-job->pgid, &status, WUNTRACED | WNOHANG);
-		jc_update(((t_jc_job*)job_list->content), status);
+		if (waitpid(-job->pgid, &status, WUNTRACED | WNOHANG))
+			jc_update(((t_jc_job*)job_list->content), status);
 		job_list = job_list->next;
 	}
 }
