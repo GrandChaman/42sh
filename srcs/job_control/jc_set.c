@@ -28,7 +28,7 @@ static void	jc_change_pgrp(t_jc_job *job, int mode)
 		ft_exit(errno, "killpg");
 	jc_get()->fg_job = job;
 	if (tcsetpgrp(STDIN_FILENO, job->pgid))
-		ft_exit(errno, "tcsetpgrp");
+		ft_exit(errno, "tcsetpgrp"); //decommenter apres
 }
 
 static int	jc_wait(t_jc_job *job, int mode)

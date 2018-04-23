@@ -40,21 +40,22 @@ int				callbase(char **av, char ***env, t_ast_node *root)
 	{
 		if (change_fd(root) < 0)
 		{
-			// jc_delete_tag(root->tag_gpid);
+			jc_delete_tag(root->tag_gpid);
 			del_sh21_exit();
 			exit(errno);
 		}
 		if (execve(av[0], av, *env) < 0)
 		{
-			// jc_delete_tag(root->tag_gpid);
+			jc_delete_tag(root->tag_gpid);
 			ft_exit(errno, av[0]);
 		}
 	}
 	else
 	{
-		// jc_add(root->tag_gpid, child);
-		// status = jc_set(root->tag_gpid, root->mod_gpid);
-		child = waitpid(child, &status, WUNTRACED);
+		reset_fd(root);
+		jc_add(root->tag_gpid, child);
+		status = jc_set(root->tag_gpid, root->mod_gpid);
+		// child = waitpid(child, &status, WUNTRACED);
 		return (status);
 	}
 	return (0);
@@ -89,13 +90,13 @@ int				callsystem(char **av, char ***env, t_ast_node *root)
 	{
 		if (change_fd(root) < 0)
 		{
-			// jc_delete_tag(root->tag_gpid);
+			jc_delete_tag(root->tag_gpid);
 			del_sh21_exit();
 			exit(errno);
 		}
 		if (!str || execve(str, av, *env) < 0)
 		{
-			// jc_delete_tag(root->tag_gpid);
+			jc_delete_tag(root->tag_gpid);
 			reset_fd(root);
 			ft_exit((str ? errno : -1), (str ? str : av[0]));
 		}
@@ -103,10 +104,10 @@ int				callsystem(char **av, char ***env, t_ast_node *root)
 	}
 	else
 	{
-		// jc_add(root->tag_gpid, child);
-		// status = jc_set(root->tag_gpid, root->mod_gpid);
 		reset_fd(root);
-		child = waitpid(child, &status, WUNTRACED);
+		jc_add(root->tag_gpid, child);
+		status = jc_set(root->tag_gpid, root->mod_gpid);
+		// child = waitpid(child, &status, WUNTRACED);
 		return (status);
 	}
 	return (0);
@@ -119,7 +120,7 @@ int 			sh21_exec_builtin(char **av, char ***env, t_ast_node *root, t_builtin bui
 
 	if (!(root->piped_cmd || root->mod_gpid == BG))
 	{
-		// jc_delete_tag(root->tag_gpid);
+		jc_delete_tag(root->tag_gpid);
 		return (builtin.fn_ptr(arrlen(av), av, env, root));
 	}
 	if ((parent = fork()) < 0)
@@ -128,7 +129,7 @@ int 			sh21_exec_builtin(char **av, char ***env, t_ast_node *root, t_builtin bui
 	{
 		if (change_fd(root) < 0)
 		{
-			// jc_delete_tag(root->tag_gpid);
+			jc_delete_tag(root->tag_gpid);
 			del_sh21_exit();
 			exit(errno);
 		}
@@ -138,9 +139,10 @@ int 			sh21_exec_builtin(char **av, char ***env, t_ast_node *root, t_builtin bui
 	}
 	else
 	{
-		// jc_add(root->tag_gpid, parent);
-		// status = jc_set(root->tag_gpid, root->mod_gpid);
-		parent = waitpid(parent, &status, WUNTRACED);//SUPP
+		reset_fd(root);
+		jc_add(root->tag_gpid, parent);
+		status = jc_set(root->tag_gpid, root->mod_gpid);
+		// parent = waitpid(parent, &status, WUNTRACED);//SUPP
 		return (status);
 	}
 	return (0);
@@ -153,6 +155,7 @@ int				sh21_exec(char **av, char ***env, t_ast_node *root)
 	idx = -1;
 	if (!av[0])
 		return (0);
+	ft_printf("root->content = %s, root->tag_gpid = %d, mod = %d\n",root->content, root->tag_gpid, root->mod_gpid);
 	while (g_builtins[++idx].fn_ptr)
 	{
 		if (ft_strequ(av[0], g_builtins[idx].fn_name))

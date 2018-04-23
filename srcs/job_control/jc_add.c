@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "sh21.h"
 #include "job_control.h"
 
 void		jc_add(t_jc_tag jtag, pid_t npid)

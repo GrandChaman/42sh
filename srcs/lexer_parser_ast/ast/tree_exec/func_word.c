@@ -23,15 +23,12 @@ int		func_word(t_ast_node *root)
 	if (!root)
 		return (0);
 	sh21 = sh21_get();
-	// set_bg_job(root);
 	root->content = format_word(&root->content);
 	sh21->argv = split_args(root->content);
-	if (root->tag_gpid < 0)
-		root->tag_gpid = jc_create_tag();
+	set_job(root);
 	if (!status)
 		status = sh21_exec(sh21->argv, &sh21->env.orig_env, root); //add tag_gpid
 	sh21->status = status;
-
 	del_arr(&sh21->argv);
 	return (status);
 }

@@ -181,7 +181,7 @@ char					**copy_list_to_array(t_args **list);
 char					**split_args(char *argv);
 
 
-void			set_bg_job(t_ast_node *root);
+void			set_job(t_ast_node *root);
 
 static t_exec_tree g_exec_fn[] =
 {
