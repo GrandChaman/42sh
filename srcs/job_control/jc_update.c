@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 13:33:03 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/23 13:22:26 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/23 13:26:33 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void		jc_update(t_jc_job *job, int status)
 	jc = jc_get();
 	if (WIFEXITED(status) || WIFSIGNALED(status))
 	{
-		ft_fprintf(2, "Toto : %d\n", WTERMSIG(status));
 		job->status = (WIFEXITED(status) ? DONE : KILLED);
 		if (job != jc->fg_job || job->status == KILLED)
 			jc_print(job);
