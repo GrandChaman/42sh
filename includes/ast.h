@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:32:20 by hfontain          #+#    #+#             */
-/*   Updated: 2018/03/19 12:52:01 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/23 17:57:29 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,16 @@ typedef struct			s_ast_node
 	struct s_ast_node	*right;
 	struct s_ast_node	*redir_node;
 	struct s_ast_node	*condition_node;
-	int 				esc_i[NB_ESCAPED_QUOTE];
-	int 				nb_escaped_quote;
-	int 				i;
-	int 				quote_count;
+	int					esc_i[NB_ESCAPED_QUOTE];
+	int					nb_escaped_quote;
+	int					i;
+	int					quote_count;
 }						t_ast_node;
 
 typedef struct			s_args
 {
-	struct s_args 		*next;
-	char 				*content;
+	struct s_args		*next;
+	char				*content;
 }						t_args;
 
 typedef struct			s_ast
@@ -138,15 +138,14 @@ t_ast_node				*ast_create_op(t_ast_node *node, t_lex **lex);
 t_ast_node				*ast_create_tree(t_lex *lex);
 t_ast_node				*redir_node(t_lex **lex, t_ast_node *node);
 t_fd_cleanup			*create_fd_cleanup(t_fd_function fd_function,
-						int fd_close, int fd_reassign);
+							int fd_close, int fd_reassign);
 void					ast_free_node(t_ast_node *node);
 void					ast_free_one_node(t_ast_node *node);
 void					fd_close(t_fd_cleanup *elem);
 void					fd_reassign(t_fd_cleanup *elem);
 void					heredoc_node(t_ast_node *node);
 
-
-t_ast_node				*ast_assignment_word(t_lex **lex, t_ast_node *node);
+t_ast_node		*ast_assignment_word(t_lex **lex, t_ast_node *node);
 t_ast_node		*ast_pipe(t_lex **lex, t_ast_node *root);
 t_ast_node		*ast_while(t_lex **lex, t_ast_node *root);
 t_ast_node		*ast_word(t_lex **lex, t_ast_node *node);
@@ -155,28 +154,29 @@ t_ast_node		*ast_else(t_lex **lex, t_ast_node *root);
 t_ast_node		*ast_elif(t_lex **lex, t_ast_node *root);
 t_ast_node		*ast_if(t_lex **lex, t_ast_node *node);
 
-
 char					*format_word(t_ast_node *node);
 char					*word(char **argv);
 char					*add_str(char **ret, char **ptr, int *i);
 char					*find_var(char *str);
 int						skip_var(char *str);
 void					case_backslash(char **ret, char **ptr,
-							int *i, char *special_chars, t_ast_node *node);
+							int *i, t_ast_node *node);
 void					case_dollar(char **ret, char **ptr, int *i);
 void					case_quote(char **ret, char **ptr, int *i);
 void					case_dquote(char **ret, char **ptr, int *i,t_ast_node *node);
 void					case_tilde(char **ret, char **ptr, int *i);
 
 
-int	escaped_char(char *argv, t_ast_node *node, int *i, int *j);
-void case_quote_args(char *argv, int *i, int *j, t_ast_node *node);
-t_args *new_args(char *argv, int *j, int *i);
-void case_space(char *argv, int *i[2], t_ast_node *node, t_args **list);
-char **split_args(char *argv, t_ast_node *node);
-char **copy_list_to_array(t_args **list);
-void del_el(void **el);
-
+int						escaped_char(char *argv, t_ast_node *node, int *i,
+							int *j);
+void					case_quote_args(char *argv, int *i, int *j,
+							t_ast_node *node);
+t_args					*new_args(char *argv, int *j, int *i);
+void					case_space(char *argv, int *i[2], t_ast_node *node,
+							t_args **list);
+char					**split_args(char *argv, t_ast_node *node);
+char					**copy_list_to_array(t_args **list);
+void					del_el(void **el);
 void					ast_print(t_ast_node *root);
 
 static t_exec_tree g_exec_fn[] =

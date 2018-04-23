@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/19 18:57:41 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/23 17:37:37 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@
 ** "%s -- %[GRN]%s %[NC](%s)\n", __FUNCTION__,
 ** lex->content, g_token_type_str[lex->token_type]); usleep(1000);}
 */
-
-enum 	e_index_subshell
+enum					e_index_subshell
 {
 	CMD_FD_SUBSH,
 	RES_FD_SUBSH,

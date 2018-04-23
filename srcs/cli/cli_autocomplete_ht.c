@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cli_autocomplete_ht.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 16:29:28 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/17 13:19:51 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/23 17:49:21 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ static char		*get_el_name(t_hash_bin *bin)
 
 }
 
-static void		insert_ht_el_in_list(t_list **list,
-	char *bin_name)
+static void		insert_ht_el_in_list(t_list **list, char *bin_name)
 {
 	t_ft_autoc_entry entry;
 
