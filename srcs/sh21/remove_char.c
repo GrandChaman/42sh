@@ -6,13 +6,13 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 12:40:21 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/19 18:57:47 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/23 18:15:31 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 
-void 	case_quote_rm(char *str, int *i)
+void		case_quote_rm(char *str, int *i)
 {
 	char c;
 
