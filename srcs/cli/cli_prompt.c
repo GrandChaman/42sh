@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/18 17:32:17 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/22 17:35:19 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/24 16:46:29 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int			display_prompt(int last_result)
 
 	lexer_s = sh21_get();
 	res = 4;
-	jc_update_all();
 	if (lexer_s && (path = ft_strdup(ft_getenv("PWD", &lexer_s->env.orig_env))))
 		res += ft_strlen(path);
 	else if ((path = getcwd(NULL, MAXPATHLEN)))
