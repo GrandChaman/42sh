@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 13:13:55 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/23 17:46:34 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/24 14:26:56 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,42 @@
 static void	jc_change_pgrp(t_jc_job *job, int mode)
 {
 	int kill_res;
+	t_list *proc_list;
+	t_jc_proc *proc;
 
+	proc_list = job->pid_list;
 	if (mode == BG)
 	{
-		ft_printf("[%d] %d (%C)\n", job->tag, job->pgid, 8675);
 		if (tcsetpgrp(STDIN_FILENO, getpgrp()))
 			ft_exit(errno, "tcsetpgrp");
-		if (job->status == SUSPENDED)
+		while (proc_list)
 		{
-			kill_res = killpg(job->pgid, SIGCONT);
-			if (kill_res != 0 && errno != EPERM)
-				ft_exit(errno, "killpg");
+			proc = (t_jc_proc*)proc_list->content;
+			if (proc->status == SUSPENDED)
+			{
+				kill_res = kill(proc->pid, SIGCONT);
+				if (kill_res != 0)
+					ft_exit(errno, "killpg");
+			}
+			//TODO check_all_job_status_no_wait
 		}
-			job->status = RUNNING;
+		ft_printf("[%d] %d (%C)\n", job->tag, job->pgid, 8675);
 		return ;
 	}
-	if (job->status == SUSPENDED)
+	while (proc_list)
 	{
-		kill_res = killpg(job->pgid, SIGCONT);
-		if (kill_res != 0 && errno != EPERM)
-			ft_exit(errno, "killpg");
+		proc = (t_jc_proc*)proc_list->content;
+		if (proc->status == SUSPENDED)
+		{
+			kill_res = kill(proc->pid, SIGCONT);
+			if (kill_res != 0)
+				ft_exit(errno, "killpg");
+		}
+		//TODO check_all_job_status_wait
+		jc_get()->fg_job = job;
+		if (tcsetpgrp(STDIN_FILENO, job->pgid))
+			ft_exit(errno, "tcsetpgrp");
 	}
-	job->status = RUNNING;
-	jc_get()->fg_job = job;
-	if (tcsetpgrp(STDIN_FILENO, job->pgid))
-		ft_exit(errno, "tcsetpgrp");
 
 }
 
@@ -55,7 +66,7 @@ static int	jc_wait(t_jc_job *job, int mode, int *should_update)
 	{
 		*should_update = 0; //TODO
 		while ((wait_res = waitpid(-job->pgid, &status, WUNTRACED | WNOHANG))
-			!= 0)
+			!= 0 || (wait_res > 0 && WIFSTOPPED(status)))
 			{
 				if (wait_res < 0)
 					ft_exit(errno, "waitpid");
@@ -66,13 +77,14 @@ static int	jc_wait(t_jc_job *job, int mode, int *should_update)
 	}
 	else
 	{
-		ft_fprintf(2, "Toto 1\n");
 		while ((wait_res = waitpid(-job->pgid, &status, WUNTRACED)))
+		{
 			if (wait_res < 0 && errno != ECHILD)
-				ft_exit(errno, "waitpid");
+			ft_exit(errno, "waitpid");
 			else if (wait_res < 0 && errno == ECHILD)
-				break ;
-		ft_fprintf(2, "Toto 2\n");
+			break ;
+			ft_printf("One wait done !\n");
+		}
 		tcsetpgrp(0, getpgrp());
 	}
 	return (status);

@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 15:23:14 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/22 17:35:08 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/24 14:13:03 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,18 @@ static const char		*g_jc_status_string[] = {
 	"suspended"
 };
 
+typedef	struct			s_jc_proc
+{
+	pid_t				pid;
+	t_jc_status			status;
+	int					rvalue;
+}						t_jc_proc;
+
 typedef	struct			s_jc_job
 {
 	int					pgid;
 	t_jc_tag			tag;
 	t_list				*pid_list;
-	t_jc_status			status;
 }						t_jc_job;
 
 typedef	struct			s_jc
