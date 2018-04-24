@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:36:08 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/06 17:27:58 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/24 16:26:29 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int		func_word(t_ast_node *root)
 	t_sh21			*sh21;
 	t_fd_cleanup	*fd_cleanup;
 	int				status;
-	int				argc;
 	char			**argv;
 
 	status = 0;
@@ -27,12 +26,10 @@ int		func_word(t_ast_node *root)
 	sh21 = sh21_get();
 	format_word(root);
 	argv = split_args(root->content, root);
-	ft_fprintf(sh21_get()->debug_tty, "{magenta}argv[0] = %s{eoc}\n", argv[0]);
-	argc = arrlen(argv);
 	if (root->redir_node)
 		status = g_exec_fn[root->redir_node->type](root->redir_node);
 	if (!status)
-		status = sh21_exec(argc, argv, &sh21->env.orig_env);
+		status = sh21_exec(arrlen(argv), argv, &sh21->env.orig_env);
 	sh21->status = status;
 	fd_cleanup = sh21->tree.fd_cleanup;
 	while (fd_cleanup)

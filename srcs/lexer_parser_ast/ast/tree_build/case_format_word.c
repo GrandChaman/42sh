@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   format_word.c                                      :+:      :+:    :+:   */
+/*   case_format_word.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 16:24:35 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/03/15 17:44:27 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/24 15:19:11 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,11 @@
 ** The function case_backslash fill an array to keep the index of backslashed
 ** character that will be interpreted a second time in the split_args function
 */
-
-
 void	case_backslash(char **ret, char **ptr, int *i, char *special_chars, t_ast_node *node)
 {
 	int		len;
 	int		backslashed;
+	//const	char *special_chars = "$`\"\\\n";
 
 	backslashed = 0;
 	*ret = add_str(ret, ptr, i);
@@ -39,12 +38,10 @@ void	case_backslash(char **ret, char **ptr, int *i, char *special_chars, t_ast_n
 			node->nb_escaped_quote++;
 	}
 }
-// echo $((2 + 3))
-// echo 5
 
 void	case_dollar(char **ret, char **ptr, int *i)
 {
-	int end;
+	int		end;
 
 	end = 0;
 	*ret = add_str(ret, ptr, i);
@@ -57,6 +54,7 @@ void	case_dollar(char **ret, char **ptr, int *i)
 	else
 	{
 		*ret = ft_strffjoin(*ret, find_var(*ptr));
+		ft_printf("ret = |%s|\n", *ret);		
 		*ptr += skip_var(*ptr);
 	}
 }
@@ -77,7 +75,7 @@ void	case_dquote(char **ret, char **ptr, int *i, t_ast_node *node)
 	while ((*ptr)[*i] && (*ptr)[*i] != '\"')
 	{
 		if ((*ptr)[*i] == '\\')
-			case_backslash(ret, ptr, i, "$`\"\\\n", node);
+			case_backslash(ret, ptr, i,"$`\"\\\n", node);
 		else if ((*ptr)[*i] == '$')
 			case_dollar(ret, ptr, i);
 		else

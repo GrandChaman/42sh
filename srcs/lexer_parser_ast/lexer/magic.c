@@ -6,20 +6,22 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 15:07:38 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/19 19:46:28 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/24 15:22:34 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 
-char	*exec_subshell(char *str, char *file_nm_cmd, char *file_nm_io)
+char	*exec_subshell(char *str, char *file_nm_io)
 {
 	int 	i[4];
 	pid_t	pid;
-	char	*argv[] = {"./42sh", file_nm_cmd, NULL};
+	t_sh21	*sh21;
+	//char	*argv[] = {"./42sh", file_nm_cmd, NULL};
 
-	i[CMD_FD_SUBSH] = open(file_nm_cmd, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-	write(i[CMD_FD_SUBSH], str, ft_strlen(str));
+	//i[CMD_FD_SUBSH] = open(file_nm_cmd, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+	//write(i[CMD_FD_SUBSH], str, ft_strlen(str));
+	sh21 = sh21_get();
 	close(i[CMD_FD_SUBSH]);
 	i[RES_FD_SUBSH] = open(file_nm_io, O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	i[NW_SUBSH] = dup(1);
@@ -29,8 +31,12 @@ char	*exec_subshell(char *str, char *file_nm_cmd, char *file_nm_io)
 	pid = fork();
 	if (pid == 0)
 	{
-		sh21_get()->ret = execve("./42sh", argv, sh21_get()->env.orig_env);
-		exit(sh21_get()->ret);
+		del_sh21();
+		sh21->lex = lexer(str);
+		if (parser(sh21->lex))
+			sh21->ret = exec_tree(sh21->tree.root_node);
+		del_sh21();
+		exit(sh21->ret);
 	}
 	else
 	{
@@ -104,7 +110,7 @@ void 	on_subshell(t_lexa *lexa)
 	int		offset;
 	int		fd;
 	char	*ret;
-	char	*rdm_file_cmd;
+	//	*rdm_file_cmd;
 	char 	*rdm_file_io;
 
 	if (lexa->buffer && lexa->buffer[0] && lexa->t != WORD)
@@ -113,13 +119,13 @@ void 	on_subshell(t_lexa *lexa)
 	lexa->str += 1;
 	if ((offset = ft_strindex(lexa->str, '`')) < 0)
 		return ;
-	rdm_file_cmd = create_rdm_file();
+	//rdm_file_cmd = create_rdm_file();
 	rdm_file_io = create_rdm_file();
 	ret = ft_strndup(lexa->str, offset + 1);
 	lexa->str += offset;
-	exec_subshell(ret, rdm_file_cmd, rdm_file_io);
-	unlink(rdm_file_cmd);
-	ft_strdel(&rdm_file_cmd);
+	exec_subshell(ret, rdm_file_io);
+	//unlink(rdm_file_cmd);
+//	ft_strdel(&rdm_file_cmd);
 	ft_strdel(&ret);
 	if ((fd = open(rdm_file_io, O_RDONLY)) < 0)
 		return ;

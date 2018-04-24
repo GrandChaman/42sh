@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   eval_expr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: rfautier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 21:36:44 by rfautier          #+#    #+#             */
 /*   Updated: 2018/04/24 21:36:47 by rfautier         ###   ########.fr       */
+=======
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/04/23 17:52:58 by hfontain          #+#    #+#             */
+/*   Updated: 2018/04/24 16:22:21 by hfontain         ###   ########.fr       */
+>>>>>>> 2b1149ee5bc8f333757165fb0124ab7727587864
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +39,7 @@ static int		is_number(char *str, int *i)
 
 static int		check_parenthese(char *str, int *i)
 {
-	int nbr;
+	int		nbr;
 
 	while (str[*i] == ' ' || str[*i] == '\n')
 		*i = *i + 1;
@@ -73,7 +80,11 @@ static int		is_factors(char *str, int *i)
 	return (nbr);
 }
 
+<<<<<<< HEAD
 int				main_expr(char *str)
+=======
+int				main_expr(char *str, int *i)
+>>>>>>> 2b1149ee5bc8f333757165fb0124ab7727587864
 {
 	int		nbr;
 	int		nbr2;
@@ -121,8 +132,13 @@ int				ft_eval_expr(char *ori, int *end)
 	*end = i;
 	lol = ft_strdup(ori);
 	str = ft_strsub(lol, 0, i);
+<<<<<<< HEAD
 	str = find_var_expr(str);
 	i = main_expr(str);
+=======
+	i = 0;
+	i = main_expr(str, &i);
+>>>>>>> 2b1149ee5bc8f333757165fb0124ab7727587864
 	free(str);
 	free(lol);
 	return (i);

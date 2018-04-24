@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:36:08 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/16 14:57:57 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/23 18:05:07 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ int		func_pipe(t_ast_node *root)
 		dup2(nw, 1);
 		close(nw);
 	}
-	// if (root->job = 1)
-	// 	job_control_at_job(pid, root->content);
 	waitpid(pid, &ret, WUNTRACED);
 	sh21_get()->status = ret;
 	return (ret);

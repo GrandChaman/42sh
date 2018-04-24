@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/18 18:48:51 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/24 16:19:25 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,13 @@ int					bi_history(int argc, char **argv, char ***environ)
 	if (argc == 1)
 		return (display_history(0));
 	if (argv[1][0] == '-')
-		return (0);//Handle param
+		return (0);
 	else
 	{
 		while (argv[1][i])
 			if (!ft_isdigit(argv[1][i++]))
-				return (ft_fprintf(2, "history: %s: numeric argument"
-					" required", argv[1]) && 1);
+				return (ft_fprintf(2, "history: %s: numeric argument"\
+" required", argv[1]) && 1);
 		return (display_history(ft_atoi(argv[1])));
 	}
-
 }
