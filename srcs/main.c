@@ -48,7 +48,6 @@ static void	main_loop(t_sh21 *sh21, t_ft_sh *shell)
 		lexer(sh21);
 		if (parser(sh21->lex) && sh21->signal != T_CTRL_C)
 			sh21_get()->ret = exec_tree(sh21->tree.root_node);
-		ast_print(sh21->tree.root_node);
 		del_sh21();
 		ft_strdel(&cmd);
 	}
@@ -66,7 +65,7 @@ void		job_control_test(char **environ)
 	if (!pid)
 		exit(execve("/bin/sleep", newargv, environ));
 	ntag = jc_create_tag();
-	jc_add(ntag, pid);
+	jc_add(ntag, pid, "job_control_test");
 	jc_set(ntag, FG);
 	ft_printf("Juste avant le wait wefewfwe \n");
 	while (1)
