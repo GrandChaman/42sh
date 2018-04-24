@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:36:08 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/06 17:24:41 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/24 19:15:24 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ t_ast_node		*ast_create_node(t_token_type type, char *str)
 	return (node);
 }
 
-static t_ast_node	*(*g_ast_pipeline_cmd_token[6])(t_lex **, t_ast_node *) =
-{NULL, ast_word, ast_assignment_word, ast_pipe, ast_while, ast_if};
+static t_ast_node	*(*g_ast_pipeline_cmd_token[])(t_lex **, t_ast_node *) =
+{NULL, ast_word, ast_assignment_word, ast_pipe, ast_while, ast_if, ast_until, ast_bang};
 
 t_ast_node		*ast_create_leaf(t_token_type type, t_lex **lex)
 {
-	t_ast_node			*node;
-	int 				call_fc;
+	t_ast_node		*node;
+	int				call_fc;
 
 	if (!lex || !*lex)
 		return (NULL);
@@ -60,7 +60,7 @@ t_ast_node		*ast_create_leaf(t_token_type type, t_lex **lex)
 
 t_ast_node		*ast_create_op(t_ast_node *node, t_lex **lex)
 {
-	t_ast_node *root;
+	t_ast_node	*root;
 
 	root = ast_create_node((*lex)->token_type, (*lex)->content);
 	root->left = node;
@@ -72,7 +72,8 @@ t_ast_node		*ast_create_op(t_ast_node *node, t_lex **lex)
 
 t_ast_node		*ast_create_tree(t_lex *lex)
 {
-	t_ast_node *node;
+	t_ast_node	*node;
+
 	node = ast_create_leaf(lex->token_type, &lex);
 	while (lex)
 		node = ast_create_op(node, &lex);

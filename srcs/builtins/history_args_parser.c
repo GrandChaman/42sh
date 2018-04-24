@@ -1,30 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   history_args_parser.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/04/23 14:06:25 by hfontain          #+#    #+#             */
+/*   Updated: 2018/04/23 18:23:06 by hfontain         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-
-#define AF			1 << 0
-#define WF			1 << 1
-#define RF			1 << 2
-#define NF			1 << 3
-#define D_ERR		1 << 4
-#define AWRN_ERR	1 << 5
-#define INVARG		1 << 6
-
-typedef struct	s_hist_args
-{
-	int		c;
-	int		d;
-	int		d_val;
-	int		p;
-	int		s;
-	int		awrn;
-	int		err;
-}				t_hist_args;
+#include "builtins.h"
 
 t_hist_args		*args_create(void)
 {
-	t_hist_args *args = malloc(sizeof(t_hist_args));
+	t_hist_args *args;
+
+	args = malloc(sizeof(t_hist_args));
 	args->c = 0;
 	args->d = 0;
 	args->d_val = 0;
@@ -49,7 +45,9 @@ static void		awrn_handle(t_hist_args *args, char *str)
 
 int				handle_arg(t_hist_args *args, char **arg)
 {
-	char *str = *arg;
+	char	*str;
+
+	str = *arg;
 	while (*str)
 	{
 		if (*str == 'c')
@@ -74,13 +72,14 @@ int				handle_arg(t_hist_args *args, char **arg)
 
 void			read_args(t_hist_args *args, int argc, char **argv)
 {
-	int idx;
-	int err;
+	int		idx;
+	int		err;
+	char	*arg;
 
 	idx = 1;
 	while (idx < argc)
 	{
-		char  *arg = argv[idx];
+		arg = argv[idx];
 		if (*arg == '-')
 		{
 			++arg;
@@ -103,29 +102,11 @@ void			read_args(t_hist_args *args, int argc, char **argv)
 			else if (err < 0)
 			{
 				args->err = AWRN_ERR;
-				return;
+				return ;
 			}
 		}
 		else
-			return;
+			return ;
 		++idx;
 	}
 }
-
-// void			pargs(t_hist_args *args)
-// {
-// 	args->c ? printf("C\n") : (0);
-// 	args->p ? printf("P\n") : (0);
-// 	args->s ? printf("S\n") : (0);
-// 	args->d ? printf("D:%i\n", args->d_val) : (0);
-// 	args->awrn ? printf("AWRN:%c\n", args->awrn) : (0);
-// }
-
-// int				main(void)
-// {
-// 	t_hist_args *args = args_create();
-// 	char *v[] = {"test", "-cnd", "4", "-a", NULL};
-// 	read_args(args, 4, v);
-// 	pargs(args);
-// 	return 0;
-// }
