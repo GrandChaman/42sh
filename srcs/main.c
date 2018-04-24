@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/23 15:12:02 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/24 13:56:26 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void		job_control_test(char **environ)
 	{
 		waitpid(-pid, &status, WUNTRACED);
 		signal(SIGTTOU, SIG_IGN);
-		signal(SIGTSTP, SIG_IGN);
-		signal(SIGCONT, SIG_IGN);
+		signal(SIGTSTP, ignore_signal);
+		signal(SIGCONT, ignore_signal);
 		tcsetpgrp(0, getpgrp());
 		signal(SIGTTOU, SIG_DFL);
 		if (WIFSTOPPED(status))
