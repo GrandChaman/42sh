@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 14:52:14 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/22 14:56:40 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/24 12:54:17 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	jc_print(t_jc_job *job)
 	ft_printf("[%d]  + %d %s\n", job->tag, *((int*)pid_list->content),
 		g_jc_status_string[job->status]);
 	while ((pid_list = pid_list->next))
-		ft_printf("%*d %s\n", 6 + numlen, job->tag, *((int*)pid_list->content),
+		ft_printf("%*d %s\n", 7 + numlen + ft_numlen(*((int*)
+			pid_list->content)), *((int*)pid_list->content),
 			g_jc_status_string[job->status]);
 }
