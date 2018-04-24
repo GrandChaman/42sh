@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 13:33:03 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/24 16:15:46 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/24 16:22:19 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void		jc_garbage_collector(t_jc *jc)
 		}
 		if (job != jc->fg_job)
 		 	bi_jobs(1, NULL, NULL, NULL);
+		job_list = job_list->next;
 		if (should_delete)
 			jc_delete_tag(job->tag);
-		job_list = job_list->next;
 	}
 }
 
