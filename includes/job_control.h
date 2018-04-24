@@ -16,6 +16,7 @@
 # include <sys/types.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include "ast.h"
 # define FG 0
 # define BG 1
 typedef int t_jc_tag;
@@ -48,7 +49,7 @@ typedef	struct			s_jc
 
 t_jc			*jc_get(void);
 t_jc_tag		jc_create_tag(void);
-void			jc_add(t_jc_tag jtag, pid_t npid);
+void			jc_add(t_jc_tag jtag, pid_t npid, char *cmd);
 void			jc_delete_tag(t_jc_tag tag);
 int				jc_set(t_jc_tag tag, int mode);
 t_jc_job		*jc_get_by_pid(pid_t pid);
@@ -56,5 +57,6 @@ void			jc_print(t_jc_job *job);
 void			jc_update(t_jc_job *job, int status);
 void			jc_update_all(void);
 
+char			*jc_cmd(t_ast_node *root);
 
 #endif

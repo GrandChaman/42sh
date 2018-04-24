@@ -13,12 +13,12 @@
 #include "sh21.h"
 #include "job_control.h"
 
-void		jc_add(t_jc_tag jtag, pid_t npid)
+void		jc_add(t_jc_tag jtag, pid_t npid, char *cmd)
 {
 	t_list		*jb_list;
 	t_jc_job*	tmp;
 
-	ft_printf("{green}%d - call jc_add(%d, %d){eoc}\n", getpid(), jtag, npid);
+	ft_printf("{green}%d - call jc_add(%s){eoc}\n", getpid(), cmd);
 	jb_list = jc_get()->job_list;
 	while (jb_list)
 	{
