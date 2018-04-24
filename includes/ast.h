@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:32:20 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/24 18:16:27 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/24 19:21:22 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,8 @@ t_ast_node				*ast_compound_list(t_lex **lex, t_ast_node *node);
 t_ast_node				*ast_else(t_lex **lex, t_ast_node *root);
 t_ast_node				*ast_elif(t_lex **lex, t_ast_node *root);
 t_ast_node				*ast_if(t_lex **lex, t_ast_node *node);
-
+t_ast_node				*ast_bang(t_lex **lex, t_ast_node *node);
+t_ast_node				*ast_pipeline(t_lex **lex, t_ast_node *node);
 
 char					*format_word(t_ast_node *node);
 char					*word(char **argv);
