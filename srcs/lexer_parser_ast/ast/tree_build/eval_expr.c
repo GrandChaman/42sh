@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   eval_expr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rfautier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/04/24 21:36:44 by rfautier          #+#    #+#             */
+/*   Updated: 2018/04/24 21:36:47 by rfautier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sh21.h"
 
 static int		is_number(char *str, int *i)
@@ -32,12 +44,6 @@ static int		check_parenthese(char *str, int *i)
 			*i = *i + 1;
 		return (nbr);
 	}
-	ft_printf("Avant\n");
-	if (str[*i] == '$')
-	{
-		ft_printf("Here = %s \n", find_var(str + *i + 1)); // FIX HERE, NE PAS COMMIT AVEC
-	}
-	ft_printf("Apres\n");
 	return (is_number(str, i));
 }
 
@@ -67,22 +73,24 @@ static int		is_factors(char *str, int *i)
 	return (nbr);
 }
 
-int		main_expr(char *str, int *i)
+int				main_expr(char *str)
 {
 	int		nbr;
 	int		nbr2;
 	char	op;
+	int		i;
 
-	nbr = is_factors(str, i);
-	while (str[*i])
+	i = 0;
+	nbr = is_factors(str, &i);
+	while (str[i])
 	{
-		while (str[*i] == ' ' || str[*i] == '\n')
-			*i = *i + 1;
-		op = str[*i];
+		while (str[i] == ' ' || str[i] == '\n')
+			i = i + 1;
+		op = str[i];
 		if (op != '+' && op != '-')
 			return (nbr);
-		*i = *i + 1;
-		nbr2 = is_factors(str, i);
+		i = i + 1;
+		nbr2 = is_factors(str, &i);
 		if (op == '+')
 			nbr = nbr + nbr2;
 		else
@@ -91,17 +99,17 @@ int		main_expr(char *str, int *i)
 	return (nbr);
 }
 
-int		ft_eval_expr(char *ori, int *end)
+int				ft_eval_expr(char *ori, int *end)
 {
-	int i;
-	int o;
-	char *str;
-	char *lol;
+	int		i;
+	int		o;
+	char	*str;
+	char	*lol;
 
-	i = 0;
+	i = -1;
 	o = 0;
 	str = NULL;
-	while (ori[i])
+	while (ori[++i])
 	{
 		if (o == 0 && i != 0)
 			break ;
@@ -109,13 +117,12 @@ int		ft_eval_expr(char *ori, int *end)
 			o++;
 		if (ori[i] == ')')
 			o--;
-		i++;
 	}
 	*end = i;
 	lol = ft_strdup(ori);
 	str = ft_strsub(lol, 0, i);
-	i = 0;
-	i = main_expr(str, &i);
+	str = find_var_expr(str);
+	i = main_expr(str);
 	free(str);
 	free(lol);
 	return (i);
