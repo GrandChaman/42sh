@@ -67,6 +67,11 @@ int case_bang(char **str, int *i)
 	j = 1;
 	if (!(*str)[*i + j])
 		return (bang_error());
+	else if ((*str)[*i + j] == ' ')
+	{
+		*i += j;
+		return (1);
+	}
 	else if ((*str)[*i + j] == '!')
 	{
 		bang = ft_strdup(((t_ft_hist_entry*)(get_ft_shell()->
