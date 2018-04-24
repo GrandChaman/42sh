@@ -89,6 +89,11 @@ int 			sh21_exec_builtin(char **av, char ***env, t_ast_node *root, t_builtin bui
 	int			status;
 
 	status = 0;
+	if (!(root->piped_cmd || root->mod_gpid == BG)) 
+	{ 
+	  jc_delete_tag(root->tag_gpid); 
+	  return (builtin.fn_ptr(arrlen(av), av, env, root)); 
+	}
 	if ((parent = fork()) < 0)
 		ft_exit(errno, "fork");
 	else if (!parent)
