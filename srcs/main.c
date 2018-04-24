@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/24 15:47:33 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/24 16:18:35 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ int			main(void)
 		cli_loader(1);
 		return (1);
 	}
-	//main_loop(sh21, shell);
-	job_control_test(sh21);
+	main_loop(sh21, shell);
+	//job_control_test(sh21);
 	del_sh21_exit();
 	return (0);
 }
