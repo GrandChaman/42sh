@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:32:20 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/23 18:20:31 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/24 15:19:05 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ char					*add_str(char **ret, char **ptr, int *i);
 char					*find_var(char *str);
 int						skip_var(char *str);
 void					case_backslash(char **ret, char **ptr,
-							int *i, t_ast_node *node);
+							int *i, char *spe_ch, t_ast_node *node);
 void					case_dollar(char **ret, char **ptr, int *i);
 void					case_quote(char **ret, char **ptr, int *i);
 void					case_dquote(char **ret, char **ptr, int *i,
