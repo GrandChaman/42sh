@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bi_kill.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfautier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rfautier <rfautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 19:30:13 by rfautier          #+#    #+#             */
-/*   Updated: 2018/04/23 19:30:16 by rfautier         ###   ########.fr       */
+/*   Updated: 2018/04/24 14:29:08 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int					bi_kill(int argc, char **argv,
 	int i;
 	int stock;
 	int sinal;
-
+    
 	(void)environ;
 	(void)root;
 	if ((sinal = 15) && argc == 1)

@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/16 13:29:02 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/24 16:30:04 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef enum			e_token_type
 	Elif,
 	Fi,
 	Do,
-	Time,
 	Done,
 	Case,
 	Esac,
@@ -130,7 +129,6 @@ static const char		*g_token_type_str[] =
 	"elif",
 	"fi",
 	"do",
-	"time",
 	"done",
 	"case",
 	"esac",

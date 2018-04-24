@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bi_bg.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfautier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rfautier <rfautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 19:21:43 by rfautier          #+#    #+#             */
-/*   Updated: 2018/04/23 19:21:48 by rfautier         ###   ########.fr       */
+/*   Updated: 2018/04/24 14:29:18 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int					bi_bg(int argc, char **argv,
 	char ***environ, t_ast_node *root)
 {
 	int i;
-
+    
 	i = 1;
 	(void)environ; // rajouter msg si c est deja en backgroung;
 	(void)root;

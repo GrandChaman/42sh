@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 13:13:55 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/23 17:46:34 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/24 16:09:52 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,62 +17,71 @@
 static void	jc_change_pgrp(t_jc_job *job, int mode)
 {
 	int kill_res;
+	t_list *proc_list;
+	t_jc_proc *proc;
 
+	proc_list = job->pid_list;
 	if (mode == BG)
 	{
-		ft_printf("[%d] %d (%C)\n", job->tag, job->pgid, 8675);
+		ft_printf("Change background !\n");
 		if (tcsetpgrp(STDIN_FILENO, getpgrp()))
 			ft_exit(errno, "tcsetpgrp");
-		if (job->status == SUSPENDED)
+		while (proc_list)
 		{
-			kill_res = killpg(job->pgid, SIGCONT);
-			if (kill_res != 0 && errno != EPERM)
-				ft_exit(errno, "killpg");
+			proc = (t_jc_proc*)proc_list->content;
+			if (proc->status == SUSPENDED)
+			{
+				kill_res = kill(proc->pid, SIGCONT);
+				if (kill_res != 0)
+					ft_exit(errno, "killpg");
+			}
+			proc_list = proc_list->next;
 		}
-			job->status = RUNNING;
+		ft_printf("[%d] %d (%C)\n", job->tag, job->pgid, 8675);
 		return ;
 	}
-	if (job->status == SUSPENDED)
+	while (proc_list)
 	{
-		kill_res = killpg(job->pgid, SIGCONT);
-		if (kill_res != 0 && errno != EPERM)
-			ft_exit(errno, "killpg");
+		proc = (t_jc_proc*)proc_list->content;
+		if (proc->status == SUSPENDED)
+		{
+			kill_res = kill(proc->pid, SIGCONT);
+			if (kill_res != 0)
+				ft_exit(errno, "killpg");
+		}
+		jc_get()->fg_job = job;
+		if (tcsetpgrp(STDIN_FILENO, job->pgid))
+			ft_exit(errno, "tcsetpgrp");
+		proc_list = proc_list->next;
 	}
-	job->status = RUNNING;
-	jc_get()->fg_job = job;
-	if (tcsetpgrp(STDIN_FILENO, job->pgid))
-		ft_exit(errno, "tcsetpgrp");
 
 }
 
-static int	jc_wait(t_jc_job *job, int mode, int *should_update)
+static int	jc_wait(t_jc_job *job, int mode)
 {
 	int status;
 	int wait_res;
+	t_list	*proc_list;
 
-	*should_update = 1;
 	if (mode == BG)
-	{
-		*should_update = 0; //TODO
-		while ((wait_res = waitpid(-job->pgid, &status, WUNTRACED | WNOHANG))
-			!= 0)
-			{
-				if (wait_res < 0)
-					ft_exit(errno, "waitpid");
-				else
-					*should_update = 1;
-				ft_printf("Alatreub");
-			}
-	}
+		jc_update_job(job);
 	else
 	{
-		ft_fprintf(2, "Toto 1\n");
-		while ((wait_res = waitpid(-job->pgid, &status, WUNTRACED)))
+		proc_list = job->pid_list;
+		while (proc_list)
+		{
+			ft_printf("Waiting for %d !\n", ((t_jc_proc*)proc_list->content)->pid);
+			wait_res = waitpid(((t_jc_proc*)proc_list->content)->pid,
+				&status, WUNTRACED);
 			if (wait_res < 0 && errno != ECHILD)
 				ft_exit(errno, "waitpid");
 			else if (wait_res < 0 && errno == ECHILD)
 				break ;
-		ft_fprintf(2, "Toto 2\n");
+			jc_update_proc(((t_jc_proc*)proc_list->content), status);
+			ft_printf("One wait done !\n");
+			proc_list = proc_list->next;
+		}
+		ft_printf("Done waiting !\n");
 		tcsetpgrp(0, getpgrp());
 	}
 	return (status);
@@ -83,7 +92,6 @@ int			jc_set(t_jc_tag tag, int mode)
 	t_list		*jb_list;
 	t_jc_job*	job;
 	int			res;
-	int			should_update;
 
 	jb_list = jc_get()->job_list;
 	while (jb_list)
@@ -91,22 +99,10 @@ int			jc_set(t_jc_tag tag, int mode)
 		job = ((t_jc_job*)jb_list->content);
 		if (job->tag == tag)
 		{
-			// DEBUG
-			t_list *toto;
-			ft_fprintf(2, "{green}%d - Call jc_set\n{eoc}", getpid());
-			toto = job->pid_list;
-			while (toto)
-			{
-				ft_printf("PID : {magenta}%d{eoc}\n", *((int*)toto->content));
-				toto = toto->next;
-			}
-			// DEBUG
+			ft_printf("Changing group !\n");
 			jc_change_pgrp(job, mode);
-			res = jc_wait(job, mode, &should_update);
-			if (should_update)
-				jc_update(job, res);
-			else
-				res = 0;
+			ft_printf("Gonna wait !\n");
+			res = jc_wait(job, mode);
 			return (res);
 		}
 		jb_list = jb_list->next;

@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 15:58:28 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/22 13:25:49 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/24 16:18:17 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 void		jc_add(t_jc_tag jtag, pid_t npid, char *cmd)
 {
 	t_list		*jb_list;
+	t_jc_proc	proc;
 	t_jc_job*	tmp;
 
 	ft_printf("{green}%d - call jc_add(%s){eoc}\n", getpid(), cmd);
@@ -33,7 +34,8 @@ void		jc_add(t_jc_tag jtag, pid_t npid, char *cmd)
 			}
 			else if (setpgid(npid, tmp->pgid) < 0)
 				ft_perror("setpgid", "called to setpgid failed.");
-			ft_lstpush_back(&tmp->pid_list, &npid, sizeof(pid_t));
+			proc.pid = npid;
+			ft_lstpush_back(&tmp->pid_list, &proc, sizeof(t_jc_proc));
 			return ;
 		}
 		jb_list = jb_list->next;

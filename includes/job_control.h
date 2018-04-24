@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 15:23:14 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/22 17:35:08 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/24 15:29:58 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,18 @@ static const char		*g_jc_status_string[] = {
 	"suspended"
 };
 
+typedef	struct			s_jc_proc
+{
+	pid_t				pid;
+	t_jc_status			status;
+	int					rvalue;
+}						t_jc_proc;
+
 typedef	struct			s_jc_job
 {
 	int					pgid;
 	t_jc_tag			tag;
 	t_list				*pid_list;
-	t_jc_status			status;
 }						t_jc_job;
 
 typedef	struct			s_jc
@@ -54,8 +60,10 @@ void			jc_delete_tag(t_jc_tag tag);
 int				jc_set(t_jc_tag tag, int mode);
 t_jc_job		*jc_get_by_pid(pid_t pid);
 void			jc_print(t_jc_job *job);
-void			jc_update(t_jc_job *job, int status);
+void			jc_update_proc(t_jc_proc *proc, int status);
 void			jc_update_all(void);
+void		jc_garbage_collector(t_jc *jc);
+void		jc_update_job(t_jc_job *job);
 
 char			*jc_cmd(t_ast_node *root);
 
