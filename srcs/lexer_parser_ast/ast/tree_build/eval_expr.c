@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 17:52:58 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/23 17:53:45 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/24 16:22:21 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int		is_factors(char *str, int *i)
 	return (nbr);
 }
 
-int		main_expr(char *str, int *i)
+int				main_expr(char *str, int *i)
 {
 	int		nbr;
 	int		nbr2;
@@ -97,7 +97,7 @@ int		main_expr(char *str, int *i)
 	return (nbr);
 }
 
-int		ft_eval_expr(char *ori, int *end)
+int				ft_eval_expr(char *ori, int *end)
 {
 	int		i;
 	int		o;

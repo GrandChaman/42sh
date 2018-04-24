@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/19 19:36:25 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/24 16:23:26 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static t_lex	*end_lex(t_lexa *lexa)
 	return (lexa->lex);
 }
 
-static void	escape(t_lexa *lexa)
+static void		escape(t_lexa *lexa)
 {
 	lexa->stat = SWORD;
 	lexa->t = WORD;
@@ -68,7 +68,7 @@ static void	escape(t_lexa *lexa)
 	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
 }
 
-static void	lexfallbackesc(t_lexa *lexa)
+static void		lexfallbackesc(t_lexa *lexa)
 {
 	lexa->stat = SWORD;
 	lexa->t = WORD;
