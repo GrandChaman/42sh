@@ -21,6 +21,21 @@ static char	*norme_0(int i, char *ret, char *ptr, char **str)
 	return (ret);
 }
 
+static void		space_to_discard(char *ptr)
+{
+	int 	space_to_discard;
+	
+	space_to_discard = 0;
+	if (ptr)
+	{
+		while (ptr[space_to_discard++])
+			;
+		space_to_discard--;
+		if (space_to_discard > 0)
+			ptr[space_to_discard] = '\0';
+	}
+}
+
 char		*format_word(t_ast_node *node)
 {
 	char	*ret;
@@ -29,6 +44,7 @@ char		*format_word(t_ast_node *node)
 
 	i = 0;
 	ptr = node->content;
+	space_to_discard(ptr);
 	ret = NULL;
 	ft_memset(node->esc_i, -1, NB_ESCAPED_QUOTE);
 	while (ptr[i])
@@ -46,6 +62,7 @@ char		*format_word(t_ast_node *node)
 		else
 			++i;
 	}
+	ft_printf("|%s|\n", ret);
 	node->content = norme_0(i, ret, ptr, &node->content);
 	return (node->content);
 }
