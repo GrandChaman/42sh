@@ -28,10 +28,10 @@ static void		space_to_discard(char *ptr)
 	space_to_discard = 0;
 	if (ptr)
 	{
-		while (ptr[space_to_discard++])
-			;
+		while (ptr[space_to_discard])
+			space_to_discard++;
 		space_to_discard--;
-		if (space_to_discard > 0)
+		if (space_to_discard > 0 && ptr[space_to_discard] == ' ')
 			ptr[space_to_discard] = '\0';
 	}
 }
@@ -45,6 +45,7 @@ char		*format_word(t_ast_node *node)
 	i = 0;
 	ptr = node->content;
 	space_to_discard(ptr);
+	ft_printf("ptr = |%s|\n", ptr);
 	ret = NULL;
 	ft_memset(node->esc_i, -1, NB_ESCAPED_QUOTE);
 	while (ptr[i])
