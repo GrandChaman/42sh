@@ -30,7 +30,7 @@ char	*find_var_expr(char *str)
 			final = ft_strjoin(stock, &str[i]);
 			free(stock);
 			free(str);
-			return (final);
+			str = final;
 		}
 		else
 			i++;
