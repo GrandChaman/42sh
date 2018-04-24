@@ -3,17 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   eval_expr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: rfautier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 21:36:44 by rfautier          #+#    #+#             */
 /*   Updated: 2018/04/24 21:36:47 by rfautier         ###   ########.fr       */
-=======
-/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/23 17:52:58 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/24 16:22:21 by hfontain         ###   ########.fr       */
->>>>>>> 2b1149ee5bc8f333757165fb0124ab7727587864
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,28 +73,22 @@ static int		is_factors(char *str, int *i)
 	return (nbr);
 }
 
-<<<<<<< HEAD
-int				main_expr(char *str)
-=======
 int				main_expr(char *str, int *i)
->>>>>>> 2b1149ee5bc8f333757165fb0124ab7727587864
 {
 	int		nbr;
 	int		nbr2;
 	char	op;
-	int		i;
 
-	i = 0;
-	nbr = is_factors(str, &i);
-	while (str[i])
+	nbr = is_factors(str, i);
+	while (str[*i])
 	{
-		while (str[i] == ' ' || str[i] == '\n')
-			i = i + 1;
-		op = str[i];
+		while (str[*i] == ' ' || str[*i] == '\n')
+			*i = *i + 1;
+		op = str[*i];
 		if (op != '+' && op != '-')
 			return (nbr);
-		i = i + 1;
-		nbr2 = is_factors(str, &i);
+		*i = *i + 1;
+		nbr2 = is_factors(str, i);
 		if (op == '+')
 			nbr = nbr + nbr2;
 		else
@@ -132,13 +119,8 @@ int				ft_eval_expr(char *ori, int *end)
 	*end = i;
 	lol = ft_strdup(ori);
 	str = ft_strsub(lol, 0, i);
-<<<<<<< HEAD
 	str = find_var_expr(str);
-	i = main_expr(str);
-=======
-	i = 0;
-	i = main_expr(str, &i);
->>>>>>> 2b1149ee5bc8f333757165fb0124ab7727587864
+	i = main_expr(str, 0);
 	free(str);
 	free(lol);
 	return (i);
