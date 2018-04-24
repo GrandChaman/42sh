@@ -32,6 +32,12 @@ static int		check_parenthese(char *str, int *i)
 			*i = *i + 1;
 		return (nbr);
 	}
+	ft_printf("Avant\n");
+	if (str[*i] == '$')
+	{
+		ft_printf("Here = %s \n", find_var(str + *i + 1)); // FIX HERE, NE PAS COMMIT AVEC
+	}
+	ft_printf("Apres\n");
 	return (is_number(str, i));
 }
 
@@ -107,7 +113,7 @@ int		ft_eval_expr(char *ori, int *end)
 	}
 	*end = i;
 	lol = ft_strdup(ori);
-	str = ft_strsub(lol, 0, i); //LEAKS de MALADE
+	str = ft_strsub(lol, 0, i);
 	i = 0;
 	i = main_expr(str, &i);
 	free(str);
