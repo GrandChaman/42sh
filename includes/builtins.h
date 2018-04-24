@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 15:54:39 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/23 18:19:35 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/24 16:18:59 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int						cd_rule8(char *curpath, char ***environ, int flag,
 int						cd_rule7(char *curpath, char ***environ, int flag,
 							int free_curpath);
 int						cd_rule_dash(char ***environ, int flag);
-int						change_oldpwd_pwd(char ***environ, const char* path);
+int						change_oldpwd_pwd(char ***environ, const char *path);
 int						go_home(char ***environ);
 int						ft_is_dir(char *buf, int print);
 int						create_pwd(char *curpath, char ***environ,
@@ -83,7 +83,7 @@ int						cd_rule10(char *curpath, char ***environ, int flag,
 							int free_curpath);
 
 void					del_hash_bin(t_hash_bin *hash_bin);
-void					del_hash(t_env	*env);
+void					del_hash(t_env *env);
 
 typedef struct			s_builtin
 {
