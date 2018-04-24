@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/19 18:10:14 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/24 15:31:51 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static void	main_loop(t_sh21 *sh21, t_ft_sh *shell)
 		add_to_history(shell, cmd);
 		sh21->buf = cmd;
 		sh21->lex = lexer(cmd);
+		print_lex_list(sh21->lex);
 		if (parser(sh21->lex) && sh21->signal != T_CTRL_C)
 		{
 			ast_print(sh21->tree.root_node);
