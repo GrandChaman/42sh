@@ -48,15 +48,10 @@ int		func_pipe(t_ast_node *root)
 		root->piped_cmd = 1;
 	if (pipe(pipefd) < 0)
 		return (ft_error(errno, NULL));
-	ft_printf("{red}pipefd[0] = %d, pipefd[1] = %d{eoc}\n", pipefd[0], pipefd[1]);
 	func_pipe_left(root, pipefd);
 	ret = func_pipe_right(root, pipefd);
 	if (root->piped_cmd == 1)
-	{
-		ft_printf("PID killed = %d, tag_gpid = %d\n", getpid(), root->tag_gpid);
-		ft_printf("{red}HOW MANY WAIT ? %s %s{eoc}\n", root->left->content, root->right->content);
 		ret = jc_set(root->tag_gpid, root->mod_gpid);
-	}
 	sh21_get()->status = ret;
 	return (ret);
 }

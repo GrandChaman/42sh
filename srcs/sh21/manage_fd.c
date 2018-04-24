@@ -7,7 +7,6 @@ int 	change_fd(t_ast_node *root)
 	ret = 1;
 	if (root->piped_cmd)
 	{
-		ft_printf("{magenta}cmd = %s, pipefd[0] = %d, pipefd[1] = %d{eoc}\n", root->content, root->pipe_fd[0], root->pipe_fd[1]);
 		if (root->pipe_to_close > 2)
 			close(root->pipe_to_close);
 		if (root->pipe_fd[0] != 0)
