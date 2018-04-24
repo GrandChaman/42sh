@@ -97,10 +97,9 @@ int				main_expr(char *str, int *i)
 	return (nbr);
 }
 
-int				ft_eval_expr(char *ori, int *end)
+int				ft_eval_expr(char *ori, int *end, int o)
 {
 	int		i;
-	int		o;
 	char	*str;
 	char	*lol;
 
@@ -120,7 +119,8 @@ int				ft_eval_expr(char *ori, int *end)
 	lol = ft_strdup(ori);
 	str = ft_strsub(lol, 0, i);
 	str = find_var_expr(str);
-	i = main_expr(str, 0);
+	i = 0;
+	i = main_expr(str, &i);
 	free(str);
 	free(lol);
 	return (i);
