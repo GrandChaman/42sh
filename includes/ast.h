@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:32:20 by hfontain          #+#    #+#             */
-/*   Updated: 2018/03/19 12:52:01 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/24 18:56:20 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,6 @@ static t_exec_tree g_exec_fn[] =
 	func_elif,
 	func_fi,
 	func_do,
-	func_time,
 	func_done,
 	func_case,
 	func_esac,
