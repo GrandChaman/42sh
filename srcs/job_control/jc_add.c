@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 15:58:28 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/24 16:18:17 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/24 16:45:26 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void		jc_add(t_jc_tag jtag, pid_t npid, char *cmd)
 	t_jc_proc	proc;
 	t_jc_job*	tmp;
 
-	ft_printf("{green}%d - call jc_add(%s){eoc}\n", getpid(), cmd);
 	jb_list = jc_get()->job_list;
 	while (jb_list)
 	{
