@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/24 13:56:26 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/24 15:47:33 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,37 +54,16 @@ static void	main_loop(t_sh21 *sh21, t_ft_sh *shell)
 	}
 }
 
-void		job_control_test(char **environ)
+void		job_control_test(t_sh21 *sh21)
 {
-	t_jc_tag	ntag;
-	pid_t		pid;
-	int			status;
-	char *newargv[] = { "sleep", "100", NULL };
-	signal(SIGTSTP, SIG_DFL);
-	signal(SIGCONT, SIG_DFL);
-	pid = fork();
-	if (!pid)
-		exit(execve("/bin/sleep", newargv, environ));
-	ntag = jc_create_tag();
-	jc_add(ntag, pid);
-	jc_set(ntag, FG);
-	ft_printf("Juste avant le wait wefewfwe \n");
-	while (1)
-	{
-		waitpid(-pid, &status, WUNTRACED);
-		signal(SIGTTOU, SIG_IGN);
-		signal(SIGTSTP, ignore_signal);
-		signal(SIGCONT, ignore_signal);
-		tcsetpgrp(0, getpgrp());
-		signal(SIGTTOU, SIG_DFL);
-		if (WIFSTOPPED(status))
-		{
-			main_loop(sh21_get(), get_ft_shell());
-			break ;
-		}
-		break ;
-	}
-	jc_delete_tag(ntag);
+	sh21->buf = ft_strdup("sleep 5 | sleep 10 | sleep 15 &");
+	lexer(sh21);
+	if (parser(sh21->lex) && sh21->signal != T_CTRL_C)
+		sh21_get()->ret = exec_tree(sh21->tree.root_node);
+	del_sh21();
+	sleep(2);
+	jc_set(0, FG);
+	jc_delete_tag(0);
 }
 
 
@@ -113,8 +92,8 @@ int			main(void)
 		cli_loader(1);
 		return (1);
 	}
-	main_loop(sh21, shell);
-	//job_control_test(environ);
+	//main_loop(sh21, shell);
+	job_control_test(sh21);
 	del_sh21_exit();
 	return (0);
 }
