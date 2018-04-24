@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_is_shell_cmd.c                                 :+:      :+:    :+:   */
+/*   ast_until.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/23 14:06:25 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/24 18:14:05 by hfontain         ###   ########.fr       */
+/*   Created: 2018/04/18 23:20:39 by fbertoia          #+#    #+#             */
+/*   Updated: 2018/04/24 18:14:45 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 
-int						ast_is_shell_cmd(t_token_type type)
+t_ast_node		*ast_until(t_lex **lex, t_ast_node *node)
 {
-	if (type == WORD)
-		return (1);
-	else if (type == ASSIGNMENT_WORD)
-		return (2);
-	else if (type == PIPE)
-		return (3);
-	else if (type == While)
-		return (4);
-	else if (type == If)
-		return (5);
-	else if (type == Until)
-		return (6);
-	else
-		return (0);
+	if (!lex || !*lex || !(*lex)->next)
+		return (NULL);
+	node->type = (*lex)->token_type;
+	*lex = (*lex)->next;
+	node->left = ast_compound_list(lex, node);
+	(*lex) = (*lex)->next;
+	node->right = ast_compound_list(lex, node);
+	(*lex) = (*lex)->next;
+	while ((*lex) && ast_redir_node((*lex)->token_type))
+		node->redir_node = redir_node(lex, node->left);
+	return (node);
 }
