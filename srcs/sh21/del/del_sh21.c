@@ -6,7 +6,7 @@
 /*   By: fbertoia <fbertoia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 14:51:14 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/19 17:23:24 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 15:02:33 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,4 @@ void	del_sh21_exit(void)
 	del_list((void**)&g_err_lex, del_lex);
 	del_list((void**)&g_end_of_input, del_lex);
 	close(sh21_get()->debug_tty);
-	cli_loader(1);
 }
