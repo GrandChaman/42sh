@@ -25,19 +25,20 @@ static void		print_jobs(void)
 	tmp = jobs_struct->job_list;
 	while (tmp != NULL)
 	{
-		ft_printf("[%d] PGID:%d\n", ((t_jc_job*)(tmp->content))->tag,
-			((t_jc_job*)(tmp->content))->pgid);
+		ft_printf("[%d] ", ((t_jc_job*)(tmp->content))->tag);
 		autre = ((t_jc_job*)(tmp->content))->pid_list;
 		while (autre != NULL)
 		{
-			ft_printf("%s\n", g_jc_status_string[((t_jc_proc*)(autre->content))->status]);
+			ft_printf(" %s		%s\n",
+				g_jc_status_string[((t_jc_proc*)(autre->content))->status],
+					((t_jc_proc*)(autre->content))->cmd);
 			autre = autre->next;
 		}
 		tmp = tmp->next;
 	}
 }
 
-static int		print_one_jobs(int tague)
+int		print_one_jobs(int tague)
 {
 	t_list	*tmp;
 	t_jc	*jobs_struct;
@@ -49,12 +50,13 @@ static int		print_one_jobs(int tague)
 	{
 		if (tague == ((t_jc_job*)(tmp->content))->tag)
 		{
-			ft_printf("[%d] PGID:%d\n", ((t_jc_job*)(tmp->content))->tag,
-				((t_jc_job*)(tmp->content))->pgid);
+			ft_printf("[%d] ", ((t_jc_job*)(tmp->content))->tag);
 			autre = ((t_jc_job*)(tmp->content))->pid_list;
 			while (autre != NULL)
 			{
-				ft_printf("%s\n", g_jc_status_string[((t_jc_proc*)(autre->content))->status]);
+				ft_printf(" %s		%s\n",
+				g_jc_status_string[((t_jc_proc*)(autre->content))->status],
+					((t_jc_proc*)(autre->content))->cmd);
 				autre = autre->next;
 			}
 			return (1);
