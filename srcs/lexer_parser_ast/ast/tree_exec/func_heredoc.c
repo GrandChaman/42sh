@@ -19,6 +19,8 @@ int			func_dless(t_ast_node *root)
 
 	ret = 0;
 	out_fd = 0;
+	if (sh21_get()->signal == T_CTRL_C)
+		return (1);
 	if (root->left)
 		ret = g_exec_fn[root->left->type](root->left);
 	ret += func_redirection(root);

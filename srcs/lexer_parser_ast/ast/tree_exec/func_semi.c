@@ -18,6 +18,8 @@ int		func_semi(t_ast_node *root)
 	int ret;
 
 	ret = 0;
+	if (sh21_get()->signal == T_CTRL_C)
+		return (1);
 	if (root->left)
 		ret = g_exec_fn[root->left->type](root->left);
 	if (root->right)

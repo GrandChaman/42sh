@@ -54,12 +54,14 @@ int			jc_set(t_jc_tag tag, int mode)
 	t_jc_job	*job;
 	int			res;
 
+	ft_printf("{magenta}INSIDE THE JC_SET on tag %d : %s{eoc}\n", tag, (mode ? "BG" : "FG"));
 	jb_list = jc_get()->job_list;
 	while (jb_list)
 	{
 		job = ((t_jc_job*)jb_list->content);
 		if (job->tag == tag)
 		{
+			ft_printf("I found IT\n");
 			jc_change_pgrp(job, mode);
 			res = jc_wait(job, mode);
 			return (res);

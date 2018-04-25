@@ -15,6 +15,8 @@
 
 int		func_io_number(t_ast_node *root)
 {
+	if (sh21_get()->signal == T_CTRL_C)
+		return (1);
 	if (root->left)
 		g_exec_fn[root->left->type](root->left);
 	return (0);

@@ -66,7 +66,7 @@ void		copy_select(unsigned long touch)
 
 	(void)touch;
 	sh = get_ft_shell();
-	free(sh->select);
+	ft_strdel(&sh->select);
 	if (sh->select_size < 0)
 		sh->select = ft_strsub(sh->buf.buf, sh->select_start + sh->select_size,
 			sh->select_size * -1);
@@ -104,7 +104,7 @@ void		cut_select(unsigned long touch)
 
 	(void)touch;
 	sh = get_ft_shell();
-	free(sh->select);
+	ft_strdel(&sh->select);
 	if (sh->select_size < 0)
 		sh->select = ft_strsub(sh->buf.buf, sh->select_start + sh->select_size,
 			sh->select_size * -1);

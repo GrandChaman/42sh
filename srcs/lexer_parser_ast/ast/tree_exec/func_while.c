@@ -12,6 +12,16 @@
 
 #include "sh21.h"
 
+void	reset_job(t_ast_node *root)
+{
+	if (!root)
+		return ;
+	reset_job(root->condition_node);
+	reset_job(root->left);
+	reset_job(root->right);
+	root->tag_gpid = -1;
+}
+
 int		func_while(t_ast_node *root)
 {
 	t_sh21			*sh21;
@@ -23,14 +33,14 @@ int		func_while(t_ast_node *root)
 	if (root->redir_node)
 		status = g_exec_fn[root->redir_node->type](root->redir_node);
 	if (!status)
-		while (!g_exec_fn[root->left->type](root->left))
-			status = g_exec_fn[root->right->type](root->right);
-	fd_cleanup = sh21->tree.fd_cleanup;
-	while (fd_cleanup)
 	{
-		fd_cleanup->fd_function(fd_cleanup);
-		fd_cleanup = fd_cleanup->next;
+		while (!(status = g_exec_fn[root->left->type](root->left)))
+		{
+			if (sh21->signal == T_CTRL_C)
+				return (1);
+			status = g_exec_fn[root->right->type](root->right);
+			reset_job(root);
+		}
 	}
-	del_list((void **)&sh21->tree.fd_cleanup, &del_redir);
 	return (status);
 }

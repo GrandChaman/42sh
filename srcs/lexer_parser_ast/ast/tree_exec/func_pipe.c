@@ -43,6 +43,8 @@ int		func_pipe(t_ast_node *root)
 	int pipefd[2];
 	int ret;
 
+	if (sh21_get()->signal == T_CTRL_C)
+		return (1);
 	set_job(root);
 	if (!root->piped_cmd)
 		root->piped_cmd = 1;

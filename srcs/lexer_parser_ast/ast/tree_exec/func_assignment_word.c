@@ -37,6 +37,8 @@ int		func_assignment_word(t_ast_node *root)
 {
 	int		ret;
 
+	if (sh21_get()->signal == T_CTRL_C)
+		return (1);
 	ret = 0;
 	if (root->left && root->left->left)
 		ret = g_exec_fn[root->left->left->type](root->left->left);

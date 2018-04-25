@@ -108,4 +108,6 @@ void		jc_update_proc(t_jc_proc *proc, int status)
 		proc->rvalue = WSTOPSIG(status);
 	else
 		proc->status = RUNNING;
+	if (proc->status == KILLED && proc->rvalue == 2)
+		kill(getpid(), SIGINT);
 }

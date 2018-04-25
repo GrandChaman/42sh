@@ -17,6 +17,8 @@ int		func_and_if(t_ast_node *root)
 {
 	int ret;
 
+	if (sh21_get()->signal == T_CTRL_C)
+		return (1);
 	if (!(ret = g_exec_fn[root->left->type](root->left)))
 		return (g_exec_fn[root->right->type](root->right));
 	return (ret);

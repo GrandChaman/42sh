@@ -19,9 +19,12 @@ int		func_word(t_ast_node *root)
 	int				status;
 
 	status = 0;
+	sh21 = sh21_get();
 	if (!root)
 		return (0);
-	sh21 = sh21_get();
+		ft_printf("{green}in the func_fonction{eoc}\n");
+	if (sh21->signal == T_CTRL_C)
+		return (1);
 	root->content = format_word(&root->content, root);
 	root->argv = split_args(root->content, root);
 	set_job(root);
