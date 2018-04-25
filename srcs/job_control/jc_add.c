@@ -13,7 +13,24 @@
 #include "sh21.h"
 #include "job_control.h"
 
-void	jc_add(t_jc_tag jtag, pid_t npid, char *cmd)
+static void	jc_add_routine(t_jc_job *job, pid_t pid, char *cmd)
+{
+	if (!job->proc_list)
+	{
+		if (setpgid(npid, npid) < 0)
+			ft_perror("setpgid", "called to setpgid failed.");
+		job->pgid = npid;
+	}
+	else if (setpgid(npid, job->pgid) < 0)
+		ft_perror("setpgid", "called to setpgid failed.");
+	proc.pid = npid;
+	proc.cmd = cmd;
+	proc.status = NONE;
+	ft_lstpush_back(&job->proc_list, &proc, sizeof(t_jc_proc));
+	return ;
+}
+
+void		jc_add(t_jc_tag jtag, pid_t npid, char *cmd)
 {
 	t_list		*jb_list;
 	t_jc_proc	proc;
@@ -24,20 +41,7 @@ void	jc_add(t_jc_tag jtag, pid_t npid, char *cmd)
 	{
 		tmp = ((t_jc_job*)jb_list->content);
 		if (tmp->tag == jtag)
-		{
-			if (!tmp->proc_list)
-			{
-				if (setpgid(npid, npid) < 0)
-					ft_perror("setpgid", "called to setpgid failed.");
-				tmp->pgid = npid;
-			}
-			else if (setpgid(npid, tmp->pgid) < 0)
-				ft_perror("setpgid", "called to setpgid failed.");
-			proc.pid = npid;
-			proc.cmd = cmd;
-			ft_lstpush_back(&tmp->proc_list, &proc, sizeof(t_jc_proc));
-			return ;
-		}
+			jc_add_routine(tmp, pid, cmd);
 		jb_list = jb_list->next;
 	}
 }
