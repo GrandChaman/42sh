@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 12:40:21 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/18 18:26:24 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/23 18:15:31 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	case_remove_chariot(char *str, int *i)
 		*i += 1;
 }
 
-char	*remove_char(char *str)
+char		*remove_char(char *str)
 {
 	int i;
 

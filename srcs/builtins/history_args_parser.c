@@ -38,8 +38,9 @@ static void		awrn_handle(t_hist_args *args, char *str)
 
 int				handle_arg(t_hist_args *args, char **arg)
 {
-	char *str = *arg;
+	char	*str;
 
+	str = *arg;
 	while (*str)
 	{
 		if (*str == 'c')
@@ -92,7 +93,7 @@ void			read_args(t_hist_args *args, int argc, char **argv)
 			else if (err < 0)
 			{
 				args->err = AWRN_ERR;
-				return;
+				return ;
 			}
 		}
 		else

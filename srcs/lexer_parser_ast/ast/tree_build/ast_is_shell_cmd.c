@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   ast_is_shell_cmd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/19 19:37:48 by hfontain         ###   ########.fr       */
+/*   Created: 2018/04/23 14:06:25 by hfontain          #+#    #+#             */
+/*   Updated: 2018/04/24 19:14:18 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
 #include "sh21.h"
 
-int		parser(t_lex *lex)
+int						ast_is_shell_cmd(t_token_type type)
 {
-	t_lex	*cpy;
-
-	cpy = lex;
-	if (size_list(lex) == 1 && lex->token_type == EOI)
-		return (0);
-	print_lex_list(lex);
-	lex = program(lex);
-	if (lex && lex->token_type == EOI)
-	{
-		sh21_get()->tree.root_node = ast_create_tree(cpy);
+	if (type == WORD)
 		return (1);
-	}
-	ft_fprintf(2, "{red}42sh{eoc}: Syntax error near '%s'\n", lex->content);
-	ft_strdel(&g_err_lex->content);
-	return (0);
+	else if (type == ASSIGNMENT_WORD)
+		return (2);
+	else if (type == PIPE)
+		return (3);
+	else if (type == While)
+		return (4);
+	else if (type == If)
+		return (5);
+	else if (type == Until)
+		return (6);
+	else if (type == Bang)
+		return (7);
+	else
+		return (0);
 }

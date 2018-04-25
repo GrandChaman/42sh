@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 20:29:45 by hfontain          #+#    #+#             */
-/*   Updated: 2018/03/13 17:57:26 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/23 17:33:16 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void		on_quote(t_lexa *lexa)
 
 void		on_blank(t_lexa *lexa)
 {
-	if (lexa->buffer)
+	if (lexa->buffer && lexa->buffer[0])
 	{
 		if (str_digit(lexa->buffer))
 			lexa->t = IO_NUM_SPC;
@@ -72,7 +72,7 @@ void		on_operator_prev(t_lexa *lexa)
 void		on_operator(t_lexa *lexa)
 {
 	lexa->stat = SOP;
-	if (lexa->buffer)
+	if (lexa->buffer && lexa->buffer[0])
 	{
 		add_elem_back((void**)&lexa->lex,
 					(void*)lex_create(lexa->t, lexa->buffer));

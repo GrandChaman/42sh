@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   ast_compound_list.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/19 19:37:48 by hfontain         ###   ########.fr       */
+/*   Created: 2018/04/18 23:20:22 by fbertoia          #+#    #+#             */
+/*   Updated: 2018/04/23 17:59:50 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
 #include "sh21.h"
 
-int		parser(t_lex *lex)
+int				is_compound_token(t_token_type type)
 {
-	t_lex	*cpy;
-
-	cpy = lex;
-	if (size_list(lex) == 1 && lex->token_type == EOI)
-		return (0);
-	print_lex_list(lex);
-	lex = program(lex);
-	if (lex && lex->token_type == EOI)
-	{
-		sh21_get()->tree.root_node = ast_create_tree(cpy);
+	if (type == SEMI || type == AMPER || type == AND_IF || type == OR_IF)
 		return (1);
-	}
-	ft_fprintf(2, "{red}42sh{eoc}: Syntax error near '%s'\n", lex->content);
-	ft_strdel(&g_err_lex->content);
 	return (0);
+}
+
+t_ast_node		*ast_compound_list(t_lex **lex, t_ast_node *node)
+{
+	node = ast_create_leaf((*lex)->token_type, lex);
+	while (is_compound_token((*lex)->token_type))
+		node = ast_create_op(node, lex);
+	return (node);
 }

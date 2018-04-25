@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   ast_bang.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/19 19:37:48 by hfontain         ###   ########.fr       */
+/*   Created: 2018/04/18 23:20:31 by fbertoia          #+#    #+#             */
+/*   Updated: 2018/04/24 19:17:53 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
 #include "sh21.h"
 
-int		parser(t_lex *lex)
+t_ast_node		*ast_bang(t_lex **lex, t_ast_node *node)
 {
-	t_lex	*cpy;
-
-	cpy = lex;
-	if (size_list(lex) == 1 && lex->token_type == EOI)
-		return (0);
-	print_lex_list(lex);
-	lex = program(lex);
-	if (lex && lex->token_type == EOI)
-	{
-		sh21_get()->tree.root_node = ast_create_tree(cpy);
-		return (1);
-	}
-	ft_fprintf(2, "{red}42sh{eoc}: Syntax error near '%s'\n", lex->content);
-	ft_strdel(&g_err_lex->content);
-	return (0);
+	if (!lex || !*lex || !(*lex)->next)
+		return (NULL);
+	node->type = (*lex)->token_type;
+	*lex = (*lex)->next;
+	node->left = ast_create_leaf((*lex)->token_type, lex);
+	return (node);
 }
