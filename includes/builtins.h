@@ -48,6 +48,7 @@ int						ft_setenv(const char *name, const char *value,
 int						print_env(char **env);
 int						env_usage(char c, int option);
 
+int		print_one_jobs(int tague);
 int					check_jobs(int tague);
 int					get_last_last_jobs(void);
 int					get_last_jobs(void);
