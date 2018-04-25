@@ -69,7 +69,8 @@ void		jc_update_job(t_jc_job *job)
 		proc = (t_jc_proc*)proc_list->content;
 		proc_list = proc_list->next;
 		if (proc->status == DONE || proc->status == KILLED ||
-			(wait_res = waitpid(proc->pid, &status, WUNTRACED | WNOHANG) == 0))
+			(wait_res = waitpid(proc->pid, &status, WUNTRACED
+				| WNOHANG) == 0))
 			continue ;
 		jc_update_proc(proc, status);
 	}

@@ -39,7 +39,7 @@ void				trim_history(t_ft_sh *sh)
 	}
 }
 
-void					parse_and_add_to_history(t_ft_sh *sh, char *line)
+void				parse_and_add_to_history(t_ft_sh *sh, char *line)
 {
 	char			*tmp;
 	t_ft_hist_entry	entry;

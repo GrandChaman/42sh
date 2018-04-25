@@ -34,7 +34,7 @@ int			display_prompt(int last_result)
 	ft_fprintf(2, "%%");
 	exec_term_command(TC_RESETGRAPHICS);
 	ft_fprintf(2, "%*s\r%s%C {bmagenta}%s{eoc}> ", shell->x_size - 1, " ",
-	(last_result ? ANSI_COLOR_B_RED : ANSI_COLOR_B_GREEN), 10140 , path);
+		(last_result ? ANSI_COLOR_B_RED : ANSI_COLOR_B_GREEN), 10140, path);
 	free(path);
 	shell->prompt_size = res;
 	return (res);

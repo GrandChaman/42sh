@@ -30,7 +30,7 @@ void		jc_delete_tag(t_jc_tag tag)
 {
 	t_jc		*jc;
 	t_list		*jb_list;
-	t_jc_job*	tmp;
+	t_jc_job	*tmp;
 
 	jc = jc_get();
 	jb_list = jc->job_list;

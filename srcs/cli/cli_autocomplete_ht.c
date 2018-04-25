@@ -18,7 +18,6 @@ static char		*get_el_name(t_hash_bin *bin)
 	if (!bin || !bin->path)
 		return (NULL);
 	return (ft_strrchr(bin->path, '/'));
-
 }
 
 static void		insert_ht_el_in_list(t_list **list,

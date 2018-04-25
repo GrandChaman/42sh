@@ -12,7 +12,7 @@
 
 #include "sh21.h"
 
-void 	case_quote_rm(char *str, int *i)
+void	case_quote_rm(char *str, int *i)
 {
 	char c;
 
@@ -22,7 +22,7 @@ void 	case_quote_rm(char *str, int *i)
 		*i += 1;
 }
 
-void 	case_backslash_rm(char *str, int *i)
+void	case_backslash_rm(char *str, int *i)
 {
 	while (str[*i + 1] == ' ' || str[*i + 1] == '\t')
 		*i += 1;
@@ -32,7 +32,7 @@ void 	case_backslash_rm(char *str, int *i)
 		*i += 1;
 }
 
-void 	case_remove_chariot(char *str, int *i)
+void	case_remove_chariot(char *str, int *i)
 {
 	while (str[*i + 1] == ' ' || str[*i + 1] == '\t')
 		*i += 1;

@@ -16,9 +16,9 @@
 
 static void	jc_change_pgrp(t_jc_job *job, int mode)
 {
-	int kill_res;
-	t_list *proc_list;
-	t_jc_proc *proc;
+	int			kill_res;
+	t_list		*proc_list;
+	t_jc_proc	*proc;
 
 	proc_list = job->proc_list;
 	if (mode == BG)
@@ -53,13 +53,12 @@ static void	jc_change_pgrp(t_jc_job *job, int mode)
 			ft_exit(errno, "tcsetpgrp");
 		proc_list = proc_list->next;
 	}
-
 }
 
 static int	jc_wait(t_jc_job *job, int mode)
 {
-	int status;
-	int wait_res;
+	int		status;
+	int		wait_res;
 	t_list	*proc_list;
 
 	status = 0;
@@ -92,7 +91,7 @@ static int	jc_wait(t_jc_job *job, int mode)
 int			jc_set(t_jc_tag tag, int mode)
 {
 	t_list		*jb_list;
-	t_jc_job*	job;
+	t_jc_job	*job;
 	int			res;
 
 	jb_list = jc_get()->job_list;

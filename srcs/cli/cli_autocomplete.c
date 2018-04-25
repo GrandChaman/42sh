@@ -69,6 +69,7 @@ static void				complete_missing_autocomplete(t_ft_sh *sh,
 	int					i;
 	char				*tmp;
 	char				*res;
+
 	i = 0;
 	if (!completion)
 		return ;

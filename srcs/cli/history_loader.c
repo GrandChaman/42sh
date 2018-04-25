@@ -12,7 +12,7 @@
 
 #include "cli.h"
 
-int						read_history(t_ft_sh *sh, int fd)
+int					read_history(t_ft_sh *sh, int fd)
 {
 	int				gnl_res;
 	char			*line;
