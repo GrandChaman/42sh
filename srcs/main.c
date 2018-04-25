@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/25 13:46:51 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/25 13:53:04 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int			main(int argc, char *argv[])
 	(void)argc;
 	sh21 = sh21_init(environ);
 	sh21->name = argv[0];
+	sh21->argc = argc;
 	shell = get_ft_shell();
 	shell->ht = NULL;
 	if (!sh21->terminal.isatty || argv[1])
