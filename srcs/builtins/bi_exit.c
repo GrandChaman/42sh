@@ -22,8 +22,11 @@ int		bi_exit(int argc, char **argv, char ***environ, t_ast_node *root)
 	(void)root;
 	(void)environ;
 	if (jc_get()->job_list)
-		return (ft_fprintf(2, "Jobs are still running. Please close them before"
-			" exiting\n") && 1);
+	{
+		ft_fprintf(2, "Jobs are still running. Please close them before"
+			" exiting\n");
+		return (1);
+	}
 	del_sh21_exit();
 	ft_exit(0, NULL);
 	return (0);

@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -40,6 +39,7 @@ static void		awrn_handle(t_hist_args *args, char *str)
 int				handle_arg(t_hist_args *args, char **arg)
 {
 	char *str = *arg;
+
 	while (*str)
 	{
 		if (*str == 'c')

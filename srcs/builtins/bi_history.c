@@ -80,7 +80,8 @@ static int			hist_del_at_offset(int off)
 	return (0);
 }
 
-int					bi_history(int argc, char **argv, char ***environ, t_ast_node *root)
+int					bi_history(int argc, char **argv,
+	char ***environ, t_ast_node *root)
 {
 	int			ret;
 	t_hist_args	flags;

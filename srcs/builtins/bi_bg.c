@@ -12,7 +12,7 @@
 
 #include "builtins.h"
 
-int				get_last_jobs(void)
+int					get_last_jobs(void)
 {
 	t_list	*tmp;
 	t_jc	*jobs_struct;
@@ -29,7 +29,7 @@ int				get_last_jobs(void)
 	return (tague);
 }
 
-int				get_last_last_jobs(void)
+int					get_last_last_jobs(void)
 {
 	t_list	*tmp;
 	t_jc	*jobs_struct;
@@ -77,9 +77,9 @@ int					bi_bg(int argc, char **argv,
 	char ***environ, t_ast_node *root)
 {
 	int i;
-    
+
 	i = 1;
-	(void)environ; // rajouter msg si c est deja en backgroung;
+	(void)environ;
 	(void)root;
 	if (argc == 1)
 	{

@@ -68,7 +68,8 @@ int					cd_rule10(char *curpath, char ***environ,
 	return (0);
 }
 
-int					bi_cd(int argc, char **argv, char ***environ, t_ast_node *root)
+int					bi_cd(int argc, char **argv,
+	char ***environ, t_ast_node *root)
 {
 	char				*curpath;
 	int					flag;
