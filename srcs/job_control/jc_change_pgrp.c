@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 15:46:15 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 16:14:09 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 17:21:55 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void		jc_change_pgrp_bg(t_jc_job *job)
 	t_list		*proc_list;
 	t_jc_proc	*proc;
 
+	proc_list = job->proc_list;
 	if (tcsetpgrp(STDIN_FILENO, getpgrp()))
 		ft_exit(errno, "tcsetpgrp");
 	while (proc_list)
@@ -40,6 +41,7 @@ static void		jc_change_pgrp_fg(t_jc_job *job)
 	t_list		*proc_list;
 	t_jc_proc	*proc;
 
+	proc_list = job->proc_list;
 	while (proc_list)
 	{
 		proc = (t_jc_proc*)proc_list->content;
@@ -58,11 +60,6 @@ static void		jc_change_pgrp_fg(t_jc_job *job)
 
 void			jc_change_pgrp(t_jc_job *job, int mode)
 {
-	int			kill_res;
-	t_list		*proc_list;
-	t_jc_proc	*proc;
-
-	proc_list = job->proc_list;
 	if (mode == BG)
 		jc_change_pgrp_bg(job);
 	else
