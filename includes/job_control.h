@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 15:23:14 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 09:36:02 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 11:05:13 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void			jc_update_proc(t_jc_proc *proc, int status);
 void			jc_update_all(void);
 void		jc_garbage_collector(t_jc *jc);
 void		jc_update_job(t_jc_job *job);
+void		jc_set_job_as_running(t_jc_job *job);
 
 char			*jc_cmd(t_ast_node *root);
 

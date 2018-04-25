@@ -6,7 +6,7 @@
 /*   By: rfautier <rfautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 19:30:13 by rfautier          #+#    #+#             */
-/*   Updated: 2018/04/24 14:29:08 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 12:42:00 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int					bi_kill(int argc, char **argv,
 	int i;
 	int stock;
 	int sinal;
-    
+
 	(void)environ;
 	(void)root;
 	if ((sinal = 15) && argc == 1)
@@ -118,7 +118,7 @@ int					bi_kill(int argc, char **argv,
 		if (argv[i][0] == '%')
 		{
 			if (bi_kill_loop(argv, i, &stock))
-				return (0);
+				return (1);
 			killpg(stock, sinal);
 		}
 		else
