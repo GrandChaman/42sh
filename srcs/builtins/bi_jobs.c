@@ -6,7 +6,7 @@
 /*   By: rfautier <rfautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 19:23:38 by rfautier          #+#    #+#             */
-/*   Updated: 2018/04/24 14:29:03 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 12:25:03 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,50 +17,50 @@
 
 static void		print_jobs(void)
 {
-	t_list	*tmp;
-	t_jc	*jobs_struct;
-	t_list	*autre;
+	t_list		*tmp;
+	t_jc		*jobs_struct;
+	t_jc_job	*job;
 
 	jobs_struct = jc_get();
 	tmp = jobs_struct->job_list;
-	while (tmp != NULL)
+	while (tmp)
 	{
-		ft_printf("[%d] ", ((t_jc_job*)(tmp->content))->tag);
-		autre = ((t_jc_job*)(tmp->content))->pid_list;
-		while (autre != NULL)
-		{
-			ft_printf(" %s		%s\n",
-				g_jc_status_string[((t_jc_proc*)(autre->content))->status],
-					((t_jc_proc*)(autre->content))->cmd);
-			autre = autre->next;
-		}
+		job = ((t_jc_job*)(tmp->content));
+		print_one_jobs(job->tag);
 		tmp = tmp->next;
 	}
 }
 
-int		print_one_jobs(int tague)
+static int	print_one_job_routine(t_jc_job *job)
 {
-	t_list	*tmp;
-	t_jc	*jobs_struct;
-	t_list	*autre;
+	t_list		*proc_list;
+	t_jc_proc	*proc;
+	size_t		numlen;
 
-	jobs_struct = jc_get();
-	tmp = jobs_struct->job_list;
+	numlen = ft_numlen(job->tag);
+	proc_list = job->pid_list;
+	proc = (t_jc_proc*)(proc_list->content);
+	ft_printf("[%d] + %d %-*s %s\n", job->tag, proc->pid, 11,
+		g_jc_status_string[proc->status], proc->cmd);
+	while ((proc_list = proc_list->next))
+	{
+		proc = (t_jc_proc*)(proc_list->content);
+		ft_printf("%*s%d %-*s %s\n", 6 + numlen, " ", proc->pid, 11,
+			g_jc_status_string[proc->status], proc->cmd);
+	}
+	return (1);
+}
+
+int		print_one_jobs(int ntag)
+{
+	t_list		*tmp;
+	t_jc_job	*job;
+
+	tmp = jc_get()->job_list;
 	while (tmp != NULL)
 	{
-		if (tague == ((t_jc_job*)(tmp->content))->tag)
-		{
-			ft_printf("[%d] ", ((t_jc_job*)(tmp->content))->tag);
-			autre = ((t_jc_job*)(tmp->content))->pid_list;
-			while (autre != NULL)
-			{
-				ft_printf(" %s		%s\n",
-				g_jc_status_string[((t_jc_proc*)(autre->content))->status],
-					((t_jc_proc*)(autre->content))->cmd);
-				autre = autre->next;
-			}
-			return (1);
-		}
+		if (ntag == ((t_jc_job*)(tmp->content))->tag)
+			print_one_job_routine((t_jc_job*)(tmp->content));
 		tmp = tmp->next;
 	}
 	return (0);
@@ -91,7 +91,7 @@ int				bi_jobs(int argc, char **argv,
 	char ***environ, t_ast_node *root)
 {
 	int i;
-    
+
 	i = 1;
 	(void)environ;
 	(void)root;

@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 13:13:55 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 09:38:29 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 11:05:30 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ static int	jc_wait(t_jc_job *job, int mode)
 
 	status = 0;
 	if (mode == BG)
+	{
 		jc_update_job(job);
+		jc_set_job_as_running(job);
+	}
 	else
 	{
 		proc_list = job->pid_list;
@@ -78,6 +81,7 @@ static int	jc_wait(t_jc_job *job, int mode)
 				break ;
 			jc_update_proc(((t_jc_proc*)proc_list->content), status);
 			proc_list = proc_list->next;
+			jc_garbage_collector(jc_get());
 		}
 		tcsetpgrp(0, getpgrp());
 	}

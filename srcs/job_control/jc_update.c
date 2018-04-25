@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 13:33:03 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 09:39:05 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 12:35:50 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,25 @@ void		jc_garbage_collector(t_jc *jc)
 				should_delete = 0;
 			proc_list = proc_list->next;
 		}
-		if (job != jc->fg_job)
+		if (job != jc->fg_job && should_delete)
 		 	bi_jobs(1, NULL, NULL, NULL);
 		job_list = job_list->next;
 		if (should_delete)
 			jc_delete_tag(job->tag);
+	}
+}
+
+void		jc_set_job_as_running(t_jc_job *job)
+{
+	t_list		*proc_list;
+	t_jc_proc	*proc;
+
+	proc_list = job->pid_list;
+	while (proc_list)
+	{
+		proc = (t_jc_proc*)proc_list->content;
+		proc_list = proc_list->next;
+		proc->status = RUNNING;
 	}
 }
 
@@ -54,9 +68,9 @@ void		jc_update_job(t_jc_job *job)
 	{
 		proc = (t_jc_proc*)proc_list->content;
 		proc_list = proc_list->next;
-		if ((wait_res = waitpid(proc->pid, &status, WUNTRACED | WNOHANG)
-			== 0))
-			continue;
+		if (proc->status == DONE || proc->status == KILLED ||
+			(wait_res = waitpid(proc->pid, &status, WUNTRACED | WNOHANG) == 0))
+			continue ;
 		jc_update_proc(proc, status);
 	}
 }
