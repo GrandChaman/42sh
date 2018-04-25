@@ -106,13 +106,15 @@ int					bi_kill(int argc, char **argv,
 
 	(void)environ;
 	(void)root;
+	i = 1;
 	if ((sinal = 15) && argc == 1)
 	{
 		ft_fprintf(2, "kill: usage: [-l | -SIGNAL]\n");
 		return (0);
 	}
-	if ((i = 0) && flag_kill(&i, argv, &sinal))
+	if (flag_kill(&i, argv, &sinal))
 		return (0);
+	i = 0;
 	while (++i < argc)
 	{
 		if (argv[i][0] == '%')
