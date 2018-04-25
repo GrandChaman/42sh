@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 18:41:18 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/19 18:52:41 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 10:18:16 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char				*escape_operator(char *str)
 			len++;
 	}
 	i = 0;
-	res = ft_strnew(len);
+	res = ft_strnew(len + 1);
 	len = 0;
 	while (str[i])
 	{
