@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 16:26:13 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/19 18:57:54 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 10:37:15 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,21 @@
 
 static char				*extract_autocomplete_search(t_ft_sh *sh)
 {
-	int		i;
 	int		len;
 	char	*tmp;
 	char	*res;
 
-	i = 0;
 	len = 0;
 	if (!sh->cursor || ft_iswhitespace(sh->buf.buf[sh->cursor - 1]))
 		return (NULL);
-	while (sh->cursor - i > 0 && ft_iswhitespace(sh->buf.buf[sh->cursor - i]))
-		i++;
-	while (sh->cursor - i - len > 0 &&
-		!ft_iswhitespace(sh->buf.buf[sh->cursor - i - len]))
+	while ((sh->cursor - len > 0 &&
+			!ft_iswhitespace(sh->buf.buf[sh->cursor - len])) ||
+			(sh->cursor - len - 1 > 0 &&
+			ft_iswhitespace(sh->buf.buf[sh->cursor - len]) &&
+			sh->buf.buf[sh->cursor - len - 1] == '\\'))
 		len++;
-	tmp = ft_strndup2(sh->buf.buf + (sh->cursor - i - len) +
-		(sh->cursor - i - len > 0), len - (sh->cursor - i - len > 0));
+	tmp = ft_strndup2(sh->buf.buf + (sh->cursor - len) +
+		(sh->cursor - len > 0), len - (sh->cursor - len > 0));
 	if (tmp && tmp[0] == '~')
 	{
 		ft_asprintf(&res, "%s%s", ft_getenv("HOME", &sh21_get()->env.orig_env),
