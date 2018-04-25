@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:32:20 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/24 19:21:22 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/25 14:23:50 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ void					fd_close(t_fd_cleanup *elem);
 void					fd_reassign(t_fd_cleanup *elem);
 void					heredoc_node(t_ast_node *node);
 
+int						is_compound_token(t_token_type type);
 t_ast_node				*ast_assignment_word(t_lex **lex, t_ast_node *node);
 t_ast_node				*ast_pipe(t_lex **lex, t_ast_node *root);
 t_ast_node				*ast_while(t_lex **lex, t_ast_node *root);

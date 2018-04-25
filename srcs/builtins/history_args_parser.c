@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history_args_parser.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfautier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 13:43:49 by rfautier          #+#    #+#             */
-/*   Updated: 2018/04/25 13:44:06 by rfautier         ###   ########.fr       */
+/*   Updated: 2018/04/25 14:21:48 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int				handle_arg(t_hist_args *args, char **arg)
 	while (*str)
 	{
 		if (!ft_strchr("awrncdps", *str))
-			return ((args->err = INVALID_CHAR));
+			return ((args->err = INVARG));
 		if (*str == 'c')
 			args->c = 1;
 		else if (*str == 'p')
@@ -54,11 +54,11 @@ int				handle_arg(t_hist_args *args, char **arg)
 		else if (strchr("awrn", *str) != NULL)
 		{
 			if (args->awrn != 0)
-				return ((args->err = MULTIPLE_AWRN));
+				return ((args->err = AWRN_ERR));
 			awrn_handle(args, str);
 		}
 		else
-			return ((args->d = (*str == 'd')) ? 'd' : INVALID_OFFSET);
+			return ((args->d = (*str == 'd')) ? 'd' : D_ERR);
 		++*arg;
 		++str;
 	}

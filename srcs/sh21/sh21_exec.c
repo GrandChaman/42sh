@@ -64,7 +64,6 @@ int				try_direct_acces(char **av, char ***env, t_ast_node *root)
 {
 	t_sh21			*sh21;
 	struct stat		st;
-	int				ret;
 	char 			*cmd;
 
 	sh21 = sh21_get();
