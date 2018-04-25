@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   timespec.c                                         :+:      :+:    :+:   */
+/*   jc_get.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/12 17:59:42 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/24 16:28:36 by hfontain         ###   ########.fr       */
+/*   Created: 2018/04/20 15:31:30 by fle-roy           #+#    #+#             */
+/*   Updated: 2018/04/20 15:58:58 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh21.h"
-#include "lexer.h"
+#include "job_control.h"
 
-t_lex	*timespec(t_lex *lex)
+t_jc		*jc_get(void)
 {
-	if (!assert_lex(lex))
-		return (g_err_lex);
-	//if (assert_lex(lex) && ft_strequ(lex->content, "-p"))
-	//	return ((lex->next));
-	return (lex);
+	static t_jc jc;
+
+	return (&jc);
 }

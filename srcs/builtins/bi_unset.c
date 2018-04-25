@@ -15,11 +15,12 @@
 #include "libft.h"
 #include "builtins.h"
 
-int		bi_unset(int argc, char **argv, char ***environ)
+int		bi_unset(int argc, char **argv, char ***environ, t_ast_node *root)
 {
 	int		i;
 
 	(void)environ;
+	(void)root;
 	if (argc == 1)
 	{
 		ft_printf("unset: Too few arguments\n");

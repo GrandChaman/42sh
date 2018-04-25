@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh21_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbertoia <fbertoia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:03:18 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/18 18:44:02 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/22 16:12:17 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,70 +29,92 @@ char			*search_bin(char *bin, t_env *env)
 	return (ret ? ret->path : NULL);
 }
 
-int				callbase(char **av, char ***env)
+int				callsystem(char *cmd, char **av, char ***env, t_ast_node *root)
 {
-	pid_t		parent;
+	pid_t		child;
 	int			status;
 
-	if ((parent = fork()) < 0)
+	status = 0;
+	if ((child = fork()) < 0)
 		ft_exit(errno, "fork");
-	else if (!parent)
+	else if (!child)
 	{
-		if (execve(av[0], av, *env) < 0)
-			ft_exit(errno, av[0]);
+		if (change_fd(root) < 0)
+		{
+			del_sh21_exit();
+			exit(errno);
+		}
+		if (!cmd || execve(cmd, av, *env) < 0)
+			ft_exit((cmd ? errno : -1), (cmd ? cmd : av[0]));
+		ft_exit((cmd ? errno : -1), (cmd ? cmd : av[0]));
 	}
 	else
 	{
-		parent = waitpid(parent, &status, WUNTRACED);
+		jc_add(root->tag_gpid, child, jc_cmd(root));
+		reset_fd(root);
+		if (!root->piped_cmd)
+			status = jc_set(root->tag_gpid, root->mod_gpid);
 		return (status);
 	}
 	return (0);
 }
 
-int				try_direct_acces(char **av, char ***env)
+
+int				try_direct_acces(char **av, char ***env, t_ast_node *root)
 {
 	t_sh21			*sh21;
 	struct stat		st;
+	int				ret;
+	char 			*cmd;
 
 	sh21 = sh21_get();
-	if (ft_strchr(av[0], '/') == NULL)
-		return (0);
-	stat(av[0], &st);
-	if (S_ISDIR(st.st_mode))
-		ft_error(21, av[0]);
+	if (ft_strchr(av[0], '/') != NULL)
+	{
+		stat(av[0], &st);
+		if (S_ISDIR(st.st_mode))
+			return (ft_error(21, av[0]));
+		else
+			return (callsystem(av[0], av, env, root));
+	}
 	else
-		callbase(av, env);
-	return (1);
+	{
+		cmd = search_bin(av[0], &sh21_get()->env);
+		return (callsystem(cmd, av, env, root));
+	}
 }
 
-int				callsystem(char **av, char ***env)
+int 			sh21_exec_builtin(char **av, char ***env, t_ast_node *root, t_builtin builtin)
 {
 	pid_t		parent;
 	int			status;
-	char		*str;
 
-	str = search_bin(av[0], &sh21_get()->env);
+	status = 0;
+	if (!(root->piped_cmd || root->mod_gpid == BG)) 
+	{ 
+	  jc_delete_tag(root->tag_gpid); 
+	  return (builtin.fn_ptr(arrlen(av), av, env, root)); 
+	}
 	if ((parent = fork()) < 0)
 		ft_exit(errno, "fork");
 	else if (!parent)
 	{
-		if (str)
-		{
-			if (execve(str, av, *env) < 0)
-				ft_exit(errno, str);
-		}
-		else
-			ft_exit(-1, av[0]);
+		if ((status = change_fd(root)) >= 0)
+			status = builtin.fn_ptr(arrlen(av), av, env, root);
+		del_sh21_exit();
+		exit(status);
 	}
 	else
 	{
-		parent = waitpid(parent, &status, WUNTRACED);
+		reset_fd(root);
+		jc_add(root->tag_gpid, parent, jc_cmd(root));
+		if (!root->piped_cmd)
+			status = jc_set(root->tag_gpid, root->mod_gpid);
 		return (status);
 	}
 	return (0);
 }
 
-int				sh21_exec(int ac, char **av, char ***env)
+int				sh21_exec(char **av, char ***env, t_ast_node *root)
 {
 	int			idx;
 
@@ -102,9 +124,7 @@ int				sh21_exec(int ac, char **av, char ***env)
 	while (g_builtins[++idx].fn_ptr)
 	{
 		if (ft_strequ(av[0], g_builtins[idx].fn_name))
-			return (g_builtins[idx].fn_ptr(ac, av, env));
+			return (sh21_exec_builtin(av, env, root, g_builtins[idx]));
 	}
-	if (try_direct_acces(av, env))
-		return (0);
-	return (callsystem(av, env));
+	return (try_direct_acces(av, env, root));
 }

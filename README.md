@@ -11,3 +11,5 @@
 - CLI bug avec escape char
 - CLI bug auto complete et espace char
 - history testing
+- echo $ => affiche dollars
+- echo $$ => doit afficher le pid du 42sh
