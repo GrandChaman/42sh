@@ -1,6 +1,6 @@
 #include "sh21.h"
 
-int 	change_fd(t_ast_node *root)
+int		change_fd(t_ast_node *root)
 {
 	int ret;
 
@@ -31,7 +31,7 @@ int 	change_fd(t_ast_node *root)
 	return (ret);
 }
 
-int 	reset_fd(t_ast_node *root)
+int		reset_fd(t_ast_node *root)
 {
 	if (root->piped_cmd)
 	{
@@ -40,4 +40,5 @@ int 	reset_fd(t_ast_node *root)
 		if (root->pipe_fd[1] != 1)
 			close(root->pipe_fd[1]);
 	}
+	return (0);
 }

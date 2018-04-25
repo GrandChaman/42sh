@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   bi_history.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
 /*   Updated: 2018/04/19 17:14:08 by fle-roy          ###   ########.fr       */

@@ -35,15 +35,11 @@ int		assign_var(t_ast_node *node)
 
 int		func_assignment_word(t_ast_node *root)
 {
-	t_sh21	*sh21;
 	int		ret;
 
 	ret = 0;
 	if (root->left && root->left->left)
 		ret = g_exec_fn[root->left->left->type](root->left->left);
-	sh21 = sh21_get();
-	// format_word(root);
 	ret += assign_var(root);
-	// ret += ft_putenv(ft_strdup(root->content), &sh21->env.local_var);
 	return (ret);
 }
