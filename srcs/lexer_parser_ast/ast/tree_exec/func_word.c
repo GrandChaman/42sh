@@ -22,7 +22,6 @@ int		func_word(t_ast_node *root)
 	sh21 = sh21_get();
 	if (!root)
 		return (0);
-		ft_printf("{green}in the func_fonction{eoc}\n");
 	if (sh21->signal == T_CTRL_C)
 		return (1);
 	root->content = format_word(&root->content, root);

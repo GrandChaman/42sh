@@ -33,8 +33,8 @@ int			display_prompt(int last_result)
 	exec_term_command(TC_REVERSEVIDEO);
 	ft_fprintf(2, "%%");
 	exec_term_command(TC_RESETGRAPHICS);
-	ft_fprintf(2, "%*s\r%s%C {bmagenta}%s{eoc}> ", shell->x_size - 1, " ",
-		(last_result ? ANSI_COLOR_B_RED : ANSI_COLOR_B_GREEN), 10140, path);
+	ft_fprintf(2, "%*s\r%s%C \x1b[38;2;19;126;186m%s>{eoc} ", shell->x_size - 1, " ",
+	(last_result ? "\x1b[38;2;132;3;3m" : "\x1b[38;2;5;112;19m"), 10140, path);
 	free(path);
 	shell->prompt_size = res;
 	return (res);
