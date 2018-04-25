@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 13:33:03 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 15:59:46 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 21:20:18 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void		jc_update_job(t_jc_job *job)
 		proc_list = proc_list->next;
 		if (proc->status == DONE || proc->status == KILLED ||
 			(wait_res = waitpid(proc->pid, &status, WUNTRACED
-				| WNOHANG) == 0))
+				| WNOHANG)) == 0)
 			continue ;
 		jc_update_proc(proc, status);
 	}
