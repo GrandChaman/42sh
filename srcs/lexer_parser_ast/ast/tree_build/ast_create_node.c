@@ -26,6 +26,7 @@ t_ast_node		*ast_create_node(t_token_type type, char *str)
 	node->left = NULL;
 	node->right = NULL;
 	node->redir_node = NULL;
+	node->assign_node = NULL;
 	node->condition_node = NULL;
 	node->nb_escaped_quote = 0;
 	node->i = 0;

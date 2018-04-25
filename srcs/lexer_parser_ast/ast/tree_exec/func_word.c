@@ -24,7 +24,7 @@ int		func_word(t_ast_node *root)
 	if (!root)
 		return (0);
 	sh21 = sh21_get();
-	format_word(root);
+	root->content = format_word(root->content, root);
 	argv = split_args(root->content, root);
 	if (root->redir_node)
 		status = g_exec_fn[root->redir_node->type](root->redir_node);

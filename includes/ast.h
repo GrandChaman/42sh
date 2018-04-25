@@ -31,6 +31,12 @@ typedef struct			s_fd_cleanup
 	int					fd_reassign;
 }						t_fd_cleanup;
 
+typedef struct 			s_assign_ls
+{
+	struct s_assign_ls	*next;
+	char 				*assignation;
+}						t_assign_ls;
+
 typedef struct			s_ast_node
 {
 	t_token_type		type;
@@ -39,6 +45,7 @@ typedef struct			s_ast_node
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
 	struct s_ast_node	*redir_node;
+	t_assign_ls			*assign_node;
 	struct s_ast_node	*condition_node;
 	int					esc_i[NB_ESCAPED_QUOTE];
 	int					nb_escaped_quote;
@@ -79,6 +86,7 @@ int						func_amper(t_ast_node *root);
 int						func_and_if(t_ast_node *root);
 int						func_andgreat(t_ast_node *root);
 int						func_assignment_word(t_ast_node *root);
+int						assign_var(t_ast_node *node);
 int						func_backslash(t_ast_node *root);
 int						func_bang(t_ast_node *root);
 int						func_case(t_ast_node *root);
@@ -157,7 +165,7 @@ t_ast_node				*ast_if(t_lex **lex, t_ast_node *node);
 t_ast_node				*ast_bang(t_lex **lex, t_ast_node *node);
 t_ast_node				*ast_pipeline(t_lex **lex, t_ast_node *node);
 
-char					*format_word(t_ast_node *node);
+char					*format_word(char *str, t_ast_node *node);
 char					*word(char **argv);
 char					*add_str(char **ret, char **ptr, int *i);
 char					*find_var(char *str);
@@ -181,6 +189,7 @@ char					**split_args(char *argv, t_ast_node *node);
 char					**copy_list_to_array(t_args **list);
 void					del_el(void **el);
 void					ast_print(t_ast_node *root);
+
 
 static t_exec_tree g_exec_fn[] =
 {

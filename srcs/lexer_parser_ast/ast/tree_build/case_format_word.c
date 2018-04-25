@@ -54,7 +54,6 @@ void	case_dollar(char **ret, char **ptr, int *i)
 	else
 	{
 		*ret = ft_strffjoin(*ret, find_var(*ptr));
-		ft_printf("ret = |%s|\n", *ret);		
 		*ptr += skip_var(*ptr);
 	}
 }

@@ -13,41 +13,50 @@
 #include "sh21.h"
 #include "builtins.h"
 
-static char	*norme_0(int i, char *ret, char *ptr, char **str)
+static char	*norme_0(int i, char *ret, char *ptr, char *str)
 {
 	if (i)
 		ret = add_str(&ret, &ptr, &i);
-	ft_strdel(str);
+	ft_strdel(&str);
 	return (ret);
 }
+//
+// static void		space_to_discard(char *ptr)
+// {
+// 	int 	space_to_discard;
+//
+// 	space_to_discard = 0;
+// 	if (ptr)
+// 	{
+// 		while (ptr[space_to_discard])
+// 			space_to_discard++;
+// 		space_to_discard--;
+// 		if (space_to_discard > 0 && ptr[space_to_discard] == ' ')
+// 			ptr[space_to_discard] = '\0';
+// 	}
+// }
 
-static void		space_to_discard(char *ptr)
+static void initialize_values(t_ast_node *node, char **ptr,
+			char *str, char **ret)
 {
-	int 	space_to_discard;
-	
-	space_to_discard = 0;
-	if (ptr)
-	{
-		while (ptr[space_to_discard])
-			space_to_discard++;
-		space_to_discard--;
-		if (space_to_discard > 0 && ptr[space_to_discard] == ' ')
-			ptr[space_to_discard] = '\0';
-	}
+	*ptr = str;
+	node->nb_escaped_quote = 0;
+	node->i = 0;
+	node->quote_count = 0;
+	ft_memset(node->esc_i, -1, NB_ESCAPED_QUOTE);
+	*ret = NULL;
 }
 
-char		*format_word(t_ast_node *node)
+char		*format_word(char *str, t_ast_node *node)
 {
 	char	*ret;
 	char	*ptr;
 	int		i;
 
 	i = 0;
-	ptr = node->content;
-	space_to_discard(ptr);
-	ft_printf("ptr = |%s|\n", ptr);
-	ret = NULL;
-	ft_memset(node->esc_i, -1, NB_ESCAPED_QUOTE);
+	if (!str)
+		return (NULL);
+	initialize_values(node, &ptr, str, &ret);
 	while (ptr[i])
 	{
 		if (ptr[i] == '\\')
@@ -63,7 +72,5 @@ char		*format_word(t_ast_node *node)
 		else
 			++i;
 	}
-	ft_printf("|%s|\n", ret);
-	node->content = norme_0(i, ret, ptr, &node->content);
-	return (node->content);
+	return (norme_0(i, ret, ptr, str));
 }
