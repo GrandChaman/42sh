@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:38:34 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/23 17:37:10 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/25 13:46:26 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct		s_sh21
 	int				ret;
 	int				script;
 	int				status;
+	char			*name;
 }					t_sh21;
 
 static int			g_shell_idx = 0;

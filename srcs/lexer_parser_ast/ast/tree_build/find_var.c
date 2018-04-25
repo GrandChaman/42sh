@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 16:24:26 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/03/15 15:01:29 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/25 13:50:01 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	*special_parameters(char c)
 		return (ft_itoa(sh21->status));
 	else if (c == '$')
 		return (ft_itoa(getpid()));
+	else if (c == '0')
+		return (ft_strdup(sh21_get()->name));
 	else
 		return (NULL);
 }
