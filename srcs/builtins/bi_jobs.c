@@ -6,7 +6,7 @@
 /*   By: rfautier <rfautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 19:23:38 by rfautier          #+#    #+#             */
-/*   Updated: 2018/04/25 13:04:12 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 13:23:50 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	print_one_job_routine(t_jc_job *job)
 	size_t		numlen;
 
 	numlen = ft_numlen(job->tag);
-	proc_list = job->pid_list;
+	proc_list = job->proc_list;
 	proc = (t_jc_proc*)(proc_list->content);
 	ft_printf("[%d] + %d %-*s %s\t", job->tag, proc->pid, 11,
 		g_jc_status_string[proc->status], proc->cmd);
@@ -64,7 +64,6 @@ static int	print_one_job_routine(t_jc_job *job)
 int		print_one_jobs(int ntag)
 {
 	t_list		*tmp;
-	t_jc_job	*job;
 
 	tmp = jc_get()->job_list;
 	while (tmp != NULL)

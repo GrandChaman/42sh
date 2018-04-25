@@ -22,7 +22,7 @@ static void	delete_jc_proc(void *el, size_t size)
 static void	delete_jc_tag(void *el, size_t size)
 {
 	(void)size;
-	ft_lstdel(&(((t_jc_job*)el)->pid_list), delete_jc_proc);
+	ft_lstdel(&(((t_jc_job*)el)->proc_list), delete_jc_proc);
 	free(el);
 }
 

@@ -44,7 +44,7 @@ typedef	struct			s_jc_job
 {
 	int					pgid;
 	t_jc_tag			tag;
-	t_list				*pid_list;
+	t_list				*proc_list;
 }						t_jc_job;
 
 typedef	struct			s_jc

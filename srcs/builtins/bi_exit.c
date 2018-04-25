@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 16:38:41 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/17 14:31:10 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 13:16:30 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ int		bi_exit(int argc, char **argv, char ***environ, t_ast_node *root)
 	(void)argv;
 	(void)root;
 	(void)environ;
+	if (jc_get()->job_list)
+		return (ft_fprintf(2, "Jobs are still running. Please close them before"
+			" exiting\n") && 1);
 	del_sh21_exit();
 	ft_exit(0, NULL);
 	return (0);

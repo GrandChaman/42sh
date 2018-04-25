@@ -25,7 +25,7 @@ void		jc_add(t_jc_tag jtag, pid_t npid, char *cmd)
 		tmp = ((t_jc_job*)jb_list->content);
 		if (tmp->tag == jtag)
 		{
-			if (!tmp->pid_list)
+			if (!tmp->proc_list)
 			{
 				if (setpgid(npid, npid) < 0)
 					ft_perror("setpgid", "called to setpgid failed.");
@@ -35,7 +35,7 @@ void		jc_add(t_jc_tag jtag, pid_t npid, char *cmd)
 				ft_perror("setpgid", "called to setpgid failed.");
 			proc.pid = npid;
 			proc.cmd = cmd;
-			ft_lstpush_back(&tmp->pid_list, &proc, sizeof(t_jc_proc));
+			ft_lstpush_back(&tmp->proc_list, &proc, sizeof(t_jc_proc));
 			return ;
 		}
 		jb_list = jb_list->next;

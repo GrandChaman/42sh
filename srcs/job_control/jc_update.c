@@ -25,7 +25,7 @@ void		jc_garbage_collector(t_jc *jc)
 	while (job_list)
 	{
 		job = (t_jc_job*)job_list->content;
-		proc_list = job->pid_list;
+		proc_list = job->proc_list;
 		should_delete = 1;
 		while (proc_list)
 		{
@@ -47,7 +47,7 @@ void		jc_set_job_as_running(t_jc_job *job)
 	t_list		*proc_list;
 	t_jc_proc	*proc;
 
-	proc_list = job->pid_list;
+	proc_list = job->proc_list;
 	while (proc_list)
 	{
 		proc = (t_jc_proc*)proc_list->content;
@@ -63,7 +63,7 @@ void		jc_update_job(t_jc_job *job)
 	int			wait_res;
 	int			status;
 
-	proc_list = job->pid_list;
+	proc_list = job->proc_list;
 	while (proc_list)
 	{
 		proc = (t_jc_proc*)proc_list->content;

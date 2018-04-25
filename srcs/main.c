@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/25 13:11:33 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 13:19:38 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,15 @@ static void	main_loop(t_sh21 *sh21, t_ft_sh *shell)
 
 	while (42)
 	{
-		if (((cmd = read_command(NULL, sh21->ret, 0)) == NULL))
+		if (((cmd = read_command(NULL, sh21->ret, 0)) == NULL) &&
+			jc_get()->job_list == NULL)
 			break ;
+		if (!cmd)
+		{
+			ft_fprintf(2, "Jobs are still running. Please close them before "
+			"exiting\n");
+			continue ;
+		}
 		cmd = remove_char(cmd);
 		if (!bang(&cmd))
 		{

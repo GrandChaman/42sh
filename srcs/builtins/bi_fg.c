@@ -28,7 +28,7 @@ static int		print_one_jobs_2(int tague)
 	{
 		if (((t_jc_job*)(tmp->content))->tag == tague)
 		{
-			autre = ((t_jc_job*)(tmp->content))->pid_list;
+			autre = ((t_jc_job*)(tmp->content))->proc_list;
 			while (autre != NULL)
 			{
 				ft_printf("%s\n",((t_jc_proc*)(autre->content))->cmd);

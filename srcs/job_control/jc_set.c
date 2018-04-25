@@ -20,7 +20,7 @@ static void	jc_change_pgrp(t_jc_job *job, int mode)
 	t_list *proc_list;
 	t_jc_proc *proc;
 
-	proc_list = job->pid_list;
+	proc_list = job->proc_list;
 	if (mode == BG)
 	{
 		if (tcsetpgrp(STDIN_FILENO, getpgrp()))
@@ -71,7 +71,7 @@ static int	jc_wait(t_jc_job *job, int mode)
 	}
 	else
 	{
-		proc_list = job->pid_list;
+		proc_list = job->proc_list;
 		while (proc_list)
 		{
 			wait_res = waitpid(((t_jc_proc*)proc_list->content)->pid,
