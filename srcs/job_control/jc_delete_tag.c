@@ -6,16 +6,23 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 17:35:08 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/24 14:13:52 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 09:37:26 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "job_control.h"
 
+static void	delete_jc_proc(void *el, size_t size)
+{
+	(void)size;
+	free(((t_jc_proc*)el)->cmd);
+	free(el);
+}
+
 static void	delete_jc_tag(void *el, size_t size)
 {
 	(void)size;
-	ft_lstdel(&(((t_jc_job*)el)->pid_list), NULL);
+	ft_lstdel(&(((t_jc_job*)el)->pid_list), delete_jc_proc);
 	free(el);
 }
 

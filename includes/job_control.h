@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 15:23:14 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/24 15:29:58 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 09:36:02 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef	struct			s_jc_proc
 	pid_t				pid;
 	t_jc_status			status;
 	int					rvalue;
+	char				*cmd;
 }						t_jc_proc;
 
 typedef	struct			s_jc_job
