@@ -62,6 +62,8 @@ typedef struct		s_sh21
 
 static int			g_shell_idx = 0;
 
+char		*return_prompt(int stock);
+char		*bracket(char *cmd, int i);
 char 				*find_var_expr(char *str);
 int					ft_eval_expr(char *str, int *end, int o);
 int					main_expr(char *str, int *i);

@@ -53,7 +53,7 @@ static void		add_builtin_to_ht(t_list **list, char *str_part)
 
 void			collect_data_ht(t_list **list, char *str_part)
 {
-	size_t 				len;
+	size_t				len;
 	unsigned int		i;
 	t_sh21				*lexer_s;
 	char				*bin_name;

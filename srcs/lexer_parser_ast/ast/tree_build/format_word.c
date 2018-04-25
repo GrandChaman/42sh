@@ -20,21 +20,6 @@ static char	*norme_0(int i, char *ret, char *ptr, char *str)
 	ft_strdel(&str);
 	return (ret);
 }
-//
-// static void		space_to_discard(char *ptr)
-// {
-// 	int 	space_to_discard;
-//
-// 	space_to_discard = 0;
-// 	if (ptr)
-// 	{
-// 		while (ptr[space_to_discard])
-// 			space_to_discard++;
-// 		space_to_discard--;
-// 		if (space_to_discard > 0 && ptr[space_to_discard] == ' ')
-// 			ptr[space_to_discard] = '\0';
-// 	}
-// }
 
 static void initialize_values(t_ast_node *node, char **ptr,
 			char *str, char **ret)

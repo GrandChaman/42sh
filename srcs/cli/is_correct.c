@@ -12,7 +12,7 @@
 
 #include "sh21.h"
 
-static int	check_second_quote(char second, int *i, char *cmd)
+static int		check_second_quote(char second, int *i, char *cmd)
 {
 	*i = *i + 1;
 	while (cmd[*i] && cmd[*i] != second)
@@ -32,7 +32,7 @@ static int	check_second_quote(char second, int *i, char *cmd)
 	return (0);
 }
 
-static int	quote(char *cmd, int *i)
+static int		quote(char *cmd, int *i)
 {
 	char	tabl[5];
 	int		var;
@@ -54,38 +54,7 @@ static int	quote(char *cmd, int *i)
 	return (0);
 }
 
-static char	*bracket(char *cmd, int i)
-{
-	int tabl[3];
-
-	tabl[0] = 0;
-	tabl[1] = 0;
-	tabl[2] = 0;
-	while (cmd[++i])
-	{
-		if (cmd[i] == '{')
-			tabl[0]++;
-		else if (cmd[i] == '}')
-			tabl[0]--;
-		else if (cmd[i] == '(')
-			tabl[1]++;
-		else if (cmd[i] == ')')
-			tabl[1]--;
-		else if (cmd[i] == '[')
-			tabl[2]++;
-		else if (cmd[i] == ']')
-			tabl[2]--;
-	}
-	if (tabl[0] > 0)
-		return ("need_}> ");
-	else if (tabl[1] > 0)
-		return ("need_)> ");
-	else if (tabl[2] > 0)
-		return ("need_]> ");
-	return (NULL);
-}
-
-static char	*check_correct_2(int i, char *cmd)
+static char		*check_correct_2(int i, char *cmd)
 {
 	int		o;
 	int		stock;
@@ -110,7 +79,7 @@ static char	*check_correct_2(int i, char *cmd)
 	return (NULL);
 }
 
-char		*check_correct(char *cmd)
+char			*check_correct(char *cmd)
 {
 	int		i;
 	int		stock;
@@ -129,14 +98,7 @@ char		*check_correct(char *cmd)
 			continue ;
 		}
 		if ((stock = quote(cmd, &i)) != 0)
-		{
-			if (stock == 1)
-				return ("d_quote> ");
-			if (stock == 2)
-				return ("s_quote> ");
-			if (stock == 3)
-				return ("b_quote> ");
-		}
+			return (return_prompt(stock));
 		if (check_correct_2(i, cmd) != NULL)
 			return (check_correct_2(i, cmd));
 		++i;

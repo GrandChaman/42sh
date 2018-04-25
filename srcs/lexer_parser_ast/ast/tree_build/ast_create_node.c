@@ -30,7 +30,6 @@ t_ast_node		*ast_create_node(t_token_type type, char *str)
 	node->mod_gpid = FG;
 	node->piped_cmd = 0;
 	node->pipe_fd[0] = 0;
-	node->pipe_fd[1] = 1;
 	node->pipe_to_close = -1;
 	node->assign_node = NULL;
 	node->condition_node = NULL;
@@ -38,13 +37,14 @@ t_ast_node		*ast_create_node(t_token_type type, char *str)
 	node->i = 0;
 	node->quote_count = 0;
 	node->type = type;
-	if (str)
+	if ((node->pipe_fd[1] = 1) && str)
 		node->content = ft_strdup(str);
 	return (node);
 }
 
 static t_ast_node	*(*g_ast_pipeline_cmd_token[])(t_lex **, t_ast_node *) =
-{NULL, ast_word, ast_assignment_word, ast_pipe, ast_while, ast_if, ast_until, ast_bang};
+{NULL, ast_word, ast_assignment_word, ast_pipe,
+	ast_while, ast_if, ast_until, ast_bang};
 
 t_ast_node		*ast_create_leaf(t_token_type type, t_lex **lex)
 {
