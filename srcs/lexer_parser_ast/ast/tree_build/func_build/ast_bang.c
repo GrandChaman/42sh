@@ -12,16 +12,12 @@
 
 #include "sh21.h"
 
-t_ast_node		*ast_bang(t_lex **lex, t_ast_node *root)
+t_ast_node		*ast_bang(t_lex **lex, t_ast_node *node)
 {
-	t_ast_node			*node;
-
-	(void)root;
 	if (!lex || !*lex || !(*lex)->next)
 		return (NULL);
-	node = ast_create_node((*lex)->token_type, NULL);
+	node->type = (*lex)->token_type;
 	*lex = (*lex)->next;
-	node->left = ast_pipeline(lex, node);
+	node->left = ast_create_leaf((*lex)->token_type, lex);
 	return (node);
 }
-
