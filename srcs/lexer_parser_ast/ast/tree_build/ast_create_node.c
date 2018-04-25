@@ -30,6 +30,12 @@ t_ast_node		*ast_create_node(t_token_type type, char *str)
 	node->right = NULL;
 	node->heredoc = NULL;
 	node->redir_node = NULL;
+	node->tag_gpid = -1;
+	node->mod_gpid = FG;
+	node->piped_cmd = 0;
+	node->pipe_fd[0] = 0;
+	node->pipe_fd[1] = 1;
+	node->pipe_to_close = -1;
 	return (node);
 }
 
@@ -62,7 +68,7 @@ t_ast_node		*ast_create_leaf(t_token_type type, t_lex **lex)
 		if ((*lex)->token_type == PIPE)
 			node = ast_pipe((*lex)->token_type, lex, node);
 		else if (ast_redir_token((*lex)->token_type))
-			node->left = redir_node(lex, node->left);
+			node->redir_node = redir_node(lex, node->redir_node);
 		else
 		{
 			node->content = ft_strfjoin(node->content, (*lex)->content);

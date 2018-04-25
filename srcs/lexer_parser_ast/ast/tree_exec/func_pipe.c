@@ -12,51 +12,46 @@
 
 #include "sh21.h"
 
-int		func_pipe2(t_ast_node *root, int pipefd[2])
+int		func_pipe_right(t_ast_node *root, int pipefd[2])
 {
-	int		nw;
 	int		status;
-	int		ret;
 
 	status = 0;
-	nw = dup(0);
-	close(pipefd[1]);
-	dup2(pipefd[0], 0);
 	if (root->right)
-		ret = g_exec_fn[root->right->type](root->right);
-	wait(&status);
-	dup2(nw, 0);
-	close(nw);
-	exit(0);
+	{
+		root->right->piped_cmd = 1 + root->piped_cmd;
+		root->right->pipe_fd[0] = pipefd[0];
+		root->left->pipe_to_close = pipefd[1];
+		status = g_exec_fn[root->right->type](root->right);
+	}
+	close(pipefd[1]);
+	close(pipefd[0]);
+	return (status);
+}
+
+void 	func_pipe_left(t_ast_node *root, int pipefd[2])
+{
+	root->left->piped_cmd = 1 + root->piped_cmd;
+	root->left->pipe_fd[0] = root->pipe_fd[0];
+	root->left->pipe_fd[1] = pipefd[1];
+	root->left->pipe_to_close = pipefd[0];
+	g_exec_fn[root->left->type](root->left);
 }
 
 int		func_pipe(t_ast_node *root)
 {
 	int pipefd[2];
-	int pid;
-	int ret_child;
-	int nw;
 	int ret;
 
-	ret_child = 0;
-	if (pipe(pipefd) < -1)
+	set_job(root);
+	if (!root->piped_cmd)
+		root->piped_cmd = 1;
+	if (pipe(pipefd) < 0)
 		return (ft_error(errno, NULL));
-	pid = fork();
-	if (pid == 0)
-		func_pipe2(root, pipefd);
-	else
-	{
-		nw = dup(1);
-		close(pipefd[0]);
-		dup2(pipefd[1], 1);
-		close(pipefd[1]);
-		ret_child = g_exec_fn[root->left->type](root->left);
-		dup2(nw, 1);
-		close(nw);
-	}
-	// if (root->job = 1)
-	// 	job_control_at_job(pid, root->content);
-	waitpid(pid, &ret, WUNTRACED);
+	func_pipe_left(root, pipefd);
+	ret = func_pipe_right(root, pipefd);
+	if (root->piped_cmd == 1)
+		ret = jc_set(root->tag_gpid, root->mod_gpid);
 	sh21_get()->status = ret;
 	return (ret);
 }

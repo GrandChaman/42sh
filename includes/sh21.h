@@ -33,6 +33,7 @@
 # include "ast.h"
 # include "env.h"
 # include "builtins.h"
+# include "job_control.h"
 
 # define BUFF_SIZE_INPUT_21SH 1024
 
@@ -72,7 +73,7 @@ int					input_piped_script(t_sh21 *sh21, char **argv);
 int					lexer(t_sh21 *sh21);
 int					parser(t_lex *lex);
 int					sh21_addenv(t_sh21 *sh21, const char *n, const char *v);
-int					sh21_exec(int ac, char **av, char ***env);
+int					sh21_exec(char **av, char ***env, t_ast_node *root);
 int					sh21_loadenv(t_sh21 *sh21, char **environ);
 t_sh21				*sh21_get(void);
 t_sh21				*sh21_init(char *env[]);
@@ -92,5 +93,8 @@ void				ft_lstqueue(t_list **lst, t_list *lnew);
 size_t				compute(const char *n, const char *v, \
 					char **str, void *to_free);
 char				*remove_char(char *str);
+
+int 	change_fd(t_ast_node *root);
+int 	reset_fd(t_ast_node *root);
 
 #endif
