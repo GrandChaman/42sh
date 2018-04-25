@@ -24,8 +24,7 @@ static int			hist_display(int lim)
 	sh = get_ft_shell();
 	i = 0;
 	if (lim < 0 || lim > sh->history_size)
-		return (ft_fprintf(2, "42sh: history: %d: index out of range\n", lim)
-			&& 1);
+		return (ft_fprintf(2, "42sh: history: %d: index out of range\n", lim));
 	if (!(tmp = (lim ? ft_lstat(sh->history, lim) : ft_lstlast(sh->history))))
 		return (0);
 	if (lim)
@@ -64,18 +63,17 @@ static int			display_cmd(int argc, char **argv, int should_display)
 	return (0);
 }
 
-static int			hist_del_at_offset(int offset)
+static int			hist_del_at_offset(int off)
 {
 	t_ft_sh	*sh;
 	t_list	*tmp;
 
 	sh = get_ft_shell();
 	if (sh->history_size >= SH_HIST_MAX_SIZE)
-		offset--;
-	if (offset < 0 || sh->history_size - offset < 0)
-		return (ft_fprintf(2, "42sh: history: %d: index out of range\n",
-			offset) && 1);
-	if (!(tmp = ft_lstat(sh->history, sh->history_size - offset - 1)))
+		off--;
+	if (off < 0 || sh->history_size - off < 0)
+		return (ft_fprintf(2, "42sh: history: %d: index out of range\n", off));
+	if (!(tmp = ft_lstat(sh->history, sh->history_size - off - 1)))
 		return (1);
 	ft_lstdelone(&tmp, delete_hist_entry);
 	sh->history_size--;
@@ -84,8 +82,8 @@ static int			hist_del_at_offset(int offset)
 
 int					bi_history(int argc, char **argv, char ***environ)
 {
-	int ret;
-	t_hist_args flags;
+	int			ret;
+	t_hist_args	flags;
 
 	(void)environ;
 	ret = 0;

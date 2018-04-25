@@ -56,7 +56,7 @@ int			hist_sync_file(char *path)
 	gnl_res = hist_divergence("toto.txt", &line, &tmp, &fd);
 	free(line);
 	if (gnl_res < 0)
-		return ((close(fd) + ft_fprintf(2,
+		return ((close(fd) + ft_fprintf(2,\
 			"42sh: history: Error while reading history file %s\n")) || 1);
 	if (lseek(fd, 0, SEEK_END) < 0)
 		return ((close(fd) + ft_fprintf(2, "42sh: history: lseek() failed\n"))
