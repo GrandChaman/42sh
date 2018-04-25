@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 13:33:03 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 12:35:50 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 14:55:41 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,13 @@ void		jc_update_job(t_jc_job *job)
 	int			status;
 
 	proc_list = job->proc_list;
+	if (!job)
+		return ;
+	if (!job->proc_list)
+	{
+		jc_delete_tag(job->tag);
+		return ;
+	}
 	while (proc_list)
 	{
 		proc = (t_jc_proc*)proc_list->content;
@@ -79,12 +86,14 @@ void		jc_update_job(t_jc_job *job)
 void		jc_update_all(void)
 {
 	t_list		*job_list;
+	t_jc_job	*job;
 
 	job_list = jc_get()->job_list;
 	while (job_list)
 	{
-		jc_update_job(((t_jc_job*)job_list->content));
+		job = ((t_jc_job*)job_list->content);
 		job_list = job_list->next;
+		jc_update_job(job);
 	}
 	jc_garbage_collector(jc_get());
 }
