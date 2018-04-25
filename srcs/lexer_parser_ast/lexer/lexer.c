@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/22 16:16:56 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 18:33:26 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,42 @@ static void		lexfallbackesc(t_lexa *lexa)
 	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
 }
 
+int		ends_with(char *str, char *t)
+{
+	const int		strlen = ft_strlen(str);
+	const int		tlen = ft_strlen(t);
+	if (!str)
+		return (0);
+	if (!t)
+		return (1);
+
+	if (strlen >= tlen && ft_strcmp(str + strlen - tlen, t) == 0)
+		return (1);
+	return (0);
+}
+
 t_lex			*lexer(char *cmd)
 {
 	t_lexa		lexa;
+	int			in_eval;
 
+	in_eval = 0;
 	lexa.cmd = cmd;
 	lexa_init(&lexa, cmd);
 	while (*lexa.str && (lexa.c = *(lexa.str)))
 	{
+		if (ends_with(lexa.buffer, "$(("))
+			in_eval = 1;
+		if (ends_with(lexa.buffer, "))"))
+			in_eval = 0;
 		check_semi_stat(&lexa);
 		if (lexa.c == '\\')
 			escape(&lexa);
+		else if (in_eval)
+		{
+			if (!ft_iswhitespace(lexa.c))
+				lexa.buffer = ft_strpushback(lexa.buffer, lexa.c, &g_lexa_buff_sz);
+		}
 		else if (lexa.c == '`')
 			on_subshell(&lexa);
 		else if (lexa.c == '"' || lexa.c == '\'')

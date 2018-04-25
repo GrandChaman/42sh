@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 16:42:37 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/25 17:32:01 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static int			hist_del_at_offset(int off)
 	t_list	*tmp;
 
 	sh = get_ft_shell();
+	ft_printf("offset = %i\n", off);
 	if (sh->history_size >= SH_HIST_MAX_SIZE)
 		off--;
 	if (off < 0 || sh->history_size - off < 0)
@@ -110,3 +111,4 @@ int					bi_history(int argc, char **argv,
 		ret = hist_append_file(argv[flags.argv_count]);
 	return (ret);
 }
+
