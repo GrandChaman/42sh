@@ -99,11 +99,11 @@ t_lex			*lexer(char *cmd)
 	lexa_init(&lexa, cmd);
 	while (*lexa.str && (lexa.c = *(lexa.str)))
 	{
+		check_semi_stat(&lexa);
 		if (ends_with(lexa.buffer, "$(("))
 			in_eval = 1;
 		if (ends_with(lexa.buffer, "))"))
 			in_eval = 0;
-		check_semi_stat(&lexa);
 		if (lexa.c == '\\')
 			escape(&lexa);
 		else if (in_eval)
