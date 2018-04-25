@@ -53,6 +53,7 @@ typedef struct			s_ast_node
 	struct s_ast_node	*redir_node;
 	t_assign_ls			*assign_node;
 	struct s_ast_node	*condition_node;
+	char 				**argv;
 	int					esc_i[NB_ESCAPED_QUOTE];
 	int					nb_escaped_quote;
 	int					i;

@@ -22,17 +22,17 @@
 # define D_ERR		1 << 4
 # define AWRN_ERR	1 << 5
 # define INVARG		1 << 6
-
-typedef struct			s_hist_args
-{
-	int		c;
-	int		d;
-	int		d_val;
-	int		p;
-	int		s;
-	int		awrn;
-	int		err;
-}						t_hist_args;
+// 
+// typedef struct			s_hist_args
+// {
+// 	int		c;
+// 	int		d;
+// 	int		d_val;
+// 	int		p;
+// 	int		s;
+// 	int		awrn;
+// 	int		err;
+// }						t_hist_args;
 
 typedef struct			s_flag
 {

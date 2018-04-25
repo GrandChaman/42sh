@@ -12,21 +12,6 @@
 
 #include "sh21.h"
 
-void			ast_print(t_ast_node *root)
-{
-	static int offset;
-
-	if (!root)
-		return ;
-	offset += 4;
-	ast_print(root->right);
-	offset -= 4;
-	ft_fprintf(sh21_get()->debug_tty, "%*s%s\n", offset, "", root->content);
-	offset += 4;
-	ast_print(root->left);
-	offset -= 4;
-}
-
 static int		input_piped_script2(t_sh21 *sh21, int ret)
 {
 	if (ret < 0)
