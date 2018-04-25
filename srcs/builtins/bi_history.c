@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/19 17:14:08 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 16:42:37 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ int					bi_history(int argc, char **argv,
 		return (hist_display(0));
 	args_init(&flags);
 	read_args(&flags, argc, argv);
-	//print_hhh(flags);
 	if (flags.err)
 		return (flags.err);
 	ret = (flags.d ? hist_del_at_offset(flags.d_val) : ret);
