@@ -18,16 +18,20 @@ int		assign_var(t_ast_node *node)
 	int 		ret;
 	t_assign_ls *ls;
 	char		**argv;
+	char		*cmd;
 
 	ls = node->assign_node;
 	ret = 0;
 	argv = NULL;
     while (ls)
     {
-		ls->assignation = format_word(&ls->assignation, node);
+		cmd = ft_strdup(ls->assignation);
+		cmd = format_word(&cmd, node);
+		ft_printf("argv = %s|\n", cmd);
 		argv = split_args(ls->assignation, node);
 		ret += ft_putenv(ft_strdup(argv[0]), &sh21_get()->env.local_var);
 		del_arr(&argv);
+		ft_strdel(&cmd);
         ls = ls->next;
     }
 	return (ret);

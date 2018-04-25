@@ -12,28 +12,46 @@
 
 #include "sh21.h"
 
+// char	*add_str(char **ret, char **ptr, int *i)
+// {
+// 	*ret = ft_strffjoin(*ret, ft_strndup(*ptr, *i + 1));
+// 	*ptr += *i;
+// 	*i = 0;
+// 	return (*ret);
+// }
+void	case_dollar_expr(char **ret, char **ptr, int *i)
+{
+	int		end;
+	char 	*tmp;
+
+	end = 0;
+	*ret = add_str(ret, ptr, i);
+	(*ptr)++;
+	tmp = find_var(*ptr);
+	*ret = ft_strfjoin(*ret, tmp ? tmp : "0");
+	*ptr += skip_var(*ptr);
+	free(tmp);
+}
+
 char	*find_var_expr(char *str)
 {
 	int		i;
-	char	*stock;
-	char	*final;
+	char	*ret;
+	char	*ptr;
 
 	i = 0;
-	while (str[i])
+	ptr = str;
+	ret = NULL;
+	while (ptr[i])
 	{
-		if (str[i] == '$' && str[i + 1])
-		{
-			stock = ft_strffjoin(ft_strsub(str, 0, i), find_var(&str[i + 1]));
-			i++;
-			while (str[i] && ft_isalpha(str[i]))
-				i++;
-			final = ft_strjoin(stock, &str[i]);
-			free(stock);
-			free(str);
-			str = final;
-		}
+		if (ptr[i] == '$')
+			case_dollar(&ret, &ptr, &i);
 		else
 			i++;
 	}
-	return (str);
+	if (i)
+		ret = add_str(&ret, &ptr, &i);
+	ft_printf("***ptr = %s\n", ret);
+	free(str);
+	return (ret);
 }

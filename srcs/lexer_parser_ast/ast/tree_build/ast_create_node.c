@@ -72,7 +72,7 @@ t_ast_node		*ast_create_op(t_ast_node *node, t_lex **lex)
 	root = ast_create_node((*lex)->token_type, (*lex)->content);
 	root->left = node;
 	*lex = (*lex)->next;
-	if (*lex && ((*lex)->token_type == WORD))
+	if (*lex && (ast_is_shell_cmd((*lex)->token_type) || ast_redir_node((*lex)->token_type)))
 		root->right = ast_create_leaf((*lex)->token_type, lex);
 	return (root);
 }

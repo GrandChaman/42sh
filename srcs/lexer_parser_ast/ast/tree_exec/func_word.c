@@ -17,19 +17,23 @@ int		func_word(t_ast_node *root)
 {
 	t_sh21			*sh21;
 	int				status;
+	char			*cmd;
 
 	status = 0;
+	cmd = NULL;
 	sh21 = sh21_get();
 	if (!root)
 		return (0);
 	if (sh21->signal == T_CTRL_C)
 		return (1);
-	root->content = format_word(&root->content, root);
-	root->argv = split_args(root->content, root);
+	cmd = ft_strdup(root->content);
+	cmd = format_word(&cmd, root);
+	root->argv = split_args(cmd, root);
 	set_job(root);
 	if (!status)
 		status = sh21_exec(root->argv, &sh21->env.orig_env, root); //add tag_gpid
 	sh21->status = status;
 	del_arr(&root->argv);
+	ft_strdel(&cmd);
 	return (status);
 }

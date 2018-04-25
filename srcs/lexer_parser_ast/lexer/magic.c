@@ -35,7 +35,7 @@ char	*exec_subshell(char *str, char *file_nm_io)
 		sh21->lex = lexer(str);
 		if (parser(sh21->lex))
 			sh21->ret = exec_tree(sh21->tree.root_node);
-		del_sh21();
+		del_sh21_exit();
 		exit(sh21->ret);
 	}
 	else
@@ -60,8 +60,6 @@ char *create_rdm_file(void)
 	ft_strdel(&random_file);
 	return (random_file_path);
 }
-
-
 
 static void on_subshell3(t_lexa *lexa, char *new_str)
 {
@@ -110,7 +108,6 @@ void 	on_subshell(t_lexa *lexa)
 	int		offset;
 	int		fd;
 	char	*ret;
-	//	*rdm_file_cmd;
 	char 	*rdm_file_io;
 
 	if (lexa->buffer && lexa->buffer[0] && lexa->t != WORD)
@@ -119,47 +116,13 @@ void 	on_subshell(t_lexa *lexa)
 	lexa->str += 1;
 	if ((offset = ft_strindex(lexa->str, '`')) < 0)
 		return ;
-	//rdm_file_cmd = create_rdm_file();
 	rdm_file_io = create_rdm_file();
 	ret = ft_strndup(lexa->str, offset + 1);
 	lexa->str += offset;
 	exec_subshell(ret, rdm_file_io);
-	//unlink(rdm_file_cmd);
-//	ft_strdel(&rdm_file_cmd);
 	ft_strdel(&ret);
 	if ((fd = open(rdm_file_io, O_RDONLY)) < 0)
 		return ;
 	else
 		return (on_subshell2(lexa, rdm_file_io, fd));
 }
-
-
-// int 	nested_subshell_quote(t_lexa *lexa, char c)
-// {
-// 	int i;
-// 	int i_brace;
-//
-// 	i = 0;
-// 	i_brace = 1;
-// 	if (c == '`')
-// 	 	return (ft_strindex(lexa->str + 1, '`'));
-// 	else
-// 	{
-// 		while (lexa->str[i])
-// 		{
-// 			if (lexa->str[i] == '\\')
-// 				i += lexa->str[i + 1] ? 2 : 1;
-// 			else if (lexa->str[i] == '(')
-// 				i_brace++;
-// 			else if (lexa->str[i] == ')')
-// 			{
-// 				i_brace--;
-// 				if (!i_brace)
-// 					return (i);
-// 			}
-// 			else
-// 				i++;
-// 		}
-// 		return (-1);
-// 	}
-// }

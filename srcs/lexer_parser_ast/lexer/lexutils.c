@@ -66,6 +66,7 @@ void		on_operator_prev(t_lexa *lexa)
 		ft_strdel(&lexa->buffer);
 		lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
 		lexa->t = WORD;
+		lexa->stat = SWORD;
 	}
 }
 

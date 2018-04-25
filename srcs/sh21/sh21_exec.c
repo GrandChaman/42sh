@@ -36,7 +36,10 @@ int				callsystem(char *cmd, char **av, char ***env, t_ast_node *root)
 
 	status = 0;
 	if ((child = fork()) < 0)
+	{
+
 		ft_exit(errno, "fork");
+	}
 	else if (!child)
 	{
 		assign_var(root);
@@ -72,7 +75,10 @@ int				try_direct_acces(char **av, char ***env, t_ast_node *root)
 	{
 		stat(av[0], &st);
 		if (S_ISDIR(st.st_mode))
+		{
+			jc_delete_tag(root->tag_gpid);
 			return (ft_error(21, av[0]));
+		}
 		else
 			return (callsystem(av[0], av, env, root));
 	}

@@ -28,6 +28,7 @@ static void	ignore_signal(int sig)
 
 static void signal_c(int sig)
 {
+	(void)sig;
 	sh21_get()->signal = T_CTRL_C;
 }
 
@@ -59,6 +60,7 @@ static void	main_loop(t_sh21 *sh21, t_ft_sh *shell)
 		sh21->lex = lexer(cmd);
 		if (parser(sh21->lex) && sh21->signal != T_CTRL_C)
 		{
+			ast_print(sh21->tree.root_node);
 			sh21_get()->ret = exec_tree(sh21->tree.root_node);
 		}
 		del_sh21();
