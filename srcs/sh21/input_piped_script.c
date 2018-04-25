@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:03:09 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/18 17:58:00 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/19 18:10:17 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void			ast_print(t_ast_node *root)
 	offset += 4;
 	ast_print(root->right);
 	offset -= 4;
-	ft_fprintf(sh21_get()->debug_tty, "%*s%s mod = %d tag_gpid = %d\n", offset, "", root->content, root->mod_gpid, root->tag_gpid);
+	ft_fprintf(sh21_get()->debug_tty, "%*s%s\n", offset, "", root->content);
 	offset += 4;
 	ast_print(root->left);
 	offset -= 4;
@@ -31,7 +31,7 @@ static int		input_piped_script2(t_sh21 *sh21, int ret)
 {
 	if (ret < 0)
 		ft_exit(errno, "pipe_error");
-	lexer(sh21);
+	sh21->lex = lexer(sh21->buf);
 	if (parser(sh21->lex))
 		exec_tree(sh21->tree.root_node);
 	ft_exit(0, NULL);

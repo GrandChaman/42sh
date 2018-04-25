@@ -51,38 +51,30 @@ static void	main_loop(t_sh21 *sh21, t_ft_sh *shell)
 		add_to_history(shell, cmd);
 		sh21->buf = cmd;
 		jc_update_all();
-		lexer(sh21);
+		sh21->lex = lexer(cmd);
 		if (parser(sh21->lex) && sh21->signal != T_CTRL_C)
+		{
+			ast_print(sh21->tree.root_node);
 			sh21_get()->ret = exec_tree(sh21->tree.root_node);
+		}
 		del_sh21();
 		ft_strdel(&cmd);
 	}
 }
 
-void		job_control_test(t_sh21 *sh21)
-{
-	sh21->buf = ft_strdup("sleep 5 | sleep 10 | sleep 15 &");
-	lexer(sh21);
-	if (parser(sh21->lex) && sh21->signal != T_CTRL_C)
-		sh21_get()->ret = exec_tree(sh21->tree.root_node);
-	del_sh21();
-	sleep(2);
-	jc_set(0, FG);
-	jc_delete_tag(0);
-}
-
-
-
-int			main(void)
+int			main(int argc, char *argv[])
 {
 	t_ft_sh			*shell;
 	t_sh21			*sh21;
 	extern char		**environ;
 
 	setlocale(LC_ALL, "");
+	(void)argc;
 	sh21 = sh21_init(environ);
 	shell = get_ft_shell();
 	shell->ht = NULL;
+	if (!sh21->terminal.isatty || argv[1])
+		return (input_piped_script(sh21, argv));
 	signal(SIGINT, ignore_signal);
 	signal(SIGTSTP, ignore_signal);
 	signal(SIGCONT, ignore_signal);

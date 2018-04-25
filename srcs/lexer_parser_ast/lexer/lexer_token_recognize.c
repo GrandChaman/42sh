@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 14:49:23 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/03/15 16:58:50 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/23 17:17:53 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,15 @@ int				is_operator_part(char c, int stat)
 {
 	return (c == '\n'
 		|| c == '&'
-			|| c == '|'
-				|| c == '<'
-					|| c == '>'
-						|| c == ';'
-							|| (c == '=' && stat != SWORD)
-								|| c == '\n'
-									|| c == '('
-										|| c == ')'
-											|| (c == '{' && stat != SWORD)
-												|| c == '}'
-													|| (stat == SOP
-														&& c == '-'));
+		|| c == '|'
+		|| c == '<'
+		|| c == '>'
+		|| c == ';'
+		|| c == '\n'
+		|| c == '}'
+		|| (c == '{' && stat != SWORD)
+		|| (c == '=' && stat != SWORD)
+		|| (stat == SOP && c == '-'));
 }
 
 t_token_type	get_operator_tok(char *str)

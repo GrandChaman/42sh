@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 15:02:35 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/17 18:57:52 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/23 17:52:03 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,7 @@ static char	*check_correct_2(int i, char *cmd)
 	if (cmd[i] && (cmd[i] == '|' || cmd[i] == '\\' || cmd[i] == '&'))
 	{
 		stock = cmd[i];
-		if (i == 0)
-			beforestock = '\0';
-		else
-			beforestock = cmd[i - 1];
+		beforestock = i == 0 ? '\0' : cmd[i - 1];
 		o = i;
 		o++;
 		while (cmd[o] && (cmd[o] == ' ' || cmd[o] == '\n'))
@@ -142,7 +139,7 @@ char		*check_correct(char *cmd)
 		}
 		if (check_correct_2(i, cmd) != NULL)
 			return (check_correct_2(i, cmd));
-		i++;
+		++i;
 	}
 	return (NULL);
 }

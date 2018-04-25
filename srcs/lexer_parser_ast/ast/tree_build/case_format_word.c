@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   format_word.c                                      :+:      :+:    :+:   */
+/*   case_format_word.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 16:24:35 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/03/15 17:44:27 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/24 15:19:11 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,13 @@
 ** The function case_backslash fill an array to keep the index of backslashed
 ** character that will be interpreted a second time in the split_args function
 */
-
-void	case_backslash(char **ret, char **ptr, int *i, char *special_chars)
+void	case_backslash(char **ret, char **ptr, int *i, char *special_chars, t_ast_node *node)
 {
-	t_ast	*tree;
 	int		len;
 	int		backslashed;
+	//const	char *special_chars = "$`\"\\\n";
 
 	backslashed = 0;
-	tree = &sh21_get()->tree;
 	*ret = add_str(ret, ptr, i);
 	(*i)++;
 	if (!special_chars || ft_strindex(special_chars, (*ptr)[*i]) >= 0)
@@ -35,18 +33,29 @@ void	case_backslash(char **ret, char **ptr, int *i, char *special_chars)
 	if (backslashed)
 	{
 		len = ft_strlen(*ret);
-		tree->esc_i[tree->nb_escaped_quote] = len ? len - 1 : len;
-		if (tree->nb_escaped_quote < NB_ESCAPED_QUOTE)
-			tree->nb_escaped_quote++;
+		node->esc_i[node->nb_escaped_quote] = len ? len - 1 : len;
+		if (node->nb_escaped_quote < NB_ESCAPED_QUOTE)
+			node->nb_escaped_quote++;
 	}
 }
 
 void	case_dollar(char **ret, char **ptr, int *i)
 {
+	int		end;
+
+	end = 0;
 	*ret = add_str(ret, ptr, i);
 	(*ptr)++;
-	*ret = ft_strffjoin(*ret, find_var(*ptr));
-	*ptr += skip_var(*ptr);
+	if (ft_strnequ(*ptr, "((", 2))
+	{
+		*ret = ft_strffjoin(*ret, ft_itoa(ft_eval_expr(*ptr, &end, 0)));
+		*ptr += end;
+	}
+	else
+	{
+		*ret = ft_strffjoin(*ret, find_var(*ptr));
+		*ptr += skip_var(*ptr);
+	}
 }
 
 void	case_quote(char **ret, char **ptr, int *i)
@@ -59,13 +68,13 @@ void	case_quote(char **ret, char **ptr, int *i)
 	*ret = add_str(ret, ptr, i);
 }
 
-void	case_dquote(char **ret, char **ptr, int *i)
+void	case_dquote(char **ret, char **ptr, int *i, t_ast_node *node)
 {
 	(*i)++;
 	while ((*ptr)[*i] && (*ptr)[*i] != '\"')
 	{
 		if ((*ptr)[*i] == '\\')
-			case_backslash(ret, ptr, i, "$`\"\\\n");
+			case_backslash(ret, ptr, i,"$`\"\\\n", node);
 		else if ((*ptr)[*i] == '$')
 			case_dollar(ret, ptr, i);
 		else

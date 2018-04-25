@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:36:08 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/06 17:27:58 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/24 16:26:29 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int		func_word(t_ast_node *root)
 {
 	t_sh21			*sh21;
 	int				status;
+	char			**argv;
 
 	status = 0;
 	if (!root)

@@ -19,6 +19,7 @@ void	del_ast(t_ast_node **node)
 	del_ast(&(*node)->left);
 	del_ast(&(*node)->right);
 	del_ast(&(*node)->redir_node);
+	del_ast(&(*node)->condition_node);
 	ft_strdel(&(*node)->heredoc);
 	ft_strdel(&(*node)->content);
 	ft_memdel((void**)node);

@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+         #
+#    By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/16 13:28:08 by fle-roy           #+#    #+#              #
 #    Updated: 2018/04/25 13:10:07 by fle-roy          ###   ########.fr        #

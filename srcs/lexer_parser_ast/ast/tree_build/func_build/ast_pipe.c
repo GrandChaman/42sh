@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_elif.c                                        :+:      :+:    :+:   */
+/*   ast_pipe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbertoia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/18 23:19:12 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/18 23:19:14 by fbertoia         ###   ########.fr       */
+/*   Created: 2018/04/18 23:20:34 by fbertoia          #+#    #+#             */
+/*   Updated: 2018/04/18 23:20:38 by fbertoia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 
-int		func_elif(t_ast_node *root)
+t_ast_node		*ast_pipe(t_lex **lex, t_ast_node *root)
 {
-	int status;
+	t_ast_node *node;
 
-	status = 0;
-	if (!g_exec_fn[root->condition_node->type](root->condition_node))
-		status = g_exec_fn[root->left->type](root->left);
-	else if (root->right)
-		status = g_exec_fn[root->right->type](root->right);
-	return (status);
+	if (!lex || !*lex)
+		return (NULL);
+	node = ast_create_node((*lex)->token_type, (*lex)->content);
+	*lex = (*lex)->next;
+	node->left = root;
+	node->right = ast_create_leaf((*lex)->token_type, lex);
+	return (node);
 }

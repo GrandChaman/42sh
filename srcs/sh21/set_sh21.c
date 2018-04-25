@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:58:39 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/16 14:55:58 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/19 15:46:26 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_sh21		*sh21_init(char *env[])
 
 t_sh21		*sh21_get(void)
 {
-	static t_sh21	sh21;
+	static t_sh21	sh21[16];
 
-	return (&sh21);
+	return (&sh21[g_shell_idx]);
 }
