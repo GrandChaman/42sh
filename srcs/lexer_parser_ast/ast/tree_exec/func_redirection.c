@@ -93,14 +93,14 @@ static void			handle_format_word(t_ast_node *node)
 
 	if (node->left)
 	{
-		node->left->content = format_word(node->left->content, node->left);
+		node->left->content = format_word(&node->left->content, node->left);
 		tmp = node->left->content;
 		node->left->content = word(&node->left->content);
 		ft_strdel(&tmp);
 	}
 	if (node->right)
 	{
-		node->right->content = format_word(node->right->content, node->right);
+		node->right->content = format_word(&node->right->content, node->right);
 		tmp = node->right->content;
 		node->right->content = word(&node->right->content);
 		ft_strdel(&tmp);

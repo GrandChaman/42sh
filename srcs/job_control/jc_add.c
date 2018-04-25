@@ -13,8 +13,10 @@
 #include "sh21.h"
 #include "job_control.h"
 
-static void	jc_add_routine(t_jc_job *job, pid_t pid, char *cmd)
+static void	jc_add_routine(t_jc_job *job, pid_t npid, char *cmd)
 {
+	t_jc_proc	proc;
+
 	if (!job->proc_list)
 	{
 		if (setpgid(npid, npid) < 0)
@@ -41,7 +43,7 @@ void		jc_add(t_jc_tag jtag, pid_t npid, char *cmd)
 	{
 		tmp = ((t_jc_job*)jb_list->content);
 		if (tmp->tag == jtag)
-			jc_add_routine(tmp, pid, cmd);
+			jc_add_routine(tmp, npid, cmd);
 		jb_list = jb_list->next;
 	}
 }
