@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 15:58:28 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/24 16:45:26 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 09:36:13 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void		jc_add(t_jc_tag jtag, pid_t npid, char *cmd)
 			else if (setpgid(npid, tmp->pgid) < 0)
 				ft_perror("setpgid", "called to setpgid failed.");
 			proc.pid = npid;
+			proc.cmd = cmd;
 			ft_lstpush_back(&tmp->pid_list, &proc, sizeof(t_jc_proc));
 			return ;
 		}

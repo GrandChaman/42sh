@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 13:13:55 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/24 16:45:54 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 09:38:29 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static int	jc_wait(t_jc_job *job, int mode)
 	int wait_res;
 	t_list	*proc_list;
 
+	status = 0;
 	if (mode == BG)
 		jc_update_job(job);
 	else

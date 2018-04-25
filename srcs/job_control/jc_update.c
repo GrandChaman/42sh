@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 13:33:03 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/24 16:22:19 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 09:39:05 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ void		jc_update_all(void)
 
 void		jc_update_proc(t_jc_proc *proc, int status)
 {
-	if (WIFEXITED(status) && ((proc->status = DONE) >= 0))
+	if (WIFEXITED(status) && ((proc->status = DONE) || 1))
 		proc->rvalue = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status) && ((proc->status = KILLED) >= 0))
+	else if (WIFSIGNALED(status) && ((proc->status = KILLED) || 1))
 		proc->rvalue = WTERMSIG(status);
-	else if (WIFSTOPPED(status) && ((proc->status = SUSPENDED) >= 0))
+	else if (WIFSTOPPED(status) && ((proc->status = SUSPENDED) || 1))
 		proc->rvalue = WSTOPSIG(status);
 	else
 		proc->status = RUNNING;
