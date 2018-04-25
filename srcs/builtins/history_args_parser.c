@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history_args_parser.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rfautier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/23 14:06:25 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/23 18:23:06 by hfontain         ###   ########.fr       */
+/*   Created: 2018/04/25 13:43:49 by rfautier          #+#    #+#             */
+/*   Updated: 2018/04/25 13:44:06 by rfautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,6 @@
 #define D_ERR		1 << 4
 #define AWRN_ERR	1 << 5
 #define INVARG		1 << 6
-
-// t_hist_args		*args_create(void)
-// {
-// 	t_hist_args *args = malloc(sizeof(t_hist_args));
-// 	args->c = 0;
-// 	args->d = 0;
-// 	args->d_val = 0;
-// 	args->p = 0;
-// 	args->s = 0;
-// 	args->awrn = 0;
-// 	args->err = 0;
-// 	return (args);
-// }
 
 static void		awrn_handle(t_hist_args *args, char *str)
 {

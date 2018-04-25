@@ -31,13 +31,11 @@ static void		print_jobs(void)
 	}
 }
 
-static int	print_one_job_routine(t_jc_job *job)
+static int		print_one_job_routine(t_jc_job *job)
 {
 	t_list		*proc_list;
 	t_jc_proc	*proc;
-	size_t		numlen;
 
-	numlen = ft_numlen(job->tag);
 	proc_list = job->proc_list;
 	proc = (t_jc_proc*)(proc_list->content);
 	ft_printf("[%d] + %d %-*s %s\t", job->tag, proc->pid, 11,
@@ -50,8 +48,8 @@ static int	print_one_job_routine(t_jc_job *job)
 	while ((proc_list = proc_list->next))
 	{
 		proc = (t_jc_proc*)(proc_list->content);
-		ft_printf("%*s%d %-*s %s\t", 6 + numlen, " ", proc->pid, 11,
-			g_jc_status_string[proc->status], proc->cmd);
+		ft_printf("%*s%d %-*s %s\t", 6 + ft_numlen(job->tag), " ",
+			proc->pid, 11, g_jc_status_string[proc->status], proc->cmd);
 		if (proc->status == KILLED || proc->status == DONE)
 			ft_printf("(%s : %d)\n", (proc->status == KILLED ? "Signal" :
 				"Exit code"), proc->rvalue);
@@ -61,7 +59,7 @@ static int	print_one_job_routine(t_jc_job *job)
 	return (1);
 }
 
-int		print_one_jobs(int ntag)
+int				print_one_jobs(int ntag)
 {
 	t_list		*tmp;
 

@@ -15,8 +15,7 @@
 #include "builtins.h"
 #include "env.h"
 
-
-static int		print_one_jobs_2(int tague)
+static int			print_one_jobs_2(int tague)
 {
 	t_list	*tmp;
 	t_jc	*jobs_struct;
@@ -31,7 +30,7 @@ static int		print_one_jobs_2(int tague)
 			autre = ((t_jc_job*)(tmp->content))->proc_list;
 			while (autre != NULL)
 			{
-				ft_printf("%s\n",((t_jc_proc*)(autre->content))->cmd);
+				ft_printf("%s\n", ((t_jc_proc*)(autre->content))->cmd);
 				autre = autre->next;
 			}
 			return (1);

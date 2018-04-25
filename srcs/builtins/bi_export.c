@@ -21,7 +21,8 @@ static int		print_exit(char ***environ)
 	return (0);
 }
 
-int				bi_export(int argc, char **argv, char ***environ, t_ast_node *root)
+int				bi_export(int argc,
+	char **argv, char ***environ, t_ast_node *root)
 {
 	int		i;
 	char	*var;
