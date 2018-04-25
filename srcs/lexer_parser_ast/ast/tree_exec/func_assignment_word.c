@@ -24,7 +24,7 @@ int		assign_var(t_ast_node *node)
 	argv = NULL;
     while (ls)
     {
-		ls->assignation = format_word(ls->assignation, node);
+		ls->assignation = format_word(&ls->assignation, node);
 		argv = split_args(ls->assignation, node);
 		ret += ft_putenv(ft_strdup(argv[0]), &sh21_get()->env.local_var);
 		del_arr(&argv);

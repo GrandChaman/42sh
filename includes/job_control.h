@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 15:23:14 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 11:05:13 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 16:14:15 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <sys/types.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <errno.h>
+# include <signal.h>
+# include "sh21.h"
 # include "ast.h"
 # define FG 0
 # define BG 1
@@ -66,6 +69,7 @@ void			jc_update_all(void);
 void		jc_garbage_collector(t_jc *jc);
 void		jc_update_job(t_jc_job *job);
 void		jc_set_job_as_running(t_jc_job *job);
+void	jc_change_pgrp(t_jc_job *job, int mode);
 
 char			*jc_cmd(t_ast_node *root);
 

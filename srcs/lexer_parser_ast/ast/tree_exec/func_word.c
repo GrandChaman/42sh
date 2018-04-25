@@ -22,7 +22,7 @@ int		func_word(t_ast_node *root)
 	if (!root)
 		return (0);
 	sh21 = sh21_get();
-	root->content = format_word(root->content, root);
+	root->content = format_word(&root->content, root);
 	root->argv = split_args(root->content, root);
 	set_job(root);
 	if (!status)

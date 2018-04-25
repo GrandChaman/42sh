@@ -180,7 +180,7 @@ t_ast_node				*ast_if(t_lex **lex, t_ast_node *node);
 t_ast_node				*ast_bang(t_lex **lex, t_ast_node *node);
 t_ast_node				*ast_pipeline(t_lex **lex, t_ast_node *node);
 
-char					*format_word(char *str, t_ast_node *node);
+char					*format_word(char **str, t_ast_node *node);
 char					*word(char **argv);
 char					*add_str(char **ret, char **ptr, int *i);
 char					*find_var(char *str);
