@@ -21,11 +21,12 @@ static int		print_exit(char ***environ)
 	return (0);
 }
 
-int				bi_export(int argc, char **argv, char ***environ)
+int				bi_export(int argc, char **argv, char ***environ, t_ast_node *root)
 {
 	int		i;
 	char	*var;
 
+	(void)root;
 	i = 1;
 	if (argc < 2)
 		return (print_exit(environ));

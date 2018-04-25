@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:32:20 by hfontain          #+#    #+#             */
-/*   Updated: 2018/03/19 12:52:01 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/24 18:56:20 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ typedef struct			s_fd_cleanup
 	int					fd_reassign;
 }						t_fd_cleanup;
 
+enum e_pipe_side
+{
+	PIPE_IN = 0,
+	PIPE_OUT = 1,
+};
+
 typedef struct			s_ast_node
 {
 	t_token_type		type;
@@ -39,6 +45,13 @@ typedef struct			s_ast_node
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
 	struct s_ast_node	*redir_node;
+	int					tag_gpid;
+	int 				mod_gpid;
+	int 				piped_cmd;
+	int 				pipe_fd[2];
+	int 				tmp_fd_write;
+	int 				tmp_fd_read;
+	int 				pipe_to_close;
 }						t_ast_node;
 
 typedef struct			s_args
@@ -168,6 +181,7 @@ char					**copy_list_to_array(t_args **list);
 char					**split_args(char *argv);
 
 
+void			set_job(t_ast_node *root);
 
 static t_exec_tree g_exec_fn[] =
 {
@@ -198,7 +212,6 @@ static t_exec_tree g_exec_fn[] =
 	func_elif,
 	func_fi,
 	func_do,
-	func_time,
 	func_done,
 	func_case,
 	func_esac,

@@ -15,13 +15,14 @@
 #include "libft.h"
 #include "builtins.h"
 
-int		bi_hash(int argc, char **argv, char ***environ)
+int		bi_hash(int argc, char **argv, char ***environ, t_ast_node *root)
 {
 	t_sh21 *sh21;
 
 	(void)argc;
 	(void)argv;
 	(void)environ;
+	(void)root;
 	sh21 = sh21_get();
 	find_bin_paths(&sh21->env, environ);
 	return (0);

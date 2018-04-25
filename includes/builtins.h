@@ -48,16 +48,24 @@ int						ft_setenv(const char *name, const char *value,
 int						print_env(char **env);
 int						env_usage(char c, int option);
 
-int						bi_cd(int argc, char **argv, char ***environ);
-int						bi_echo(int argc, char **argv, char ***environ);
-int						bi_env(int argc, char **argv, char ***environ);
-int						bi_exit(int argc, char **argv, char ***environ);
-int						bi_setenv(int argc, char **argv, char ***environ);
-int						bi_unsetenv(int argc, char **argv, char ***environ);
-int						bi_hash(int argc, char **argv, char ***environ);
-int						bi_export(int argc, char **argv, char ***environ);
-int						bi_unset(int argc, char **argv, char ***environ);
-int						bi_history(int argc, char **argv, char ***environ);
+int		print_one_jobs(int tague);
+int					check_jobs(int tague);
+int					get_last_last_jobs(void);
+int					get_last_jobs(void);
+int					bi_kill(int argc, char **argv, char ***environ, t_ast_node *root);
+int					bi_fg(int argc, char **argv, char ***environ, t_ast_node *root);
+int					bi_bg(int argc, char **argv, char ***environ, t_ast_node *root);
+int					bi_jobs(int argc, char **argv, char ***environ, t_ast_node *root);
+int						bi_cd(int argc, char **argv, char ***environ, t_ast_node *root);
+int						bi_echo(int argc, char **argv, char ***environ, t_ast_node *root);
+int						bi_env(int argc, char **argv, char ***environ, t_ast_node *root);
+int						bi_exit(int argc, char **argv, char ***environ, t_ast_node *root);
+int						bi_setenv(int argc, char **argv, char ***environ, t_ast_node *root);
+int						bi_unsetenv(int argc, char **argv, char ***environ, t_ast_node *root);
+int						bi_hash(int argc, char **argv, char ***environ, t_ast_node *root);
+int						bi_export(int argc, char **argv, char ***environ, t_ast_node *root);
+int						bi_unset(int argc, char **argv, char ***environ, t_ast_node *root);
+int						bi_history(int argc, char **argv, char ***environ, t_ast_node *root);
 int						hist_write(char *path);
 int						hist_append_file(char *path);
 int						hist_sync(char *path);
@@ -87,7 +95,7 @@ void					del_hash(t_env	*env);
 typedef struct			s_builtin
 {
 	const char		*fn_name;
-	int				(*fn_ptr)(int, char**, char ***);
+	int				(*fn_ptr)(int, char**, char ***, t_ast_node*);
 }						t_builtin;
 
 enum flag_cd {
@@ -101,6 +109,10 @@ static const t_builtin		g_builtins[] =
 {
 	{"exit", &bi_exit},
 	{"cd", &bi_cd},
+	{"jobs", &bi_jobs},
+	{"fg", &bi_fg},
+	{"bg", &bi_bg},
+	{"kill", &bi_kill},
 	{"echo", &bi_echo},
 	{"env", &bi_env},
 	{"setenv", &bi_setenv},

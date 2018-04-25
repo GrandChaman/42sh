@@ -16,7 +16,6 @@
 int		func_word(t_ast_node *root)
 {
 	t_sh21			*sh21;
-	t_fd_cleanup	*fd_cleanup;
 	int				status;
 
 	status = 0;
@@ -25,19 +24,10 @@ int		func_word(t_ast_node *root)
 	sh21 = sh21_get();
 	root->content = format_word(&root->content);
 	sh21->argv = split_args(root->content);
-	sh21->argc = arrlen(sh21->argv);
-	if (root->redir_node)
-		status = g_exec_fn[root->redir_node->type](root->redir_node);
+	set_job(root);
 	if (!status)
-		status = sh21_exec(arrlen(sh21->argv), sh21->argv, &sh21->env.orig_env);
+		status = sh21_exec(sh21->argv, &sh21->env.orig_env, root); //add tag_gpid
 	sh21->status = status;
-	fd_cleanup = sh21->tree.fd_cleanup;
-	while (fd_cleanup)
-	{
-		fd_cleanup->fd_function(fd_cleanup);
-		fd_cleanup = fd_cleanup->next;
-	}
 	del_arr(&sh21->argv);
-	del_list((void **)&sh21->tree.fd_cleanup, &del_redir);
 	return (status);
 }

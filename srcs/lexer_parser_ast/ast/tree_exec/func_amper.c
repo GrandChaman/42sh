@@ -15,7 +15,20 @@
 
 int		func_amper(t_ast_node *root)
 {
-	(void)root;
-	// root->left.job = 1;
-	return (0);
+	int ret;
+
+	ret = 0;
+	if (root->left && (root->left->type == SEMI || root->left->type == AND_IF
+		|| root->left->type == OR_IF))
+	{
+		if (root->left->right)
+			root->left->right->mod_gpid = BG;
+	}
+	else if (root->left)
+		root->left->mod_gpid = BG;
+	if (root->left)
+		ret = g_exec_fn[root->left->type](root->left);
+	if (root->right)
+		ret = g_exec_fn[root->right->type](root->right);
+	return (ret);
 }

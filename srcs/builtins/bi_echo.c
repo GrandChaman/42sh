@@ -105,7 +105,7 @@ static int	norme_0(char **argv, int i, int ii, int stock)
 	return (0);
 }
 
-int			bi_echo(int argc, char **argv, char ***environ)
+int			bi_echo(int argc, char **argv, char ***environ, t_ast_node *root)
 {
 	int i;
 	int ii;
@@ -116,5 +116,6 @@ int			bi_echo(int argc, char **argv, char ***environ)
 	stock = 0;
 	(void)environ;
 	(void)argc;
+	(void)root;
 	return (norme_0(argv, i, ii, stock));
 }

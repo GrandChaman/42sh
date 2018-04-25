@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/18 19:34:12 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/22 16:16:56 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ t_lex		*lex_create(t_token_type token_type, char *content)
 {
 	t_lex	*lex;
 
-	lex = malloc(sizeof(t_lex));
+	lex = ft_memalloc(sizeof(t_lex));
 	if (content)
 		lex->content = ft_strdup(content);
 	else
 	{
-		lex->content = malloc(sizeof(char) * 1);
+		lex->content = ft_memalloc(sizeof(char) * 1);
 		lex->content[0] = '\0';
 	}
 	lex->token_type = token_type;
