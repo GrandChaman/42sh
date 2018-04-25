@@ -18,7 +18,6 @@ static char	*norme_0(int i, char *ret, char *ptr, char **str)
 	if (i)
 		ret = add_str(&ret, &ptr, &i);
 	ft_strdel(str);
-	ft_printf("within format = %s|\n", ret);
 	return (ret);
 }
 
