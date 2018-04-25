@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 15:23:14 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 15:56:45 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 16:14:15 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <sys/types.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <errno.h>
+# include <signal.h>
+# include "sh21.h"
 # include "ast.h"
 # define FG 0
 # define BG 1

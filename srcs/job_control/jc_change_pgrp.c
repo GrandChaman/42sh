@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 15:46:15 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 15:57:05 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 16:14:09 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void			jc_change_pgrp(t_jc_job *job, int mode)
 
 	proc_list = job->proc_list;
 	if (mode == BG)
-		jc_change_pgrp_bg(job, mode);
+		jc_change_pgrp_bg(job);
 	else
-		jc_change_pgrp_fg(job, mode);
+		jc_change_pgrp_fg(job);
 }

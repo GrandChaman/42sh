@@ -6,15 +6,13 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 13:13:55 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 15:59:33 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 16:13:52 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "job_control.h"
-#include <signal.h>
-#include "sh21.h"
 
-static int	jc_wait_on_bg(t_jc_job *job)
+static void	jc_wait_on_bg(t_jc_job *job)
 {
 	jc_update_job(job);
 	jc_set_job_as_running(job);
