@@ -16,14 +16,6 @@
 #include <ctype.h>
 #include "sh21.h"
 
-#define AF			1 << 0
-#define WF			1 << 1
-#define RF			1 << 2
-#define NF			1 << 3
-#define D_ERR		1 << 4
-#define AWRN_ERR	1 << 5
-#define INVARG		1 << 6
-
 static void		awrn_handle(t_hist_args *args, char *str)
 {
 	if (*str == 'a' && !args->awrn)
@@ -51,19 +43,48 @@ int				handle_arg(t_hist_args *args, char **arg)
 			args->p = 1;
 		else if (*str == 's')
 			args->s = 1;
+		else if (*str == 'd')
+		{
+			args->d = 1;
+			return ('d');
+		}
 		else if (strchr("awrn", *str) != NULL)
 		{
 			if (args->awrn != 0)
 				return ((args->err = AWRN_ERR));
 			awrn_handle(args, str);
 		}
-		else
-			return ((args->d = (*str == 'd')) ? 'd' : D_ERR);
+
 		++*arg;
 		++str;
 	}
 	return (0);
 }
+
+void print_hhh(t_hist_args flags)
+{
+	flags.err ? ft_printf("ERROR") : (0);
+	flags.d ? ft_printf("D:%i", flags.d_val) : (0);
+	flags.c ? ft_printf("C") : (0);
+	flags.p ? ft_printf("P") : (0);
+	flags.s ? ft_printf("S") : (0);
+	flags.awrn ? ft_printf("%c", flags.awrn) : (0);
+}
+
+
+void			args_init(t_hist_args *args)
+{
+	args->c = 0;
+	args->p = 0;
+	args->s = 0;
+	args->d = 0;
+	args->d_val = 0;
+	args->awrn = 0;
+	args->err = 0;
+	args->argv_count = 1;
+}
+
+#define Dreturn ft_printf("%i\n", __LINE__); return ;
 
 void			read_args(t_hist_args *args, int argc, char **argv)
 {
@@ -80,12 +101,18 @@ void			read_args(t_hist_args *args, int argc, char **argv)
 			{
 				++arg;
 				if (*arg && isdigit(*arg))
+				{
 					args->d_val = atoi(arg);
+					arg = argv[++args->argv_count];
+				}
 				else if (args->argv_count < argc - 1)
 				{
 					arg = argv[++args->argv_count];
 					if (*arg && isdigit(*arg))
+					{
 						args->d_val = atoi(arg);
+						arg = argv[++args->argv_count];
+					}
 					else
 						args->err = D_ERR;
 				}
@@ -98,10 +125,10 @@ void			read_args(t_hist_args *args, int argc, char **argv)
 				return ;
 			}
 			else if (err < 0)
-				return;
+				return ;
 		}
 		else
-			return;
+			return ;
 		++args->argv_count;
 	}
 }

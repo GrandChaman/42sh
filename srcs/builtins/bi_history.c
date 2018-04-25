@@ -91,7 +91,9 @@ int					bi_history(int argc, char **argv,
 	ret = 0;
 	if (argc == 1)
 		return (hist_display(0));
+	args_init(&flags);
 	read_args(&flags, argc, argv);
+	//print_hhh(flags);
 	if (flags.err)
 		return (flags.err);
 	ret = (flags.d ? hist_del_at_offset(flags.d_val) : ret);

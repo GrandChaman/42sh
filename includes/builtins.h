@@ -22,7 +22,7 @@
 # define D_ERR		1 << 4
 # define AWRN_ERR	1 << 5
 # define INVARG		1 << 6
-// 
+//
 // typedef struct			s_hist_args
 // {
 // 	int		c;
@@ -54,6 +54,7 @@ typedef struct	s_hist_args
 	int		argv_count;
 }				t_hist_args;
 
+void					args_init(t_hist_args *args);
 char					*cd_rules5_2(char *curpath);
 int						go_home(char ***environ);
 int						ft_echo(char *argv[]);
@@ -66,7 +67,7 @@ int						ft_setenv(const char *name, const char *value,
 						int override, char ***environ);
 int						print_env(char **env);
 int						env_usage(char c, int option);
-
+void print_hhh(t_hist_args flags);
 int		print_one_jobs(int tague);
 int					check_jobs(int tague);
 int					get_last_last_jobs(void);
