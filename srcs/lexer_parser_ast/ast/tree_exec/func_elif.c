@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_arr.c                                        :+:      :+:    :+:   */
+/*   func_elif.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbertoia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/15 15:59:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/03/15 15:59:35 by hfontain         ###   ########.fr       */
+/*   Created: 2018/04/18 23:19:12 by fbertoia          #+#    #+#             */
+/*   Updated: 2018/04/18 23:19:14 by fbertoia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ast.h"
 #include "sh21.h"
 
 int		func_elif(t_ast_node *root)
 {
-	(void)root;
-	return (0);
+	int status;
+
+	status = 0;
+	if (!g_exec_fn[root->condition_node->type](root->condition_node))
+		status = g_exec_fn[root->left->type](root->left);
+	else if (root->right)
+		status = g_exec_fn[root->right->type](root->right);
+	return (status);
 }

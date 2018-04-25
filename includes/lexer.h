@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/16 13:29:02 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/24 16:30:04 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@
 ** "%s -- %[GRN]%s %[NC](%s)\n", __FUNCTION__,
 ** lex->content, g_token_type_str[lex->token_type]); usleep(1000);}
 */
+enum					e_index_subshell
+{
+	CMD_FD_SUBSH,
+	RES_FD_SUBSH,
+	NW_SUBSH,
+	NERR_SUBSH,
+};
 
 typedef struct s_sh21	t_sh21;
 typedef enum			e_token_type
@@ -58,7 +65,6 @@ typedef enum			e_token_type
 	Elif,
 	Fi,
 	Do,
-	Time,
 	Done,
 	Case,
 	Esac,
@@ -130,7 +136,6 @@ static const char		*g_token_type_str[] =
 	"elif",
 	"fi",
 	"do",
-	"time",
 	"done",
 	"case",
 	"esac",
@@ -163,7 +168,7 @@ static const char		*g_token_type_str[] =
 	"IO_NUM_SPC"
 };
 
-int						lexer(t_sh21 *sh21);
+t_lex					*lexer(char *cmd);
 int						is_operator_part(char c, int stat);
 int						is_redir_part(char c);
 int						is_redir_token(t_token_type token_type);
@@ -209,19 +214,21 @@ void					word_rec(t_lex *lex);
 
 typedef struct			s_lexa
 {
-	char			*str;
 	char			*buffer;
-	int				stat;
-	char			prev;
+	char			*cmd;
+	char			*str;
 	char			c;
-	t_token_type	t;
-	t_lex			*lex;
-	int				oquote;
+	char			prev;
 	int				escaped;
+	int				oquote;
+	int				stat;
+	t_lex			*lex;
+	t_token_type	t;
 }						t_lexa;
 
 static size_t g_lexa_buff_sz = 1024;
 
+void					on_subshell(t_lexa *lexa);
 void					check_semi_stat(t_lexa *lexa);
 void					on_quote(t_lexa *lexa);
 void					on_blank(t_lexa *lexa);
@@ -229,7 +236,7 @@ void					on_operator_prev(t_lexa *lexa);
 void					on_operator(t_lexa *lexa);
 void					on_word(t_lexa *lexa);
 void					lexfallback(t_lexa *lexa);
-void					lexa_init(t_lexa *lexa, t_sh21 *sh21);
+void					lexa_init(t_lexa *lexa, char *cmd);
 void					loop_word(t_lex *ptr);
 void					word_recog(t_lexa *lexa);
 

@@ -6,13 +6,13 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 12:40:21 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/18 18:26:24 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/23 18:15:31 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 
-void 	case_quote_rm(char *str, int *i)
+void	case_quote_rm(char *str, int *i)
 {
 	char c;
 
@@ -22,7 +22,7 @@ void 	case_quote_rm(char *str, int *i)
 		*i += 1;
 }
 
-void 	case_backslash_rm(char *str, int *i)
+void	case_backslash_rm(char *str, int *i)
 {
 	while (str[*i + 1] == ' ' || str[*i + 1] == '\t')
 		*i += 1;
@@ -32,7 +32,7 @@ void 	case_backslash_rm(char *str, int *i)
 		*i += 1;
 }
 
-void 	case_remove_chariot(char *str, int *i)
+void	case_remove_chariot(char *str, int *i)
 {
 	while (str[*i + 1] == ' ' || str[*i + 1] == '\t')
 		*i += 1;
@@ -42,7 +42,7 @@ void 	case_remove_chariot(char *str, int *i)
 		*i += 1;
 }
 
-char	*remove_char(char *str)
+char		*remove_char(char *str)
 {
 	int i;
 

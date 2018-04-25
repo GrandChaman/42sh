@@ -53,7 +53,7 @@ static	int		flag_equal(char **av, char ***cpy_env, int *i)
 	return (2);
 }
 
-int				bi_env(int ac, char *av[], char ***environ)
+int				bi_env(int ac, char *av[], char ***environ, t_ast_node *root)
 {
 	int		i;
 	int		ret;
@@ -76,5 +76,5 @@ int				bi_env(int ac, char *av[], char ***environ)
 	while (av[i] && (ft_strindex(av[i], '=')) >= 0)
 		if ((ret = flag_equal(av, &env->env_cpy, &i)) < 2)
 			return (ret);
-	return (sh21_exec(arrlen(av + i), av + i, &env->env_cpy));
+	return (sh21_exec(av + i, &env->env_cpy, root));
 }

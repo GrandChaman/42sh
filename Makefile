@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+         #
+#    By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/16 13:28:08 by fle-roy           #+#    #+#              #
-#    Updated: 2018/04/17 19:24:00 by rfautier         ###   ########.fr        #
+#    Updated: 2018/04/25 13:10:07 by fle-roy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ SRC =  $(shell find srcs -regex '.*\.c' -exec basename {} \; | tr '\n' ' ')
 # 		word.c split_args2.c remove_char.c
 
 LIBFT_INCLUDE = $(LIBFT_DIR)/include
-CFLAG = -g3 -O2 -Wall -Wextra -I $(LIBFT_INCLUDE) -I $(INCLUDE)
+CFLAG = -g3 -fsanitize=address -Wall -Wextra -I $(LIBFT_INCLUDE) -I $(INCLUDE)
 CC = cc
 LFLAG = -ltermcap
 BIN = bin

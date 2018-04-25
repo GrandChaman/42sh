@@ -15,10 +15,11 @@
 #include "libft.h"
 #include "builtins.h"
 
-int		bi_unsetenv(int argc, char **argv, char ***environ)
+int		bi_unsetenv(int argc, char **argv, char ***environ, t_ast_node *root)
 {
 	int		i;
 
+	(void)root;
 	if (argc == 1)
 	{
 		ft_printf("unsetenv: Too few arguments\n");

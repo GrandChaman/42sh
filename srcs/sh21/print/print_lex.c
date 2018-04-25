@@ -17,11 +17,12 @@ void	print_lex_list(t_lex *elem)
 	t_sh21 *sh21;
 
 	sh21 = sh21_get();
+	ft_fprintf(sh21->debug_tty, "\n\n==============================\n");
 	while (elem)
 	{
-		ft_printf("Tok: %-16s '%[RED]%s%[NC](%i)'\n",
+		ft_fprintf(sh21->debug_tty, "Tok: %-16s '{red}%s{eoc}(%i) SHLVL = %s\n",
 				g_token_type_str[(int)elem->token_type], elem->content,
-				elem->token_type);
+				elem->token_type, ft_getenv("SHLVL", &sh21->env.orig_env));
 		elem = elem->next;
 	}
 }

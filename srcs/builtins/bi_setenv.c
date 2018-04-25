@@ -15,13 +15,14 @@
 #include "libft.h"
 #include "builtins.h"
 
-int		bi_setenv(int argc, char **argv, char ***environ)
+int		bi_setenv(int argc, char **argv, char ***environ, t_ast_node *root)
 {
 	char	**args;
 	int		err;
 
+	(void)root;
 	if (argc == 1)
-		return (bi_env(1, argv, environ));
+		return (bi_env(1, argv, environ, root));
 	else
 	{
 		args = ft_strsplit(argv[1], '=');

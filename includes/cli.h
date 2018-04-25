@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 10:56:03 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/19 12:43:16 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/21 19:07:00 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,8 +159,7 @@ t_ft_sh					*get_ft_shell(void);
 int						is_env_correct(void);
 void					apply_terminal_setting(int def);
 int						display_prompt(int last_result);
-char					*read_command(char *prompt, int status, int heredoc,
-	int fb);
+char					*read_command(char *prompt, int status, int heredoc);
 void					exec_term_command(const char *code);
 void					exec_term_command_p(const char *code, int p1, int p2);
 void					spt_arrow(unsigned long touch);
@@ -208,8 +207,7 @@ void					setpos_autocomplete(t_ft_sh *sh);
 void					cancel_selection(t_ft_sh *shell, unsigned long rchar);
 void					print_normal_touch(t_ft_sh *sh, unsigned long rchar);
 int						display_prompt(int last_result);
-void					prompt_select(char *prompt, int status, int heredoc,
-	int fb);
+void					prompt_select(char *prompt, int status, int heredoc);
 int						display_prompt(int last_result);
 void					print_normal_touch(t_ft_sh *sh, unsigned long rchar);
 void					delete_hist_entry(void *entry, size_t size);
@@ -220,6 +218,9 @@ void					home_or_end_touch(unsigned long touch);
 int						is_last_char_a_nl(void);
 int						read_history(t_ft_sh *sh, int fd);
 void					write_history(t_ft_sh *sh, int fd, int should_delete);
+void					parse_and_add_to_history(t_ft_sh *sh, char *line);
+char					*get_history_file(void);
+char					*escape_operator(char *str);
 
 static t_ft_touch		g_ft_touch_list[] =
 {

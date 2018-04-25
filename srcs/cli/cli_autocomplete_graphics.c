@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/18 16:41:32 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/03/21 17:39:43 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/19 18:21:05 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ static void	select_autocompletion(t_ft_autoc_entry *item, int invert_video)
 		exec_term_command_p(TC_MOVENDOWN, 0, item->y_pos);
 	if (item->x_pos > 0)
 		exec_term_command_p(TC_MOVENRIGHT, 0, item->x_pos);
+	if (item->undeline)
+		exec_term_command(TC_UNDERLINE_ON);
 	ft_printf("%s%-*s{eoc}", item->color, sh->autocomplete_padding, item->name);
+	exec_term_command(TC_UNDERLINE_OFF);
 	if (invert_video)
 	{
 		exec_term_command(TC_RESETGRAPHICS);

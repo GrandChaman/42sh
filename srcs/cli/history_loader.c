@@ -6,32 +6,21 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 14:16:25 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/18 15:32:11 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/19 16:45:51 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cli.h"
 
-int						read_history(t_ft_sh *sh, int fd)
+int					read_history(t_ft_sh *sh, int fd)
 {
 	int				gnl_res;
 	char			*line;
-	char			*tmp;
-	t_ft_hist_entry	entry;
 
 	while ((gnl_res = get_next_line(fd, &line)) > 0)
 	{
-		tmp = ft_strchr(line, ' ');
-		if (tmp)
-			entry.command = ft_strdup(tmp + 1);
-		else
-			entry.command = ft_strdup(line);
-		entry.timestamp = ft_atoi(line);
+		parse_and_add_to_history(sh, line);
 		free(line);
-		ft_lstpush_front(&sh->history, &entry, sizeof(entry));
-		sh->history_size++;
-		if (sh->history_size > SH_HIST_MAX_SIZE)
-			trim_history(sh);
 	}
 	return (gnl_res);
 }
@@ -61,14 +50,12 @@ void				write_history(t_ft_sh *sh, int fd, int should_delete)
 int					load_history(t_ft_sh *sh, int unload)
 {
 	char	*path;
-	char	*home;
 	int		res;
 	int		fd;
 
-	if (!(home = getenv("HOME")))
-		return (ft_fprintf(2, "\nCan't open history file. "
-		"$HOME's not defined\n"));
-	path = ft_strjoin(home, "/.42sh_history");
+	path = get_history_file();
+	if (!path)
+		return (ft_fprintf(2, "\nCan't open history file. HOME not defined\n"));
 	if ((fd = open(path, O_RDWR | O_CREAT | (unload ? O_TRUNC : 0), 0600)) < 0)
 		return (ft_fprintf(2, "\nCan't open history file. open() failed.\n"));
 	if (unload)

@@ -6,15 +6,14 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/19 14:22:53 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/19 17:14:08 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 #include "cli.h"
-#include <time.h>
 
-static int			display_history(int lim)
+static int			hist_display(int lim)
 {
 	t_ft_sh			*sh;
 	t_list			*tmp;
@@ -25,25 +24,24 @@ static int			display_history(int lim)
 	sh = get_ft_shell();
 	i = 0;
 	if (lim < 0 || lim > sh->history_size)
-		return (ft_fprintf(2, "42sh: history: %d: index out of range\n", lim)
-			&& 1);
+		return (ft_fprintf(2, "42sh: history: %d: index out of range\n", lim));
 	if (!(tmp = (lim ? ft_lstat(sh->history, lim) : ft_lstlast(sh->history))))
 		return (0);
 	if (lim)
 		i = sh->history_size - lim;
-	while ((tmp = tmp->prev))
+	while (tmp && ++i)
 	{
 		entry = (t_ft_hist_entry*)tmp->content;
 		ft_bzero(t_format, 50);
 		strftime(t_format, 50, "%e/%d/%G %H:%M:%S",
 			localtime((const time_t *)&entry->timestamp));
-		ft_printf("%d\t%s\t%s\n", i, t_format, entry->command);
-		i++;
+		ft_printf("%d\t%s\t%s\n", i - 1, t_format, entry->command);
+		tmp = tmp->prev;
 	}
 	return (0);
 }
 
-static int			clear_history(void)
+static int			hist_clear(void)
 {
 	t_ft_sh *sh;
 
@@ -53,40 +51,7 @@ static int			clear_history(void)
 	return (0);
 }
 
-static int			read_and_append_history_form_file(char *path)
-{
-	t_ft_sh		*sh;
-	int			fd;
-
-	sh = get_ft_shell();
-	if ((fd = open(path, O_RDONLY)) < 0)
-		return (ft_fprintf(2, "42sh: history: can't read file %s.\n", path)
-			&& 1);
-	if (read_history(sh, fd) < 0)
-	{
-		close(fd);
-		return (ft_fprintf(2, "42sh: history: error while reading %s.\n", path)
-			&& 1);
-	}
-	close(fd);
-	return (0);
-}
-
-static int			write_history_to_file(char *path)
-{
-	t_ft_sh		*sh;
-	int			fd;
-
-	sh = get_ft_shell();
-	if ((fd = open(path, O_WRONLY)) < 0)
-		return (ft_fprintf(2, "42sh: history: can't write to file %s.\n", path)
-			&& 1);
-	write_history(sh, fd, 0);
-	close(fd);
-	return (0);
-}
-
-static int			display_cmd(int argc, const char **argv, int should_display)
+static int			display_cmd(int argc, char **argv, int should_display)
 {
 	int i;
 
@@ -98,81 +63,49 @@ static int			display_cmd(int argc, const char **argv, int should_display)
 	return (0);
 }
 
-static char	*find_diverging_point_in_history_file(char *path, int *fd)
-{
-	t_ft_sh		*sh;
-	char		*line;
-	char		*tmp;
-	t_list		*hist;
-
-	sh = get_ft_shell();
-	if (!sh->history)
-		return (NULL);
-	hist = ft_lstlast(sh->history);
-	if ((*fd = open(path, O_WRONLY)) < 0)
-		return ((void*)(long)(ft_fprintf(2, "42sh: history: can't write to "
-		"file %s.\n", path) && 0));
-	while (hist && get_next_line(*fd, &line) > 0)
-	{
-		tmp = ft_strchr(line, ' ');
-		if (!tmp)
-			continue ;
-		if (!ft_strcmp(tmp, ((t_ft_hist_entry*)hist->content)->command))
-			hist = hist->prev;
-		else
-			break ;
-		free(line);
-	}
-	return (line);
-	// return ((t_ft_hist_entry){.command = ft_strdup(tmp),
-	// 	.timestamp = ft_atoi(line)})
-}
-
-static int			delete_at_offset(int offset)
+static int			hist_del_at_offset(int off)
 {
 	t_ft_sh	*sh;
-	int		len;
 	t_list	*tmp;
 
 	sh = get_ft_shell();
-	len = sh->history_size;
-	if (offset < 0 || len - offset < 0)
-		return (ft_fprintf(2, "42sh: history: %d: index out of range\n",
-			offset) && 1);
-	if (!(tmp = ft_lstat(sh->history, len - offset)))
+	if (sh->history_size >= SH_HIST_MAX_SIZE)
+		off--;
+	if (off < 0 || sh->history_size - off < 0)
+		return (ft_fprintf(2, "42sh: history: %d: index out of range\n", off));
+	if (!(tmp = ft_lstat(sh->history, sh->history_size - off - 1)))
 		return (1);
-	ft_printf("Deleting : %s\n", ((t_ft_hist_entry*)(tmp->content))->command);
 	ft_lstdelone(&tmp, delete_hist_entry);
+	sh->history_size--;
 	return (0);
 }
 
-int					bi_history(int argc, char **argv, char ***environ)
+int					bi_history(int argc, char **argv,
+	char ***environ, t_ast_node *root)
 {
-	int ret;
-	t_hist_args flags;
+	int			ret;
+	t_hist_args	flags;
 
 	(void)environ;
+	(void)root;
 	ret = 0;
 	if (argc == 1)
-		return (display_history(0));
+		return (hist_display(0));
 	read_args(&flags, argc, argv);
 	if (flags.err)
-		return (flags.err); // Handle err here
-	if (flags.d == 'd')
-		return (display_history(flags.d_val));
-	if (flags.p)
-		ret = 0; //-p
+		return (flags.err);
+	ret = (flags.d ? hist_del_at_offset(flags.d_val) : ret);
+	ret = (flags.p ? display_cmd(argc, argv, !flags.s) : ret);
 	if (flags.s)
-		ret = 0; //-s
+		add_to_history(get_ft_shell(), argv[flags.argv_count]);
 	if (flags.awrn == 'a')
-		ret = 0;
+		ret = hist_sync_file(argv[flags.argv_count]);
 	else if (flags.awrn == 'w')
-		ret = 0;
+		ret = hist_write(argv[flags.argv_count]);
 	else if (flags.awrn == 'n')
-		ret = 0;
+		ret = hist_sync(argv[flags.argv_count]);
+	ret = (flags.c ? hist_clear() : ret);
 	if (flags.awrn == 'r')
-		ret = 0;
-	if (flags.c)
-		ret = 0;
+		ret = hist_append_file(argv[flags.argv_count]);
 	return (ret);
 }

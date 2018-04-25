@@ -23,6 +23,8 @@ char	*special_parameters(char c)
 	sh21 = sh21_get();
 	if (c == '?')
 		return (ft_itoa(sh21->status));
+	else if (c == '$')
+		return (ft_itoa(getpid()));
 	else
 		return (NULL);
 }

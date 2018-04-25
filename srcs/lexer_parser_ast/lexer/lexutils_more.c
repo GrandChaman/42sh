@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 20:35:41 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/16 13:29:17 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/19 15:46:21 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void		lexfallback(t_lexa *lexa)
 	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
 }
 
-void		lexa_init(t_lexa *lexa, t_sh21 *sh21)
+void		lexa_init(t_lexa *lexa, char *cmd)
 {
-	lexa->str = sh21->buf;
+	lexa->str = cmd;
 	lexa->stat = SNIL;
 	lexa->prev = '\0';
 	lexa->t = EOI;
@@ -64,11 +64,9 @@ void		word_recog(t_lexa *lexa)
 	token_last_elem = BEGIN;
 	while (ptr)
 	{
-		if (ptr->token_type == WORD || ptr->token_type == IO_NUM_SPC ||
+		if (ptr->token_type == WORD ||
 			ptr->token_type == IO_NUMBER)
 		{
-			if (ptr->token_type == IO_NUM_SPC)
-				ptr->token_type = WORD;
 			if (str_digit(ptr->content) &&
 				((ptr->next && is_redir_part(ptr->next->content[0]))
 							|| is_redir_token(token_last_elem)))
@@ -76,6 +74,8 @@ void		word_recog(t_lexa *lexa)
 			else
 				loop_word(ptr);
 		}
+		if (ptr->token_type == IO_NUM_SPC)
+			ptr->token_type = WORD;
 		token_last_elem = ptr->token_type;
 		ptr = ptr->next;
 	}

@@ -6,24 +6,24 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/18 19:34:12 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/22 16:16:56 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "sh21.h"
 #include "libft.h"
-// modif
+
 t_lex		*lex_create(t_token_type token_type, char *content)
 {
 	t_lex	*lex;
 
-	lex = malloc(sizeof(t_lex));
+	lex = ft_memalloc(sizeof(t_lex));
 	if (content)
 		lex->content = ft_strdup(content);
 	else
 	{
-		lex->content = malloc(sizeof(char) * 1);
+		lex->content = ft_memalloc(sizeof(char) * 1);
 		lex->content[0] = '\0';
 	}
 	lex->token_type = token_type;
@@ -31,7 +31,7 @@ t_lex		*lex_create(t_token_type token_type, char *content)
 	return (lex);
 }
 
-static int	end_lex(t_lexa *lexa, t_sh21 *sh21)
+static t_lex	*end_lex(t_lexa *lexa)
 {
 	int		prev_word;
 	t_lex	*ptr;
@@ -56,11 +56,10 @@ static int	end_lex(t_lexa *lexa, t_sh21 *sh21)
 		ptr = ptr->next;
 	}
 	lexa->buffer ? ft_strdel(&lexa->buffer) : (0);
-	sh21->lex = lexa->lex;
-	return (1);
+	return (lexa->lex);
 }
 
-static void	escape(t_lexa *lexa)
+static void		escape(t_lexa *lexa)
 {
 	lexa->stat = SWORD;
 	lexa->t = WORD;
@@ -69,23 +68,26 @@ static void	escape(t_lexa *lexa)
 	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
 }
 
-static void	lexfallbackesc(t_lexa *lexa)
+static void		lexfallbackesc(t_lexa *lexa)
 {
 	lexa->stat = SWORD;
 	lexa->t = WORD;
 	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
 }
 
-int			lexer(t_sh21 *sh21)
+t_lex			*lexer(char *cmd)
 {
 	t_lexa		lexa;
 
-	lexa_init(&lexa, sh21);
+	lexa.cmd = cmd;
+	lexa_init(&lexa, cmd);
 	while (*lexa.str && (lexa.c = *(lexa.str)))
 	{
 		check_semi_stat(&lexa);
 		if (lexa.c == '\\')
 			escape(&lexa);
+		else if (lexa.c == '`')
+			on_subshell(&lexa);
 		else if (lexa.c == '"' || lexa.c == '\'')
 			on_quote(&lexa);
 		else if (lexa.oquote)
@@ -103,5 +105,5 @@ int			lexer(t_sh21 *sh21)
 		lexa.prev = lexa.c;
 		++(lexa.str);
 	}
-	return (end_lex(&lexa, sh21));
+	return (end_lex(&lexa));
 }

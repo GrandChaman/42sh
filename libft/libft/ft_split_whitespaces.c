@@ -6,7 +6,7 @@
 /*   By: vbaudot <vbaudot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/10 16:12:08 by vbaudot           #+#    #+#             */
-/*   Updated: 2018/03/01 11:36:22 by vbaudot          ###   ########.fr       */
+/*   Updated: 2018/04/22 16:18:03 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static char	**ft_deux_split_whitespaces(int i, char *str)
 
 	tv[0] = 0;
 	tv[1] = 0;
-	tab = malloc(calc_nb_words(str) * sizeof(char*));
+	tab = ft_memalloc(calc_nb_words(str) * sizeof(char*));
 	while (str[i] != '\0')
 	{
 		i = iplusplus(1, str, i);
@@ -90,7 +90,7 @@ static char	**ft_deux_split_whitespaces(int i, char *str)
 		if (str[i] != '\0')
 		{
 			i = iplusplus(0, str, i);
-			tab[tv[1]] = malloc(sizeof(char) * ((i - tv[0]) + 1));
+			tab[tv[1]] = ft_memalloc(sizeof(char) * ((i - tv[0]) + 1));
 			fill_tab(str, tab[tv[1]], i, tv[0]);
 			tv[1]++;
 		}

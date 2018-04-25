@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:38:34 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/16 15:05:21 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/23 17:37:10 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # include "ast.h"
 # include "env.h"
 # include "builtins.h"
+# include "job_control.h"
 
 # define BUFF_SIZE_INPUT_21SH 1024
 
@@ -52,8 +53,6 @@ typedef struct		s_sh21
 	t_env			env;
 	char			*buf;
 	int				signal;
-	char			**argv;
-	int				argc;
 	int				debug_tty;
 	t_list			*envl;
 	int				ret;
@@ -61,6 +60,11 @@ typedef struct		s_sh21
 	int				status;
 }					t_sh21;
 
+static int			g_shell_idx = 0;
+
+char 				*find_var_expr(char *str);
+int					ft_eval_expr(char *str, int *end, int o);
+int					main_expr(char *str, int *i);
 int					bang(char **str);
 char				*random_str(size_t len);
 void				del_flist(void **lst);
@@ -69,10 +73,9 @@ int					all_signal(void);
 
 int					ft_error(int err, const char *s);
 int					input_piped_script(t_sh21 *sh21, char **argv);
-int					lexer(t_sh21 *sh21);
 int					parser(t_lex *lex);
 int					sh21_addenv(t_sh21 *sh21, const char *n, const char *v);
-int					sh21_exec(int ac, char **av, char ***env);
+int					sh21_exec(char **av, char ***env, t_ast_node *root);
 int					sh21_loadenv(t_sh21 *sh21, char **environ);
 t_sh21				*sh21_get(void);
 t_sh21				*sh21_init(char *env[]);
@@ -92,5 +95,8 @@ void				ft_lstqueue(t_list **lst, t_list *lnew);
 size_t				compute(const char *n, const char *v, \
 					char **str, void *to_free);
 char				*remove_char(char *str);
+
+int 	change_fd(t_ast_node *root);
+int 	reset_fd(t_ast_node *root);
 
 #endif
