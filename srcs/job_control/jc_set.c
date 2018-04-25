@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 13:13:55 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 11:05:30 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 12:47:15 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static int	jc_wait(t_jc_job *job, int mode)
 	{
 		jc_update_job(job);
 		jc_set_job_as_running(job);
+		jc_get()->fg_job = NULL;
 	}
 	else
 	{
