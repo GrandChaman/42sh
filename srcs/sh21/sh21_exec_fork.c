@@ -32,13 +32,13 @@ static int		sh21_exec_father(t_ast_node *root, pid_t parent)
 
 int				callsystem(char *cmd, char **av, char ***env, t_ast_node *root)
 {
-	pid_t		child;
+	pid_t		parent;
 	int			status;
 
 	status = 0;
-	if ((child = fork()) < 0)
+	if ((parent = fork()) < 0)
 		failed_fork(root);
-	else if (!child)
+	else if (!parent)
 	{
 		assign_var(root);
 		if (change_fd(root) < 0)
