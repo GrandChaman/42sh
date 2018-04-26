@@ -19,8 +19,6 @@ t_ast_node		*ast_create_node(t_token_type type, char *str)
 
 	if (!(node = malloc(sizeof(t_ast_node))))
 		ft_exit(errno, NULL);
-	if (!node)
-		return (NULL);
 	node->content = NULL;
 	node->heredoc = NULL;
 	node->left = NULL;
