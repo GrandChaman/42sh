@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 20:35:41 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 15:14:20 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 17:52:03 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void		word_recog(t_lexa *lexa)
 				loop_word(ptr);
 		}
 		if (ptr->token_type == IO_NUM_SPC)
-			ptr->token_type = WORD;
+			ptr->token_type = is_redir_token(token_last_elem) ? IO_NUMBER : WORD;
 		token_last_elem = ptr->token_type;
 		ptr = ptr->next;
 	}
