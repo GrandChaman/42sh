@@ -39,6 +39,15 @@ int		change_fd(t_ast_node *root)
 
 int		reset_fd(t_ast_node *root)
 {
+	t_fd_cleanup	*fd_cleanup;
+
+	fd_cleanup = sh21_get()->tree.fd_cleanup;
+	while (fd_cleanup)
+	{
+		fd_cleanup->fd_function(fd_cleanup);
+		fd_cleanup = fd_cleanup->next;
+	}
+	del_list((void **)&sh21_get()->tree.fd_cleanup, &del_redir);
 	if (root->piped_cmd)
 	{
 		if (root->pipe_fd[0] != 0)

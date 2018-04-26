@@ -12,7 +12,7 @@
 
 #include "sh21.h"
 
-static int		failed_fork(t_ast_node *root)
+static void		failed_fork(t_ast_node *root)
 {
 	jc_delete_tag(root->tag_gpid);
 	ft_exit(errno, "fork");
@@ -30,6 +30,15 @@ static int		sh21_exec_father(t_ast_node *root, pid_t parent)
 	return (status);
 }
 
+static void		change_fd_or_exit(t_ast_node *root)
+{
+	if (change_fd(root) < 0)
+	{
+		del_sh21_exit();
+		exit(errno);
+	}
+}
+
 int				callsystem(char *cmd, char **av, char ***env, t_ast_node *root)
 {
 	pid_t		parent;
@@ -41,11 +50,7 @@ int				callsystem(char *cmd, char **av, char ***env, t_ast_node *root)
 	else if (!parent)
 	{
 		assign_var(root);
-		if (change_fd(root) < 0)
-		{
-			del_sh21_exit();
-			exit(errno);
-		}
+		change_fd_or_exit(root);
 		if (!cmd || execve(cmd, av, *env) < 0)
 			ft_exit((cmd ? errno : -1), (cmd ? cmd : av[0]));
 		ft_exit((cmd ? errno : -1), (cmd ? cmd : av[0]));
@@ -66,7 +71,9 @@ int				sh21_exec_builtin(char **av, char ***env,
 		&& !(root->piped_cmd || root->mod_gpid == BG))
 	{
 		jc_delete_tag(root->tag_gpid);
-		return (builtin.fn_ptr(arrlen(av), av, env, root));
+		change_fd_or_exit(root);
+		status = builtin.fn_ptr(arrlen(av), av, env, root);
+		reset_fd(root);
 	}
 	if ((parent = fork()) < 0)
 		failed_fork(root);

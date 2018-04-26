@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 16:38:41 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 13:31:25 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/26 15:29:10 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static void		quit_all_jobs(void)
 	while (job_list)
 	{
 		job = (t_jc_job*)job_list->content;
+		job_list = job_list->next;
 		killpg(job->pgid, SIGKILL);
 		jc_set(job->tag, FG);
-		job_list = job_list->next;
 	}
 }
 
