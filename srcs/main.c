@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 16:41:49 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 17:41:50 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int			main(int argc, char *argv[])
 	extern char		**environ;
 
 	setlocale(LC_ALL, "");
-	(void)argc;
 	sh21 = sh21_init(environ);
 	sh21->name = argv[0];
 	sh21->argc = argc;
