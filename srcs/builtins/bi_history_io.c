@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 17:08:33 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/26 14:14:00 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/26 14:30:43 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int			hist_sync_file(char *path)
 	if (!(path = (path ? path : get_history_file())))
 		return (ft_fprintf(2, "42sh: history: can't open default history file."
 			" HOME not defined %s.\n", path) || 1);
-		gnl_res = hist_divergence("toto.txt", &line, &tmp, &fd);
+		gnl_res = hist_divergence(path, &line, &tmp, &fd);
 	free(line);
 	if (gnl_res < 0)
 		return ((close(fd) + ft_fprintf(2,\
@@ -84,7 +84,7 @@ int			hist_sync(char *path)
 	if (!path)
 		return (ft_fprintf(2, "42sh: history: can't open default history file."
 			" HOME not defined %s.\n", path) || 1);
-		gnl_res = hist_divergence("toto.txt", &line, &tmp, &fd);
+		gnl_res = hist_divergence(path, &line, &tmp, &fd);
 	if (gnl_res < 0)
 		return ((close(fd) + ft_fprintf(2,
 			"42sh: history: Error while reading history file %s\n")) || 1);
