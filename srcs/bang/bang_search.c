@@ -12,14 +12,14 @@
 
 #include "sh21.h"
 
-char *get_history_at(int nb, int *j)
+char	*get_history_at(int nb, int *j)
 {
 	const t_list	*list = get_ft_shell()->history;
-	int	len = ft_lstsize((t_list*)list);
-	t_list *ptr;
+	int				len;
+	t_list			*ptr;
+	char			*iota;
 
-	char *iota;
-
+	len = ft_lstsize((t_list*)list);
 	nb += nb < 0 ? len + 1 : 0;
 	if (nb <= 0 || nb > len)
 		return (NULL);
@@ -38,7 +38,7 @@ char *get_history_at(int nb, int *j)
 		ft_strdup(((t_ft_hist_entry*)(ptr->content))->command) : NULL);
 }
 
-char *cmp_history(char *str, int *j)
+char	*cmp_history(char *str, int *j)
 {
 	char *tmp;
 	char *ret;
@@ -53,7 +53,7 @@ char *cmp_history(char *str, int *j)
 	return (ret ? ft_strdup(ret) : NULL);
 }
 
-void replace_bang(char **str, int *i, int *j, char *bang)
+void	replace_bang(char **str, int *i, int *j, char *bang)
 {
 	char *ret;
 

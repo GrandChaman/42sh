@@ -12,13 +12,13 @@
 
 #include "sh21.h"
 
-int bang(char **str)
+int	bang(char **str)
 {
 	int i;
 	int ret;
 
 	ret = 1;
-	i =0;
+	i = 0;
 	while ((*str)[i])
 	{
 		if ((*str)[i] == '\\')
@@ -34,7 +34,7 @@ int bang(char **str)
 		if (!ret)
 		{
 			ft_strdel(str);
-			break;
+			break ;
 		}
 	}
 	return (ret);
