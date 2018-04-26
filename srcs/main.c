@@ -25,10 +25,7 @@ static void	exec_command(t_sh21 *sh21, char *cmd)
 	jc_update_all();
 	sh21->lex = lexer(cmd);
 	if (parser(sh21->lex) && sh21->signal != T_CTRL_C)
-	{
-		ast_print(sh21->tree.root_node);
 		sh21_get()->status = exec_tree(sh21->tree.root_node);
-	}
 	del_sh21();
 	ft_strdel(&cmd);
 }
