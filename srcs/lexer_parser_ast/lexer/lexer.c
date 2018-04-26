@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 14:47:22 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 15:18:20 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		check_eval(t_lexa *lexa)
 		lexa->in_eval = 0;
 }
 
-int		lex_1(t_lexa *lexa)
+int			lex_1(t_lexa *lexa)
 {
 	if (lexa->c == '`')
 	{
@@ -47,7 +47,7 @@ int		lex_1(t_lexa *lexa)
 	return (0);
 }
 
-int		lex_2(t_lexa *lexa)
+int			lex_2(t_lexa *lexa)
 {
 	if (is_operator_part(lexa->prev, lexa->stat))
 	{
@@ -67,12 +67,10 @@ int		lex_2(t_lexa *lexa)
 	return (0);
 }
 
-t_lex			*lexer(char *cmd)
+t_lex		*lexer(char *cmd)
 {
 	t_lexa		lexa;
 
-	lexa.in_eval = 0;
-	lexa.cmd = cmd;
 	lexa_init(&lexa, cmd);
 	while (*lexa.str && (lexa.c = *(lexa.str)))
 	{

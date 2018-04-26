@@ -104,10 +104,9 @@ int				ft_eval_expr(char *ori, int *end, int o)
 {
 	int		i;
 	char	*str;
-    char    *lol;
+	char	*lol;
 
 	i = -1;
-	o = 0;
 	str = NULL;
 	while (ori[++i])
 	{
@@ -119,13 +118,13 @@ int				ft_eval_expr(char *ori, int *end, int o)
 			o--;
 	}
 	*end = i;
-    lol = ft_strdup(ori);
-    str = ft_strsub(lol, 0, i);
+	lol = ft_strdup(ori);
+	str = ft_strsub(lol, 0, i);
 	str = find_var_expr(str);
 	i = 0;
 	if (correct_form_eval_expr(str))
 		i = main_expr(str, &i);
 	free(str);
-    free(lol);
+	free(lol);
 	return (i);
 }
