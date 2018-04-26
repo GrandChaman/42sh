@@ -122,14 +122,8 @@ int				ft_eval_expr(char *ori, int *end, int o)
 	str = ft_strndup(ori, i + 1);
 	str = find_var_expr(str);
 	i = 0;
-	ft_printf("str = %s\n", str);
 	if (correct_form_eval_expr(str))
-	{
-		ft_printf("CORRECT !! \n");
 		i = main_expr(str, &i);
-	}
-	else
-		ft_printf("INCORRECT !! \n");
 	free(str);
 	return (i);
 }
