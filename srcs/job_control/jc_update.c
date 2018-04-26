@@ -6,12 +6,25 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 13:33:03 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 21:20:18 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/26 15:41:23 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 #include "job_control.h"
+
+static void	jc_print_updated_job(t_jc_job *job)
+{
+	char *job_str;
+	char *args[3];
+
+	ft_asprintf(&job_str, "%%%d", job->tag);
+	args[0] = "jobs";
+	args[1] = job_str;
+	args[2] = NULL;
+	bi_jobs(2, (char**)args, NULL, NULL);
+	free(job_str);
+}
 
 void		jc_garbage_collector(t_jc *jc)
 {
@@ -35,24 +48,10 @@ void		jc_garbage_collector(t_jc *jc)
 			proc_list = proc_list->next;
 		}
 		if (job != jc->fg_job && should_delete)
-			bi_jobs(1, NULL, NULL, NULL);
+			jc_print_updated_job(job);
 		job_list = job_list->next;
 		if (should_delete)
 			jc_delete_tag(job->tag);
-	}
-}
-
-void		jc_set_job_as_running(t_jc_job *job)
-{
-	t_list		*proc_list;
-	t_jc_proc	*proc;
-
-	proc_list = job->proc_list;
-	while (proc_list)
-	{
-		proc = (t_jc_proc*)proc_list->content;
-		proc_list = proc_list->next;
-		proc->status = RUNNING;
 	}
 }
 
