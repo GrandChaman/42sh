@@ -12,7 +12,7 @@
 
 #include "sh21.h"
 
-void 	del_assign(void **node)
+void	del_assign(void **node)
 {
 	t_assign_ls **tmp;
 
