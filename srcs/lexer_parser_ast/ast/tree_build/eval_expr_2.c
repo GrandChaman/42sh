@@ -19,6 +19,15 @@ static int	operator(char *c, int i)
 	return (0);
 }
 
+static void	find_var_expr_2(char *str, int *lol, int i)
+{
+	char *final;
+
+	final = find_var(&str[i + 1]);
+	*lol = ft_strlen(final);
+	free(final);
+}
+
 char		*find_var_expr(char *str)
 {
 	int		i;
@@ -32,7 +41,7 @@ char		*find_var_expr(char *str)
 		if (str[i] == '$' && str[i + 1])
 		{
 			stock = ft_strffjoin(ft_strsub(str, 0, i), find_var(&str[i + 1]));
-			lol = ft_strlen(find_var(&str[i + 1]));
+			find_var_expr_2(str, &lol, i);
 			i++;
 			while (str[i] && (!(operator(str, i) && !(is_whitespace(str[i])))))
 				i++;
