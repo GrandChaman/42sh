@@ -1,6 +1,6 @@
 #include "sh21.h"
 
-char *get_history_at(int nb, int *j)
+char		*get_history_at(int nb, int *j)
 {
 	const t_list	*list = get_ft_shell()->history;
 	int	len = ft_lstsize((t_list*)list);
@@ -26,7 +26,7 @@ char *get_history_at(int nb, int *j)
 		ft_strdup(((t_ft_hist_entry*)(ptr->content))->command) : NULL);
 }
 
-char *cmp_history(char *str, int *j)
+char		*cmp_history(char *str, int *j)
 {
 	char *tmp;
 	char *ret;
@@ -41,7 +41,7 @@ char *cmp_history(char *str, int *j)
 	return (ret ? ft_strdup(ret) : NULL);
 }
 
-void replace_bang(char **str, int *i, int *j, char *bang)
+void		replace_bang(char **str, int *i, int *j, char *bang)
 {
 	char *ret;
 
@@ -53,13 +53,13 @@ void replace_bang(char **str, int *i, int *j, char *bang)
 	*str = ret;
 }
 
-int bang_error(void)
+int			bang_error(void)
 {
 	ft_error(-9, "!");
 	return (0);
 }
 
-int case_bang(char **str, int *i)
+int			case_bang(char **str, int *i)
 {
 	int		j;
 	char	*bang;
@@ -87,7 +87,7 @@ int case_bang(char **str, int *i)
 	return (1);
 }
 
-int case_backslash_bang(char *str, int *i, char c)
+int			case_backslash_bang(char *str, int *i, char c)
 {
 	int ret;
 
@@ -98,14 +98,14 @@ int case_backslash_bang(char *str, int *i, char c)
 	return (ret);
 }
 
-void case_quote_bang(char *str, int *i)
+void		case_quote_bang(char *str, int *i)
 {
 	*i += 1;
 	while (str[*i] && (str[*i] != '\'' || case_backslash_bang(str, i, str[*i])))
 		*i += 1;
 }
 
-int case_dquote_bang(char **str, int *i)
+int			case_dquote_bang(char **str, int *i)
 {
 	int ret;
 
@@ -120,7 +120,7 @@ int case_dquote_bang(char **str, int *i)
 	return (ret);
 }
 
-int bang(char **str)
+int			bang(char **str)
 {
 	int i;
 	int ret;

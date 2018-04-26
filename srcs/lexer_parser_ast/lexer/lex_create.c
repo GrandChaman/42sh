@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 15:13:33 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 15:18:09 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int			ends_with(char *str, char *t)
 		return (0);
 	if (!t)
 		return (1);
-
 	if (strlen >= tlen && ft_strcmp(str + strlen - tlen, t) == 0)
 		return (1);
 	return (0);
