@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bi_history.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 17:32:01 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 14:02:34 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ int					bi_history(int argc, char **argv,
 	else if (flags.awrn == 'n')
 		ret = hist_sync(argv[flags.argv_count]);
 	ret = (flags.c ? hist_clear() : ret);
-	if (flags.awrn == 'r')
-		ret = hist_append_file(argv[flags.argv_count]);
+	ret = (flags.awrn == 'r' ? hist_append_file(argv[flags.argv_count]) : ret);
 	return (ret);
 }
