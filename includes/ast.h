@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:32:20 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 14:22:19 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 14:58:58 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ typedef struct			s_fd_cleanup
 typedef struct			s_assign_ls
 {
 	struct s_assign_ls	*next;
-	char 				*assignation;
+	char				*assignation;
 }						t_assign_ls;
 
-enum e_pipe_side
+enum					e_pipe_side
 {
 	PIPE_IN = 0,
 	PIPE_OUT = 1,
@@ -45,27 +45,27 @@ enum e_pipe_side
 
 typedef struct			s_ast_node
 {
-	t_token_type		type;
+	char				**argv;
 	char				*content;
 	char				*heredoc;
-	char 				*special_chars;
-	struct s_ast_node	*left;
-	struct s_ast_node	*right;
-	struct s_ast_node	*redir_node;
-	t_assign_ls			*assign_node;
-	struct s_ast_node	*condition_node;
-	char 				**argv;
+	char				*special_chars;
 	int					esc_i[NB_ESCAPED_QUOTE];
-	int					nb_escaped_quote;
 	int					i;
+	int					mod_gpid;
+	int					nb_escaped_quote;
+	int					pipe_fd[2];
+	int					pipe_to_close;
+	int					piped_cmd;
 	int					quote_count;
 	int					tag_gpid;
-	int 				mod_gpid;
-	int 				piped_cmd;
-	int 				pipe_fd[2];
-	int 				tmp_fd_write;
-	int 				tmp_fd_read;
-	int 				pipe_to_close;
+	int					tmp_fd_read;
+	int					tmp_fd_write;
+	struct s_ast_node	*condition_node;
+	struct s_ast_node	*left;
+	struct s_ast_node	*redir_node;
+	struct s_ast_node	*right;
+	t_assign_ls			*assign_node;
+	t_token_type		type;
 }						t_ast_node;
 
 typedef struct			s_args
@@ -84,7 +84,7 @@ typedef void			(*t_fd_function)(t_fd_cleanup*);
 typedef int				(*t_apply_fn)(t_ast_node*);
 typedef int				(*t_exec_tree)(t_ast_node *root);
 
-enum	e_fd
+enum					e_fd
 {
 	in_fd,
 	in_fd2,

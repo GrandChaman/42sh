@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job_control.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 15:23:14 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 16:14:15 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/26 14:59:42 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@
 # define BG 1
 typedef int t_jc_tag;
 typedef enum { NONE, RUNNING, DONE, KILLED, SUSPENDED } t_jc_status;
-// https://www.usna.edu/Users/cs/aviv/classes/ic221/s16/lec/17/lec.html
-//https://stackoverflow.com/questions/10779020/sending-a-process-to-the-background-and-returning-control-to-my-shell
 
+/*
+** https://www.usna.edu/Users/cs/aviv/classes/ic221/s16/lec/17/lec.html
+**https://stackoverflow.com/questions/10779020/sending-a-process-to-the-background-and-returning-control-to-my-shell
+*/
 static const char		*g_jc_status_string[] = {
 	"not started",
 	"continuing",
@@ -56,21 +58,19 @@ typedef	struct			s_jc
 	t_jc_job			*fg_job;
 }						t_jc;
 
-
-t_jc			*jc_get(void);
-t_jc_tag		jc_create_tag(void);
-void			jc_add(t_jc_tag jtag, pid_t npid, char *cmd);
-void			jc_delete_tag(t_jc_tag tag);
-int				jc_set(t_jc_tag tag, int mode);
-t_jc_job		*jc_get_by_pid(pid_t pid);
-void			jc_print(t_jc_job *job);
-void			jc_update_proc(t_jc_proc *proc, int status);
-void			jc_update_all(void);
-void		jc_garbage_collector(t_jc *jc);
-void		jc_update_job(t_jc_job *job);
-void		jc_set_job_as_running(t_jc_job *job);
-void	jc_change_pgrp(t_jc_job *job, int mode);
-
-char			*jc_cmd(t_ast_node *root);
+char					*jc_cmd(t_ast_node *root);
+int						jc_set(t_jc_tag tag, int mode);
+t_jc					*jc_get(void);
+t_jc_job				*jc_get_by_pid(pid_t pid);
+t_jc_tag				jc_create_tag(void);
+void					jc_add(t_jc_tag jtag, pid_t npid, char *cmd);
+void					jc_change_pgrp(t_jc_job *job, int mode);
+void					jc_delete_tag(t_jc_tag tag);
+void					jc_garbage_collector(t_jc *jc);
+void					jc_print(t_jc_job *job);
+void					jc_set_job_as_running(t_jc_job *job);
+void					jc_update_all(void);
+void					jc_update_job(t_jc_job *job);
+void					jc_update_proc(t_jc_proc *proc, int status);
 
 #endif

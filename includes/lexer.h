@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 14:45:46 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 15:00:37 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ typedef struct			s_lex
 t_lex					*g_err_lex;
 t_lex					*g_end_of_input;
 
-
 typedef struct			s_lexa
 {
 	char			*buffer;
@@ -123,7 +122,7 @@ typedef struct			s_lexa
 	int				in_eval;
 }						t_lexa;
 
-static size_t 			g_lexa_buf = 1024;
+static size_t			g_lexa_buf = 1024;
 
 static const char		*g_token_type_str[] =
 {

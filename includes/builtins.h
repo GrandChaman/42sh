@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 15:54:39 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 14:52:24 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 14:58:59 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct			s_flag
 	int					buf_to_free;
 }						t_flag;
 
-typedef struct	s_hist_args
+typedef struct			s_hist_args
 {
 	int		c;
 	int		d;
@@ -41,7 +41,7 @@ typedef struct	s_hist_args
 	int		awrn;
 	int		err;
 	int		argv_count;
-}				t_hist_args;
+}						t_hist_args;
 
 void					args_init(t_hist_args *args);
 char					*cd_rules5_2(char *curpath);
@@ -130,7 +130,7 @@ enum	e_flag_cd
 	CD_P,
 };
 
-static const t_builtin		g_builtins[] =
+static const t_builtin	g_builtins[] =
 {
 	{"exit", &bi_exit},
 	{"cd", &bi_cd},
