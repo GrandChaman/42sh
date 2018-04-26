@@ -65,7 +65,7 @@ typedef struct		s_sh21
 
 static int			g_shell_idx = 0;
 
-int		quote(char *cmd, int *i);
+int					quote(char *cmd, int *i);
 int					correct_form_eval_expr(char *str);
 char				*return_prompt(int stock);
 char				**sh21_envchar(t_sh21 *sh21);
