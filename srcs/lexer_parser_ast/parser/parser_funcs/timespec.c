@@ -16,6 +16,6 @@
 t_lex	*timespec(t_lex *lex)
 {
 	if (!assert_lex(lex))
-		return (g_err_lex);s
+		return (g_err_lex);
 	return (lex);
 }
