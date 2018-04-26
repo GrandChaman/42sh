@@ -12,7 +12,7 @@
 
 #include "sh21.h"
 
-static char *exec_subshell_routine(t_sh21 *sh21, char *str,
+static char		*exec_subshell_routine(t_sh21 *sh21, char *str,
 	int nerr_subsh, int nw_subsh)
 {
 	pid_t	pid;
@@ -38,11 +38,10 @@ static char *exec_subshell_routine(t_sh21 *sh21, char *str,
 
 char			*exec_subshell(char *str, char *file_nm_io)
 {
-	int 	i[4];
 	t_sh21	*sh21;
-	int 	res_fd_subsh;
-	int 	nw_subsh;
-	int 	nerr_subsh;
+	int		res_fd_subsh;
+	int		nw_subsh;
+	int		nerr_subsh;
 
 	sh21 = sh21_get();
 	res_fd_subsh = open(file_nm_io, O_CREAT | O_WRONLY | O_TRUNC, 0666);
