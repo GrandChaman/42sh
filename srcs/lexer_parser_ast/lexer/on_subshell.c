@@ -12,7 +12,7 @@
 
 #include "sh21.h"
 
-char *create_rdm_file(void)
+char		*create_rdm_file(void)
 {
 	char	*random_file;
 	char	*random_file_path;
@@ -25,7 +25,7 @@ char *create_rdm_file(void)
 	return (random_file_path);
 }
 
-static void on_subshell3(t_lexa *lexa, char *new_str)
+static void	on_subshell3(t_lexa *lexa, char *new_str)
 {
 	char	**arr;
 	int		i;
@@ -47,11 +47,11 @@ static void on_subshell3(t_lexa *lexa, char *new_str)
 	ft_strdel(&new_str);
 }
 
-static void on_subshell2(t_lexa *lexa, char *rdm_file_io, int fd)
+static void	on_subshell2(t_lexa *lexa, char *rdm_file_io, int fd)
 {
 	char	buf[100];
 	char	*new_str;
-	int 	i;
+	int		i;
 
 	i = 0;
 	new_str = NULL;
@@ -67,15 +67,16 @@ static void on_subshell2(t_lexa *lexa, char *rdm_file_io, int fd)
 	return (on_subshell3(lexa, new_str));
 }
 
-void 	on_subshell(t_lexa *lexa)
+void		on_subshell(t_lexa *lexa)
 {
 	int		offset;
 	int		fd;
 	char	*ret;
-	char 	*rdm_file_io;
+	char	*rdm_file_io;
 
 	if (lexa->buffer && lexa->buffer[0] && lexa->t != WORD)
-		add_elem_back((void**)&lexa->lex, (void*)lex_create(lexa->t, lexa->buffer));
+		add_elem_back((void**)&lexa->lex,
+			(void*)lex_create(lexa->t, lexa->buffer));
 	lexa->t = WORD;
 	lexa->str += 1;
 	if ((offset = ft_strindex(lexa->str, '`')) < 0)

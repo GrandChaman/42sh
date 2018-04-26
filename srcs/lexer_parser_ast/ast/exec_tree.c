@@ -13,7 +13,7 @@
 #include "ast.h"
 #include "sh21.h"
 
-int	exec_tree(t_ast_node *first)
+int		exec_tree(t_ast_node *first)
 {
 	int		ret;
 	t_sh21	*sh21;

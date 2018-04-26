@@ -47,11 +47,10 @@ static int		check_parenthese(char *str, int *i)
 	return (is_number(str, i));
 }
 
-static int		is_factors(char *str, int *i)
+static int		is_factors(char *str, int *i, char op)
 {
 	int		nbr;
 	int		nbr2;
-	char	op;
 
 	nbr = check_parenthese(str, i);
 	while (str[*i])
@@ -83,7 +82,7 @@ int				main_expr(char *str, int *i)
 	int		nbr2;
 	char	op;
 
-	nbr = is_factors(str, i);
+	nbr = is_factors(str, i, op);
 	while (str[*i])
 	{
 		while (str[*i] == ' ' || str[*i] == '\n')
@@ -92,7 +91,7 @@ int				main_expr(char *str, int *i)
 		if (op != '+' && op != '-')
 			return (nbr);
 		*i = *i + 1;
-		nbr2 = is_factors(str, i);
+		nbr2 = is_factors(str, i, op);
 		if (op == '+')
 			nbr = nbr + nbr2;
 		else
@@ -105,6 +104,7 @@ int				ft_eval_expr(char *ori, int *end, int o)
 {
 	int		i;
 	char	*str;
+    char    *lol;
 
 	i = -1;
 	o = 0;
@@ -119,11 +119,13 @@ int				ft_eval_expr(char *ori, int *end, int o)
 			o--;
 	}
 	*end = i;
-	str = ft_strndup(ori, i + 1);
+    lol = ft_strdup(ori);
+    str = ft_strsub(lol, 0, i);
 	str = find_var_expr(str);
 	i = 0;
 	if (correct_form_eval_expr(str))
 		i = main_expr(str, &i);
 	free(str);
+    free(lol);
 	return (i);
 }
