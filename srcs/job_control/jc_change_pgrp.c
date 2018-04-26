@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "job_control.h"
+#include "sh21.h"
 
 static void		jc_change_pgrp_bg(t_jc_job *job)
 {

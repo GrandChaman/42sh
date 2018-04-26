@@ -35,7 +35,6 @@ static void	jc_add_routine(t_jc_job *job, pid_t npid, char *cmd)
 void		jc_add(t_jc_tag jtag, pid_t npid, char *cmd)
 {
 	t_list		*jb_list;
-	t_jc_proc	proc;
 	t_jc_job	*tmp;
 
 	jb_list = jc_get()->job_list;
