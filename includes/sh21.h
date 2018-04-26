@@ -101,4 +101,13 @@ void				init_term(t_sh21 *sh21);
 void				reinit_term(t_sh21 *sh21);
 void				set_debugtty(void);
 
+int					case_bang(char **str, int *i);
+int					case_backslash_bang(char *str, int *i, char c);
+void				case_quote_bang(char *str, int *i);
+int					case_dquote_bang(char **str, int *i);
+char				*get_history_at(int nb, int *j);
+char				*cmp_history(char *str, int *j);
+void				replace_bang(char **str, int *i, int *j, char *bang);
+int					bang_error(void);
+
 #endif
