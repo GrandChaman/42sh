@@ -17,15 +17,15 @@ char    *find_var_expr(char *str)
     int        i;
     char  *stock;
     char  *final;
+	size_t o;
 
     i = 0;
-
     while (str[i])
     {
         if (str[i] == '$' && str[i + 1])
         {
             stock = ft_strffjoin(ft_strsub(str, 0, i), find_var(&str[i + 1]));
-            i++;
+            i = ft_strlen(stock) + 1;
             while (str[i] && ft_isalpha(str[i]))
                 i++;
             final = ft_strjoin(stock, &str[i]);
