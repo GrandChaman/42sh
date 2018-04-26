@@ -36,7 +36,10 @@ int				callsystem(char *cmd, char **av, char ***env, t_ast_node *root)
 
 	status = 0;
 	if ((child = fork()) < 0)
+	{
+		jc_delete_tag(root->tag_gpid);
 		ft_exit(errno, "fork");
+	}
 	else if (!child)
 	{
 		assign_var(root);
@@ -72,7 +75,10 @@ int				try_direct_acces(char **av, char ***env, t_ast_node *root)
 	{
 		stat(av[0], &st);
 		if (S_ISDIR(st.st_mode))
+		{
+			jc_delete_tag(root->tag_gpid);
 			return (ft_error(21, av[0]));
+		}
 		else
 			return (callsystem(av[0], av, env, root));
 	}
@@ -96,7 +102,10 @@ int 			sh21_exec_builtin(char **av, char ***env, t_ast_node *root, t_builtin bui
 	  return (builtin.fn_ptr(arrlen(av), av, env, root));
 	}
 	if ((parent = fork()) < 0)
+	{
+		jc_delete_tag(root->tag_gpid);
 		ft_exit(errno, "fork");
+	}
 	else if (!parent)
 	{
 		assign_var(root);
@@ -122,7 +131,10 @@ int				sh21_exec(char **av, char ***env, t_ast_node *root)
 
 	idx = -1;
 	if (!av[0])
+	{
+		jc_delete_tag(root->tag_gpid);
 		return (0);
+	}
 	while (g_builtins[++idx].fn_ptr)
 	{
 		if (ft_strequ(av[0], g_builtins[idx].fn_name))

@@ -48,6 +48,7 @@ typedef struct			s_ast_node
 	t_token_type		type;
 	char				*content;
 	char				*heredoc;
+	char 				*special_chars;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
 	struct s_ast_node	*redir_node;
@@ -186,7 +187,7 @@ char					*add_str(char **ret, char **ptr, int *i);
 char					*find_var(char *str);
 int						skip_var(char *str);
 void					case_backslash(char **ret, char **ptr,
-							int *i, char *spe_ch, t_ast_node *node);
+							int *i, t_ast_node *node);
 void					case_dollar(char **ret, char **ptr, int *i);
 void					case_quote(char **ret, char **ptr, int *i);
 void					case_dquote(char **ret, char **ptr, int *i,

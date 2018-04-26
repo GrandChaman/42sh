@@ -20,12 +20,18 @@ int		func_until(t_ast_node *root)
 	int				status;
 
 	sh21 = sh21_get();
+	if (sh21->signal == T_CTRL_C)
+		return (1);
 	status = 0;
 	if (root->redir_node)
 		status = g_exec_fn[root->redir_node->type](root->redir_node);
 	if (!status)
 		while (g_exec_fn[root->left->type](root->left))
+		{
+			if (sh21->signal == T_CTRL_C)
+				return (1);
 			status = g_exec_fn[root->right->type](root->right);
+		}
 	fd_cleanup = sh21->tree.fd_cleanup;
 	while (fd_cleanup)
 	{

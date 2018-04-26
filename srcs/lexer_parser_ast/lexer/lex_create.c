@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_semi.c                                        :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/15 15:59:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/03/15 16:37:26 by hfontain         ###   ########.fr       */
+/*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
+/*   Updated: 2018/04/25 18:33:26 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ast.h"
+#include "lexer.h"
 #include "sh21.h"
+#include "libft.h"
 
-int		func_semi(t_ast_node *root)
+t_lex		*lex_create(t_token_type token_type, char *content)
 {
-	int ret;
+	t_lex	*lex;
 
-	ret = 0;
-	if (sh21_get()->signal == T_CTRL_C)
-		return (1);
-	if (root->left)
-		ret = g_exec_fn[root->left->type](root->left);
-	if (root->right)
-		ret = g_exec_fn[root->right->type](root->right);
-	return (ret);
+	lex = ft_memalloc(sizeof(t_lex));
+	if (content)
+		lex->content = ft_strdup(content);
+	else
+	{
+		lex->content = ft_memalloc(sizeof(char) * 1);
+		lex->content[0] = '\0';
+	}
+	lex->token_type = token_type;
+	lex->next = NULL;
+	return (lex);
 }

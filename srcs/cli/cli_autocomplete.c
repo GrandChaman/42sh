@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 16:26:13 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 10:37:15 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 21:03:54 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,11 @@ static char				*extract_autocomplete_search(t_ft_sh *sh)
 	char	*tmp;
 	char	*res;
 
-	len = 0;
+	len = 1;
 	if (!sh->cursor || ft_iswhitespace(sh->buf.buf[sh->cursor - 1]))
 		return (NULL);
-	while ((sh->cursor - len > 0 &&
-			!ft_iswhitespace(sh->buf.buf[sh->cursor - len])) ||
-			(sh->cursor - len - 1 > 0 &&
-			ft_iswhitespace(sh->buf.buf[sh->cursor - len]) &&
-			sh->buf.buf[sh->cursor - len - 1] == '\\'))
+	while (sh->cursor - len > 0 &&
+			!ft_iswhitespace(sh->buf.buf[sh->cursor - len]))
 		len++;
 	tmp = ft_strndup2(sh->buf.buf + (sh->cursor - len) +
 		(sh->cursor - len > 0), len - (sh->cursor - len > 0));
@@ -82,7 +79,7 @@ static void				complete_missing_autocomplete(t_ft_sh *sh,
 			i++;
 		else
 			break ;
-	tmp = ft_strdup(completion + i + (sh->cursor < sh->buf.cursor));
+	tmp = ft_strdup(completion + i);
 	res = escape_operator(tmp);
 	insert_in_cli(res);
 	free(tmp);

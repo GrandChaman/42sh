@@ -17,6 +17,8 @@ int		func_elif(t_ast_node *root)
 	int status;
 
 	status = 0;
+	if (sh21_get()->signal == T_CTRL_C)
+		return (1);
 	if (!g_exec_fn[root->condition_node->type](root->condition_node))
 		status = g_exec_fn[root->left->type](root->left);
 	else if (root->right)

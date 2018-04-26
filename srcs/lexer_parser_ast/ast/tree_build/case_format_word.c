@@ -16,16 +16,17 @@
 ** The function case_backslash fill an array to keep the index of backslashed
 ** character that will be interpreted a second time in the split_args function
 */
-void	case_backslash(char **ret, char **ptr, int *i, char *special_chars, t_ast_node *node)
+
+void	case_backslash(char **ret, char **ptr, int *i, t_ast_node *node)
 {
 	int		len;
 	int		backslashed;
-	//const	char *special_chars = "$`\"\\\n";
 
 	backslashed = 0;
 	*ret = add_str(ret, ptr, i);
 	(*i)++;
-	if (!special_chars || ft_strindex(special_chars, (*ptr)[*i]) >= 0)
+	if (!node->special_chars || ft_strindex(node->special_chars,
+	(*ptr)[*i]) >= 0)
 		(*ptr)++;
 	if (**ptr == '\'' || **ptr == '\"' || is_whitespace(**ptr))
 		backslashed = 1;
@@ -44,17 +45,21 @@ void	case_dollar(char **ret, char **ptr, int *i)
 	int		end;
 
 	end = 0;
-	*ret = add_str(ret, ptr, i);
-	(*ptr)++;
-	if (ft_strnequ(*ptr, "((", 2))
-	{
-		*ret = ft_strffjoin(*ret, ft_itoa(ft_eval_expr(*ptr, &end, 0)));
-		*ptr += end;
-	}
+	if (!(*ptr)[*i + 1] || is_whitespace((*ptr)[*i + 1]))
+		*i += 1;
 	else
 	{
-		*ret = ft_strffjoin(*ret, find_var(*ptr));
-		*ptr += skip_var(*ptr);
+		*ret = add_str(ret, ptr, i);
+		if (ft_strnequ(*ptr, "((", 2))
+		{
+			*ret = ft_strffjoin(*ret, ft_itoa(ft_eval_expr(*ptr, &end, 0)));
+			*ptr += end;
+		}
+		else
+		{
+			*ret = ft_strffjoin(*ret, find_var(*ptr));
+			*ptr += skip_var(*ptr);
+		}
 	}
 }
 
@@ -74,7 +79,10 @@ void	case_dquote(char **ret, char **ptr, int *i, t_ast_node *node)
 	while ((*ptr)[*i] && (*ptr)[*i] != '\"')
 	{
 		if ((*ptr)[*i] == '\\')
-			case_backslash(ret, ptr, i,"$`\"\\\n", node);
+		{
+			node->special_chars = "$`\"\\\n";
+			case_backslash(ret, ptr, i, node);
+		}
 		else if ((*ptr)[*i] == '$')
 			case_dollar(ret, ptr, i);
 		else

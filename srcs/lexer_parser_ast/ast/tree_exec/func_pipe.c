@@ -29,7 +29,7 @@ int		func_pipe_right(t_ast_node *root, int pipefd[2])
 	return (status);
 }
 
-void 	func_pipe_left(t_ast_node *root, int pipefd[2])
+void	func_pipe_left(t_ast_node *root, int pipefd[2])
 {
 	root->left->piped_cmd = 1 + root->piped_cmd;
 	root->left->pipe_fd[0] = root->pipe_fd[0];
@@ -43,11 +43,13 @@ int		func_pipe(t_ast_node *root)
 	int pipefd[2];
 	int ret;
 
-	set_job(root);
+	if (sh21_get()->signal == T_CTRL_C)
+		return (1);
 	if (!root->piped_cmd)
 		root->piped_cmd = 1;
 	if (pipe(pipefd) < 0)
 		return (ft_error(errno, NULL));
+	set_job(root);
 	func_pipe_left(root, pipefd);
 	ret = func_pipe_right(root, pipefd);
 	if (root->piped_cmd == 1)

@@ -105,7 +105,6 @@ int				ft_eval_expr(char *ori, int *end, int o)
 {
 	int		i;
 	char	*str;
-	char	*lol;
 
 	i = -1;
 	o = 0;
@@ -120,8 +119,7 @@ int				ft_eval_expr(char *ori, int *end, int o)
 			o--;
 	}
 	*end = i;
-	lol = ft_strdup(ori);
-	str = ft_strsub(lol, 0, i);
+	str = ft_strndup(ori, i + 1);
 	str = find_var_expr(str);
 	i = 0;
 	ft_printf("str = %s\n", str);
@@ -133,6 +131,5 @@ int				ft_eval_expr(char *ori, int *end, int o)
 	else
 		ft_printf("INCORRECT !! \n");
 	free(str);
-	free(lol);
 	return (i);
 }

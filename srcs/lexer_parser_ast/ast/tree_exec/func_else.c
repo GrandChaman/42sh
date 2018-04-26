@@ -14,5 +14,7 @@
 
 int		func_else(t_ast_node *root)
 {
+	if (sh21_get()->signal == T_CTRL_C)
+		return (1);
 	return (g_exec_fn[root->left->type](root->left));
 }

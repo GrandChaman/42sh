@@ -15,5 +15,13 @@
 
 int	exec_tree(t_ast_node *first)
 {
-	return (g_exec_fn[first->type](first));
+	int ret;
+	t_sh21 *sh21;
+
+	sh21 = sh21_get();
+	if (sh21->signal == T_CTRL_C)
+		return (1);
+	sh21->signal = 0;
+	ret = g_exec_fn[first->type](first);
+	return (ret);
 }

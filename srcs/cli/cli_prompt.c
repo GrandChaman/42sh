@@ -6,13 +6,39 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/18 17:32:17 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 13:11:22 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 20:23:08 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cli.h"
 #include "sh21.h"
 #include "ft_printf.h"
+
+static int	shorten_path(char **prompt, t_sh21 *sh21)
+{
+	int			res;
+	char		*path;
+	char		*home;
+	size_t		home_len;
+
+	res = 4;
+	if (sh21 && (path = ft_strdup(ft_getenv("PWD", &sh21->env.orig_env))))
+		res += ft_strlen(path);
+	else if ((path = getcwd(NULL, MAXPATHLEN)))
+		res += ft_strlen(path);
+	else
+		res += ft_strlen("(null)");
+	home = ft_getenv("HOME", &sh21->env.orig_env);
+	if (home && !ft_strncmp(path, home, (home_len = ft_strlen(home))))
+	{
+		*prompt = ft_strjoin("~", path + home_len);
+		res = 4 + ft_strlen(*prompt);
+		free(path);
+	}
+	else
+		*prompt = path;
+	return (res);
+}
 
 int			display_prompt(int last_result)
 {
@@ -23,18 +49,12 @@ int			display_prompt(int last_result)
 
 	lexer_s = sh21_get();
 	shell = get_ft_shell();
-	res = 4;
-	if (lexer_s && (path = ft_strdup(ft_getenv("PWD", &lexer_s->env.orig_env))))
-		res += ft_strlen(path);
-	else if ((path = getcwd(NULL, MAXPATHLEN)))
-		res += ft_strlen(path);
-	else
-		res += ft_strlen("(null)");
+	res = shorten_path(&path, lexer_s);
 	exec_term_command(TC_REVERSEVIDEO);
 	ft_fprintf(2, "%%");
 	exec_term_command(TC_RESETGRAPHICS);
-	ft_fprintf(2, "%*s\r%s%C {bmagenta}%s{eoc}> ", shell->x_size - 1, " ",
-		(last_result ? ANSI_COLOR_B_RED : ANSI_COLOR_B_GREEN), 10140, path);
+	ft_fprintf(2, "%*s\r%s%C \x1b[38;2;0;170;255m%s>{eoc} ", shell->x_size - 1,
+	" ", (last_result ? ANSI_COLOR_B_RED : ANSI_COLOR_B_GREEN), 10140, path);
 	free(path);
 	shell->prompt_size = res;
 	return (res);

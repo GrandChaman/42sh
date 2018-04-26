@@ -15,21 +15,25 @@
 
 int		assign_var(t_ast_node *node)
 {
-	int 		ret;
+	int			ret;
 	t_assign_ls *ls;
 	char		**argv;
+	char		*cmd;
 
 	ls = node->assign_node;
 	ret = 0;
 	argv = NULL;
-    while (ls)
-    {
-		ls->assignation = format_word(&ls->assignation, node);
+	while (ls)
+	{
+		cmd = ft_strdup(ls->assignation);
+		cmd = format_word(&cmd, node);
+		ft_printf("argv = %s|\n", cmd);
 		argv = split_args(ls->assignation, node);
 		ret += ft_putenv(ft_strdup(argv[0]), &sh21_get()->env.local_var);
 		del_arr(&argv);
-        ls = ls->next;
-    }
+		ft_strdel(&cmd);
+		ls = ls->next;
+	}
 	return (ret);
 }
 
@@ -37,6 +41,8 @@ int		func_assignment_word(t_ast_node *root)
 {
 	int		ret;
 
+	if (sh21_get()->signal == T_CTRL_C)
+		return (1);
 	ret = 0;
 	if (root->left && root->left->left)
 		ret = g_exec_fn[root->left->left->type](root->left->left);

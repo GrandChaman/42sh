@@ -21,7 +21,7 @@ static char	*norme_0(int i, char *ret, char *ptr, char **str)
 	return (ret);
 }
 
-static void initialize_values(t_ast_node *node, char **ptr,
+static void	initialize_values(t_ast_node *node, char **ptr,
 			char **str, char **ret)
 {
 	*ptr = *str;
@@ -44,8 +44,8 @@ char		*format_word(char **str, t_ast_node *node)
 	initialize_values(node, &ptr, str, &ret);
 	while (ptr[i])
 	{
-		if (ptr[i] == '\\')
-			case_backslash(&ret, &ptr, &i, NULL, node);
+		if (ptr[i] == '\\' && !(node->special_chars = NULL))
+			case_backslash(&ret, &ptr, &i, node);
 		else if (ptr[i] == '~')
 			case_tilde(&ret, &ptr, &i);
 		else if (ptr[i] == '\'')

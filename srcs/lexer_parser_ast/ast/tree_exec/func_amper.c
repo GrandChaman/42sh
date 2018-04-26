@@ -27,6 +27,8 @@ int		func_amper(t_ast_node *root)
 	int ret;
 
 	ret = 0;
+	if (sh21_get()->signal == T_CTRL_C)
+		return (1);
 	if (root->left && (root->left->type == SEMI || root->left->type == AND_IF
 		|| root->left->type == OR_IF))
 	{

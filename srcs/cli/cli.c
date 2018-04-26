@@ -90,7 +90,7 @@ static char	*read_command_outro(t_ft_sh *sh, char lchar, int heredoc)
 	ft_free((void**)&sh->history_last);
 	dbuf_clear(&sh->buf);
 	apply_terminal_setting(1);
-	free(sh->select);
+	ft_strdel(&sh->select);
 	return (res);
 }
 

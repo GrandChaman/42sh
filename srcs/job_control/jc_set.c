@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 13:13:55 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 16:13:52 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/25 21:19:45 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	jc_wait_on_bg(t_jc_job *job)
 {
-	jc_update_job(job);
 	jc_set_job_as_running(job);
 	jc_get()->fg_job = NULL;
 }
