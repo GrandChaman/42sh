@@ -24,7 +24,7 @@ char		*find_var_expr(char *str)
 		if (str[i] == '$' && str[i + 1])
 		{
 			stock = ft_strffjoin(ft_strsub(str, 0, i), find_var(&str[i + 1]));
-			i = ft_strlen(stock) + 1;
+			i = ft_strlen(stock);
 			while (str[i] && ft_isalpha(str[i]))
 				i++;
 			final = ft_strjoin(stock, &str[i]);
@@ -32,9 +32,9 @@ char		*find_var_expr(char *str)
 			free(str);
 			str = final;
 		}
-		else
-			i++;
+		i++;
 	}
+	ft_printf("str = %s\n", str);
 	return (str);
 }
 
