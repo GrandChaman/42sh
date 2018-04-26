@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 13:43:49 by rfautier          #+#    #+#             */
-/*   Updated: 2018/04/26 14:15:24 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 14:25:27 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int		handle_arg(t_hist_args *args, char **arg)
 	return (0);
 }
 
-static void		process_args(char *arg, t_hist_args *args, int argc, char **argv)
+static void		process_args(char *arg, t_hist_args *args, int ac, char **av)
 {
 	++arg;
 	if (handle_arg(args, &arg) == 'd')
@@ -78,15 +78,15 @@ static void		process_args(char *arg, t_hist_args *args, int argc, char **argv)
 		if (*arg && isdigit(*arg))
 		{
 			args->d_val = atoi(arg);
-			arg = argv[++args->argv_count];
+			arg = av[++args->argv_count];
 		}
-		else if (args->argv_count < argc - 1)
+		else if (args->argv_count < ac - 1)
 		{
-			arg = argv[++args->argv_count];
+			arg = av[++args->argv_count];
 			if (*arg && isdigit(*arg))
 			{
 				args->d_val = atoi(arg);
-				arg = argv[++args->argv_count];
+				arg = av[++args->argv_count];
 			}
 			else
 				args->err = D_ERR;
@@ -98,10 +98,12 @@ static void		process_args(char *arg, t_hist_args *args, int argc, char **argv)
 
 void			read_args(t_hist_args *args, int argc, char **argv)
 {
+	char *arg;
+
 	args->argv_count = 1;
 	while (args->argv_count < argc)
 	{
-		char  *arg = argv[args->argv_count];
+		arg = argv[args->argv_count];
 		if (*arg == '-')
 			process_args(arg, args, argc, argv);
 		else
