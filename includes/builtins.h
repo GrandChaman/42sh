@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 15:54:39 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 14:20:13 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 14:52:24 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,34 @@ int						print_one_jobs(int tague);
 int						check_jobs(int tague);
 int						get_last_last_jobs(void);
 int						get_last_jobs(void);
-int						bi_kill(int argc, char **argv, char ***environ, t_ast_node *root);
-int						bi_fg(int argc, char **argv, char ***environ, t_ast_node *root);
-int						bi_bg(int argc, char **argv, char ***environ, t_ast_node *root);
-int						bi_jobs(int argc, char **argv, char ***environ, t_ast_node *root);
-int						bi_cd(int argc, char **argv, char ***environ, t_ast_node *root);
-int						bi_echo(int argc, char **argv, char ***environ, t_ast_node *root);
-int						bi_env(int argc, char **argv, char ***environ, t_ast_node *root);
-int						bi_exit(int argc, char **argv, char ***environ, t_ast_node *root);
-int						bi_setenv(int argc, char **argv, char ***environ, t_ast_node *root);
-int						bi_unsetenv(int argc, char **argv, char ***environ, t_ast_node *root);
-int						bi_hash(int argc, char **argv, char ***environ, t_ast_node *root);
-int						bi_export(int argc, char **argv, char ***environ, t_ast_node *root);
-int						bi_unset(int argc, char **argv, char ***environ, t_ast_node *root);
-int						bi_history(int argc, char **argv, char ***environ, t_ast_node *root);
+int						bi_kill(int argc, char **argv, char ***environ,
+							t_ast_node *root);
+int						bi_fg(int argc, char **argv, char ***environ,
+							t_ast_node *root);
+int						bi_bg(int argc, char **argv, char ***environ,
+							t_ast_node *root);
+int						bi_jobs(int argc, char **argv, char ***environ,
+							t_ast_node *root);
+int						bi_cd(int argc, char **argv, char ***environ,
+							t_ast_node *root);
+int						bi_echo(int argc, char **argv, char ***environ,
+							t_ast_node *root);
+int						bi_env(int argc, char **argv, char ***environ,
+							t_ast_node *root);
+int						bi_exit(int argc, char **argv, char ***environ,
+							t_ast_node *root);
+int						bi_setenv(int argc, char **argv, char ***environ,
+							t_ast_node *root);
+int						bi_unsetenv(int argc, char **argv, char ***environ,
+							t_ast_node *root);
+int						bi_hash(int argc, char **argv, char ***environ,
+							t_ast_node *root);
+int						bi_export(int argc, char **argv, char ***environ,
+							t_ast_node *root);
+int						bi_unset(int argc, char **argv, char ***environ,
+							t_ast_node *root);
+int						bi_history(int argc, char **argv, char ***environ,
+							t_ast_node *root);
 int						hist_write(char *path);
 int						hist_append_file(char *path);
 int						hist_sync(char *path);
