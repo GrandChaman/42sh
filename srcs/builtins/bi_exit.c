@@ -44,7 +44,6 @@ int				bi_exit(int argc, char **argv, char ***environ,
 	}
 	else if (jc_get()->job_list)
 		quit_all_jobs();
-	del_sh21_exit();
 	ft_exit(0, NULL);
 	return (0);
 }
@@ -56,5 +55,6 @@ void			ft_exit(int err, const char *s)
 	sh21 = sh21_get();
 	if (err)
 		ft_error(err, s);
+	del_sh21_exit();
 	exit(err);
 }

@@ -10,10 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
 #include "sh21.h"
 
 void			args_init(t_hist_args *args)
@@ -26,6 +22,7 @@ void			args_init(t_hist_args *args)
 	args->awrn = 0;
 	args->err = 0;
 	args->argv_count = 1;
+	args->concate_argv = NULL;
 }
 
 static void		awrn_handle(t_hist_args *args, char *str)
@@ -57,7 +54,7 @@ static int		handle_arg(t_hist_args *args, char **arg)
 			args->s = 1;
 		else if (*str == 'd' && (args->d = 1))
 			return ('d');
-		else if (strchr("awrn", *str) != NULL)
+		else if (ft_strchr("awrn", *str) != NULL)
 		{
 			if (args->awrn != 0)
 				return ((args->err = AWRN_ERR));
@@ -75,17 +72,17 @@ static void		process_args(char *arg, t_hist_args *args, int ac, char **av)
 	if (handle_arg(args, &arg) == 'd')
 	{
 		++arg;
-		if (*arg && isdigit(*arg))
+		if (*arg && ft_isdigit(*arg))
 		{
-			args->d_val = atoi(arg);
+			args->d_val = ft_atoi(arg);
 			arg = av[++args->argv_count];
 		}
 		else if (args->argv_count < ac - 1)
 		{
 			arg = av[++args->argv_count];
-			if (*arg && isdigit(*arg))
+			if (*arg && ft_isdigit(*arg))
 			{
-				args->d_val = atoi(arg);
+				args->d_val = ft_atoi(arg);
 				arg = av[++args->argv_count];
 			}
 			else
@@ -107,7 +104,10 @@ void			read_args(t_hist_args *args, int argc, char **argv)
 		if (*arg == '-')
 			process_args(arg, args, argc, argv);
 		else
+		{
+			args->concate_argv = concate_array(argv + args->argv_count);
 			return ;
+		}
 		++args->argv_count;
 	}
 }

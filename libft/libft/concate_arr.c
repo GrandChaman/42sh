@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cpy_arr.c                                          :+:      :+:    :+:   */
+/*   concate_arr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbertoia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/14 20:49:07 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/22 16:17:38 by fle-roy          ###   ########.fr       */
+/*   Created: 2018/04/26 22:08:57 by fbertoia          #+#    #+#             */
+/*   Updated: 2018/04/26 22:08:58 by fbertoia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
 
-char	**cpy_arr(char **arr)
+char	*concate_array(char **arr)
 {
-	char	**ret;
 	int		i;
+	char	*ret;
 
 	i = 0;
 	if (!arr || !*arr)
 		return (NULL);
+	ret = NULL;
 	while (arr[i])
-		i++;
-	ret = (char**)ft_memalloc(sizeof(char*) * (i + 1));
-	if (!ret)
-		return (NULL);
-	ret[i] = NULL;
-	while (--i >= 0)
-		ret[i] = ft_strdup(arr[i]);
+	{
+		ret = ft_strfjoin(ret, arr[i++]);
+		if (arr[i])
+			ret = ft_strfjoin(ret, " ");
+	}
 	return (ret);
 }

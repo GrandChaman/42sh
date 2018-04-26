@@ -44,7 +44,7 @@ dbuf_destroy.c dbuf_substract.c dbuf_print.c ft_str3join.c ft_lstappend.c \
 ft_split_whitespaces.c ft_strndup.c ft_stralike.c arrlen.c del_arr.c ft_strlcpy.c \
 ft_hash.c ft_strpop.c str_isprint.c add_elem_front_dl.c del_list.c ft_strpush.c \
 ft_strfjoin.c is_whitespace.c add_elem_front.c add_elem_back.c size_list.c \
-cpy_arr.c ft_strindex.c ft_strndup2.c ft_strjoin_multiple.c)
+cpy_arr.c ft_strindex.c ft_strndup2.c ft_strjoin_multiple.c concate_arr.c)
 
 SRC_PRINTF = $(addprefix $(PRINTF_DIR)/, ft_printf_routine.c ft_printf.c \
 		ft_printf_utils.c ft_printf_string.c ft_printf_parser.c \

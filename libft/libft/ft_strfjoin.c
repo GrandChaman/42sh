@@ -23,7 +23,7 @@ static char		*null_case(char const *s1, char const *s2)
 		return (ft_strdup(s1));
 }
 
-char			*ft_strfjoin(char *s1, char const *s2)
+char			*ft_strfjoin(char *s1, char *s2)
 {
 	char	*ret;
 	int		i;

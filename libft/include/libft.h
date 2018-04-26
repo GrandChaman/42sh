@@ -79,6 +79,7 @@ typedef struct			s_void
 char					*ft_strrchr_2(const char *s, int c);
 size_t					ft_strlcpy(char *dst, const char *src, size_t size);
 char					*ft_strffjoin(char *s1, char *s2);
+char					*ft_strfjoin(char *s1, char *s2);
 char					*ft_strpush(char *str, size_t idx, char c,
 							size_t *buff_sz);
 char					**ft_split_whitespaces(char *str);
@@ -224,5 +225,6 @@ int						ft_snprintf(char *ret, size_t size, const char *format,
 							...);
 int						ft_stralike(char *str1, char *str2, size_t len);
 char					*ft_strjoin_multiple(int nb_args, ...);
+char					*concate_array(char **arr);
 
 #endif

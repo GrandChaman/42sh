@@ -51,15 +51,13 @@ static int			hist_clear(void)
 	return (0);
 }
 
-static int			display_cmd(int argc, char **argv, int should_display)
+static int			display_cmd(int argc, char **argv, int should_display,
+	int argv_count)
 {
-	int i;
-
-	i = -1;
 	if (!should_display)
 		return (0);
-	while (++i < argc)
-		ft_printf("%s\n", argv);
+	while (argv_count < argc)
+		ft_printf("%s\n", argv[argv_count++]);
 	return (0);
 }
 
@@ -75,13 +73,13 @@ static int			hist_del_at_offset(int off)
 		return (ft_fprintf(2, "42sh: history: %d: index out of range\n", off));
 	if (!(tmp = ft_lstat(sh->history, sh->history_size - off - 1)))
 		return (1);
-	ft_lstdelone(&tmp, delete_hist_entry);
+	ft_lstdelone(&tmp, delete_hist_entry); // CORRECT THIS | DOES NOT WORK
 	sh->history_size--;
 	return (0);
 }
 
 int					bi_history(int argc, char **argv,
-	char ***environ, t_ast_node *root)
+					char ***environ, t_ast_node *root)
 {
 	int			ret;
 	t_hist_args	flags;
@@ -95,9 +93,9 @@ int					bi_history(int argc, char **argv,
 	if (flags.err)
 		return (flags.err);
 	ret = (flags.d ? hist_del_at_offset(flags.d_val) : ret);
-	ret = (flags.p ? display_cmd(argc, argv, !flags.s) : ret);
+	ret = (flags.p ? display_cmd(argc, argv, !flags.s, flags.argv_count) : ret);
 	if (flags.s)
-		add_to_history(get_ft_shell(), argv[flags.argv_count]);
+		add_to_history(get_ft_shell(), flags.concate_argv);
 	if (flags.awrn == 'a')
 		ret = hist_sync_file(argv[flags.argv_count]);
 	else if (flags.awrn == 'w')
@@ -106,5 +104,6 @@ int					bi_history(int argc, char **argv,
 		ret = hist_sync(argv[flags.argv_count]);
 	ret = (flags.c ? hist_clear() : ret);
 	ret = (flags.awrn == 'r' ? hist_append_file(argv[flags.argv_count]) : ret);
+	ft_strdel(&flags.concate_argv);
 	return (ret);
 }

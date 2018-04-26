@@ -56,8 +56,8 @@ int			hist_sync_file(char *path)
 		gnl_res = hist_divergence(path, &line, &tmp, &fd);
 	free(line);
 	if (gnl_res < 0)
-		return ((close(fd) + ft_fprintf(2,\
-			"42sh: history: Error while reading history file %s\n")) || 1);
+		return ((close(fd) + ft_fprintf(2, "42sh: history: Error while"
+		" reading history file %s\n", path)) || 1);
 		if (lseek(fd, 0, SEEK_END) < 0)
 		return ((close(fd) + ft_fprintf(2, "42sh: history: lseek() failed\n"))
 			&& 1);
@@ -86,8 +86,8 @@ int			hist_sync(char *path)
 			" HOME not defined %s.\n", path) || 1);
 		gnl_res = hist_divergence(path, &line, &tmp, &fd);
 	if (gnl_res < 0)
-		return ((close(fd) + ft_fprintf(2,
-			"42sh: history: Error while reading history file %s\n")) || 1);
+		return ((close(fd) + ft_fprintf(2, "42sh: history: Error while reading"
+		" history file %s\n", path)) || 1);
 		if (line)
 		parse_and_add_to_history(sh, line);
 	free(line);

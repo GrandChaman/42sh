@@ -41,6 +41,7 @@ typedef struct			s_hist_args
 	int		awrn;
 	int		err;
 	int		argv_count;
+	char	*concate_argv;
 }						t_hist_args;
 
 void					args_init(t_hist_args *args);
