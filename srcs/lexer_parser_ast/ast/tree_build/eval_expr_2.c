@@ -12,41 +12,41 @@
 
 #include "sh21.h"
 
-char    *find_var_expr(char *str)
+char		*find_var_expr(char *str)
 {
-    int        i;
-    char  *stock;
-    char  *final;
-	size_t o;
+	int		i;
+	char	*stock;
+	char	*final;
+	size_t	o;
 
-    i = 0;
-    while (str[i])
-    {
-        if (str[i] == '$' && str[i + 1])
-        {
-            stock = ft_strffjoin(ft_strsub(str, 0, i), find_var(&str[i + 1]));
-            i = ft_strlen(stock) + 1;
-            while (str[i] && ft_isalpha(str[i]))
-                i++;
-            final = ft_strjoin(stock, &str[i]);
-            free(stock);
-            free(str);
-            str = final;
-        }
-        else
-            i++;
-    }
-    return (str);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$' && str[i + 1])
+		{
+			stock = ft_strffjoin(ft_strsub(str, 0, i), find_var(&str[i + 1]));
+			i = ft_strlen(stock) + 1;
+			while (str[i] && ft_isalpha(str[i]))
+				i++;
+			final = ft_strjoin(stock, &str[i]);
+			free(stock);
+			free(str);
+			str = final;
+		}
+		else
+			i++;
+	}
+	return (str);
 }
 
-static int operator(char *c, int i)
+static int	operator(char *c, int i)
 {
 	if (c[i] == '+' || c[i] == '-' || c[i] == '*' || c[i] == '/' || c[i] == '%')
 		return (1);
 	return (0);
 }
 
-static int is_whitespace_1(char *str, int *i)
+static int	is_whitespace_1(char *str, int *i)
 {
 	while (str[*i] && str[*i] == ' ')
 		*i = *i + 1;
@@ -55,7 +55,7 @@ static int is_whitespace_1(char *str, int *i)
 	return (1);
 }
 
-int	correct_form_eval_expr(char *str)
+int			correct_form_eval_expr(char *str)
 {
 	int i;
 
@@ -67,10 +67,8 @@ int	correct_form_eval_expr(char *str)
 		if ((!(ft_isalnum(str[i]))) && str[i] != '(')
 			return (0);
 		else
-		{
 			while (ft_isalnum(str[i]) || str[i] == '(')
 				i++;
-		}
 		if (!(is_whitespace_1(str, &i)))
 			break ;
 		while (str[i] == ')')

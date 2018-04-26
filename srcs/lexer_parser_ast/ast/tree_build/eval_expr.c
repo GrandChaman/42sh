@@ -47,11 +47,10 @@ static int		check_parenthese(char *str, int *i)
 	return (is_number(str, i));
 }
 
-static int		is_factors(char *str, int *i)
+static int		is_factors(char *str, int *i, char op)
 {
 	int		nbr;
 	int		nbr2;
-	char	op;
 
 	nbr = check_parenthese(str, i);
 	while (str[*i])
@@ -83,7 +82,7 @@ int				main_expr(char *str, int *i)
 	int		nbr2;
 	char	op;
 
-	nbr = is_factors(str, i);
+	nbr = is_factors(str, i, op);
 	while (str[*i])
 	{
 		while (str[*i] == ' ' || str[*i] == '\n')
@@ -92,7 +91,7 @@ int				main_expr(char *str, int *i)
 		if (op != '+' && op != '-')
 			return (nbr);
 		*i = *i + 1;
-		nbr2 = is_factors(str, i);
+		nbr2 = is_factors(str, i, op);
 		if (op == '+')
 			nbr = nbr + nbr2;
 		else
