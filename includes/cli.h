@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 10:56:03 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/21 19:07:00 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/26 13:49:43 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,9 @@ void					write_history(t_ft_sh *sh, int fd, int should_delete);
 void					parse_and_add_to_history(t_ft_sh *sh, char *line);
 char					*get_history_file(void);
 char					*escape_operator(char *str);
+void					set_up_default_signal(void);
+void					signal_c(int sig);
+void					ignore_signal(int sig);
 
 static t_ft_touch		g_ft_touch_list[] =
 {
