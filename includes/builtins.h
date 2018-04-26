@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 15:54:39 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/19 17:12:33 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/26 14:20:13 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,6 @@
 # define D_ERR		1 << 4
 # define AWRN_ERR	1 << 5
 # define INVARG		1 << 6
-//
-// typedef struct			s_hist_args
-// {
-// 	int		c;
-// 	int		d;
-// 	int		d_val;
-// 	int		p;
-// 	int		s;
-// 	int		awrn;
-// 	int		err;
-// }						t_hist_args;
 
 typedef struct			s_flag
 {
@@ -67,15 +56,15 @@ int						ft_setenv(const char *name, const char *value,
 						int override, char ***environ);
 int						print_env(char **env);
 int						env_usage(char c, int option);
-void print_hhh(t_hist_args flags);
-int		print_one_jobs(int tague);
-int					check_jobs(int tague);
-int					get_last_last_jobs(void);
-int					get_last_jobs(void);
-int					bi_kill(int argc, char **argv, char ***environ, t_ast_node *root);
-int					bi_fg(int argc, char **argv, char ***environ, t_ast_node *root);
-int					bi_bg(int argc, char **argv, char ***environ, t_ast_node *root);
-int					bi_jobs(int argc, char **argv, char ***environ, t_ast_node *root);
+
+int						print_one_jobs(int tague);
+int						check_jobs(int tague);
+int						get_last_last_jobs(void);
+int						get_last_jobs(void);
+int						bi_kill(int argc, char **argv, char ***environ, t_ast_node *root);
+int						bi_fg(int argc, char **argv, char ***environ, t_ast_node *root);
+int						bi_bg(int argc, char **argv, char ***environ, t_ast_node *root);
+int						bi_jobs(int argc, char **argv, char ***environ, t_ast_node *root);
 int						bi_cd(int argc, char **argv, char ***environ, t_ast_node *root);
 int						bi_echo(int argc, char **argv, char ***environ, t_ast_node *root);
 int						bi_env(int argc, char **argv, char ***environ, t_ast_node *root);
@@ -91,7 +80,7 @@ int						hist_append_file(char *path);
 int						hist_sync(char *path);
 int						hist_sync_file(char *path);
 int						hist_divergence(char *path, char **line,
-	t_list **hist, int *fd);
+							t_list **hist, int *fd);
 
 void					read_args(t_hist_args *args, int argc, char **argv);
 
@@ -126,7 +115,6 @@ enum	e_flag_cd
 	CD_L,
 	CD_P,
 };
-
 
 static const t_builtin		g_builtins[] =
 {

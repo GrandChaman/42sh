@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:32:20 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/25 14:23:50 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 14:22:19 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct			s_fd_cleanup
 	int					fd_reassign;
 }						t_fd_cleanup;
 
-typedef struct 			s_assign_ls
+typedef struct			s_assign_ls
 {
 	struct s_assign_ls	*next;
 	char 				*assignation;
@@ -205,11 +205,9 @@ char					**split_args(char *argv, t_ast_node *node);
 char					**copy_list_to_array(t_args **list);
 void					del_el(void **el);
 void					ast_print(t_ast_node *root);
+void					set_job(t_ast_node *root);
 
-
-void			set_job(t_ast_node *root);
-
-static t_exec_tree g_exec_fn[] =
+static t_exec_tree		g_exec_fn[] =
 {
 	NULL,
 	func_word,

@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:38:34 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/23 17:37:10 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 14:19:36 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,9 @@ typedef struct		s_sh21
 
 static int			g_shell_idx = 0;
 
-int	correct_form_eval_expr(char *str);
-char		*return_prompt(int stock);
-char		*bracket(char *cmd, int i);
-char 				*find_var_expr(char *str);
+char				*return_prompt(int stock);
+char				*bracket(char *cmd, int i);
+char				*find_var_expr(char *str);
 int					ft_eval_expr(char *str, int *end, int o);
 int					main_expr(char *str, int *i);
 int					bang(char **str);
