@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:36:08 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/24 19:15:24 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 14:28:05 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ t_ast_node		*ast_create_node(t_token_type type, char *str)
 
 	if (!(node = malloc(sizeof(t_ast_node))))
 		ft_exit(errno, NULL);
-	if (!node)
-		return (NULL);
 	node->content = NULL;
 	node->heredoc = NULL;
 	node->left = NULL;
