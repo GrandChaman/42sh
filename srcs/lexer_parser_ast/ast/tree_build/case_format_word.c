@@ -45,17 +45,22 @@ void	case_dollar(char **ret, char **ptr, int *i)
 	int		end;
 
 	end = 0;
-	*ret = add_str(ret, ptr, i);
-	(*ptr)++;
-	if (ft_strnequ(*ptr, "((", 2))
-	{
-		*ret = ft_strffjoin(*ret, ft_itoa(ft_eval_expr(*ptr, &end, 0)));
-		*ptr += end;
-	}
+	if (!(*ptr)[*i + 1] || is_whitespace((*ptr)[*i + 1]))
+		*i += 1;
 	else
 	{
-		*ret = ft_strffjoin(*ret, find_var(*ptr));
-		*ptr += skip_var(*ptr);
+		*ret = add_str(ret, ptr, i);
+		(*ptr)++;
+		if (ft_strnequ(*ptr, "((", 2))
+		{
+			*ret = ft_strffjoin(*ret, ft_itoa(ft_eval_expr(*ptr, &end, 0)));
+			*ptr += end;
+		}
+		else
+		{
+			*ret = ft_strffjoin(*ret, find_var(*ptr));
+			*ptr += skip_var(*ptr);
+		}		
 	}
 }
 
