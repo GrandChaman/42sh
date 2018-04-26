@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 20:29:45 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/23 17:33:16 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 14:42:19 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void		on_quote(t_lexa *lexa)
 	{
 		lexa->t = WORD;
 		lexa->oquote = lexa->c == '"' ? 1 : 2;
-		lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
+		lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buf);
 	}
 	else
 	{
 		q = lexa->c == '"' ? 1 : 2;
 		if (lexa->oquote == q)
 			lexa->oquote = 0;
-		lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
+		lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buf);
 	}
 }
 
@@ -55,7 +55,7 @@ void		on_operator_prev(t_lexa *lexa)
 {
 	if (is_operator_part(lexa->c, lexa->stat))
 	{
-		lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
+		lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buf);
 		lexa->t = get_operator_tok(lexa->buffer);
 	}
 	else
@@ -64,7 +64,7 @@ void		on_operator_prev(t_lexa *lexa)
 		add_elem_back((void**)&lexa->lex,
 					(void*)lex_create(lexa->t, lexa->buffer));
 		ft_strdel(&lexa->buffer);
-		lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
+		lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buf);
 		lexa->t = WORD;
 		lexa->stat = SWORD;
 	}
@@ -79,6 +79,6 @@ void		on_operator(t_lexa *lexa)
 					(void*)lex_create(lexa->t, lexa->buffer));
 		ft_strdel(&lexa->buffer);
 	}
-	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
+	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buf);
 	lexa->t = get_operator_tok(lexa->buffer);
 }

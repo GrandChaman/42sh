@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/24 16:30:04 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 14:45:46 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,10 @@ typedef struct			s_lexa
 	int				stat;
 	t_lex			*lex;
 	t_token_type	t;
+	int				in_eval;
 }						t_lexa;
 
-static size_t g_lexa_buff_sz = 1024;
+static size_t 			g_lexa_buf = 1024;
 
 static const char		*g_token_type_str[] =
 {
@@ -242,5 +243,13 @@ void					lexfallback(t_lexa *lexa);
 void					lexa_init(t_lexa *lexa, char *cmd);
 void					loop_word(t_lex *ptr);
 void					word_recog(t_lexa *lexa);
+
+t_lex					*end_lex(t_lexa *lexa);
+void					escape(t_lexa *lexa);
+void					lexfallbackesc(t_lexa *lexa);
+int						ends_with(char *str, char *t);
+void					check_eval(t_lexa *lexa);
+int						lex_1(t_lexa *lexa);
+int						lex_2(t_lexa *lexa);
 
 #endif

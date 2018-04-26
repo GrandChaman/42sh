@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/25 18:33:26 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 14:45:47 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "sh21.h"
 #include "libft.h"
 
-static t_lex	*end_lex(t_lexa *lexa)
+t_lex	*end_lex(t_lexa *lexa)
 {
 	int		prev_word;
 	t_lex	*ptr;
@@ -42,23 +42,23 @@ static t_lex	*end_lex(t_lexa *lexa)
 	return (lexa->lex);
 }
 
-static void		escape(t_lexa *lexa)
+void		escape(t_lexa *lexa)
 {
 	lexa->stat = SWORD;
 	lexa->t = WORD;
-	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
+	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buf);
 	lexa->c = *++(lexa->str);
-	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
+	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buf);
 }
 
-static void		lexfallbackesc(t_lexa *lexa)
+void		lexfallbackesc(t_lexa *lexa)
 {
 	lexa->stat = SWORD;
 	lexa->t = WORD;
-	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buff_sz);
+	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buf);
 }
 
-int		ends_with(char *str, char *t)
+int				ends_with(char *str, char *t)
 {
 	const int		strlen = ft_strlen(str);
 	const int		tlen = ft_strlen(t);
@@ -72,42 +72,81 @@ int		ends_with(char *str, char *t)
 	return (0);
 }
 
+void		check_eval(t_lexa *lexa)
+{
+	if (ends_with(lexa->buffer, "$(("))
+		lexa->in_eval = 1;
+	if (ends_with(lexa->buffer, "))"))
+		lexa->in_eval = 0;
+}
+
+int		lex_1(t_lexa *lexa)
+{
+	if (lexa->c == '`')
+	{
+		on_subshell(lexa);
+		return (1);
+	}
+	else if (lexa->c == '"' || lexa->c == '\'')
+	{
+		on_quote(lexa);
+		return (1);
+	}
+	else if (lexa->oquote)
+	{
+		lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buf);
+		return (1);
+	}
+	else if (lexa->c == ' ')
+	{
+		on_blank(lexa);
+		return (1);
+	}
+	return (0);
+}
+
+int		lex_2(t_lexa *lexa)
+{
+	if (is_operator_part(lexa->prev, lexa->stat))
+	{
+		lexa->escaped ? lexfallbackesc(lexa) : on_operator_prev(lexa);
+		return (1);
+	}
+	else if (is_operator_part(lexa->c, lexa->stat))
+	{
+		on_operator(lexa);
+		return (1);
+	}
+	else if (lexa->stat == SWORD)
+	{
+		on_word(lexa);
+		return (1);
+	}
+	return (0);
+}
+
 t_lex			*lexer(char *cmd)
 {
 	t_lexa		lexa;
-	int			in_eval;
 
-	in_eval = 0;
+	lexa.in_eval = 0;
 	lexa.cmd = cmd;
 	lexa_init(&lexa, cmd);
 	while (*lexa.str && (lexa.c = *(lexa.str)))
 	{
 		check_semi_stat(&lexa);
-		if (ends_with(lexa.buffer, "$(("))
-			in_eval = 1;
-		if (ends_with(lexa.buffer, "))"))
-			in_eval = 0;
+		check_eval(&lexa);
 		if (lexa.c == '\\')
 			escape(&lexa);
-		else if (in_eval)
+		else if (lexa.in_eval)
 		{
 			if (!ft_iswhitespace(lexa.c))
-				lexa.buffer = ft_strpushback(lexa.buffer, lexa.c, &g_lexa_buff_sz);
+				lexa.buffer = ft_strpushback(lexa.buffer, lexa.c, &g_lexa_buf);
 		}
-		else if (lexa.c == '`')
-			on_subshell(&lexa);
-		else if (lexa.c == '"' || lexa.c == '\'')
-			on_quote(&lexa);
-		else if (lexa.oquote)
-			lexa.buffer = ft_strpushback(lexa.buffer, lexa.c, &g_lexa_buff_sz);
-		else if (lexa.c == ' ')
-			on_blank(&lexa);
-		else if (is_operator_part(lexa.prev, lexa.stat))
-			lexa.escaped ? lexfallbackesc(&lexa) : on_operator_prev(&lexa);
-		else if (is_operator_part(lexa.c, lexa.stat))
-			on_operator(&lexa);
-		else if (lexa.stat == SWORD)
-			on_word(&lexa);
+		else if (lex_1(&lexa))
+			;
+		else if (lex_2(&lexa))
+			;
 		else
 			lexfallback(&lexa);
 		lexa.prev = lexa.c;
