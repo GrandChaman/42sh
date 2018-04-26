@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 15:23:14 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/26 14:59:42 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 15:07:57 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,24 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <signal.h>
-# include "sh21.h"
 # include "ast.h"
 # define FG 0
 # define BG 1
-typedef int t_jc_tag;
-typedef enum { NONE, RUNNING, DONE, KILLED, SUSPENDED } t_jc_status;
+
+typedef int		t_jc_tag;
+typedef enum	e_jc_status
+{
+	NONE,
+	RUNNING,
+	DONE,
+	KILLED,
+	SUSPENDED
+}				t_jc_status;
 
 /*
 ** https://www.usna.edu/Users/cs/aviv/classes/ic221/s16/lec/17/lec.html
-**https://stackoverflow.com/questions/10779020/sending-a-process-to-the-background-and-returning-control-to-my-shell
+** https://stackoverflow.com/questions/10779020/
+** sending-a-process-to-the-background-and-returning-control-to-my-shell
 */
 static const char		*g_jc_status_string[] = {
 	"not started",
@@ -59,7 +67,8 @@ typedef	struct			s_jc
 }						t_jc;
 
 char					*jc_cmd(t_ast_node *root);
-int						jc_set(t_jc_tag tag, int mode);
+int						jc_set(t_jc_tag tag,
+	int mode);
 t_jc					*jc_get(void);
 t_jc_job				*jc_get_by_pid(pid_t pid);
 t_jc_tag				jc_create_tag(void);
