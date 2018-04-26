@@ -23,9 +23,9 @@ static char		*exec_subshell_routine(t_sh21 *sh21, char *str,
 		del_sh21();
 		sh21->lex = lexer(str);
 		if (parser(sh21->lex))
-			sh21->ret = exec_tree(sh21->tree.root_node);
+			sh21->status = exec_tree(sh21->tree.root_node);
 		del_sh21_exit();
-		exit(sh21->ret);
+		exit(sh21->status);
 	}
 	else
 	{

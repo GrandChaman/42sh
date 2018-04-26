@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 13:57:33 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/26 16:41:49 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	exec_command(t_sh21 *sh21, char *cmd)
 	if (parser(sh21->lex) && sh21->signal != T_CTRL_C)
 	{
 		ast_print(sh21->tree.root_node);
-		sh21_get()->ret = exec_tree(sh21->tree.root_node);
+		sh21_get()->status = exec_tree(sh21->tree.root_node);
 	}
 	del_sh21();
 	ft_strdel(&cmd);
@@ -39,7 +39,7 @@ static void	exec_cli(t_sh21 *sh21, t_ft_sh *shell)
 
 	while (42)
 	{
-		if (((cmd = read_command(NULL, sh21->ret, 0)) == NULL) &&
+		if (((cmd = read_command(NULL, sh21->status, 0)) == NULL) &&
 			jc_get()->job_list == NULL)
 			break ;
 		if (!cmd)
@@ -70,6 +70,8 @@ int			main(int argc, char *argv[])
 	setlocale(LC_ALL, "");
 	(void)argc;
 	sh21 = sh21_init(environ);
+	sh21->name = argv[0];
+	sh21->argc = argc;
 	shell = get_ft_shell();
 	shell->ht = NULL;
 	if (!sh21->terminal.isatty || argv[1])

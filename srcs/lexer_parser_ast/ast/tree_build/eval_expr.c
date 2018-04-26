@@ -82,6 +82,7 @@ int				main_expr(char *str, int *i)
 	int		nbr2;
 	char	op;
 
+	op = '\0';
 	nbr = is_factors(str, i, op);
 	while (str[*i])
 	{

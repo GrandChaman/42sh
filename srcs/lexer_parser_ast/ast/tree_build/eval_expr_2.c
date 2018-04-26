@@ -17,7 +17,6 @@ char		*find_var_expr(char *str)
 	int		i;
 	char	*stock;
 	char	*final;
-	size_t	o;
 
 	i = 0;
 	while (str[i])
