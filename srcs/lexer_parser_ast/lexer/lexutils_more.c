@@ -77,7 +77,8 @@ void		word_recog(t_lexa *lexa)
 				loop_word(ptr);
 		}
 		if (ptr->token_type == IO_NUM_SPC)
-			ptr->token_type = is_redir_token(token_last_elem) ? IO_NUMBER : WORD;
+			ptr->token_type = is_redir_token(token_last_elem)
+			? IO_NUMBER : WORD;
 		token_last_elem = ptr->token_type;
 		ptr = ptr->next;
 	}

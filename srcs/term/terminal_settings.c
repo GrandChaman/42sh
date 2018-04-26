@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/10 13:37:56 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/26 14:00:24 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/26 17:58:56 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static void				set_terminal_setting(struct termios *old
 	, struct termios *new)
 {
 	*new = *old;
-	new->c_lflag = (ECHOKE | ECHOE | ECHOK | ECHOCTL | IEXTEN | PENDIN);
+	new->c_lflag = (ECHOKE | ECHOE | ECHOK | ECHOCTL | IEXTEN | PENDIN |
+		TOSTOP);
 	new->c_cc[VMIN] = 1;
 	new->c_cc[VTIME] = 0;
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, new))

@@ -22,6 +22,15 @@
 ** root->left.job = 1;
 */
 
+void	apply_bg(t_ast_node *root)
+{
+	if (!root)
+		return ;
+	apply_bg(root->left);
+	apply_bg(root->right);
+	root->mod_gpid = BG;
+}
+
 int		func_amper(t_ast_node *root)
 {
 	int ret;
@@ -30,11 +39,8 @@ int		func_amper(t_ast_node *root)
 	if (sh21_get()->signal == T_CTRL_C)
 		return (1);
 	if (root->left && (root->left->type == SEMI || root->left->type == AND_IF
-		|| root->left->type == OR_IF))
-	{
-		if (root->left->right)
-			root->left->right->mod_gpid = BG;
-	}
+			|| root->left->type == OR_IF || root->left->type == AMPER))
+		apply_bg(root->left->right);
 	else if (root->left)
 		root->left->mod_gpid = BG;
 	if (root->left)
