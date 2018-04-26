@@ -6,7 +6,7 @@
 /*   By: rfautier <rfautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 19:23:38 by rfautier          #+#    #+#             */
-/*   Updated: 2018/04/26 14:33:50 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/26 22:01:16 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,6 @@
 #include "libft.h"
 #include "builtins.h"
 #include "env.h"
-
-static void		print_jobs(void)
-{
-	t_list		*tmp;
-	t_jc		*jobs_struct;
-	t_jc_job	*job;
-
-	jobs_struct = jc_get();
-	tmp = jobs_struct->job_list;
-	while (tmp)
-	{
-		job = ((t_jc_job*)(tmp->content));
-		print_one_jobs(job->tag);
-		tmp = tmp->next;
-	}
-}
 
 static int		print_one_job_routine(t_jc_job *job)
 {
@@ -58,6 +42,23 @@ static int		print_one_job_routine(t_jc_job *job)
 		p_list = p_list->next;
 	}
 	return (1);
+}
+
+static void		print_jobs(void)
+{
+	t_list		*tmp;
+	t_jc		*jobs_struct;
+	t_jc_job	*job;
+
+	jobs_struct = jc_get();
+	tmp = jobs_struct->job_list;
+	while (tmp)
+	{
+		job = ((t_jc_job*)(tmp->content));
+		tmp = tmp->next;
+		if (job && job->proc_list)
+			print_one_job_routine(job);
+	}
 }
 
 int				print_one_jobs(int ntag)
