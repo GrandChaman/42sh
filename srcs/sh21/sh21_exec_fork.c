@@ -74,6 +74,7 @@ int				sh21_exec_builtin(char **av, char ***env,
 		change_fd_or_exit(root);
 		status = builtin.fn_ptr(arrlen(av), av, env, root);
 		reset_fd(root);
+		return (status);
 	}
 	if ((parent = fork()) < 0)
 		failed_fork(root);
