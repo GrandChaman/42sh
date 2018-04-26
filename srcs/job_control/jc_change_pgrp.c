@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 15:46:15 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 17:21:55 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/27 01:03:02 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ static void		jc_change_pgrp_bg(t_jc_job *job)
 		}
 		proc_list = proc_list->next;
 	}
-	ft_printf("[%d] %d (%C)\n", job->tag, job->pgid, 8675);
+	if (job->pgid > 0)
+		ft_printf("[%d] %d (%C)\n", job->tag, job->pgid, 8675);
+	else
+		ft_printf("[%d] Ended.\n", job->tag);
 }
 
 static void		jc_change_pgrp_fg(t_jc_job *job)
@@ -52,11 +55,11 @@ static void		jc_change_pgrp_fg(t_jc_job *job)
 			if (kill_res != 0)
 				ft_exit(errno, "killpg");
 		}
-		jc_get()->fg_job = job;
-		if (tcsetpgrp(STDIN_FILENO, job->pgid))
-			ft_exit(errno, "tcsetpgrp");
 		proc_list = proc_list->next;
 	}
+	jc_get()->fg_job = job;
+	if (job->pgid > 0 && tcsetpgrp(STDIN_FILENO, job->pgid))
+		ft_exit(errno, "tcsetpgrp");
 }
 
 void			jc_change_pgrp(t_jc_job *job, int mode)
