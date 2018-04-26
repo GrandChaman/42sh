@@ -22,7 +22,6 @@ int		parser(t_lex *lex)
 		return (0);
 	print_lex_list(lex);
 	lex = program(lex);
-
 	if (lex && lex->token_type == EOI)
 	{
 		sh21_get()->tree.root_node = ast_create_tree(cpy);

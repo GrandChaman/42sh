@@ -28,6 +28,7 @@ t_ast_node		*ast_create_node(t_token_type type, char *str)
 	node->redir_node = NULL;
 	node->assign_node = NULL;
 	node->condition_node = NULL;
+	node->special_chars = NULL;
 	node->tag_gpid = -1;
 	node->mod_gpid = FG;
 	node->piped_cmd = 0;
@@ -72,7 +73,8 @@ t_ast_node		*ast_create_op(t_ast_node *node, t_lex **lex)
 	root = ast_create_node((*lex)->token_type, (*lex)->content);
 	root->left = node;
 	*lex = (*lex)->next;
-	if (*lex && (ast_is_shell_cmd((*lex)->token_type) || ast_redir_node((*lex)->token_type)))
+	if (*lex && (ast_is_shell_cmd((*lex)->token_type)
+		|| ast_redir_node((*lex)->token_type)))
 		root->right = ast_create_leaf((*lex)->token_type, lex);
 	return (root);
 }

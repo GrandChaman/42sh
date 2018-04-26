@@ -89,8 +89,7 @@ int					bi_history(int argc, char **argv,
 
 	(void)environ;
 	(void)root;
-	ret = 0;
-	if (argc == 1)
+	if (!(ret = 0) && argc == 1)
 		return (hist_display(0));
 	args_init(&flags);
 	read_args(&flags, argc, argv);
@@ -111,4 +110,3 @@ int					bi_history(int argc, char **argv,
 		ret = hist_append_file(argv[flags.argv_count]);
 	return (ret);
 }
-

@@ -25,7 +25,6 @@ void	reset_job(t_ast_node *root)
 int		func_while(t_ast_node *root)
 {
 	t_sh21			*sh21;
-	t_fd_cleanup	*fd_cleanup;
 	int				status;
 
 	sh21 = sh21_get();

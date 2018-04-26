@@ -16,3 +16,6 @@
 - cat -e 3<Makefile <&3
 
 - set position executable pour shell
+
+
+-m regler l'execution

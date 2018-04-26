@@ -14,23 +14,6 @@
 #include "sh21.h"
 #include "libft.h"
 
-t_lex		*lex_create(t_token_type token_type, char *content)
-{
-	t_lex	*lex;
-
-	lex = ft_memalloc(sizeof(t_lex));
-	if (content)
-		lex->content = ft_strdup(content);
-	else
-	{
-		lex->content = ft_memalloc(sizeof(char) * 1);
-		lex->content[0] = '\0';
-	}
-	lex->token_type = token_type;
-	lex->next = NULL;
-	return (lex);
-}
-
 static t_lex	*end_lex(t_lexa *lexa)
 {
 	int		prev_word;

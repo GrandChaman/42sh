@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_tree.c                                        :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/12 14:26:30 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/06 17:16:56 by hfontain         ###   ########.fr       */
+/*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
+/*   Updated: 2018/04/25 18:33:26 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ast.h"
+#include "lexer.h"
 #include "sh21.h"
+#include "libft.h"
 
-int	exec_tree(t_ast_node *first)
+t_lex		*lex_create(t_token_type token_type, char *content)
 {
-	int ret;
-	t_sh21 *sh21;
+	t_lex	*lex;
 
-	sh21 = sh21_get();
-	if (sh21->signal == T_CTRL_C)
-		return (1);
-	sh21->signal = 0;
-	ret = g_exec_fn[first->type](first);
-	return (ret);
+	lex = ft_memalloc(sizeof(t_lex));
+	if (content)
+		lex->content = ft_strdup(content);
+	else
+	{
+		lex->content = ft_memalloc(sizeof(char) * 1);
+		lex->content[0] = '\0';
+	}
+	lex->token_type = token_type;
+	lex->next = NULL;
+	return (lex);
 }
