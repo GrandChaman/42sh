@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 13:13:55 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/27 01:31:35 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/27 01:44:07 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int			jc_set(t_jc_tag tag, int mode)
 		{
 			jc_change_pgrp(job, mode);
 			res = jc_wait(job, mode);
+			jc_get()->fg_job = NULL;
 			return (res);
 		}
 		jb_list = jb_list->next;
