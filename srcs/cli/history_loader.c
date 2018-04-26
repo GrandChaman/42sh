@@ -47,6 +47,13 @@ void				write_history(t_ft_sh *sh, int fd, int should_delete)
 	}
 }
 
+static void			load_history_2(t_ft_sh *sh, int fd)
+{
+	write_history(sh, fd, 1);
+	sh->history = NULL;
+	sh->history_size = 0;
+}
+
 int					load_history(t_ft_sh *sh, int unload)
 {
 	char	*path;
@@ -62,11 +69,7 @@ int					load_history(t_ft_sh *sh, int unload)
 		return (ft_fprintf(2, "\nCan't open history file. open() failed.\n"));
 	}
 	if (unload)
-	{
-		write_history(sh, fd, 1);
-		sh->history = NULL;
-		sh->history_size = 0;
-	}
+		load_history_2(sh, fd);
 	else if ((res = read_history(sh, fd)))
 	{
 		ft_fprintf(2, "\nCan't read history file.\n");
