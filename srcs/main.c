@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/25 14:31:41 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 13:57:33 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,20 @@
 
 t_lex		*g_err_lex;
 
-
-static void	ignore_signal(int sig)
+static void	exec_command(t_sh21 *sh21, char *cmd)
 {
-	(void)sig;
+	jc_update_all();
+	sh21->lex = lexer(cmd);
+	if (parser(sh21->lex) && sh21->signal != T_CTRL_C)
+	{
+		ast_print(sh21->tree.root_node);
+		sh21_get()->ret = exec_tree(sh21->tree.root_node);
+	}
+	del_sh21();
+	ft_strdel(&cmd);
 }
 
-static void signal_c(int sig)
-{
-	(void)sig;
-	sh21_get()->signal = T_CTRL_C;
-}
-
-static void	main_loop(t_sh21 *sh21, t_ft_sh *shell)
+static void	exec_cli(t_sh21 *sh21, t_ft_sh *shell)
 {
 	char	*cmd;
 
@@ -56,15 +57,7 @@ static void	main_loop(t_sh21 *sh21, t_ft_sh *shell)
 		}
 		add_to_history(shell, cmd);
 		sh21->buf = cmd;
-		jc_update_all();
-		sh21->lex = lexer(cmd);
-		if (parser(sh21->lex) && sh21->signal != T_CTRL_C)
-		{
-			ast_print(sh21->tree.root_node);
-			sh21_get()->ret = exec_tree(sh21->tree.root_node);
-		}
-		del_sh21();
-		ft_strdel(&cmd);
+		exec_command(sh21, cmd);
 	}
 }
 
@@ -81,11 +74,7 @@ int			main(int argc, char *argv[])
 	shell->ht = NULL;
 	if (!sh21->terminal.isatty || argv[1])
 		return (input_piped_script(sh21, argv));
-	signal(SIGINT, signal_c);
-	signal(SIGTSTP, ignore_signal);
-	signal(SIGCONT, ignore_signal);
-	signal(SIGTTOU, SIG_IGN);
-	signal(SIGTTIN, SIG_IGN);
+	set_up_default_signal();
 	setpgid(0, getpid());
 	if (!is_env_correct())
 		return (1);
@@ -95,8 +84,7 @@ int			main(int argc, char *argv[])
 		cli_loader(1);
 		return (1);
 	}
-	main_loop(sh21, shell);
-	//job_control_test(sh21);
+	exec_cli(sh21, shell);
 	del_sh21_exit();
 	return (0);
 }
