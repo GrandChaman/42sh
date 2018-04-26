@@ -38,8 +38,7 @@ int				try_direct_acces(char **av, char ***env, t_ast_node *root)
 	sh21 = sh21_get();
 	if (ft_strchr(av[0], '/') != NULL)
 	{
-		stat(av[0], &st);
-		if (S_ISDIR(st.st_mode))
+		if (stat(av[0], &st) > 0 && S_ISDIR(st.st_mode))
 		{
 			jc_delete_tag(root->tag_gpid);
 			return (ft_error(21, av[0]));
