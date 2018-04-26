@@ -43,7 +43,7 @@ char		*find_var_expr(char *str)
 			stock = ft_strffjoin(ft_strsub(str, 0, i), find_var(&str[i + 1]));
 			find_var_expr_2(str, &lol, i);
 			i++;
-			while (str[i] && (!(operator(str, i) && !(is_whitespace(str[i])))))
+			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 				i++;
 			final = ft_strjoin(stock, &str[i]);
 			free(stock);
