@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 16:26:13 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/25 21:03:54 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/26 14:34:30 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void					collect_data(char *str_part)
 		ft_lstsort(&sh->autocomplete, cmp_autoc_entry);
 }
 
-static void				complete_missing_autocomplete(t_ft_sh *sh,
-	char *str_part, char *completion)
+static void				complete_missing_autocomplete(char *str_part,
+	char *completion)
 {
 	int					i;
 	char				*tmp;
@@ -132,7 +132,7 @@ void					ft_sh_autocomplete(unsigned long touch)
 		completion = ft_strdup(((t_ft_autoc_entry*)
 			sh->autocomplete_cusor->content)->name);
 		cancel_autocompletion(sh, 0);
-		complete_missing_autocomplete(sh, str_part, completion);
+		complete_missing_autocomplete(str_part, completion);
 		free(completion);
 	}
 	free(str_part);
