@@ -55,7 +55,7 @@ SRC =  $(shell find srcs -regex '.*\.c' -exec basename {} \; | tr '\n' ' ')
 # 		word.c split_args2.c remove_char.c
 
 LIBFT_INCLUDE = $(LIBFT_DIR)/include
-CFLAG = -g3 -Wall -Wextra -Werror -fsanitize=address -I $(LIBFT_INCLUDE) -I $(INCLUDE)
+CFLAG = -g3 -Wall -Wextra -Werror -I $(LIBFT_INCLUDE) -I $(INCLUDE)
 CC = cc
 LFLAG = -ltermcap
 BIN = bin
