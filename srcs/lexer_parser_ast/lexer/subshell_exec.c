@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   magic.c                                            :+:      :+:    :+:   */
+/*   subshell_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 15:07:38 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/24 15:22:34 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 14:48:53 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,4 @@ char			*exec_subshell(char *str, char *file_nm_io)
 	dup2(res_fd_subsh, 1);
 	close(2);
 	return (exec_subshell_routine(sh21, str, nerr_subsh, nw_subsh));
-} 
+}
