@@ -27,7 +27,7 @@ static void	exec_command(t_sh21 *sh21, char *cmd)
 	if (parser(sh21->lex) && sh21->signal != T_CTRL_C)
 	{
 		ast_print(sh21->tree.root_node);
-		sh21_get()->ret = exec_tree(sh21->tree.root_node);
+		sh21_get()->status = exec_tree(sh21->tree.root_node);
 	}
 	del_sh21();
 	ft_strdel(&cmd);
@@ -39,7 +39,7 @@ static void	exec_cli(t_sh21 *sh21, t_ft_sh *shell)
 
 	while (42)
 	{
-		if (((cmd = read_command(NULL, sh21->ret, 0)) == NULL) &&
+		if (((cmd = read_command(NULL, sh21->status, 0)) == NULL) &&
 			jc_get()->job_list == NULL)
 			break ;
 		if (!cmd)
