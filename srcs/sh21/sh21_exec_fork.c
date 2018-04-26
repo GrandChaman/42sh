@@ -52,10 +52,10 @@ int				callsystem(char *cmd, char **av, char ***env, t_ast_node *root)
 		assign_var(root);
 		change_fd_or_exit(root);
 		if (!cmd || execve(cmd, av, *env) < 0)
-			ft_exit((cmd ? errno : -1), (cmd ? cmd : av[0]));
+			;
 		ft_exit((cmd ? errno : -1), (cmd ? cmd : av[0]));
 	}
-	else
+	else if (parent != 0)
 		return (sh21_exec_father(root, parent));
 	return (0);
 }

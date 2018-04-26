@@ -20,7 +20,9 @@ static void	jc_add_routine(t_jc_job *job, pid_t npid, char *cmd)
 	if (!job->proc_list)
 	{
 		if (setpgid(npid, npid) < 0)
+		{
 			ft_exit(errno, "setpgid");
+		}
 		job->pgid = npid;
 	}
 	else if (setpgid(npid, job->pgid) < 0)

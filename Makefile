@@ -69,7 +69,7 @@ SRC = bang_case.c bang_main.c bang_search.c bi_bg.c bi_cd.c bi_cd3.c \
 # $(shell find srcs -regex '.*\.c' -exec basename {} \; | tr '\n' ' ')
 
 LIBFT_INCLUDE = $(LIBFT_DIR)/include
-CFLAG = -Wall -Wextra -Werror -O2 -I $(LIBFT_INCLUDE) -I $(INCLUDE)
+CFLAG = -fsanitize=address -O2 -I $(LIBFT_INCLUDE) -I $(INCLUDE)
 CC = cc
 LFLAG = -ltermcap
 BIN = bin
