@@ -62,12 +62,8 @@ typedef struct		s_sh21
 
 static int			g_shell_idx = 0;
 
-<<<<<<< Updated upstream
 int					correct_form_eval_expr(char *str);
-char				*return_prompt(int stock);
-=======
 char				**sh21_envchar(t_sh21 *sh21);
->>>>>>> Stashed changes
 char				*bracket(char *cmd, int i);
 char				*find_var_expr(char *str);
 char				*random_str(size_t len);
