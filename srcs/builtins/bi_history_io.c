@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 17:08:33 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/19 17:14:12 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/26 14:30:43 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ int			hist_divergence(char *path, char **line, t_list **hist, int *fd)
 	if (!(path = (path ? path : get_history_file())))
 		return (ft_fprintf(2, "42sh: history: can't open default history file."
 			" HOME not defined %s.\n", path) || 1);
-	*hist = ft_lstlast(sh->history);
+		*hist = ft_lstlast(sh->history);
 	if ((*fd = open(path, O_RDWR)) < 0)
 		return (ft_fprintf(2, "42sh: history: can't write to "
 			"file %s.\n", path) * -1);
-	while (*hist && (gnl_res = get_next_line(*fd, line)) > 0)
+		while (*hist && (gnl_res = get_next_line(*fd, line)) > 0)
 	{
 		if (!(tmp = ft_strchr(*line, ' ')))
 			continue ;
@@ -53,15 +53,15 @@ int			hist_sync_file(char *path)
 	if (!(path = (path ? path : get_history_file())))
 		return (ft_fprintf(2, "42sh: history: can't open default history file."
 			" HOME not defined %s.\n", path) || 1);
-	gnl_res = hist_divergence("toto.txt", &line, &tmp, &fd);
+		gnl_res = hist_divergence(path, &line, &tmp, &fd);
 	free(line);
 	if (gnl_res < 0)
 		return ((close(fd) + ft_fprintf(2,\
 			"42sh: history: Error while reading history file %s\n")) || 1);
-	if (lseek(fd, 0, SEEK_END) < 0)
+		if (lseek(fd, 0, SEEK_END) < 0)
 		return ((close(fd) + ft_fprintf(2, "42sh: history: lseek() failed\n"))
 			&& 1);
-	while (tmp)
+		while (tmp)
 	{
 		ft_fprintf(fd, "%lu %s\n", ((t_ft_hist_entry*)tmp->content)->timestamp,
 			((t_ft_hist_entry*)tmp->content)->command);
@@ -84,18 +84,18 @@ int			hist_sync(char *path)
 	if (!path)
 		return (ft_fprintf(2, "42sh: history: can't open default history file."
 			" HOME not defined %s.\n", path) || 1);
-	gnl_res = hist_divergence("toto.txt", &line, &tmp, &fd);
+		gnl_res = hist_divergence(path, &line, &tmp, &fd);
 	if (gnl_res < 0)
 		return ((close(fd) + ft_fprintf(2,
 			"42sh: history: Error while reading history file %s\n")) || 1);
-	if (line)
+		if (line)
 		parse_and_add_to_history(sh, line);
 	free(line);
 	read_history(get_ft_shell(), fd);
 	if (lseek(fd, 0, SEEK_END) < 0)
 		return ((close(fd) +
 			ft_fprintf(2, "42sh: history: lseek() failed\n")) || 1);
-	close(fd);
+		close(fd);
 	return (0);
 }
 
@@ -109,10 +109,10 @@ int			hist_append_file(char *path)
 	if (!path)
 		return (ft_fprintf(2, "42sh: history: can't open default history file."
 			" HOME not defined %s.\n", path) || 1);
-	if ((fd = open(path, O_RDONLY)) < 0)
+		if ((fd = open(path, O_RDONLY)) < 0)
 		return (ft_fprintf(2, "42sh: history: can't read file %s.\n", path)
 			|| 1);
-	if (read_history(sh, fd) < 0)
+		if (read_history(sh, fd) < 0)
 	{
 		close(fd);
 		return (ft_fprintf(2, "42sh: history: error while reading %s.\n", path)
@@ -132,10 +132,10 @@ int			hist_write(char *path)
 	if (!path)
 		return (ft_fprintf(2, "42sh: history: can't open default history file."
 			" HOME not defined %s.\n", path) || 1);
-	if ((fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644)) < 0)
+		if ((fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644)) < 0)
 		return (ft_fprintf(2, "42sh: history: can't write to file %s.\n", path)
 			&& 1);
-	write_history(sh, fd, 0);
+		write_history(sh, fd, 0);
 	close(fd);
 	return (0);
 }

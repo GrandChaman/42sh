@@ -64,7 +64,11 @@ static int		is_factors(char *str, int *i)
 		*i = *i + 1;
 		nbr2 = check_parenthese(str, i);
 		if (op == '/')
+		{
+			if (nbr2 == 0)
+				return (0);
 			nbr = nbr / nbr2;
+		}
 		else if (op == '*')
 			nbr = nbr * nbr2;
 		else
@@ -117,7 +121,9 @@ int				ft_eval_expr(char *ori, int *end, int o)
 	*end = i;
 	str = ft_strndup(ori, i + 1);
 	str = find_var_expr(str);
-	i = main_expr(str, 0);
+	i = 0;
+	if (correct_form_eval_expr(str))
+		i = main_expr(str, &i);
 	free(str);
 	return (i);
 }
