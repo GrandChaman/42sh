@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 14:46:07 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 15:13:33 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_lex		*lex_create(t_token_type token_type, char *content)
 	return (lex);
 }
 
-t_lex	*end_lex(t_lexa *lexa)
+t_lex		*end_lex(t_lexa *lexa)
 {
 	int		prev_word;
 	t_lex	*ptr;
@@ -75,10 +75,11 @@ void		lexfallbackesc(t_lexa *lexa)
 	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buf);
 }
 
-int				ends_with(char *str, char *t)
+int			ends_with(char *str, char *t)
 {
 	const int		strlen = ft_strlen(str);
 	const int		tlen = ft_strlen(t);
+
 	if (!str)
 		return (0);
 	if (!t)

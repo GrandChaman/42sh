@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 20:35:41 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 14:41:30 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 15:14:20 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void		lexfallback(t_lexa *lexa)
 
 void		lexa_init(t_lexa *lexa, char *cmd)
 {
+	lexa->cmd = cmd;
+	lexa->in_eval = 0;
 	lexa->str = cmd;
 	lexa->stat = SNIL;
 	lexa->prev = '\0';
