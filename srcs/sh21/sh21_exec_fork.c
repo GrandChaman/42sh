@@ -30,7 +30,7 @@ static int		sh21_exec_father(t_ast_node *root, pid_t parent)
 	return (status);
 }
 
-static void		change_fd_or_exit(t_ast_node *root)
+void			change_fd_or_exit(t_ast_node *root)
 {
 	if (change_fd(root) < 0)
 	{
@@ -69,13 +69,7 @@ int				sh21_exec_builtin(char **av, char ***env,
 	status = 0;
 	if (!ft_strequ(builtin.fn_name, "env")
 		&& !(root->piped_cmd || root->mod_gpid == BG))
-	{
-		jc_delete_tag(root->tag_gpid);
-		change_fd_or_exit(root);
-		status = builtin.fn_ptr(arrlen(av), av, env, root);
-		reset_fd(root);
-		return (status);
-	}
+		return (sh21_exec_builtin_no_fork(av, env, root, builtin));
 	if ((parent = fork()) < 0)
 		failed_fork(root);
 	else if (!parent)
