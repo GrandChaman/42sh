@@ -20,7 +20,6 @@ int		parser(t_lex *lex)
 	cpy = lex;
 	if (size_list(lex) == 1 && lex->token_type == EOI)
 		return (0);
-	print_lex_list(lex);
 	lex = program(lex);
 	if (lex && lex->token_type == EOI)
 	{

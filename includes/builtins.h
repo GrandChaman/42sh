@@ -150,4 +150,8 @@ static const t_builtin	g_builtins[] =
 };
 int						sh21_exec_builtin(char **av, char ***env,
 						t_ast_node *root, t_builtin builtin);
+int						sh21_exec_builtin_no_fork(char **av, char ***env,
+						t_ast_node *root, t_builtin builtin);
+void					change_fd_or_exit(t_ast_node *root);
+
 #endif

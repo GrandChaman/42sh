@@ -33,7 +33,7 @@ int		func_while(t_ast_node *root)
 		status = g_exec_fn[root->redir_node->type](root->redir_node);
 	if (!status)
 	{
-		while (!(status = g_exec_fn[root->left->type](root->left)))
+		while (!g_exec_fn[root->left->type](root->left))
 		{
 			if (sh21->signal == T_CTRL_C)
 				return (1);

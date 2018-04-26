@@ -6,11 +6,12 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/27 11:18:55 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/03/23 14:48:44 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/26 16:59:48 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cli.h"
+#include "sh21.h"
 
 void		cancel_selection(t_ft_sh *shell, unsigned long rchar)
 {
@@ -31,6 +32,8 @@ void		cancel_selection(t_ft_sh *shell, unsigned long rchar)
 		exec_term_command(TC_RESETCURPOS);
 		shell->cursor = cur_save;
 	}
+	if (!shell->select_size)
+		shell->select_start = 0;
 }
 
 void		move_select(unsigned long touch)
@@ -94,6 +97,7 @@ void		paste_select(unsigned long touch)
 	update_stdout(sh, 0);
 	while (--i > 0)
 		move_in_terminal(T_RARR);
+	cancel_selection(sh, 0);
 }
 
 void		cut_select(unsigned long touch)

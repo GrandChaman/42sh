@@ -60,10 +60,10 @@ static void	on_subshell2(t_lexa *lexa, char *rdm_file_io, int fd)
 		buf[i] = '\0';
 		new_str = ft_strfjoin(new_str, buf);
 	}
-	if (i < 0 || !new_str)
-		return ;
 	unlink(rdm_file_io);
 	ft_strdel(&rdm_file_io);
+	if (i < 0 || !new_str)
+		return ;
 	return (on_subshell3(lexa, new_str));
 }
 
