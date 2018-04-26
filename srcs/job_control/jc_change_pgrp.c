@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 15:46:15 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/27 01:03:02 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/27 01:30:56 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void		jc_change_pgrp_bg(t_jc_job *job)
 	t_jc_proc	*proc;
 
 	proc_list = job->proc_list;
-	if (tcsetpgrp(STDIN_FILENO, getpgrp()))
+	if (tcsetpgrp(STDOUT_FILENO, getpgrp()))
 		ft_exit(errno, "tcsetpgrp");
 	while (proc_list)
 	{
@@ -58,7 +58,7 @@ static void		jc_change_pgrp_fg(t_jc_job *job)
 		proc_list = proc_list->next;
 	}
 	jc_get()->fg_job = job;
-	if (job->pgid > 0 && tcsetpgrp(STDIN_FILENO, job->pgid))
+	if (job->pgid > 0 && tcsetpgrp(STDOUT_FILENO, job->pgid))
 		ft_exit(errno, "tcsetpgrp");
 }
 

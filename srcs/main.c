@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 17:41:50 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/27 01:28:36 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ int			main(int argc, char *argv[])
 	sh21->argc = argc;
 	shell = get_ft_shell();
 	shell->ht = NULL;
+	set_up_default_signal();
 	if (!sh21->terminal.isatty || argv[1])
 		return (input_piped_script(sh21, argv));
-	set_up_default_signal();
 	setpgid(0, getpid());
 	if (!is_env_correct())
 		return (1);

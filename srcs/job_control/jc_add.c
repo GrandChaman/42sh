@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 15:58:28 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/27 01:00:38 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/27 01:22:44 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,6 @@ static void	jc_add_routine(t_jc_job *job, pid_t npid, char *cmd)
 {
 	t_jc_proc	proc;
 
-<<<<<<< HEAD
-	if (!job->proc_list)
-	{
-		if (setpgid(npid, npid) < 0)
-		{
-			ft_exit(errno, "setpgid");
-		}
-		job->pgid = npid;
-	}
-	else if (setpgid(npid, job->pgid) < 0)
-		ft_exit(errno, "setpgid");
-=======
->>>>>>> Fixed big race condition on setpgid
 	proc.pid = npid;
 	proc.cmd = cmd;
 	proc.status = NONE;
