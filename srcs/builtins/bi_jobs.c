@@ -68,7 +68,10 @@ int				print_one_jobs(int ntag)
 	while (tmp != NULL)
 	{
 		if (ntag == ((t_jc_job*)(tmp->content))->tag)
+		{
 			print_one_job_routine((t_jc_job*)(tmp->content));
+			return (1);
+		}
 		tmp = tmp->next;
 	}
 	return (0);
