@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "cli.h"
+#include "sh21.h"
 
 void		cancel_selection(t_ft_sh *shell, unsigned long rchar)
 {
@@ -34,8 +35,6 @@ void		cancel_selection(t_ft_sh *shell, unsigned long rchar)
 	if (!shell->select_size)
 		shell->select_start = 0;
 }
-
-#include "sh21.h"
 
 void		move_select(unsigned long touch)
 {

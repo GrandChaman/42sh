@@ -60,7 +60,7 @@ void	case_dollar(char **ret, char **ptr, int *i)
 		{
 			*ret = ft_strffjoin(*ret, find_var(*ptr));
 			*ptr += skip_var(*ptr);
-		}		
+		}
 	}
 }
 
