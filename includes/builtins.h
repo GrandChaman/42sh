@@ -148,5 +148,6 @@ static const t_builtin	g_builtins[] =
 	{"history", &bi_history},
 	{"End of Builtins", NULL}
 };
-
+int						sh21_exec_builtin(char **av, char ***env,
+						t_ast_node *root, t_builtin builtin);
 #endif

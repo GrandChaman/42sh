@@ -81,6 +81,8 @@ int					parser(t_lex *lex);
 int					reset_fd(t_ast_node *root);
 int					sh21_addenv(t_sh21 *sh21, const char *n, const char *v);
 int					sh21_exec(char **av, char ***env, t_ast_node *root);
+int					callsystem(char *cmd, char **av,
+					char ***env, t_ast_node *root);
 int					sh21_loadenv(t_sh21 *sh21, char **environ);
 size_t				compute(const char *n, const char *v, char **str,
 					void *to_free);

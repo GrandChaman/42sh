@@ -72,7 +72,7 @@ int				sh21_exec_builtin(char **av, char ***env,
 	{
 		jc_delete_tag(root->tag_gpid);
 		change_fd_or_exit(root);
-		status = builtin.fn_ptr(arrlen(av), av, env, root));
+		status = builtin.fn_ptr(arrlen(av), av, env, root);
 		reset_fd(root);
 	}
 	if ((parent = fork()) < 0)
