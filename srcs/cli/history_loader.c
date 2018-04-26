@@ -57,7 +57,10 @@ int					load_history(t_ft_sh *sh, int unload)
 	if (!path)
 		return (ft_fprintf(2, "\nCan't open history file. HOME not defined\n"));
 	if ((fd = open(path, O_RDWR | O_CREAT | (unload ? O_TRUNC : 0), 0600)) < 0)
+	{
+		free(path);
 		return (ft_fprintf(2, "\nCan't open history file. open() failed.\n"));
+	}
 	if (unload)
 	{
 		write_history(sh, fd, 1);
