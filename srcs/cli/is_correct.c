@@ -32,7 +32,7 @@ static int		check_second_quote(char second, int *i, char *cmd)
 	return (0);
 }
 
-int		quote(char *cmd, int *i)
+int				quote(char *cmd, int *i)
 {
 	char	tabl[5];
 	int		var;
