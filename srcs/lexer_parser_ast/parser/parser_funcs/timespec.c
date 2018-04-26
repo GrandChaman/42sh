@@ -17,7 +17,5 @@ t_lex	*timespec(t_lex *lex)
 {
 	if (!assert_lex(lex))
 		return (g_err_lex);
-	//if (assert_lex(lex) && ft_strequ(lex->content, "-p"))
-	//	return ((lex->next));
 	return (lex);
 }
