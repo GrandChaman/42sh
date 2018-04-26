@@ -107,6 +107,23 @@ typedef struct			s_lex
 t_lex					*g_err_lex;
 t_lex					*g_end_of_input;
 
+
+typedef struct			s_lexa
+{
+	char			*buffer;
+	char			*cmd;
+	char			*str;
+	char			c;
+	char			prev;
+	int				escaped;
+	int				oquote;
+	int				stat;
+	t_lex			*lex;
+	t_token_type	t;
+}						t_lexa;
+
+static size_t g_lexa_buff_sz = 1024;
+
 static const char		*g_token_type_str[] =
 {
 	"BEGIN",
@@ -207,26 +224,12 @@ t_lex					*subshell(t_lex *lex);
 t_lex					*timespec(t_lex *lex);
 t_lex					*word_list(t_lex *lex);
 
+char					*exec_subshell(char *str, char *file_nm_io);
+
 t_token_type			get_operator_tok(char *str);
 void					del_lex(void **lex);
 void					print_lex_list(t_lex *elem);
 void					word_rec(t_lex *lex);
-
-typedef struct			s_lexa
-{
-	char			*buffer;
-	char			*cmd;
-	char			*str;
-	char			c;
-	char			prev;
-	int				escaped;
-	int				oquote;
-	int				stat;
-	t_lex			*lex;
-	t_token_type	t;
-}						t_lexa;
-
-static size_t g_lexa_buff_sz = 1024;
 
 void					on_subshell(t_lexa *lexa);
 void					check_semi_stat(t_lexa *lexa);

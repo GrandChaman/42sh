@@ -12,42 +12,6 @@
 
 #include "sh21.h"
 
-char	*exec_subshell(char *str, char *file_nm_io)
-{
-	int 	i[4];
-	pid_t	pid;
-	t_sh21	*sh21;
-	//char	*argv[] = {"./42sh", file_nm_cmd, NULL};
-
-	//i[CMD_FD_SUBSH] = open(file_nm_cmd, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-	//write(i[CMD_FD_SUBSH], str, ft_strlen(str));
-	sh21 = sh21_get();
-	close(i[CMD_FD_SUBSH]);
-	i[RES_FD_SUBSH] = open(file_nm_io, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-	i[NW_SUBSH] = dup(1);
-	i[NERR_SUBSH] = dup(2);
-	dup2(i[RES_FD_SUBSH], 1);
-	close(2);
-	pid = fork();
-	if (pid == 0)
-	{
-		del_sh21();
-		sh21->lex = lexer(str);
-		if (parser(sh21->lex))
-			sh21->ret = exec_tree(sh21->tree.root_node);
-		del_sh21_exit();
-		exit(sh21->ret);
-	}
-	else
-	{
-		wait(&pid);
-		dup2(i[NERR_SUBSH], 2);
-		dup2(i[NW_SUBSH], 1);
-	}
-	return (str);
-}
-
-
 char *create_rdm_file(void)
 {
 	char	*random_file;
