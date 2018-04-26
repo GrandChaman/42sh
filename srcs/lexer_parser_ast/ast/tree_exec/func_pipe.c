@@ -12,6 +12,25 @@
 
 #include "sh21.h"
 
+void	open_dir_pipe(t_ast_node *root)
+{
+	if (!root)
+		return ;
+	open_dir_pipe(root->left);
+	open_dir_pipe(root->right);
+	if (root->type == WORD)
+		close(open(root->content, O_RDWR | O_CREAT | O_TRUNC, 0644));
+}
+
+void	parse_funcs_open_fd(t_ast_node *root)
+{
+	if (!root)
+		return ;
+	parse_funcs_open_fd(root->left);
+	parse_funcs_open_fd(root->right);
+	open_dir_pipe(root->redir_node);
+}
+
 int		func_pipe_right(t_ast_node *root, int pipefd[2])
 {
 	int		status;
@@ -50,6 +69,7 @@ int		func_pipe(t_ast_node *root)
 	if (pipe(pipefd) < 0)
 		return (ft_error(errno, NULL));
 	set_job(root);
+	parse_funcs_open_fd(root);
 	func_pipe_left(root, pipefd);
 	ret = func_pipe_right(root, pipefd);
 	if (root->piped_cmd == 1)
