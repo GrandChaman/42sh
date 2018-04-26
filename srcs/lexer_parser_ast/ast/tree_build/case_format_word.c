@@ -46,12 +46,12 @@ void	case_dollar(char **ret, char **ptr, int *i)
 
 	end = 0;
 	*ret = add_str(ret, ptr, i);
-    (*ptr)++;
-    if (ft_strnequ(*ptr, "((", 2))
-    {
+	(*ptr)++;
+	if (ft_strnequ(*ptr, "((", 2))
+	{
 		*ret = ft_strffjoin(*ret, ft_itoa(ft_eval_expr(*ptr, &end, 0)));
 		*ptr += end;
-    }
+	}
 	else
 	{
 		*ret = ft_strffjoin(*ret, find_var(*ptr));
