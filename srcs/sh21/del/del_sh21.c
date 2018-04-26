@@ -23,6 +23,7 @@ void	del_sh21(void)
 	del_list((void**)&sh21->lex, del_lex);
 	del_ast(&sh21->tree.root_node);
 	del_list((void**)&sh21->tree.fd_cleanup, del_redir);
+	ft_lstdel(&sh21->heredocs, del_heredocs);
 }
 
 void	del_sh21_exit(void)

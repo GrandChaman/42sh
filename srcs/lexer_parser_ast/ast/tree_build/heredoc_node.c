@@ -75,6 +75,8 @@ void		heredoc_node(t_ast_node *node)
 	if (!(tmp_file = random_str(SIZE_RANDOM_STR)))
 		return ;
 	node->content = ft_strjoin(TMP_PATH_RANDOM, tmp_file);
+	ft_lstpush_back(&sh21->heredocs, node->content,
+		ft_strlen(node->content) + 1);
 	if ((tmp = read_command(NULL, 0, 1)) == NULL)
 	{
 		free(str);

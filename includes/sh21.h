@@ -51,6 +51,7 @@ typedef struct		s_sh21
 	t_lex			*lex;
 	t_ast			tree;
 	t_env			env;
+	t_list			*heredocs;
 	char			*buf;
 	int				signal;
 	int				debug_tty;
@@ -113,5 +114,5 @@ char				*get_history_at(int nb, int *j);
 char				*cmp_history(char *str, int *j);
 void				replace_bang(char **str, int *i, int *j, char *bang);
 int					bang_error(void);
-
+void				del_heredocs(void *content, size_t size);
 #endif

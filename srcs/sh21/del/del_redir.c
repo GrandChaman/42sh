@@ -12,6 +12,16 @@
 
 #include "sh21.h"
 
+void	del_heredocs(void *content, size_t size)
+{
+	(void)size;
+	if (content)
+	{
+		unlink((char*)content);
+		ft_strdel((char**)&content);
+	}
+}
+
 void	del_redir(void **node)
 {
 	ft_memdel(node);

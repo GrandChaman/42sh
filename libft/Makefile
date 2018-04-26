@@ -54,7 +54,7 @@ SRC_PRINTF = $(addprefix $(PRINTF_DIR)/, ft_printf_routine.c ft_printf.c \
 		ft_printf_numbers2.c)
 
 INCLUDE = include
-CFLAG =-g3 -c -Wall -Wextra -Werror -I $(INCLUDE)
+CFLAG = -c -Wall -Wextra -Werror -O3 -I $(INCLUDE)
 OBJ = obj
 CC = cc
 LN = ar
