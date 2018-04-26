@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 15:54:39 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 14:02:10 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/04/26 14:20:13 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,6 @@
 # define D_ERR		1 << 4
 # define AWRN_ERR	1 << 5
 # define INVARG		1 << 6
-//
-// typedef struct			s_hist_args
-// {
-// 	int		c;
-// 	int		d;
-// 	int		d_val;
-// 	int		p;
-// 	int		s;
-// 	int		awrn;
-// 	int		err;
-// }						t_hist_args;
 
 typedef struct			s_flag
 {
@@ -126,7 +115,6 @@ enum	e_flag_cd
 	CD_L,
 	CD_P,
 };
-
 
 static const t_builtin		g_builtins[] =
 {
