@@ -12,11 +12,19 @@
 
 #include "sh21.h"
 
+static int	operator(char *c, int i)
+{
+	if (c[i] == '+' || c[i] == '-' || c[i] == '*' || c[i] == '/' || c[i] == '%')
+		return (1);
+	return (0);
+}
+
 char		*find_var_expr(char *str)
 {
 	int		i;
 	char	*stock;
 	char	*final;
+	int		lol;
 
 	i = 0;
 	while (str[i])
@@ -24,25 +32,20 @@ char		*find_var_expr(char *str)
 		if (str[i] == '$' && str[i + 1])
 		{
 			stock = ft_strffjoin(ft_strsub(str, 0, i), find_var(&str[i + 1]));
-			i = ft_strlen(stock);
-			while (str[i] && ft_isalpha(str[i]))
+			lol = ft_strlen(find_var(&str[i + 1]));
+			i++;
+			while (str[i] && (!(operator(str, i) && !(is_whitespace(str[i])))))
 				i++;
 			final = ft_strjoin(stock, &str[i]);
 			free(stock);
 			free(str);
 			str = final;
+			i = lol;
 		}
-		i++;
+		else
+			i++;
 	}
-	ft_printf("str = %s\n", str);
 	return (str);
-}
-
-static int	operator(char *c, int i)
-{
-	if (c[i] == '+' || c[i] == '-' || c[i] == '*' || c[i] == '/' || c[i] == '%')
-		return (1);
-	return (0);
 }
 
 static int	is_whitespace_1(char *str, int *i)
