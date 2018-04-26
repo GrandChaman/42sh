@@ -69,7 +69,6 @@ static int			hist_del_at_offset(int off)
 	t_list	*tmp;
 
 	sh = get_ft_shell();
-	ft_printf("offset = %i\n", off);
 	if (sh->history_size >= SH_HIST_MAX_SIZE)
 		off--;
 	if (off < 0 || sh->history_size - off < 0)
