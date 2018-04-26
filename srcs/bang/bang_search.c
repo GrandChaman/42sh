@@ -22,7 +22,10 @@ char	*get_history_at(int nb, int *j)
 	len = ft_lstsize((t_list*)list);
 	nb += nb < 0 ? len + 1 : 0;
 	if (nb <= 0 || nb > len)
+	{
+		ft_error(-9, iota);
 		return (NULL);
+	}
 	iota = ft_itoa(nb);
 	*j += ft_strlen(iota);
 	ptr = (t_list*)list;
