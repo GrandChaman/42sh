@@ -6,7 +6,7 @@
 /*   By: rfautier <rfautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 19:23:38 by rfautier          #+#    #+#             */
-/*   Updated: 2018/04/25 21:42:13 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/26 14:21:58 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,36 +33,29 @@ static void		print_jobs(void)
 
 static int		print_one_job_routine(t_jc_job *job)
 {
-	t_list		*proc_list;
-	t_jc_proc	*proc;
+	t_list		*p_list;
+	t_jc_p		*p;
 
-	proc_list = job->proc_list;
-	proc = (t_jc_proc*)(proc_list->content);
-	ft_printf("[%d] + %d %-*s", job->tag, proc->pid, 11,
-		g_jc_status_string[proc->status]);
-	if (proc->status == KILLED && proc->rvalue > 0 && proc->rvalue <= 32)
-		ft_printf("(Signal : %s (%d))", sys_siglist[proc->rvalue], proc->rvalue);
-	else if (proc->status == KILLED)
-		ft_printf("(Signal : %d)", proc->rvalue);
-	else if (proc->status == DONE)
-		ft_printf("(Exit code : %d)", proc->rvalue);
-	else
-		ft_printf("%*s", 18, " ");
-	ft_printf(" %s\n", proc->cmd);
-	while ((proc_list = proc_list->next))
+	p_list = job->p_list;
+	p = (t_jc_p*)(p_list->content);
+	ft_printf("[%d] + %d %-*s", job->tag, p->pid, 11,
+		g_jc_status_string[p->status]);
+	while (p_list)
 	{
-		proc = (t_jc_proc*)(proc_list->content);
-		ft_printf("%*s%d %-*s", 6 + ft_numlen(job->tag), " ", proc->pid, 11,
-			g_jc_status_string[proc->status]);
-		if (proc->status == KILLED && proc->rvalue > 0 && proc->rvalue <= 32)
-			ft_printf("(Signal : %s (%d))", sys_siglist[proc->rvalue], proc->rvalue);
-		else if (proc->status == KILLED)
-			ft_printf("(Signal : %d)", proc->rvalue);
-		else if (proc->status == DONE)
-			ft_printf("(Exit code : %d)", proc->rvalue);
+		p = (t_jc_p*)(p_list->content);
+		if (p_list->prev)
+			ft_printf("%*s%d %-*s", 6 + ft_numlen(job->tag), " ", p->pid, 11,
+				g_jc_status_string[p->status]);
+		if (p->status == KILLED && p->rvalue > 0 && p->rvalue <= 32)
+			ft_printf("(Signal : %s (%d))", sys_siglist[p->rvalue], p->rvalue);
+		else if (p->status == KILLED)
+			ft_printf("(Signal : %d)", p->rvalue);
+		else if (p->status == DONE)
+			ft_printf("(Exit code : %d)", p->rvalue);
 		else
-		ft_printf("%*s", 18, " ");
-		ft_printf(" %s\n", proc->cmd);
+			ft_printf("%*s", 18, " ");
+		ft_printf(" %s\n", p->cmd);
+		p_list = p_list->next;
 	}
 	return (1);
 }
