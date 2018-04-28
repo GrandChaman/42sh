@@ -30,7 +30,7 @@ SRC = bang_case.c bang_main.c bang_search.c bi_bg.c bi_cd.c bi_cd3.c \
 	bi_history.c bi_history_io.c bi_jobs.c bi_kill.c bi_setenv.c bi_unset.c \
 	bi_unsetenv.c ft_getenv.c ft_putenv.c ft_setenv.c ft_unsetenv.c \
 	hash_table_builtins.c history_args_parser.c cli.c cli_autocomplete.c \
-    cli_autocomplete_graphics.c cli_autocomplete_ht.c \
+    cli_autocomplete_graphics.c cli_autocomplete_ht.c bi_echo_2.c\
 	cli_autocomplete_local_file.c cli_autocomplete_utils.c \
 	cli_autocomplete_utils2.c cli_delete.c cli_init.c cli_nav.c \
 	cli_prompt.c cli_selection.c cli_spe_nav.c cli_text.c \
