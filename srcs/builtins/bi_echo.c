@@ -52,7 +52,7 @@ int			write_echo_special_codes(char *argv, int *cursor)
 	return (norme_1(cursor, argv));
 }
 
-static int	flag_echo(char **argv, int *should_print_nl)
+int			flag_echo(char **argv, int *should_print_nl)
 {
 	int i;
 	int o;
@@ -85,11 +85,12 @@ static int	norme_0(char **argv, int i, int ii, int stock)
 	i = flag_echo(argv, &should_print_nl);
 	while (argv[i] && (ii = -1))
 	{
-		if ((flag_echo(argv, &should_print_nl)) != i)
-			write(STDOUT_FILENO, " ", 1);
+		print_space(argv, should_print_nl, i);
 		while (argv[i][++ii])
 			if (argv[i][ii] == '\\')
 			{
+				if (print_backslash(argv, i, ii))
+					break ;
 				if (!(stock = write_echo_special_codes(&(argv[i][ii + 1])
 					, &ii)))
 					return (0);
@@ -100,8 +101,7 @@ static int	norme_0(char **argv, int i, int ii, int stock)
 				write(STDOUT_FILENO, &(argv[i][ii]), 1);
 		i++;
 	}
-	if (should_print_nl)
-		write(STDOUT_FILENO, "\n", 1);
+	print_retour(should_print_nl);
 	return (0);
 }
 
