@@ -15,9 +15,9 @@
 t_ast_node		*ast_word(t_lex **lex, t_ast_node *node)
 {
 	node->type = WORD;
-	node->content = ft_strfjoin(node->content, (*lex)->content);
-	if (!(*lex)->next || !is_compound_token((*lex)->next->token_type))
+	if (node->content)
 		node->content = ft_strfjoin(node->content, " ");
+	node->content = ft_strfjoin(node->content, (*lex)->content);
 	(*lex) = (*lex)->next;
 	return (node);
 }
