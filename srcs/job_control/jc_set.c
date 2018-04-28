@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 13:13:55 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/27 01:44:07 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/28 16:18:52 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static int	jc_wait(t_jc_job *job, int mode)
 				break ;
 			jc_update_proc(((t_jc_proc*)proc_list->content), status);
 			proc_list = proc_list->next;
-			jc_garbage_collector(jc_get());
 		}
+		jc_garbage_collector(jc_get());
 		tcsetpgrp(STDOUT_FILENO, getpgrp());
 	}
 	return (status);

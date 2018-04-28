@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 13:33:03 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/27 01:44:25 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/04/28 16:18:30 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ void		jc_garbage_collector(t_jc *jc)
 	{
 		job = (t_jc_job*)job_list->content;
 		proc_list = job->proc_list;
-		should_delete = 0;
+		should_delete = 1;
 		while (proc_list)
 		{
 			proc = (t_jc_proc*)proc_list->content;
-			if (proc->status == DONE || proc->status == KILLED)
-				should_delete = 1;
+			if (proc->status != DONE && proc->status != KILLED)
+				should_delete = 0;
 			proc_list = proc_list->next;
 		}
 		if (job != jc->fg_job && should_delete)
