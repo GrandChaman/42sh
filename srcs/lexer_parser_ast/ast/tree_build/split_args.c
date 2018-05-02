@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:36:08 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/23 18:04:42 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/05/02 18:52:04 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	**split_args(char *argv, t_ast_node *node)
 	list = NULL;
 	i = 0;
 	j = 0;
-	while (argv[i + j])
+	while (argv && argv[i + j])
 	{
 		if (escaped_char(argv, node, &i, &j))
 			j++;
