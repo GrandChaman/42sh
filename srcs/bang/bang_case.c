@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bang2.c                                            :+:      :+:    :+:   */
+/*   bang_case.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbertoia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 15:13:53 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/26 15:13:57 by fbertoia         ###   ########.fr       */
+/*   Updated: 2018/05/02 13:27:07 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@ int		case_bang(char **str, int *i)
 	char	*bang;
 
 	j = 1;
+	bang = NULL;
 	if (!(*str)[*i + j])
 		return (bang_error());
 	else if ((*str)[*i + j] == ' ')
 		return (*i += j);
 	else if ((*str)[*i + j] == '!')
 	{
-		bang = ft_strdup(((t_ft_hist_entry*)(get_ft_shell()->
-			history->content))->command);
+		if (get_ft_shell()->history && get_ft_shell()->history->content)
+			bang = ft_strdup(((t_ft_hist_entry*)(get_ft_shell()->history->content))->command);
 		(!bang ? bang_error() : (0));
 	}
 	else if (ft_isdigit((*str)[*i + j]) || (*str)[*i + j] == '-')

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bang3.c                                            :+:      :+:    :+:   */
+/*   bang_search.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbertoia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 15:13:59 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/26 15:14:01 by fbertoia         ###   ########.fr       */
+/*   Updated: 2018/05/02 13:30:08 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*get_history_at(int nb, int *j)
 	nb += nb < 0 ? len + 1 : 0;
 	if (nb <= 0 || nb > len)
 	{
-		ft_error(-9, iota);
+		ft_error(-9, "!");
 		return (NULL);
 	}
 	iota = ft_itoa(nb);
@@ -35,7 +35,7 @@ char	*get_history_at(int nb, int *j)
 		len--;
 	}
 	if (len != nb)
-		ft_error(-9, iota);
+		ft_error(-9, "!");
 	ft_strdel(&iota);
 	return (len == nb ?
 		ft_strdup(((t_ft_hist_entry*)(ptr->content))->command) : NULL);
