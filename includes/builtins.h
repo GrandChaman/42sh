@@ -44,7 +44,6 @@ typedef struct			s_hist_args
 	char	*concate_argv;
 }						t_hist_args;
 
-
 int						flag_echo(char **argv, int *should_print_nl);
 void					print_retour(int should_print_nl);
 int						print_backslash(char **argv, int i, int ii);
