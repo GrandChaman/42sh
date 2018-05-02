@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strpush.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbertoia <fbertoia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 19:39:19 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/03/15 15:56:46 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/05/03 00:42:56 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 char	*ft_strpushback(char *str, char c, size_t *buff_sz)
 {
+	if (!str)
+		str = ft_strnew(*buff_sz);
 	return (ft_strpush(str, ft_strlen(str), c, buff_sz));
 }
 

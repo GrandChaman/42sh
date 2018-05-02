@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 20:35:41 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 17:52:03 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/05/03 01:05:07 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void		lexfallback(t_lexa *lexa)
 	lexa->stat = SWORD;
 	lexa->t = WORD;
 	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buf);
+	// ft_printf("=======lexa.str = %c========\n", *lexa->str);
+
 }
 
 void		lexa_init(t_lexa *lexa, char *cmd)
@@ -37,7 +39,7 @@ void		lexa_init(t_lexa *lexa, char *cmd)
 	lexa->t = EOI;
 	lexa->lex = NULL;
 	lexa->oquote = 0;
-	lexa->buffer = ft_strnew(0);
+	lexa->buffer = NULL;
 	lexa->escaped = 0;
 }
 

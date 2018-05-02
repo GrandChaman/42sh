@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 15:18:09 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/05/03 01:05:41 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ t_lex		*end_lex(t_lexa *lexa)
 		add_elem_back((void**)&lexa->lex,
 			(void*)lex_create(lexa->t, lexa->buffer));
 	word_recog(lexa);
+	// ft_printf("=======lexa.str = %c========\n", *lexa->str);
+
 	ptr = lexa->lex;
 	while (ptr)
 	{
@@ -55,6 +57,7 @@ t_lex		*end_lex(t_lexa *lexa)
 			prev_word = 0;
 		ptr = ptr->next;
 	}
+	// ft_printf("=======lexa.str = %s========\n", lexa->buffer);
 	lexa->buffer ? ft_strdel(&lexa->buffer) : (0);
 	return (lexa->lex);
 }

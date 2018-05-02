@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 15:18:20 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/05/03 01:06:46 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ t_lex		*lexer(char *cmd)
 	lexa_init(&lexa, cmd);
 	while (*lexa.str && (lexa.c = *(lexa.str)))
 	{
+		// ft_printf("=======lexa.str = %c========\n", *lexa.str);
 		check_semi_stat(&lexa);
 		check_eval(&lexa);
 		if (lexa.c == '\\')
@@ -90,7 +91,9 @@ t_lex		*lexer(char *cmd)
 		else
 			lexfallback(&lexa);
 		lexa.prev = lexa.c;
-		++(lexa.str);
+		lexa.str += *lexa.str ? 1 : 0;
+		// ft_printf("=======lexa.str = %c========\n", *lexa.str);
+
 	}
 	return (end_lex(&lexa));
 }
