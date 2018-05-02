@@ -20,7 +20,7 @@ static void		jc_change_pgrp_bg(t_jc_job *job)
 	t_jc_proc	*proc;
 
 	proc_list = job->proc_list;
-	if (tcsetpgrp(STDOUT_FILENO, getpgrp()))
+	if (tcsetpgrp(sh21_get()->tty, getpgrp()))
 		ft_exit(errno, "tcsetpgrp");
 	while (proc_list)
 	{
@@ -58,7 +58,7 @@ static void		jc_change_pgrp_fg(t_jc_job *job)
 		proc_list = proc_list->next;
 	}
 	jc_get()->fg_job = job;
-	if (job->pgid > 0 && tcsetpgrp(STDOUT_FILENO, job->pgid))
+	if (job->pgid > 0 && tcsetpgrp(sh21_get()->tty, job->pgid))
 		ft_exit(errno, "tcsetpgrp");
 }
 

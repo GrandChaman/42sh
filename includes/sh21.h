@@ -61,6 +61,7 @@ typedef struct		s_sh21
 	int				status;
 	char			*name;
 	int				argc;
+	int				tty;
 }					t_sh21;
 
 static int			g_shell_idx = 0;

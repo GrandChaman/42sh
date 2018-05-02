@@ -1,0 +1,5 @@
+x=0
+while [ $x -lt 10 ]
+do echo $x > test
+x=$(($x+1))
+done > new_file

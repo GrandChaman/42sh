@@ -43,6 +43,7 @@ t_sh21		*sh21_init(char *env[])
 	find_bin_paths(&sh21->env, &sh21->env.orig_env);
 	sh21->terminal.isatty = isatty(0);
 	set_debugtty();
+	sh21->tty = 1;
 	return (sh21);
 }
 

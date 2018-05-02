@@ -12,14 +12,19 @@
 
 #include "sh21.h"
 
-static char		*exec_subshell_routine(t_sh21 *sh21, char *str,
-	int nerr_subsh, int nw_subsh)
+static char		*exec_subshell_routine(t_sh21 *sh21, char *str, int file_fd)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
 	if (pid == 0)
 	{
+		ft_printf("in the child\n");
+		sh21_get()->tty = dup(1);
+		// close(2);
+		dup2(file_fd, 1);
+		ft_fprintf(sh21_get()->tty, "test*********\n");
 		del_sh21();
 		sh21->lex = lexer(str);
 		if (parser(sh21->lex))
@@ -29,9 +34,9 @@ static char		*exec_subshell_routine(t_sh21 *sh21, char *str,
 	}
 	else
 	{
-		wait(&pid);
-		dup2(nerr_subsh, 2);
-		dup2(nw_subsh, 1);
+		int ret = waitpid(-1, &status, 0);
+		
+		ft_printf("status=%d, ret = %d\n", status, ret);
 	}
 	return (str);
 }
@@ -40,14 +45,8 @@ char			*exec_subshell(char *str, char *file_nm_io)
 {
 	t_sh21	*sh21;
 	int		res_fd_subsh;
-	int		nw_subsh;
-	int		nerr_subsh;
 
 	sh21 = sh21_get();
 	res_fd_subsh = open(file_nm_io, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-	nw_subsh = dup(1);
-	nerr_subsh = dup(2);
-	dup2(res_fd_subsh, 1);
-	close(2);
-	return (exec_subshell_routine(sh21, str, nerr_subsh, nw_subsh));
+	return (exec_subshell_routine(sh21, str, res_fd_subsh));
 }
