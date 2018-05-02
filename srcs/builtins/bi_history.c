@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/26 14:02:34 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/05/02 19:09:57 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int			hist_display(int lim)
 
 	sh = get_ft_shell();
 	i = 0;
-	if (lim < 0 || lim > sh->history_size)
+	if (lim < 0 || lim >= sh->history_size)
 		return (ft_fprintf(2, "42sh: history: %d: index out of range\n", lim));
 	if (!(tmp = (lim ? ft_lstat(sh->history, lim) : ft_lstlast(sh->history))))
 		return (0);
@@ -71,9 +71,11 @@ static int			hist_del_at_offset(int off)
 		off--;
 	if (off < 0 || sh->history_size - off < 0)
 		return (ft_fprintf(2, "42sh: history: %d: index out of range\n", off));
-	if (!(tmp = ft_lstat(sh->history, sh->history_size - off - 1)))
+	if ((sh->history_size - off - 1) &&
+		!(tmp = ft_lstat(sh->history, sh->history_size - off - 1)))
 		return (1);
-	ft_lstdelone(&tmp, delete_hist_entry); // CORRECT THIS | DOES NOT WORK
+	ft_lstdelone((!(sh->history_size - off - 1) ? &sh->history : &tmp),
+		delete_hist_entry);
 	sh->history_size--;
 	return (0);
 }

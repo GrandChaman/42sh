@@ -6,7 +6,7 @@
 #    By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/16 13:28:08 by fle-roy           #+#    #+#              #
-#    Updated: 2018/04/26 15:28:46 by fle-roy          ###   ########.fr        #
+#    Updated: 2018/05/02 18:26:48 by fle-roy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,7 @@ SRC = bang_case.c bang_main.c bang_search.c bi_bg.c bi_cd.c bi_cd3.c \
 # $(shell find srcs -regex '.*\.c' -exec basename {} \; | tr '\n' ' ')
 
 LIBFT_INCLUDE = $(LIBFT_DIR)/include
-CFLAG = -Wall -Wextra -Werror -fsanitize=address -g3 -I $(LIBFT_INCLUDE) -I $(INCLUDE)
+CFLAG = -Wall -Wextra -Werror -g3 -I $(LIBFT_INCLUDE) -I $(INCLUDE)
 CC = cc
 LFLAG = -ltermcap
 BIN = bin
