@@ -63,7 +63,7 @@ void	replace_bang(char **str, int *i, int *j, char *bang)
 	ret = ft_strnew(ft_strlen(*str) + ft_strlen(bang));
 	ft_strncpy(ret, *str, *i);
 	ft_strcat(ret, bang);
-	ft_strcat(ret, *str + *i + *j + 1);
+	ft_strcat(ret, *str + (*i + *j ? *i + *j + 1 : *i + *j));
 	ft_strdel(str);
 	*str = ret;
 }
