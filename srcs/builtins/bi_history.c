@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/05/02 22:23:16 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/05/02 22:32:59 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int					bi_history(int argc, char **argv,
 	read_args(&flags, argc, argv);
 	if (flags.err)
 		return (flags.err);
+	ret = (flags.c ? hist_clear() : ret);
 	ret = (flags.d ? hist_del_at_offset(flags.d_val) : ret);
 	ret = (flags.p ? display_cmd(argc, argv, !flags.s, flags.argv_count) : ret);
 	if (flags.s)
@@ -104,7 +105,6 @@ int					bi_history(int argc, char **argv,
 		ret = hist_write(argv[flags.argv_count]);
 	else if (flags.awrn == 'n')
 		ret = hist_sync(argv[flags.argv_count]);
-	ret = (flags.c ? hist_clear() : ret);
 	ret = (flags.awrn == 'r' ? hist_append_file(argv[flags.argv_count]) : ret);
 	ft_strdel(&flags.concate_argv);
 	return (ret);
