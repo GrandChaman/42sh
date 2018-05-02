@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 15:07:38 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 14:48:53 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/05/02 23:02:15 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static char		*exec_subshell_routine(t_sh21 *sh21, char *str, int file_fd)
 		if (parser(sh21->lex))
 			sh21->status = exec_tree(sh21->tree.root_node);
 		del_sh21_exit();
+		close(sh21_get()->tty);
 		exit(sh21->status);
 	}
 	else
