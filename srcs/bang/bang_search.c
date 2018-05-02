@@ -58,12 +58,14 @@ char	*cmp_history(char *str, int *j)
 
 void	replace_bang(char **str, int *i, int *j, char *bang)
 {
-	char *ret;
+	char	*ret;
+	int		len;
 
-	ret = ft_strnew(ft_strlen(*str) + ft_strlen(bang));
+	len = ft_strlen(*str) + ft_strlen(bang) + 1;
+	ret = ft_strnew(len);
 	ft_strncpy(ret, *str, *i);
 	ft_strcat(ret, bang);
-	ft_strcat(ret, *str + (*i + *j ? *i + *j + 1 : *i + *j));
+	ft_strlcat(ret, *str + (*i + *j ? *i + *j + 1 : *i + *j), len);
 	ft_strdel(str);
 	*str = ret;
 }
