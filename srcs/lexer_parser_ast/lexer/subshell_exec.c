@@ -20,11 +20,9 @@ static char		*exec_subshell_routine(t_sh21 *sh21, char *str, int file_fd)
 	pid = fork();
 	if (pid == 0)
 	{
-		ft_printf("in the child\n");
 		sh21_get()->tty = dup(1);
-		// close(2);
+		close(2);
 		dup2(file_fd, 1);
-		ft_fprintf(sh21_get()->tty, "test*********\n");
 		del_sh21();
 		sh21->lex = lexer(str);
 		if (parser(sh21->lex))
@@ -33,11 +31,7 @@ static char		*exec_subshell_routine(t_sh21 *sh21, char *str, int file_fd)
 		exit(sh21->status);
 	}
 	else
-	{
-		int ret = waitpid(-1, &status, 0);
-		
-		ft_printf("status=%d, ret = %d\n", status, ret);
-	}
+		waitpid(-1, &status, 0);
 	return (str);
 }
 

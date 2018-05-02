@@ -19,6 +19,7 @@ static void	jc_wait_on_bg(t_jc_job *job)
 	jc_get()->fg_job = NULL;
 }
 
+static int	jc_wait(t_jc_job *job, int mode)
 {
 	int		status;
 	int		wait_res;
@@ -42,12 +43,12 @@ static void	jc_wait_on_bg(t_jc_job *job)
 			proc_list = proc_list->next;
 		}
 		jc_garbage_collector(jc_get());
-		tcsetpgrp(STDOUT_FILENO, getpgrp());
-		tcsetpgrp(tty_fd, getpgrp());
+		tcsetpgrp(sh21_get()->tty, getpgrp());
 	}
 	return (status);
 }
 
+int			jc_set(t_jc_tag tag, int mode)
 {
 	t_list		*jb_list;
 	t_jc_job	*job;
@@ -60,6 +61,7 @@ static void	jc_wait_on_bg(t_jc_job *job)
 		if (job->tag == tag)
 		{
 			jc_change_pgrp(job, mode);
+			res = jc_wait(job, mode);
 			jc_get()->fg_job = NULL;
 			return (res);
 		}
