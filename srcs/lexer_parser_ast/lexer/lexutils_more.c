@@ -25,7 +25,6 @@ void		lexfallback(t_lexa *lexa)
 	lexa->stat = SWORD;
 	lexa->t = WORD;
 	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buf);
-	// ft_printf("=======lexa.str = %c========\n", *lexa->str);
 
 }
 
@@ -39,7 +38,7 @@ void		lexa_init(t_lexa *lexa, char *cmd)
 	lexa->t = EOI;
 	lexa->lex = NULL;
 	lexa->oquote = 0;
-	lexa->buffer = NULL;
+	lexa->buffer = ft_strnew(0);
 	lexa->escaped = 0;
 }
 

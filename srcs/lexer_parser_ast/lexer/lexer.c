@@ -74,7 +74,6 @@ t_lex		*lexer(char *cmd)
 	lexa_init(&lexa, cmd);
 	while (*lexa.str && (lexa.c = *(lexa.str)))
 	{
-		// ft_printf("=======lexa.str = %c========\n", *lexa.str);
 		check_semi_stat(&lexa);
 		check_eval(&lexa);
 		if (lexa.c == '\\')
@@ -92,8 +91,6 @@ t_lex		*lexer(char *cmd)
 			lexfallback(&lexa);
 		lexa.prev = lexa.c;
 		lexa.str += *lexa.str ? 1 : 0;
-		// ft_printf("=======lexa.str = %c========\n", *lexa.str);
-
 	}
 	return (end_lex(&lexa));
 }

@@ -30,6 +30,7 @@ static void	on_subshell3(t_lexa *lexa, char *new_str)
 {
 	char	**arr;
 	int		i;
+	int		j;
 
 	i = 0;
 	if (lexa->oquote)
@@ -40,16 +41,17 @@ static void	on_subshell3(t_lexa *lexa, char *new_str)
 		arr = ft_split_whitespaces(new_str);
 		while (arr && arr[i])
 		{
-			// ft_printf("lexa->buffer = %s\n", lexa->buffer);
-			lexa->buffer = ft_strfjoin(lexa->buffer, arr[i++]);
-			if (arr[i])
-				lexa->buffer = ft_strfjoin(lexa->buffer, " ");
+			j = -1;
+			while (arr[i][++j])
+				lexa->buffer = ft_strpushback(lexa->buffer,
+					arr[i][j], &g_lexa_buf);
+			if (arr[++i])
+				lexa->buffer = ft_strpushback(lexa->buffer, ' ', &g_lexa_buf);
 		}
 		del_arr(&arr);
 	}
 	if (!lexa->buffer)
 		lexa->buffer = ft_strnew(g_lexa_buf);
-	// ft_printf("*********lexa->buffer last= |%s|\n", lexa->buffer);
 	ft_strdel(&new_str);
 }
 
@@ -66,7 +68,7 @@ static void	on_subshell2(t_lexa *lexa, char *rdm_file_io, int fd)
 		buf[i] = '\0';
 		new_str = ft_strfjoin(new_str, buf);
 	}
-	// unlink(rdm_file_io);
+	unlink(rdm_file_io);
 	ft_strdel(&rdm_file_io);
 	if (i < 0 || !new_str)
 		return ;
@@ -80,7 +82,6 @@ void		on_subshell(t_lexa *lexa)
 	char	*ret;
 	char	*rdm_file_io;
 
-	// ft_printf("lexa->str = %s\n", lexa->str);
 	if (lexa->buffer && lexa->buffer[0] && lexa->t != WORD)
 		add_elem_back((void**)&lexa->lex,
 			(void*)lex_create(lexa->t, lexa->buffer));
@@ -90,8 +91,6 @@ void		on_subshell(t_lexa *lexa)
 		return ;
 	rdm_file_io = create_rdm_file();
 	ret = ft_strndup(lexa->str, offset + 1);
-	// ft_printf("ret = %s, rdm_file_io = %s\n", ret, rdm_file_io);
-	// sleep(1);
 	lexa->str += offset;
 	exec_subshell(ret, rdm_file_io);
 	ft_strdel(&ret);
