@@ -24,15 +24,15 @@ int		case_bang(char **str, int *i)
 	char	*bang;
 
 	j = 1;
-	bang = NULL;
-	if (!(*str)[*i + j])
+	if (!(bang = NULL) && !(*str)[*i + j])
 		return (bang_error());
 	else if ((*str)[*i + j] == ' ')
 		return (*i += j);
 	else if ((*str)[*i + j] == '!')
 	{
 		if (get_ft_shell()->history && get_ft_shell()->history->content)
-			bang = ft_strdup(((t_ft_hist_entry*)(get_ft_shell()->history->content))->command);
+			bang = ft_strdup(((t_ft_hist_entry*)
+				(get_ft_shell()->history->content))->command);
 		(!bang ? bang_error() : (0));
 	}
 	else if (ft_isdigit((*str)[*i + j]) || (*str)[*i + j] == '-')

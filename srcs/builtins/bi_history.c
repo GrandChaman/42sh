@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/05/02 19:09:57 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/05/02 22:23:16 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int			hist_display(int lim)
 	{
 		entry = (t_ft_hist_entry*)tmp->content;
 		ft_bzero(t_format, 50);
-		strftime(t_format, 50, "%e/%d/%G %H:%M:%S",
+		strftime(t_format, 50, "%d/%m/%G %H:%M:%S",
 			localtime((const time_t *)&entry->timestamp));
 		ft_printf("%d\t%s\t%s\n", i - 1, t_format, entry->command);
 		tmp = tmp->prev;
