@@ -25,7 +25,6 @@ void		lexfallback(t_lexa *lexa)
 	lexa->stat = SWORD;
 	lexa->t = WORD;
 	lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buf);
-
 }
 
 void		lexa_init(t_lexa *lexa, char *cmd)

@@ -26,6 +26,16 @@ char		*create_rdm_file(void)
 	return (random_file_path);
 }
 
+static void add_str_word(t_lexa *lexa, char *new_str)
+{
+	int i;
+
+	i = 0;
+	while (new_str && new_str[i])
+		lexa->buffer = ft_strpushback(lexa->buffer,
+			new_str[i++], &g_lexa_buf);
+}
+
 static void	on_subshell3(t_lexa *lexa, char *new_str)
 {
 	char	**arr;
@@ -34,7 +44,7 @@ static void	on_subshell3(t_lexa *lexa, char *new_str)
 
 	i = 0;
 	if (lexa->oquote)
-		lexa->buffer = ft_strfjoin(lexa->buffer, new_str);
+		add_str_word(lexa, new_str);
 	else
 	{
 		i = 0;

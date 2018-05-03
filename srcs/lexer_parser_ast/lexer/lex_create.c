@@ -41,8 +41,6 @@ t_lex		*end_lex(t_lexa *lexa)
 		add_elem_back((void**)&lexa->lex,
 			(void*)lex_create(lexa->t, lexa->buffer));
 	word_recog(lexa);
-	// ft_printf("=======lexa.str = %c========\n", *lexa->str);
-
 	ptr = lexa->lex;
 	while (ptr)
 	{
