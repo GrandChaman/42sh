@@ -33,7 +33,7 @@ static char		*exec_subshell_routine(t_sh21 *sh21, char *str, int file_fd)
 	}
 	else
 		waitpid(pid, &status, 0);
-	close (file_fd);
+	close(file_fd);
 	return (str);
 }
 

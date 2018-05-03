@@ -55,7 +55,6 @@ t_lex		*end_lex(t_lexa *lexa)
 			prev_word = 0;
 		ptr = ptr->next;
 	}
-	// ft_printf("=======lexa.str = %s========\n", lexa->buffer);
 	lexa->buffer ? ft_strdel(&lexa->buffer) : (0);
 	return (lexa->lex);
 }

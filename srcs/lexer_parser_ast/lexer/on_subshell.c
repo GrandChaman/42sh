@@ -26,7 +26,7 @@ char		*create_rdm_file(void)
 	return (random_file_path);
 }
 
-static void add_str_word(t_lexa *lexa, char *new_str)
+static void	add_str_word(t_lexa *lexa, char *new_str)
 {
 	int i;
 
