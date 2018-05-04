@@ -6,7 +6,7 @@
 #    By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/16 13:28:08 by fle-roy           #+#    #+#              #
-#    Updated: 2018/05/03 00:30:26 by fle-roy          ###   ########.fr        #
+#    Updated: 2018/05/04 14:21:58 by fle-roy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,6 @@ VPATH = srcs:srcs/bang:srcs/builtins:srcs/cli:srcs/job_control:\
 	srcs/lexer_parser_ast/parser:\
 	srcs/lexer_parser_ast/parser/parser_funcs:srcs/sh21:\
 	srcs/sh21/del:srcs/sh21/errors:srcs/sh21/print:srcs/term
-# $(shell find srcs -type d | tr '\n' ':')
-
 SRC = bang_case.c bang_main.c bang_search.c bi_bg.c bi_cd.c bi_cd3.c \
 	bi_cd_2.c bi_echo.c bi_env.c bi_exit.c bi_export.c bi_fg.c bi_hash.c \
 	bi_history.c bi_history_io.c bi_jobs.c bi_kill.c bi_setenv.c bi_unset.c \
@@ -66,7 +64,6 @@ SRC = bang_case.c bang_main.c bang_search.c bi_bg.c bi_cd.c bi_cd3.c \
 	env_usage.c print_env.c print_lex.c set_debugtty.c remove_char.c \
 	set_sh21.c sh21_exec.c sh21_exec_builtins.c sh21_exec_fork.c \
 	signal_handler.c term_command.c terminal_settings.c
-# $(shell find srcs -regex '.*\.c' -exec basename {} \; | tr '\n' ' ')
 
 LIBFT_INCLUDE = $(LIBFT_DIR)/include
 CFLAG = -Wall -Wextra -Werror -I $(LIBFT_INCLUDE) -I $(INCLUDE)
