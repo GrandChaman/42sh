@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 15:54:39 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 14:58:59 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/05/04 15:17:45 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int						cd_rule10(char *curpath, char ***environ, int flag,
 
 void					del_hash_bin(t_hash_bin *hash_bin);
 void					del_hash(t_env *env);
+int						hist_error(char *message, char *path, int fd);
 
 typedef struct			s_builtin
 {

@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 16:55:16 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/05/02 22:32:59 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/05/04 16:55:11 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@ static int			hist_display(int lim)
 	i = 0;
 	if (lim < 0 || lim >= sh->history_size)
 		return (ft_fprintf(2, "42sh: history: %d: index out of range\n", lim));
-	if (!(tmp = (lim ? ft_lstat(sh->history, lim) : ft_lstlast(sh->history))))
+	if (!(tmp = (lim ? ft_lstat(sh->history, sh->history_size - lim - 1)
+		: ft_lstlast(sh->history))))
 		return (0);
 	if (lim)
-		i = sh->history_size - lim;
+		i = lim;
 	while (tmp && ++i)
 	{
 		entry = (t_ft_hist_entry*)tmp->content;
@@ -84,28 +85,27 @@ int					bi_history(int argc, char **argv,
 					char ***environ, t_ast_node *root)
 {
 	int			ret;
-	t_hist_args	flags;
+	t_hist_args	flgs;
 
 	(void)environ;
 	(void)root;
 	if (!(ret = 0) && argc == 1)
 		return (hist_display(0));
-	args_init(&flags);
-	read_args(&flags, argc, argv);
-	if (flags.err)
-		return (flags.err);
-	ret = (flags.c ? hist_clear() : ret);
-	ret = (flags.d ? hist_del_at_offset(flags.d_val) : ret);
-	ret = (flags.p ? display_cmd(argc, argv, !flags.s, flags.argv_count) : ret);
-	if (flags.s)
-		add_to_history(get_ft_shell(), flags.concate_argv);
-	if (flags.awrn == 'a')
-		ret = hist_sync_file(argv[flags.argv_count]);
-	else if (flags.awrn == 'w')
-		ret = hist_write(argv[flags.argv_count]);
-	else if (flags.awrn == 'n')
-		ret = hist_sync(argv[flags.argv_count]);
-	ret = (flags.awrn == 'r' ? hist_append_file(argv[flags.argv_count]) : ret);
-	ft_strdel(&flags.concate_argv);
+	else if (argc > 1 && ft_isdigit(argv[1][0]))
+		return (hist_display(atoi(argv[1])));
+	args_init(&flgs);
+	read_args(&flgs, argc, argv);
+	if (flgs.err && ft_fprintf(2, "42sh: history: syntax error\n"))
+		return (flgs.err);
+	ret += (flgs.d ? hist_del_at_offset(flgs.d_val) : ret);
+	ret += (flgs.p ? display_cmd(argc, argv, !flgs.s, flgs.argv_count) : ret);
+	if (flgs.s)
+		add_to_history(get_ft_shell(), flgs.concate_argv);
+	ret += (flgs.awrn == 'a' ? hist_sync_file(argv[flgs.argv_count]) : ret);
+	ret += (flgs.awrn == 'w' ? hist_write(argv[flgs.argv_count]) : ret);
+	ret += (flgs.awrn == 'n' ? hist_sync(argv[flgs.argv_count]) : ret);
+	ret += (flgs.awrn == 'r' ? hist_append_file(argv[flgs.argv_count]) : ret);
+	ret += (flgs.c ? hist_clear() : ret);
+	ft_strdel(&flgs.concate_argv);
 	return (ret);
 }

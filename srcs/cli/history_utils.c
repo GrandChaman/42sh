@@ -6,12 +6,22 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 12:44:15 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/19 17:21:10 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/05/04 15:30:17 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cli.h"
 #include "sh21.h"
+
+int					hist_error(char *message, char *path, int fd)
+{
+	ft_fprintf(2, "%s%s\n", message, path);
+	if (fd >= 0)
+		close(fd);
+	if (path && path[0] != 0)
+		free(path);
+	return (1);
+}
 
 void				delete_hist_entry(void *entry, size_t size)
 {
