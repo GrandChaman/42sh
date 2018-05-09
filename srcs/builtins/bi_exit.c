@@ -34,6 +34,8 @@ static void		quit_all_jobs(void)
 int				bi_exit(int argc, char **argv, char ***environ,
 	t_ast_node *root)
 {
+	int ret;
+
 	(void)root;
 	(void)environ;
 	if (!(argc > 1 && !ft_strncmp(argv[1], "-f", 2)) && jc_get()->job_list)
@@ -44,7 +46,12 @@ int				bi_exit(int argc, char **argv, char ***environ,
 	}
 	else if (jc_get()->job_list)
 		quit_all_jobs();
-	ft_exit(0, NULL);
+	if (argc > 2)
+		ret = ft_strequ(argv[1], "-f") ? ft_atoi(argv[2]) : ft_atoi(argv[1]);
+	else
+		ret = argc > 1 ? ft_atoi(argv[1]) : 0;
+	del_sh21_exit();
+	exit(ret);
 	return (0);
 }
 

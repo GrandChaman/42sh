@@ -19,7 +19,7 @@ void	open_dir_pipe(t_ast_node *root)
 	open_dir_pipe(root->left);
 	open_dir_pipe(root->right);
 	if (root->type == WORD)
-		close(open(root->content, O_RDWR | O_CREAT | O_TRUNC, 0644));
+		close(open(root->content, O_CREAT, 0644));
 }
 
 void	parse_funcs_open_fd(t_ast_node *root)
