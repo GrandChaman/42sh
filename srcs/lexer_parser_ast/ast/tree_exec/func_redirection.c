@@ -71,7 +71,10 @@ static int			func_redirection2(t_ast_node *node, int fd[5])
 	if (node->type == LESS || node->type == LESSAND || node->type == DLESS)
 	{
 		if ((fd[out_fd] = open(node->right->content, O_RDONLY)) < 0)
-			return (ft_error(errno, node->right->content));
+		{
+			ft_error(errno, node->right->content);
+			fd[out_fd] = open("/dev/null", O_RDONLY);
+		}
 		add_elem_front((void**)&sh21_get()->tree.fd_cleanup,
 			create_fd_cleanup(fd_close, fd[out_fd], 0));
 	}
