@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+         #
+#    By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/16 13:28:08 by fle-roy           #+#    #+#              #
-#    Updated: 2018/05/04 14:21:58 by fle-roy          ###   ########.fr        #
+#    Updated: 2018/05/10 15:30:16 by hfontain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ SRC = bang_case.c bang_main.c bang_search.c bi_bg.c bi_cd.c bi_cd3.c \
 	signal_handler.c term_command.c terminal_settings.c
 
 LIBFT_INCLUDE = $(LIBFT_DIR)/include
-CFLAG = -Wall -Wextra -Werror -I $(LIBFT_INCLUDE) -I $(INCLUDE)
+CFLAG = -g3 -Wall -Wextra -Werror -I $(LIBFT_INCLUDE) -I $(INCLUDE)
 CC = cc
 LFLAG = -ltermcap
 BIN = bin
