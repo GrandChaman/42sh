@@ -92,7 +92,7 @@ int					bi_history(int argc, char **argv,
 	if (!(ret = 0) && argc == 1)
 		return (hist_display(0));
 	else if (argc > 1 && ft_isdigit(argv[1][0]))
-		return (hist_display(atoi(argv[1])));
+		return (hist_display(ft_atoi(argv[1])));
 	args_init(&flgs);
 	read_args(&flgs, argc, argv);
 	if (flgs.err && ft_fprintf(2, "42sh: history: syntax error\n"))
