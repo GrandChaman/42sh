@@ -34,6 +34,7 @@ t_ast_node		*ast_create_node(t_token_type type, char *str)
 	node->pipe_to_close = -1;
 	node->nb_escaped_quote = 0;
 	node->i = 0;
+	node->need_to_fork = 1;
 	node->quote_count = 0;
 	node->type = type;
 	if ((node->pipe_fd[1] = 1) && str)

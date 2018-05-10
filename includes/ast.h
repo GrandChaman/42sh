@@ -60,6 +60,7 @@ typedef struct			s_ast_node
 	int					tag_gpid;
 	int					tmp_fd_read;
 	int					tmp_fd_write;
+	int					need_to_fork;
 	struct s_ast_node	*condition_node;
 	struct s_ast_node	*left;
 	struct s_ast_node	*redir_node;

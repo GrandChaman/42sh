@@ -45,9 +45,10 @@ int				callsystem(char *cmd, char **av, char ***env, t_ast_node *root)
 	int			status;
 
 	status = 0;
-	if ((parent = fork()) < 0)
+	parent = 0;
+	if (root->need_to_fork && (parent = fork()) < 0)
 		failed_fork(root);
-	else if (!parent)
+	else if (!root->need_to_fork || !parent)
 	{
 		assign_var(root);
 		change_fd_or_exit(root);
@@ -67,8 +68,8 @@ int				sh21_exec_builtin(char **av, char ***env,
 	int			status;
 
 	status = 0;
-	if (!ft_strequ(builtin.fn_name, "env")
-		&& !(root->piped_cmd || root->mod_gpid == BG))
+	if (!root->need_to_fork || (!ft_strequ(builtin.fn_name, "env")
+		&& !(root->piped_cmd || root->mod_gpid == BG)))
 		return (sh21_exec_builtin_no_fork(av, env, root, builtin));
 	if ((parent = fork()) < 0)
 		failed_fork(root);
