@@ -94,7 +94,7 @@ int			hist_sync(char *path)
 	read_history(get_ft_shell(), fd);
 	if (lseek(fd, 0, SEEK_END) < 0)
 		return (hist_error("42sh: history: lseek() failed : ", path, fd));
-		close(fd);
+	close(fd);
 	ft_strdel(&path);
 	free(path);
 	return (0);
@@ -112,9 +112,8 @@ int			hist_append_file(char *path)
 			" HOME not defined ", "", -1));
 		if ((fd = open(path, O_RDONLY)) < 0)
 		return (hist_error("42sh: history: can't read file ", path, -1));
-		if (read_history(sh, fd) < 0)
-			return (hist_error("42sh: history: error while reading ", path,
-				fd));
+	if (read_history(sh, fd) < 0)
+		return (hist_error("42sh: history: error while reading ", path, fd));
 	close(fd);
 	ft_strdel(&path);
 	free(path);
@@ -129,12 +128,11 @@ int			hist_write(char *path)
 	sh = get_ft_shell();
 	path = (path ? ft_strdup(path) : get_history_file());
 	if (!path)
-		return (hist_error("42sh: history: can't open default history file."
-			" HOME not defined ", "", -1));
+		return (hist_error("42sh: history: can't open default history"
+			" file. HOME not defined ", "", -1));
 		if ((fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644)) < 0)
-			return (hist_error("42sh: history: can't write to file ", path,
-				-1));
-		write_history(sh, fd, 0);
+		return (hist_error("42sh: history: can't write to file ", path, -1));
+	write_history(sh, fd, 0);
 	close(fd);
 	ft_strdel(&path);
 	free(path);
