@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 13:13:55 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/04/28 16:18:52 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/05/10 13:54:09 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ static int	jc_wait(t_jc_job *job, int mode)
 	int		wait_res;
 	t_list	*proc_list;
 
-	status = 0;
-	if (mode == BG)
+	if (!(status = 0) && mode == BG)
 		jc_wait_on_bg(job);
 	else
 	{
@@ -40,6 +39,7 @@ static int	jc_wait(t_jc_job *job, int mode)
 			else if (wait_res < 0 && errno == ECHILD)
 				break ;
 			jc_update_proc(((t_jc_proc*)proc_list->content), status);
+			status = ((t_jc_proc*)proc_list->content)->rvalue;
 			proc_list = proc_list->next;
 		}
 		jc_garbage_collector(jc_get());
