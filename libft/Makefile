@@ -6,7 +6,7 @@
 #    By: bluff <bluff@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/19 19:26:33 by bluff             #+#    #+#              #
-#    Updated: 2018/05/04 14:22:39 by fle-roy          ###   ########.fr        #
+#    Updated: 2018/05/10 16:53:49 by fle-roy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ SRC_PRINTF = $(addprefix $(PRINTF_DIR)/, ft_printf_routine.c ft_printf.c \
 		ft_printf_numbers2.c)
 
 INCLUDE = include
-CFLAG = -c -Werror -Wextra -Wall -O3 -I $(INCLUDE)
+CFLAG = -c -Werror -Wextra -Wall -I $(INCLUDE)
 OBJ = obj
 CC = cc
 LN = ar
