@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 15:13:59 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/05/10 15:54:38 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/05/10 16:40:40 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,16 @@ char	*cmp_history(char *str, int *j)
 
 void	replace_bang(char **str, int *i, int *j, char *bang)
 {
-	char	*ret;
-	int		len;
+	char		*ret;
+	int			len;
+	const int	offset = *i + *j;
 
 	len = ft_strlen(*str) + ft_strlen(bang) + 1;
 	ret = ft_strnew(len);
 	ft_strncpy(ret, *str, *i);
 	ft_strcat(ret, bang);
-	if (*str + (*i + *j))
-		ft_strlcat(ret, *str + (*i + *j), len);
+	if (*(*str + offset) && *(*str + offset + 1))
+		ft_strlcat(ret, *str + offset + 1, len);
 	ft_strdel(str);
 	*str = ret;
 }
