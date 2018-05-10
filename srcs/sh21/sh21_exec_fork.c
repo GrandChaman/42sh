@@ -78,7 +78,6 @@ int				sh21_exec_builtin(char **av, char ***env,
 		assign_var(root);
 		if ((status = change_fd(root)) >= 0)
 			status = builtin.fn_ptr(arrlen(av), av, env, root);
-		del_sh21_exit();
 		exit(status);
 	}
 	else
