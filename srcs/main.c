@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:26:22 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/27 01:28:36 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/05/11 14:44:17 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int			main(int argc, char *argv[])
 	setlocale(LC_ALL, "");
 	sh21 = sh21_init(environ);
 	sh21->name = argv[0];
-	sh21->argc = argc;
+    sh21->argv = argv + 1;
+	sh21->argc = argc - 2;
 	shell = get_ft_shell();
 	shell->ht = NULL;
 	set_up_default_signal();

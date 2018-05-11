@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 23:20:31 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/24 19:15:48 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/05/11 15:19:32 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ t_ast_node		*ast_if(t_lex **lex, t_ast_node *node)
 		node->right = ast_elif(lex, node);
 	else
 		node->right = ast_else(lex, node);
-	*lex = (*lex)->next;
+	if (lex && *lex)
+		*lex = (*lex)->next;
 	while ((*lex) && ast_redir_node((*lex)->token_type))
 		node->redir_node = redir_node(lex, node->redir_node);
 	return (node);

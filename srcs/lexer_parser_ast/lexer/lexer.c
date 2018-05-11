@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/05/03 01:06:46 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/05/11 14:57:18 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int			lex_1(t_lexa *lexa)
 		lexa->buffer = ft_strpushback(lexa->buffer, lexa->c, &g_lexa_buf);
 		return (1);
 	}
-	else if (lexa->c == ' ')
+	else if (ft_iswhitespace(lexa->c))
 	{
 		on_blank(lexa);
 		return (1);

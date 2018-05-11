@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 13:32:20 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 14:58:58 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/05/11 14:38:20 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define TMP_HEREDOC_SIZE 64
 # define TMP_PATH_RANDOM "/tmp/"
 # define CONTENT_SIZE 1024
-# define SPECIAL_PARAMETERS "@*#?-$!0"
+# define SPECIAL_PARAMETERS "@*#?-$!0123456789"
 # define NB_ESCAPED_QUOTE 100
 
 typedef struct			s_fd_cleanup

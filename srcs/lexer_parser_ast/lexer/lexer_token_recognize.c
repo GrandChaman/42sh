@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 14:49:23 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/04/23 17:17:53 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/05/11 14:10:28 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,11 @@ int				is_redir_token(t_token_type token_type)
 
 int				is_operator_part(char c, int stat)
 {
-	return (c == '\n'
-		|| c == '&'
+	return(c == '&'
 		|| c == '|'
 		|| c == '<'
 		|| c == '>'
 		|| c == ';'
-		|| c == '\n'
 		|| c == '}'
 		|| (c == '{' && stat != SWORD)
 		|| (c == '=' && stat != SWORD)
@@ -47,11 +45,11 @@ t_token_type	get_operator_tok(char *str)
 	int					i;
 	const char			*str_to_compare[] = {">&-", "<&-", "&>-", "<<-",
 	";;", ">|", "&&", "||", ">>", "<<", ">&", "<&", "&>", ";\n", "<", ">", "|",
-	"&", ";", "=", "\n", "{", "}", "(", ")", ""};
+	"&", ";", "=", "{", "}", "(", ")", ""};
 	const t_token_type	type[] = {GREATANDDASH, LESSANDDASH,
 	ANDGREATDASH, DLESSDASH, DSEMI, CLOBBER, AND_IF, OR_IF, DGREAT, DLESS,
 	GREATAND, LESSAND, ANDGREAT, SEMI, LESS, GREATER, PIPE, AMPER, SEMI, EQUAL,
-	SEMI, Lbrace, Rbrace, LPAREN, RPAREN, NOT_AN_OP};
+    Lbrace, Rbrace, LPAREN, RPAREN, NOT_AN_OP};
 
 	i = 0;
 	while (str_to_compare[i][0] && !ft_strequ(str_to_compare[i], str))

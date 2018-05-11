@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/04/26 15:00:37 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/05/11 14:07:31 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ enum					e_index_subshell
 	NERR_SUBSH,
 };
 
-typedef struct s_sh21	t_sh21;
 typedef enum			e_token_type
 {
 	BEGIN,
