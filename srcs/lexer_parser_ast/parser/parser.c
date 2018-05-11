@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/05/11 14:06:03 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/05/11 16:02:41 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int		parser(t_lex *lex)
 	cpy = lex;
 	if (size_list(lex) == 1 && lex->token_type == EOI)
 		return (0);
-    print_lex_list(lex);
 	lex = program(lex);
 	if (lex && lex->token_type == EOI)
 	{

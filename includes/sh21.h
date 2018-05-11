@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 14:38:34 by hfontain          #+#    #+#             */
-/*   Updated: 2018/05/11 14:29:58 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/05/11 16:05:15 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ typedef struct		s_sh21
 	int				ret;
 	int				script;
 	int				status;
-	char			*name;
-    char            **argv;
+	char			**argv;
 	int				argc;
 	int				tty;
 }					t_sh21;

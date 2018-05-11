@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 16:24:26 by fbertoia          #+#    #+#             */
-/*   Updated: 2018/05/11 14:44:40 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/05/11 16:18:21 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@
 
 char	*special_parameters(char c)
 {
-	t_sh21      *sh21;
-    const int   param = c - '0';
+	t_sh21		*sh21;
+	const int	param = c - '0';
 
 	sh21 = sh21_get();
 	if (c == '?')
 		return (ft_itoa(sh21->status));
 	else if (c == '$')
 		return (ft_itoa(getpid()));
-    else if (ft_isdigit(c))
-        return (param > sh21->argc ? NULL : ft_strdup(sh21->argv[param]));
+	else if (ft_isdigit(c))
+		return (param > sh21->argc ? NULL : ft_strdup(sh21->argv[param]));
 	else if (c == '#')
 		return (ft_itoa(sh21_get()->argc));
 	else
