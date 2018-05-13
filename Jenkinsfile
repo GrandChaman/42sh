@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      image 'briceburg/macos'
-    }
-
-  }
+  agent none
   stages {
     stage('Compilation') {
       steps {
