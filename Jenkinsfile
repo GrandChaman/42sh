@@ -1,5 +1,10 @@
 pipeline {
-  agent none
+  agent {
+    node {
+      label 'swarm'
+    }
+
+  }
   stages {
     stage('Compilation') {
       steps {
