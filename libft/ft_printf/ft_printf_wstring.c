@@ -36,7 +36,7 @@ void	ft_putwchar(t_ptf_buf *buf, unsigned int c)
 		return ;
 	dbuf_append(&buf->buf, (char*)byte);
 	i = 1 + ((c > 2047 && c < 65536) ? 1 : 0) + (c > 65536 ? 2 : 0);
-	i += (i >= MB_CUR_MAX ? (i - MB_CUR_MAX - 1) : 0);
+	i += (i >= (int)MB_CUR_MAX ? (i - MB_CUR_MAX - 1) : 0);
 	while (--i >= 0)
 	{
 		byte[0] = ((((c >> (i * 6)) << 26) >> 26) | WCHAR_GEN);

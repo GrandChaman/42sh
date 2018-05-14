@@ -16,12 +16,12 @@
 static t_hash_bin	*add_paths(char *bin_name, char *path_dir, t_env *env)
 {
 	unsigned int	index;
-	char			tmp[OPEN_MAX];
+	char			tmp[PATH_MAX];
 	t_hash_bin		*ptr;
 
-	ft_strlcpy(tmp, path_dir, OPEN_MAX);
-	ft_strlcat(tmp, "/", OPEN_MAX);
-	ft_strlcat(tmp, bin_name, OPEN_MAX);
+	ft_strlcpy(tmp, path_dir, PATH_MAX);
+	ft_strlcat(tmp, "/", PATH_MAX);
+	ft_strlcat(tmp, bin_name, PATH_MAX);
 	index = ft_hash(bin_name) % (HASH_SIZE);
 	ptr = &env->hash_table[index];
 	if (ptr->path)
