@@ -11,9 +11,9 @@ pipeline {
         sh 'make'
       }
     }
-    stage('Toto') {
+    stage('Global tests') {
       steps {
-        sh 'echo Salut'
+        sh './tests_launcher.sh'
       }
     }
   }
