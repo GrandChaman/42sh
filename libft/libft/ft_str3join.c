@@ -14,10 +14,8 @@
 
 char	*ft_str3join(char const *s1, char const *s2, char const *s3)
 {
-	int		i;
 	char	*ret;
 
-	i = 0;
 	ret = NULL;
 	if (s1 && s2 && s3)
 	{
