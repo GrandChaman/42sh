@@ -41,12 +41,10 @@ static int		ft_atoi_base_routine(const char *nb, const char *base)
 int				ft_atoi_base(const char *nb, const char *base)
 {
 	int i;
-	int res;
 	int sign;
 
 	sign = 1;
 	i = 0;
-	res = 0;
 	while (ft_iswhitespace(nb[i]))
 		i++;
 	if (nb[i] == '-')
