@@ -19,7 +19,7 @@ int		dbuf_insert(t_dbuf *buf, unsigned long pos, char to_insert)
 
 	if (!buf || pos > buf->cursor)
 		return (LIBFT_ERR);
-	if (buf->cursor + 1 > buf->len)
+	if ((unsigned long)buf->cursor + 1 > (unsigned long)buf->len)
 	{
 		tmp = ft_strnew(buf->len + BUFF_SIZE);
 		ft_memcpy(tmp, buf->buf, pos + 1);
