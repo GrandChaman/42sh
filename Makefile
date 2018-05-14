@@ -66,7 +66,7 @@ SRC = bang_case.c bang_main.c bang_search.c bi_bg.c bi_cd.c bi_cd3.c \
 	signal_handler.c term_command.c terminal_settings.c
 
 LIBFT_INCLUDE = $(LIBFT_DIR)/include
-CFLAG = -Wall -Wextra -Werror -g3 -fsanitize=address -I $(LIBFT_INCLUDE) -I $(INCLUDE)
+CFLAG = -Wall -Wextra -Werror -I $(LIBFT_INCLUDE) -I $(INCLUDE)
 CC = cc
 LFLAG = -ltermcap
 BIN = bin
@@ -89,7 +89,7 @@ $(DEP_DIR)/%.d: %.c
 	@$(CC) $(CFLAG) -MM $^ | sed -e '1s/^/$(OBJ_DIR)\//' > $@
 $(NAME): $(LIBFT) $(SRC_LIBFT) $(SRC_PRINTF) $(SRC_GNL) $(OBJ)
 	@printf "\r\033[K[$(NAME_UP)] \033[1;32mLinking...\033[0m"
-	@$(CC) $(CFLAG) $(LFLAG) -o $(NAME) $(LIBFT) $(OBJ)
+	@$(CC) $(CFLAG) $(LFLAG) $(OBJ) $(LIBFT) -o $(NAME)
 	@printf "\r\033[K[$(NAME_UP)] \033[1;32mDone!\033[0m\n"
 clean:
 	@$(MAKE) -C $(LIBFT_DIR) clean

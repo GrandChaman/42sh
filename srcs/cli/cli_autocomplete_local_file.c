@@ -72,7 +72,7 @@ void			collect_data_local_file(t_list **list, char *str_part)
 
 	path = NULL;
 	slash = NULL;
-	if ((dir = opendir(str_part)))
+	if (str_part && (dir = opendir(str_part)))
 		load_dir_and_add_slash_autocomplete(dir, list, str_part, NULL);
 	else if (str_part && (slash = ft_strrchr(str_part, '/')))
 	{
@@ -82,7 +82,7 @@ void			collect_data_local_file(t_list **list, char *str_part)
 		else
 			ft_free((void**)&path);
 	}
-	if (!dir && !path)
+	else
 	{
 		path = getcwd(NULL, MAXPATHLEN);
 		if ((dir = opendir(path)))
