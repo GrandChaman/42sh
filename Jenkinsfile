@@ -1,14 +1,13 @@
 pipeline {
   agent {
     node {
-      label 'swarm'
+      label 'macos'
     }
 
   }
   stages {
     stage('Compilation') {
       steps {
-        echo 'Begin compile'
         sh 'make'
       }
     }
@@ -17,5 +16,10 @@ pipeline {
         sh 'echo Salut'
       }
     }
+  }
+  environment {
+    TERM = 'xterm-256color'
+    PATH = '/bin:/usr/bin'
+    SHLVL = '0'
   }
 }
