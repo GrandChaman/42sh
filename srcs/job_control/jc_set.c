@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 13:13:55 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/05/10 13:54:09 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/05/15 16:03:48 by bluff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ static int	jc_wait(t_jc_job *job, int mode)
 
 	if (!(status = 0) && mode == BG)
 		jc_wait_on_bg(job);
-	else
+	else if ((proc_list = job->proc_list) || 1)
 	{
-		proc_list = job->proc_list;
 		while (proc_list)
 		{
 			wait_res = waitpid(((t_jc_proc*)proc_list->content)->pid,
@@ -43,7 +42,8 @@ static int	jc_wait(t_jc_job *job, int mode)
 			proc_list = proc_list->next;
 		}
 		jc_garbage_collector(jc_get());
-		tcsetpgrp(sh21_get()->tty, getpgrp());
+		if (get_ft_shell()->is_a_tty)
+			tcsetpgrp(sh21_get()->tty, getpgrp());
 	}
 	return (status);
 }
