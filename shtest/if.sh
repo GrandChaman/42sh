@@ -1,10 +1,10 @@
 x=$1;
 if [ $x ];
 then
-	echo "Input $x"
+	echo "Input $x";
 else
-	x="250"
-	echo "Automatic input $x"
+	x="250";
+	echo "Automatic input $x";
 fi;
 if [ $x -lt 100 ];
 then
