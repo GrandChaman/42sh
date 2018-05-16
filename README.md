@@ -84,7 +84,10 @@ Once the 42h project is compiled you can run it using the `./42sh` command.
 
 ## Authors
 
-Frederic Bertoria - https://github.com/fbertoia
-Francis Le-Roy - https://github.com/GrandChaman/42sh
-Hugo Fontaine - https://github.com/Usiten
+Frederic Bertoria - https://github.com/fbertoia 
+
+Francis Le-Roy - https://github.com/GrandChaman/42sh 
+
+Hugo Fontaine - https://github.com/Usiten 
+
 Romain Fautier - https://github.com/rfautier
