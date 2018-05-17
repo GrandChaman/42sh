@@ -6,7 +6,7 @@
 /*   By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 15:56:29 by hfontain          #+#    #+#             */
-/*   Updated: 2018/05/11 14:57:18 by hfontain         ###   ########.fr       */
+/*   Updated: 2018/05/17 19:55:19 by hfontain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@ int			lex_1(t_lexa *lexa)
 
 int			lex_2(t_lexa *lexa)
 {
+	if (lexa->prev == '<' || lexa->prev == '>')
+		lexa->stat = SWORD;
+	if (lexa->prev == '&')
+		lexa->stat = SOP;
 	if (is_operator_part(lexa->prev, lexa->stat))
 	{
 		lexa->escaped ? lexfallbackesc(lexa) : on_operator_prev(lexa);
