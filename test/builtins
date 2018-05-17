@@ -1,5 +1,6 @@
 echo It Works;
 echo "Going tmp";
+/bin/pwd | rev | sed -e 's/^\///' | rev;
 cd /tmp;
 /bin/pwd | rev | sed -e 's/^\///' | rev;
 echo "Going back";

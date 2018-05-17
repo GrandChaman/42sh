@@ -1,0 +1,2 @@
+echo `printf toto`;
+echo `bla`;
