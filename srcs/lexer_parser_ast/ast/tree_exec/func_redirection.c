@@ -22,7 +22,7 @@ static int			func_redirection4(t_ast_node *node, int fd[5])
 		fd[in_fd2] = 2;
 		if ((fd[tmp_fd2] = dup(fd[in_fd2])) < 0)
 		{
-			ft_error(errno, node->right->content);
+			node->right ? ft_error(errno, node->right->content) : 0;
 			err = errno;
 		}
 		if (!err)
@@ -30,7 +30,7 @@ static int			func_redirection4(t_ast_node *node, int fd[5])
 				create_fd_cleanup(fd_close, fd[tmp_fd2], 0));
 		if (!err && dup2(fd[out_fd], fd[in_fd2]) < 0)
 		{
-			ft_error(errno, node->right->content);
+			node->right ? ft_error(errno, node->right->content) : 0;
 			err = errno;
 		}
 		if (!err)
@@ -47,7 +47,7 @@ static int			func_redirection3(t_ast_node *node, int fd[5])
 	err = 0;
 	if ((fd[tmp_fd] = dup(fd[in_fd])) < 0)
 	{
-		ft_error(errno, node->right->content);
+		node->right ? ft_error(errno, node->right->content) : 0;
 		err = errno;
 	}
 	if (!err)
@@ -55,7 +55,7 @@ static int			func_redirection3(t_ast_node *node, int fd[5])
 			create_fd_cleanup(fd_close, fd[tmp_fd], 0));
 	if (!err && dup2(fd[out_fd], fd[in_fd]) < 0)
 	{
-		ft_error(errno, node->right->content);
+		node->right ? ft_error(errno, node->right->content) : 0;
 		err = errno;
 	}
 	if (!err)
