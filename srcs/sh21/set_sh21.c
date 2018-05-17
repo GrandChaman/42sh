@@ -25,6 +25,7 @@ void		set_env(char **env, t_sh21 *sh21)
 	? ft_getenv("SHLVL", &sh21->env.orig_env) : "0") + 1;
 	strlvl = ft_itoa(shlvl);
 	ft_setenv("SHLVL", strlvl, 1, &sh21->env.orig_env);
+	ft_setenv("SHELL", "42sh", 1, &sh21->env.orig_env);
 	ft_strdel(&strlvl);
 	if (!ft_getenv("TERM", &sh21->env.orig_env))
 		ft_setenv("TERM", "xterm-256color", 1, &sh21->env.orig_env);

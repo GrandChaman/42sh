@@ -24,5 +24,6 @@ t_ast_node		*ast_until(t_lex **lex, t_ast_node *node)
 	*lex = *lex ? (*lex)->next : *lex;
 	while (*lex && ast_redir_node((*lex)->token_type))
 		node->redir_node = redir_node(lex, node->redir_node);
+	ast_redir_pipe(lex, node);
 	return (node);
 }

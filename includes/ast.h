@@ -181,6 +181,7 @@ t_ast_node				*ast_elif(t_lex **lex, t_ast_node *root);
 t_ast_node				*ast_if(t_lex **lex, t_ast_node *node);
 t_ast_node				*ast_bang(t_lex **lex, t_ast_node *node);
 t_ast_node				*ast_pipeline(t_lex **lex, t_ast_node *node);
+void					ast_redir_pipe(t_lex **lex, t_ast_node *node);
 
 char					*format_word(char **str, t_ast_node *node);
 char					*word(char **argv);

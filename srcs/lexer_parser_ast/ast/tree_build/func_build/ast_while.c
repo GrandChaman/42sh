@@ -12,6 +12,12 @@
 
 #include "sh21.h"
 
+void			ast_redir_pipe(t_lex **lex, t_ast_node *node)
+{
+	while (*lex && (*lex)->token_type == PIPE)
+		node->redir_node = ast_pipe(lex, node->redir_node);
+}
+
 t_ast_node		*ast_while(t_lex **lex, t_ast_node *node)
 {
 	if (!lex || !*lex || !(*lex)->next)
@@ -25,5 +31,6 @@ t_ast_node		*ast_while(t_lex **lex, t_ast_node *node)
 		*lex = (*lex)->next;
 	while (*lex && ast_redir_node((*lex)->token_type))
 		node->redir_node = redir_node(lex, node->redir_node);
+	ast_redir_pipe(lex, node);
 	return (node);
 }
