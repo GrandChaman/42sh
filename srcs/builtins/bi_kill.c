@@ -119,7 +119,7 @@ int					bi_kill(int argc, char **argv,
 				return (1);
 			killpg(stock, sinal);
 		}
-		else
+		else if (ft_atoi(argv[i]) != 0)
 			kill(ft_atoi(argv[i]), sinal);
 	}
 	return (0);
