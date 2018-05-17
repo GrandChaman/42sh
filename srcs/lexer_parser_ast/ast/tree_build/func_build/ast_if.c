@@ -55,10 +55,9 @@ t_ast_node		*ast_if(t_lex **lex, t_ast_node *node)
 	node->left = ast_compound_list(lex, node);
 	if (*lex && (*lex)->token_type == Elif)
 		node->right = ast_elif(lex, node);
-	else
+	else if (*lex && (*lex)->token_type == Else)
 		node->right = ast_else(lex, node);
-	if (lex && *lex)
-		*lex = (*lex)->next;
+	*lex = *lex ? (*lex)->next : *lex;
 	while (*lex && ast_redir_node((*lex)->token_type))
 		node->redir_node = redir_node(lex, node->redir_node);
 	return (node);
