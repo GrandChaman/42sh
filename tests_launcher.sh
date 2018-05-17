@@ -6,6 +6,6 @@ for script in shtest/*.sh ; do
 	./42sh $script
 	if [ $? -ne 0 ] ;
 	then
-		exit $?
+		exit 1
 	fi
 done
