@@ -6,7 +6,7 @@
 /*   By: rfautier <rfautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 19:23:38 by rfautier          #+#    #+#             */
-/*   Updated: 2018/04/26 22:01:16 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/05/17 20:15:12 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ static int		print_one_job_routine(t_jc_job *job)
 	t_list		*p_list;
 	t_jc_proc	*p;
 
-	p_list = job->proc_list;
+	if (!(p_list = job->proc_list))
+		return (1);
 	p = (t_jc_proc*)(p_list->content);
 	ft_printf("[%d] + %d %-*s", job->tag, p->pid, 11,
 		g_jc_status_string[p->status]);
-	while (p_list)
+	while (p_list && (p = (t_jc_proc*)(p_list->content)))
 	{
-		p = (t_jc_proc*)(p_list->content);
 		if (p_list->prev)
 			ft_printf("%*s%d %-*s", 6 + ft_numlen(job->tag), " ", p->pid, 11,
 				g_jc_status_string[p->status]);
