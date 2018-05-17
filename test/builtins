@@ -1,0 +1,10 @@
+echo It Works;
+cd /tmp;
+cd -;
+cd ..;
+cd -;
+pwd;
+cd;
+pwd;
+cd -;
+pwd;
