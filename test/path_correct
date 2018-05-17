@@ -1,0 +1,8 @@
+Should printf
+TEST
+Shouldn't printf
+42sh: printf: Command not found
+Should printf
+TEST
+Should printf
+TEST
