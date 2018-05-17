@@ -1,0 +1,11 @@
+unsetenv PATH;
+echo "Should printf";
+printf "TEST\n" 2>&1;
+setenv PATH;
+echo "Shouldn't printf";
+printf "TEST\n" 2>&1;
+echo "Should printf";
+/usr/bin/printf "TEST\n" 2>&1;
+echo "Should printf";
+setenv PATH=/bin:/usr/bin;
+printf "TEST\n" 2>&1;
