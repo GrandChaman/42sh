@@ -17,7 +17,7 @@ t_ast_node		*ast_bang(t_lex **lex, t_ast_node *node)
 	if (!lex || !*lex || !(*lex)->next)
 		return (NULL);
 	node->type = (*lex)->token_type;
-	*lex = (*lex)->next;
+	*lex = *lex ? (*lex)->next : *lex;
 	node->left = ast_create_leaf((*lex)->token_type, lex);
 	return (node);
 }

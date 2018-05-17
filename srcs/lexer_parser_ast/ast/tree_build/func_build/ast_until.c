@@ -17,12 +17,12 @@ t_ast_node		*ast_until(t_lex **lex, t_ast_node *node)
 	if (!lex || !*lex || !(*lex)->next)
 		return (NULL);
 	node->type = (*lex)->token_type;
-	*lex = (*lex)->next;
+	*lex = *lex ? (*lex)->next : *lex;
 	node->left = ast_compound_list(lex, node);
-	(*lex) = (*lex)->next;
+	*lex = *lex ? (*lex)->next : *lex;
 	node->right = ast_compound_list(lex, node);
-	(*lex) = (*lex)->next;
-	while ((*lex) && ast_redir_node((*lex)->token_type))
+	*lex = *lex ? (*lex)->next : *lex;
+	while (*lex && ast_redir_node((*lex)->token_type))
 		node->redir_node = redir_node(lex, node->redir_node);
 	return (node);
 }
