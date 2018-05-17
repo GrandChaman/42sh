@@ -23,7 +23,6 @@ void	del_sh21(void)
 	del_list((void**)&sh21->lex, del_lex);
 	del_ast(&sh21->tree.root_node);
 	del_list((void**)&sh21->tree.fd_cleanup, del_redir);
-	ft_lstdel(&sh21->heredocs, del_heredocs);
 }
 
 void	del_sh21_exit(void)
@@ -33,6 +32,7 @@ void	del_sh21_exit(void)
 	sh21 = sh21_get();
 	cli_loader(1);
 	del_sh21();
+	ft_lstdel(&sh21->heredocs, del_heredocs);
 	del_arr(&sh21->env.orig_env);
 	del_arr(&sh21->env.local_var);
 	del_hash(&sh21->env);
