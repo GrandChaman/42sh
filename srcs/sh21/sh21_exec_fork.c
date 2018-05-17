@@ -55,6 +55,7 @@ int				callsystem(char *cmd, char **av, char ***env, t_ast_node *root)
 		if (!cmd || execve(cmd, av, *env) < 0)
 			;
 		ft_error((cmd ? errno : -1), (cmd ? cmd : av[0]));
+		del_sh21_fork();
 		exit((cmd ? errno : -1));
 	}
 	else if (parent != 0)

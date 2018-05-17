@@ -66,7 +66,7 @@ SRC = bang_case.c bang_main.c bang_search.c bi_bg.c bi_cd.c bi_cd3.c \
 	signal_handler.c term_command.c terminal_settings.c
 
 LIBFT_INCLUDE = $(LIBFT_DIR)/include
-CFLAG = -g3 -Wall -Wextra -Werror -I $(LIBFT_INCLUDE) -I $(INCLUDE)
+CFLAG = -Wall -Wextra -Werror -g3 -I $(LIBFT_INCLUDE) -I $(INCLUDE)
 CC = cc
 LFLAG = -ltermcap
 BIN = bin

@@ -100,6 +100,7 @@ void				del_lex(void **lex);
 void				del_redir(void **node);
 void				del_sh21(void);
 void				del_sh21_exit(void);
+void				del_sh21_fork(void);
 void				ft_exit(int err, const char *s);
 void				ft_lstpush(t_list *lst, t_list *lnew);
 void				ft_lstqueue(t_list **lst, t_list *lnew);
