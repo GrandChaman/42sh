@@ -6,7 +6,7 @@
 #    By: hfontain <hfontain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/16 13:28:08 by fle-roy           #+#    #+#              #
-#    Updated: 2018/05/17 20:04:35 by fle-roy          ###   ########.fr        #
+#    Updated: 2018/05/17 21:29:59 by fle-roy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ SRC = bang_case.c bang_main.c bang_search.c bi_bg.c bi_cd.c bi_cd3.c \
 	signal_handler.c term_command.c terminal_settings.c
 
 LIBFT_INCLUDE = $(LIBFT_DIR)/include
-CFLAG = -Wall -Wextra -Werror -g3 -I $(LIBFT_INCLUDE) -I $(INCLUDE)
+CFLAG = -g3 -Wall -Wextra -Werror -g3 -I $(LIBFT_INCLUDE) -I $(INCLUDE)
 CC = cc
 LFLAG = -ltermcap
 BIN = bin

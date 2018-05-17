@@ -1,0 +1,8 @@
+echo "Testing redirections," > test$1.txt;
+echo "Testing redirections," >test$1.txt;
+echo "with multiple lines" >> test$1.txt;
+echo "with multiple lines" >>test$1.txt;
+wc -c < test$1.txt;
+wc -c<test$1.txt;
+cat -e test$1.txt;
+rm -f test$1.txt;

@@ -1,0 +1,4 @@
+echo "1" 2>&1 && echo "2" 2>&1;
+echo "1" 2>&1 | ls ewf 2>&1 && echo "2" 2>&1;
+echo "1" 2>&1 || echo "2" 2>&1;
+echo "1" 2>&1 | ls ewf 2>&1 || echo "2" 2>&1;

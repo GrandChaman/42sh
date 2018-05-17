@@ -1,0 +1,3 @@
+printf "salut\nToto\nergergerg\n" | cat -e;
+printf "salut\nToto\nergergerg\n" | sort | cat -e;
+base64 /dev/urandom | head -c 1000 | grep 42 | wc -l | sed -e 's/1/Yes/g' -e 's/0/Yes/g';

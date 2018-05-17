@@ -6,7 +6,7 @@
 /*   By: fle-roy <fle-roy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 17:08:33 by fle-roy           #+#    #+#             */
-/*   Updated: 2018/05/04 16:17:09 by fle-roy          ###   ########.fr       */
+/*   Updated: 2018/05/17 21:34:35 by fle-roy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int			hist_sync(char *path)
 	t_ft_sh	*sh;
 
 	sh = get_ft_shell();
+	line = NULL;
 	path = (path ? ft_strdup(path) : get_history_file());
 	if (!path)
 		return (hist_error("42sh: history: can't open default history file."
@@ -96,7 +97,6 @@ int			hist_sync(char *path)
 		return (hist_error("42sh: history: lseek() failed : ", path, fd));
 	close(fd);
 	ft_strdel(&path);
-	free(path);
 	return (0);
 }
 
